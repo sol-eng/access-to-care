@@ -1,0 +1,151 @@
+---
+title: "Access to care"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(leaflet)
+```
+
+```{r}
+hospitals <- read_csv("../data/hospital_list.csv")
+hospitals
+```
+
+```{r}
+hospital_list <- hospitals  %>%
+  select(state, longitude, latitude)
+write_rds(hospital_list, "../data/hospital_list.rds")
+hospital_list
+```
+
+
+```{r}
+state_hospitals <- hospitals %>%
+  mutate(county = str_to_lower(county)) %>%
+  group_by(state, county) %>%
+  summarise(population = max(population), hospitals = n())
+write_rds(state_hospitals, "../data/state_hospitals.rds")
+state_hospitals
+```
+
+```{r}
+set.seed(100)
+
+hospital_sample <- state_hospitals %>%
+  sample_frac(0.3)
+
+hospital_sample
+```
+
+```{r}
+model <- lm(hospitals ~ population, data = hospital_sample)
+write_rds(model, "../data/model.rds")
+summary(model)
+```
+
+```{r}
+predictions <- predict(model, 
+  newdata = state_hospitals, 
+  interval = "prediction") %>%
+  as_tibble() %>%
+  mutate_all(round)
+
+predictions
+```
+
+```{r}
+hospital_results <- state_hospitals %>%
+  bind_cols(predictions) %>%
+  mutate(result = case_when(
+    hospitals < lwr ~ -1,
+    hospitals > upr ~ 1,
+    TRUE ~ 0))
+
+write_rds(hospital_results, "../data/hospitals.rds")
+
+hospital_results
+```
+
+## State map
+
+```{r}
+state_name <- "CA"
+state_shapes <- read_rds(paste0("../shapes/", state_name,".rds"))
+
+state_data <- hospital_results %>%
+  filter(state == state_name)
+
+state_counties <- state_shapes %>%
+  as_tibble() %>%
+  rename_all(str_to_lower) %>%
+  mutate(
+    county = str_to_lower(name),
+    county = str_replace_all(county, "st. ", "saint")
+    ) %>%
+  select(county) %>%
+  rowid_to_column()
+
+prep_colors <- state_data %>%
+  left_join(state_counties, by = "county") %>%
+  arrange(rowid) %>%
+  mutate(color = case_when(
+    result == 0 ~ "green",
+    result == 1 ~ "blue",
+    result == -1 ~ "red"
+  ))
+
+state_data
+```
+
+
+```{r}
+leaflet() %>%
+  addTiles() %>%
+  addPolygons(data = state_shapes, weight = 0.5, color = prep_colors$color)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
