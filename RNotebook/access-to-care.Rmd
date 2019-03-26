@@ -5,6 +5,7 @@ output: html_notebook
 
 ```{r}
 library(tidyverse)
+library(rlang)
 library(leaflet)
 ```
 
@@ -20,15 +21,31 @@ write_rds(hospital_list, "../data/hospital_list.rds")
 hospital_list
 ```
 
-
 ```{r}
-state_hospitals <- hospitals %>%
-  mutate(county = str_to_lower(county)) %>%
-  group_by(state, county) %>%
-  summarise(population = max(population), hospitals = n())
+population <- usmap::countypop
+
+hospital_count <- hospitals %>%
+  count(state, original_county) 
+
+
+state_hospitals <- population %>%
+  left_join(hospital_count, by = c("abbr" = "state", "county" = "original_county")) %>%
+  mutate(hospitals = ifelse(is.na(n), 0, n)) %>%
+  select(
+    fips, 
+    state = abbr, 
+    county, 
+    population = pop_2015,
+    hospitals
+    )
+
 write_rds(state_hospitals, "../data/state_hospitals.rds")
 state_hospitals
+
 ```
+
+
+
 
 ```{r}
 set.seed(100)
@@ -61,7 +78,14 @@ hospital_results <- state_hospitals %>%
   mutate(result = case_when(
     hospitals < lwr ~ -1,
     hospitals > upr ~ 1,
-    TRUE ~ 0))
+    TRUE ~ 0)) %>%
+  mutate(
+    county_key = str_remove_all(county, " County"),
+    county_key = str_remove_all(county_key, " Parrish"), 
+    county_key = str_to_lower(county_key),
+    county_key = str_remove_all(county_key, " "),
+    county_key = str_replace_all(county_key, "st. ", "saint"),
+      )  
 
 write_rds(hospital_results, "../data/hospitals.rds")
 
@@ -71,6 +95,71 @@ hospital_results
 ## State map
 
 ```{r}
+shapes <- read_rds("../data/shapes.rds") %>%
+  mutate(
+    county_key = str_to_lower(county),
+    county_key = str_remove_all(county_key, " "),
+    county_key = str_replace_all(county_key, "st. ", "saint")
+  ) 
+
+shapes
+```
+
+```{r}
+
+hospital_results %>%
+  filter(state == "TX") %>% 
+  mutate(color = case_when(
+    result == 0 ~ "green",
+    result == 1 ~ "blue",
+    result == -1 ~ "red"
+  )) %>%
+  left_join(shapes, by = c("state", "county")) 
+
+
+```
+```{r}
+x1 <- state_data %>%
+  transpose()
+
+x1 <- c(list(leaflet()), x1)
+
+m <- reduce(x1, function(x, y) expr(!! x %>% addPolygons(lng = !! y$data[, 1][[1]], lat = !! y$data[, 2][[1]])))
+
+eval(m)
+```
+```{r}
+
+my_map <- leaflet() %>%
+  addTiles()
+
+hospital_results %>%
+  filter(state == "NY") %>%
+  mutate(color = case_when(
+    result ==  0  ~ "green",
+    result ==  1  ~ "blue",
+    result == -1  ~ "red"
+  )) %>%
+  left_join(shapes, by = c("state", "county_key")) %>%
+  transpose() %>%
+  c(list(my_map), .) %>%
+  reduce(
+    function(x, y)
+      expr(
+        !!x %>%
+          addPolygons(
+            lng = !!y$data$long, 
+            lat = !!y$data$lat, 
+            color = !!y$color
+            )
+        )) %>%
+  eval_tidy()
+
+```
+
+
+
+```{r, eval = FALSE}
 state_name <- "CA"
 state_shapes <- read_rds(paste0("../shapes/", state_name,".rds"))
 
@@ -97,10 +186,7 @@ prep_colors <- state_data %>%
   ))
 
 state_data
-```
 
-
-```{r}
 leaflet() %>%
   addTiles() %>%
   addPolygons(data = state_shapes, weight = 0.5, color = prep_colors$color)
