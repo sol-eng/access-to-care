@@ -81,7 +81,7 @@ hospital_results <- state_hospitals %>%
     TRUE ~ 0)) %>%
   mutate(
     county_key = str_remove_all(county, " County"),
-    county_key = str_remove_all(county_key, " Parrish"), 
+    county_key = str_remove_all(county_key, " Parish"),
     county_key = str_to_lower(county_key),
     county_key = str_remove_all(county_key, " "),
     county_key = str_replace_all(county_key, "st. ", "saint"),
@@ -106,27 +106,31 @@ shapes
 ```
 
 ```{r}
+shapes %>%
+  filter(state == "CA")
+```
+
+
+```{r}
 
 hospital_results %>%
-  filter(state == "TX") %>% 
+  filter(state == "CA") %>% 
   mutate(color = case_when(
     result == 0 ~ "green",
     result == 1 ~ "blue",
     result == -1 ~ "red"
   )) %>%
-  left_join(shapes, by = c("state", "county")) 
+  full_join(filter(shapes, state == "CA"), by = c("state", "county_key")) 
 
 
-```
-```{r}
-x1 <- state_data %>%
-  transpose()
+shapes %>%
+  filter(state == "CA") %>%
+  count()
 
-x1 <- c(list(leaflet()), x1)
+hospital_results %>%
+  filter(state == "CA") %>%
+  count()
 
-m <- reduce(x1, function(x, y) expr(!! x %>% addPolygons(lng = !! y$data[, 1][[1]], lat = !! y$data[, 2][[1]])))
-
-eval(m)
 ```
 ```{r}
 
@@ -134,7 +138,8 @@ my_map <- leaflet() %>%
   addTiles()
 
 hospital_results %>%
-  filter(state == "NY") %>%
+  filter(state == "CA") %>%
+  filter(county == "Los Angeles County") %>%
   mutate(color = case_when(
     result ==  0  ~ "green",
     result ==  1  ~ "blue",
@@ -149,7 +154,7 @@ hospital_results %>%
         !!x %>%
           addPolygons(
             lng = !!y$data$long, 
-            lat = !!y$data$lat, 
+            lat = !!y$data$lat,
             color = !!y$color
             )
         )) %>%
@@ -157,7 +162,33 @@ hospital_results %>%
 
 ```
 
+```{r}
 
+my_map <- leaflet() %>%
+  addTiles()
+
+shapes %>%
+  filter(state == "CA") %>%
+  filter(county == "Los Angeles") %>%
+  transpose() %>%
+  c(list(my_map), .) %>%
+  reduce(
+    function(x, y)
+      expr(
+        !!x %>%
+          addPolygons(
+            lng = !!y$data$long, 
+            lat = !!y$data$lat
+            )
+        )) %>%
+  eval_tidy()
+
+x <- shapes %>%
+  filter(state == "CA") %>%
+  filter(county == "Los Angeles") %>%
+  pull(data)
+
+```
 
 ```{r, eval = FALSE}
 state_name <- "CA"
