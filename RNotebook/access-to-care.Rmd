@@ -110,9 +110,9 @@ county_hospitals <- hospital_results  %>%
   filter(state != "PR", state != "AK") %>%
   filter(!is.na(county))
 
-county_hospitals %>%
-  mutate(popup = paste0("County:", county, " Population:", population, " Hospitals:", hospitals)) %>%
-  select(popup, everything())
+write_rds(county_hospitals, "../data/county_hospitals.rds", compress = "gz")
+
+county_hospitals
 ```
 
 ```{r}
