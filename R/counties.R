@@ -49,7 +49,15 @@ county_states <- map_dfr(
   all_paths,
   extract_coordinates,
   .id = "state"
-) %>%
+) 
+
+nested_states <- county_states %>%
   group_nest(state, county)
 
-write_rds(county_states, "data/shapes.rds", compress = "gz")
+write_csv(county_states, "data/shapes.csv")
+write_rds(nested_states, "data/shapes.rds", compress = "gz")
+
+county_states %>%
+  filter(state == "NY") %>%
+  write_csv("data/ny-shapes.csv")
+
