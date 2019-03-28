@@ -118,11 +118,14 @@ county_hospitals
 ```{r}
 library(fs)
 
-path("..","data", c("county_hospitals.rds", "hospital_locations.rds")) %>%
+path("..","data", c("county_hospitals.rds", "hospital_locations.rds", "model.rds")) %>%
   file_copy("../flexdashboard", overwrite = TRUE)
 
-path("..","data", c("model.rds", "hospitals.rds", "hospital_locations.rds")) %>%
+path("..","data", c("county_hospitals.rds", "hospital_locations.rds")) %>%
   file_copy("../RMarkdown-html", overwrite = TRUE)
+
+path("..","data", c("county_hospitals.rds", "hospital_locations.rds")) %>%
+  file_copy("../RMarkdown-pdf", overwrite = TRUE)
 
 path("..","data", c("model.rds", "hospitals.rds", "hospital_locations.rds")) %>%
   file_copy("../plumber-api", overwrite = TRUE)

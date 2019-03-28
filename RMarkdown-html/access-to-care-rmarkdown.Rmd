@@ -29,7 +29,6 @@ library(metricsgraphics)
 county_hospitals <- read_rds("county_hospitals.rds") %>%
   inner_join(statepop, by = c("state" = "abbr")) 
 hospital_locations <- read_rds("hospital_locations.rds") 
-model <- read_rds("model.rds")
 
 state_names <- county_hospitals %>%
   group_by(full) %>%
@@ -123,9 +122,9 @@ if(add_hospitals == 1) {
       popup = locations$popup,
       fillColor = hospital_color, color = "gray", 
       fillOpacity = 0.7,weight = 1)
-  } 
-county_map  
+} 
 
+county_map  
 ```
 
 ### County Data
