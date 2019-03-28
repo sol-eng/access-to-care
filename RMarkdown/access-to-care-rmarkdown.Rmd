@@ -1,0 +1,153 @@
+---
+title: "Access to Care by State"
+output: html_document
+params:
+  state:
+    label: "State:"
+    value: California
+    input: select
+    choices: [Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware, District of Columbia, Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana, Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana, Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina, North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina, South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia, Wisconsin, Wyoming]
+  printcode:
+    label: "Display Code:"
+    value: FALSE
+---
+
+<img src="RStudio1.png" style="position:absolute;top:10px;right:200px;" />
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = params$printcode)
+
+library(flexdashboard)
+library(dplyr)
+library(readr)
+library(purrr)
+library(ggplot2)
+library(leaflet)
+library(DT)
+library(usmap)
+library(metricsgraphics)
+
+county_hospitals <- read_rds("county_hospitals.rds") %>%
+  inner_join(statepop, by = c("state" = "abbr")) 
+hospital_locations <- read_rds("hospital_locations.rds") 
+model <- read_rds("model.rds")
+
+state_names <- county_hospitals %>%
+  group_by(full) %>%
+  summarise() %>%
+  pull()
+
+under <- "#CC79A7"
+over <- "#0072B2"
+at_level <- "#008b00"
+hospital_color <- "#F0E442"
+include <- c(-1, 1, 0)
+add_hospitals <- 1
+
+counties <- county_hospitals %>% 
+    filter(full %in% params$state,
+           result %in% include) %>%
+    mutate(popup = paste0("<b>", county, "</b>",
+                          "<br/>Population: ", prettyNum(population, big.mark = ","), 
+                          "<br/>Hospitals: ", hospitals,
+                          "<br/>Expected: ", fit
+                          )) %>%  
+    mutate(color = case_when(
+      result ==  0  ~ at_level,
+      result ==  1  ~ over,
+      result == -1  ~ under
+    ))
+
+```
+
+## `r params$state`
+
+### Background
+
+
+We are trying to determine which counties in **`r params$state`** have comparatively more access or less access to hospital care.
+
+A **statistical model using data from across the country** is used to identify those counties that have more or less than the model expects the specific county to have.
+
+### County Map
+
+Breakdown of counties and their status based on county population compared to the number of hospitals
+
+
+```{r, fig.height = 7, fig.width = 10}
+
+initial_map <- leaflet() %>%
+  addProviderTiles(providers$CartoDB) %>%
+  addLegend("bottomright", 
+            color  = c(under,over ,at_level, hospital_color), 
+            labels = c("Less hopitals than expected",
+                       "More hospitals than expected", "Within Range", 
+                       "Hospital Location"), 
+            title  = "Legend",opacity = 0.5)
+
+county_map <- counties %>%
+  transpose() %>%
+  map(~{
+    county <- .x
+     transpose(county$data)  %>%
+       map(~list(
+         data = .x$data, 
+         color = county$color,
+         popup = county$popup
+         ))
+    }) %>%
+  flatten() %>%
+  reduce(
+    ~ addPolygons(.x, 
+                  lng = .y$data$long, 
+                  lat = .y$data$lat, 
+                  color = .y$color, 
+                  popup = .y$popup,
+                  weight = 1, fillOpacity = 0.3), 
+    .init = initial_map)  
+
+if(add_hospitals == 1) {
+  
+  locations <- hospital_locations %>%
+    inner_join(statepop, by = c("state" = "abbr")) %>%
+    filter(full %in% params$state) %>%
+    select(longitude, latitude) %>%
+    mutate_all(round, 3) %>%
+    count(longitude, latitude) %>%
+    mutate(popup = paste0("Hospitals: ", n))
+  
+  county_map <- county_map %>%
+    addCircleMarkers(
+      lng = locations$longitude, 
+      lat = locations$latitude,
+      radius = 3 *locations$n,
+      popup = locations$popup,
+      fillColor = hospital_color, color = "gray", 
+      fillOpacity = 0.7,weight = 1)
+  } 
+county_map  
+
+```
+
+### County Data
+
+Here is the county level data used in this report
+
+
+```{r}
+counties %>%
+  select(full,county, population,hospitals, fit, result) %>%
+  mutate(result = case_when(
+      result ==  0  ~ "Acceptable",
+      result ==  1  ~ "Above",
+      result == -1  ~ "Under"
+    )) %>%
+  rename(State = full,
+         County = county,
+         Population = population,
+         Hospitals = hospitals,
+         Expected = fit,
+         `Model Result` = result) %>%
+  datatable(class = "cell-border stripe")
+```
+
