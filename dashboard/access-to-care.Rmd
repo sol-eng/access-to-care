@@ -5,15 +5,19 @@ output:
     orientation: rows
     social: ["linkedin","twitter","menu"]
     navbar:
-      - { title: "About",href: "http://rmarkdown.rstudio.com/flexdashboard/index.html", align: right }
+      - { title: "About",href: "https://solutions.rstudio.com/tour/access_to_care/", align: right }
     theme: lumen
     source_code: embed
+    logo: RStudio1.png
 runtime: shiny
 ---
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
-library(tidyverse)
+library(dplyr)
+library(readr)
+library(purrr)
+library(ggplot2)
 library(leaflet)
 library(DT)
 library(usmap)
@@ -22,6 +26,7 @@ library(metricsgraphics)
 county_hospitals <- read_rds("county_hospitals.rds") %>%
   inner_join(statepop, by = c("state" = "abbr")) 
 hospital_locations <- read_rds("hospital_locations.rds") 
+model <- read_rds("model.rds")
 
 state_names <- county_hospitals %>%
   group_by(full) %>%
@@ -205,4 +210,46 @@ renderMetricsgraphics({
     mjs_labs(x="Population (Thousands)", y="Hospitals")
 })
 ```
+
+### Fitted a model to predict how many hospitals should be in a county
+
+```{r}
+bounds <- county_hospitals %>%
+  summarise(mi = min(population), mx = max(population)) %>%
+  as.numeric()
+
+preds <- predict(
+  model, 
+  data.frame(population = bounds),
+  interval = "prediction")
+
+county_hospitals %>% 
+  group_by(population, hospitals) %>%
+  summarise() %>%
+  ggplot() +
+    geom_point(aes(hospitals, population), color = "#E69F00", alpha = 0.5) +
+    scale_y_continuous(breaks = 0:10 * 1000000, labels = paste0(0:10, "M")) +
+    geom_segment(x = preds[1,2], y = bounds[1], 
+                 xend = preds[2,2], yend = bounds[2], 
+                 color = "#009E73") +
+    geom_segment(x = preds[1,3], y = bounds[1], 
+                 xend = preds[2,3], yend = bounds[2], 
+                 color = "#CC79A7") +
+    theme_minimal()
+
+sm <- summary(model)
+```
+
+***
+
+The results of the model where:
+
+- Multiple R-squared:  `r sm$r.squared`
+
+- Adjusted ***R-squared:  `r sm$adj.r.squared` ***
+
+And the formula was: 
+
+- lm(formula = hospitals ~ population)
+
 
