@@ -17,6 +17,7 @@ library(tidyverse)
 library(leaflet)
 library(DT)
 library(usmap)
+library(metricsgraphics)
 
 county_hospitals <- read_rds("county_hospitals.rds") %>%
   inner_join(statepop, by = c("state" = "abbr")) 
@@ -27,17 +28,12 @@ state_names <- county_hospitals %>%
   summarise() %>%
   pull()
 
-
-
 under <- "#CC79A7"
 over <- "#0072B2"
 at_level <- "#008b00"
 hospital_color <- "#F0E442"
-st <- c("CA")
-#st <- states
 include <- c(-1, 1, 0)
 add_hospitals <- 1
-
 
 counties <- function(df, st, include) {
   df %>% 
@@ -52,9 +48,7 @@ counties <- function(df, st, include) {
       result ==  0  ~ at_level,
       result ==  1  ~ over,
       result == -1  ~ under
-    )) 
-} 
-  
+    ))} 
 ```
 
 
@@ -77,26 +71,23 @@ selectInput(
 ### Population
 
 ```{r}
-
-#
-
 renderValueBox({
-  cnts <- counties(county_hospitals, input$state, include)
-  population <- round(sum(cnts$population)/1000000, digits=0)
-  valueBox(
-    paste0(prettyNum(population, big.mark = ","), "M"), 
-    icon="fa-user")
-  })
+  counties(county_hospitals, input$state, include) %>%
+    summarise(x = round(sum(population)/1000000, digits=0)) %>%
+    mutate(x = paste0(prettyNum(x, big.mark = ","), "M") ) %>%
+    pull(x) %>%
+    valueBox(icon="fa-user")
+    })
 ```
 
 ### Hospitals
 
 ```{r}
 renderValueBox({
-  cnts <- counties(county_hospitals, input$state, include)
-  valueBox(
-    sum(cnts$hospitals), 
-    icon="fa-ambulance",color="#E69F00")
+  counties(county_hospitals, input$state, include) %>%
+    summarise(sum(hospitals)) %>%
+    pull() %>%
+    valueBox(icon="fa-ambulance",color="#E69F00")
   })
 ```
 
@@ -104,10 +95,9 @@ renderValueBox({
 
 ```{r}
 renderValueBox({
-  cnts <- counties(county_hospitals, input$state, include)
-  valueBox(
-    nrow(cnts), 
-    icon="fa-map-marker",color="#009E73")
+  counties(county_hospitals, input$state, include) %>%
+    nrow() %>%
+    valueBox(icon="fa-map-marker",color="#009E73")
   })
 ```
 
@@ -120,7 +110,7 @@ renderValueBox({
     filter(result == -1) %>%
     nrow() %>%
     valueBox(icon="fa-h-square", color="#CC79A7")
-})
+  })
 ```
 
 
@@ -185,22 +175,34 @@ if(add_hospitals == 1) {
       fillColor = hospital_color, color = "gray", 
       fillOpacity = 0.7,weight = 1)
   } 
-
-
 county_map  
 })
-
 ```
 
 ### County summary
 
 
-
 ```{r}
-import_files <- function() {
-  source_files <- fs::dir_ls("data", glob = "*.rds")
-  fs::file_copy(source_files, new_path = "./dashboard", overwrite = TRUE)
-}
+renderDataTable({
+  counties(county_hospitals, input$state, include) %>%
+    select(county, population, hospitals, expected = fit) %>%
+    datatable(class = 'cell-border stripe')
+})
 ```
 
+Model {.storyboard}
+======================================================================
+
+### There was a high degree of correlation between the county's population and the number of hospitals
+
+```{r}
+renderMetricsgraphics({
+  county_hospitals %>%
+    mutate(population = round(population / 1000)) %>%
+    count(population, hospitals) %>%
+    mjs_plot(x=population, y=hospitals, width=600, height=500) %>%
+    mjs_point() %>%
+    mjs_labs(x="Population (Thousands)", y="Hospitals")
+})
+```
 
