@@ -52,12 +52,13 @@ county_states <- map_dfr(
 ) 
 
 nested_states <- county_states %>%
+  group_nest(state, county, shape_id) %>%
   group_nest(state, county)
 
-write_csv(county_states, "data/shapes.csv")
 write_rds(nested_states, "data/shapes.rds", compress = "gz")
 
-county_states %>%
-  filter(state == "NY") %>%
-  write_csv("data/ny-shapes.csv")
+# write_csv(county_states, "data/shapes.csv")
+# county_states %>%
+#   filter(state == "NY") %>%
+#   write_csv("data/ny-shapes.csv")
 

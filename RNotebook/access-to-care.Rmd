@@ -15,10 +15,10 @@ hospitals
 ```
 
 ```{r}
-hospital_list <- hospitals  %>%
+hospital_locations <- hospitals  %>%
   select(state, longitude, latitude)
-write_rds(hospital_list, "../data/hospital_list.rds")
-hospital_list
+write_rds(hospital_locations, "../data/hospital_locations.rds")
+hospital_locations
 ```
 
 ```{r}
@@ -39,9 +39,7 @@ state_hospitals <- population %>%
     hospitals
     )
 
-write_rds(state_hospitals, "../data/state_hospitals.rds")
 state_hospitals
-
 ```
 
 
@@ -82,6 +80,7 @@ hospital_results <- state_hospitals %>%
   mutate(
     county_key = str_remove_all(county, " County"),
     county_key = str_remove_all(county_key, " Parish"),
+    county_key = str_remove_all(county_key, " city"),
     county_key = str_to_lower(county_key),
     county_key = str_remove_all(county_key, " "),
     county_key = str_replace_all(county_key, "st. ", "saint"),
@@ -89,7 +88,7 @@ hospital_results <- state_hospitals %>%
 
 write_rds(hospital_results, "../data/hospitals.rds")
 
-hospital_results
+hospital_results 
 ```
 
 ## State map
@@ -102,142 +101,106 @@ shapes <- read_rds("../data/shapes.rds") %>%
     county_key = str_replace_all(county_key, "st. ", "saint")
   ) 
 
-shapes
-```
-
-```{r}
-shapes %>%
-  filter(state == "CA")
-```
-
-
-```{r}
-
-hospital_results %>%
-  filter(state == "CA") %>% 
-  mutate(color = case_when(
-    result == 0 ~ "green",
-    result == 1 ~ "blue",
-    result == -1 ~ "red"
-  )) %>%
-  full_join(filter(shapes, state == "CA"), by = c("state", "county_key")) 
-
-
-shapes %>%
-  filter(state == "CA") %>%
-  count()
-
-hospital_results %>%
-  filter(state == "CA") %>%
-  count()
-
+shapes 
 ```
 ```{r}
-
-my_map <- leaflet() %>%
-  addTiles()
-
-hospital_results %>%
-  filter(state == "CA") %>%
-  filter(county == "Los Angeles County") %>%
-  mutate(color = case_when(
-    result ==  0  ~ "green",
-    result ==  1  ~ "blue",
-    result == -1  ~ "red"
-  )) %>%
+county_hospitals <- hospital_results  %>%
+  select(- county) %>%
   left_join(shapes, by = c("state", "county_key")) %>%
-  transpose() %>%
-  c(list(my_map), .) %>%
-  reduce(
-    function(x, y)
-      expr(
-        !!x %>%
-          addPolygons(
-            lng = !!y$data$long, 
-            lat = !!y$data$lat,
-            color = !!y$color
-            )
-        )) %>%
-  eval_tidy()
+  filter(state != "PR", state != "AK") %>%
+  filter(!is.na(county))
 
+write_rds(county_hospitals, "../data/county_hospitals.rds", compress = "gz")
+
+county_hospitals
 ```
 
 ```{r}
-
-my_map <- leaflet() %>%
-  addTiles()
-
-shapes %>%
-  filter(state == "CA") %>%
-  filter(county == "Los Angeles") %>%
-  transpose() %>%
-  c(list(my_map), .) %>%
-  reduce(
-    function(x, y)
-      expr(
-        !!x %>%
-          addPolygons(
-            lng = !!y$data$long, 
-            lat = !!y$data$lat
-            )
-        )) %>%
-  eval_tidy()
-
-x <- shapes %>%
-  filter(state == "CA") %>%
-  filter(county == "Los Angeles") %>%
-  pull(data)
+states <- county_hospitals %>%
+  group_by(state) %>%
+  summarise() %>%
+  pull()
 
 ```
 
-```{r, eval = FALSE}
-state_name <- "CA"
-state_shapes <- read_rds(paste0("../shapes/", state_name,".rds"))
 
-state_data <- hospital_results %>%
-  filter(state == state_name)
+```{r}
 
-state_counties <- state_shapes %>%
-  as_tibble() %>%
-  rename_all(str_to_lower) %>%
-  mutate(
-    county = str_to_lower(name),
-    county = str_replace_all(county, "st. ", "saint")
-    ) %>%
-  select(county) %>%
-  rowid_to_column()
+under <- "#CC79A7"
+over <- "#0072B2"
+at_level <- "#008b00"
+hospital_color <- "#F0E442"
+st <- c("LA")
+#st <- states
+include <- c(-1, 1, 0)
+add_hospitals <- 0
 
-prep_colors <- state_data %>%
-  left_join(state_counties, by = "county") %>%
-  arrange(rowid) %>%
+initial_map <- leaflet() %>%
+  addProviderTiles(providers$CartoDB) %>%
+  addLegend("bottomright", 
+            color  = c(under,over ,at_level, hospital_color), 
+            labels = c("Less hopitals than expected",
+                       "More hospitals than expected", "Within Range", 
+                       "Hospital Location"), 
+            title  = "Legend",opacity = 0.5)
+
+locations <- hospital_locations %>%
+  filter(state %in% st) %>%
+  select(longitude, latitude) %>%
+  mutate_all(round, 3) %>%
+  count(longitude, latitude) %>%
+  mutate(popup = paste0("Hospitals: ", n))
+
+counties <- county_hospitals %>% 
+  filter(state %in% st,
+         result %in% include) %>%
+  mutate(popup = paste0("<b>", county, "</b>",
+                        "<br/>Population: ", prettyNum(population, big.mark = ","), 
+                        "<br/>Hospitals: ", hospitals,
+                        "<br/>Expected: ", fit
+                        )) %>%  
   mutate(color = case_when(
-    result == 0 ~ "green",
-    result == 1 ~ "blue",
-    result == -1 ~ "red"
-  ))
+    result ==  0  ~ at_level,
+    result ==  1  ~ over,
+    result == -1  ~ under
+  )) 
 
-state_data
+county_map <- counties %>%
+  transpose() %>%
+  map(~{
+    county <- .x
+     transpose(county$data)  %>%
+       map(~list(
+         data = .x$data, 
+         color = county$color,
+         popup = county$popup
+         ))
+    }) %>%
+  flatten() %>%
+  reduce(
+    ~ addPolygons(.x, 
+                  lng = .y$data$long, 
+                  lat = .y$data$lat, 
+                  color = .y$color, 
+                  popup = .y$popup,
+                  weight = 1, fillOpacity = 0.3), 
+    .init = initial_map)  
 
-leaflet() %>%
-  addTiles() %>%
-  addPolygons(data = state_shapes, weight = 0.5, color = prep_colors$color)
+
+if(add_hospitals == 1) {
+  county_map <- county_map %>%
+    addCircleMarkers(
+      lng = locations$longitude, 
+      lat = locations$latitude,
+      radius = 1.5 *locations$n,
+      popup = locations$popup,
+      fillColor = hospital_color, color = "gray", 
+      fillOpacity = 0.7,weight = 1)
+  } 
+
+county_map
+  
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

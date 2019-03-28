@@ -1,0 +1,206 @@
+---
+title: "Access to Hospital Care Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    social: ["linkedin","twitter","menu"]
+    navbar:
+      - { title: "About",href: "http://rmarkdown.rstudio.com/flexdashboard/index.html", align: right }
+    theme: lumen
+    source_code: embed
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(leaflet)
+library(DT)
+library(usmap)
+
+county_hospitals <- read_rds("county_hospitals.rds") %>%
+  inner_join(statepop, by = c("state" = "abbr")) 
+hospital_locations <- read_rds("hospital_locations.rds") 
+
+state_names <- county_hospitals %>%
+  group_by(full) %>%
+  summarise() %>%
+  pull()
+
+
+
+under <- "#CC79A7"
+over <- "#0072B2"
+at_level <- "#008b00"
+hospital_color <- "#F0E442"
+st <- c("CA")
+#st <- states
+include <- c(-1, 1, 0)
+add_hospitals <- 1
+
+
+counties <- function(df, st, include) {
+  df %>% 
+    filter(full %in% st,
+           result %in% include) %>%
+    mutate(popup = paste0("<b>", county, "</b>",
+                          "<br/>Population: ", prettyNum(population, big.mark = ","), 
+                          "<br/>Hospitals: ", hospitals,
+                          "<br/>Expected: ", fit
+                          )) %>%  
+    mutate(color = case_when(
+      result ==  0  ~ at_level,
+      result ==  1  ~ over,
+      result == -1  ~ under
+    )) 
+} 
+  
+```
+
+
+State Info
+======================================================================
+
+
+Row 
+-----------------------------------------------------------------------
+### Options
+
+```{r}
+selectInput(
+  "state","Select a State:", state_names,
+  selected="California", selectize = FALSE
+  )
+```
+
+
+### Population
+
+```{r}
+
+#
+
+renderValueBox({
+  cnts <- counties(county_hospitals, input$state, include)
+  population <- round(sum(cnts$population)/1000000, digits=0)
+  valueBox(
+    paste0(prettyNum(population, big.mark = ","), "M"), 
+    icon="fa-user")
+  })
+```
+
+### Hospitals
+
+```{r}
+renderValueBox({
+  cnts <- counties(county_hospitals, input$state, include)
+  valueBox(
+    sum(cnts$hospitals), 
+    icon="fa-ambulance",color="#E69F00")
+  })
+```
+
+### Counties
+
+```{r}
+renderValueBox({
+  cnts <- counties(county_hospitals, input$state, include)
+  valueBox(
+    nrow(cnts), 
+    icon="fa-map-marker",color="#009E73")
+  })
+```
+
+
+### Underserved Counties
+
+```{r}
+renderValueBox({
+  counties(county_hospitals, input$state, include) %>%
+    filter(result == -1) %>%
+    nrow() %>%
+    valueBox(icon="fa-h-square", color="#CC79A7")
+})
+```
+
+
+Row {.tabset}
+-----------------------------------------------------------------------
+
+### County Map
+
+Breakdown of counties and their status based on county population compared to the number of hospitals
+
+
+```{r}
+
+initial_map <- leaflet() %>%
+  addProviderTiles(providers$CartoDB) %>%
+  addLegend("bottomright", 
+            color  = c(under,over ,at_level, hospital_color), 
+            labels = c("Less hopitals than expected",
+                       "More hospitals than expected", "Within Range", 
+                       "Hospital Location"), 
+            title  = "Legend",opacity = 0.5)
+
+
+renderLeaflet({
+county_map <- counties(county_hospitals, input$state, include) %>%
+  transpose() %>%
+  map(~{
+    county <- .x
+     transpose(county$data)  %>%
+       map(~list(
+         data = .x$data, 
+         color = county$color,
+         popup = county$popup
+         ))
+    }) %>%
+  flatten() %>%
+  reduce(
+    ~ addPolygons(.x, 
+                  lng = .y$data$long, 
+                  lat = .y$data$lat, 
+                  color = .y$color, 
+                  popup = .y$popup,
+                  weight = 1, fillOpacity = 0.3), 
+    .init = initial_map)  
+
+if(add_hospitals == 1) {
+  
+  locations <- hospital_locations %>%
+    inner_join(statepop, by = c("state" = "abbr")) %>%
+    filter(full %in% input$state) %>%
+    select(longitude, latitude) %>%
+    mutate_all(round, 3) %>%
+    count(longitude, latitude) %>%
+    mutate(popup = paste0("Hospitals: ", n))
+  
+  county_map <- county_map %>%
+    addCircleMarkers(
+      lng = locations$longitude, 
+      lat = locations$latitude,
+      radius = 3 *locations$n,
+      popup = locations$popup,
+      fillColor = hospital_color, color = "gray", 
+      fillOpacity = 0.7,weight = 1)
+  } 
+
+
+county_map  
+})
+
+```
+
+### County summary
+
+
+
+```{r}
+import_files <- function() {
+  source_files <- fs::dir_ls("data", glob = "*.rds")
+  fs::file_copy(source_files, new_path = "./dashboard", overwrite = TRUE)
+}
+```
+
+
