@@ -3,7 +3,21 @@ library(readr)
 
 model <- read_rds("model.rds")
 hospitals <- read_rds("hospitals.rds")
-hospital_list <- read_rds("hospital_list.rds")
+hospital_list <- read_rds("hospital_locations.rds")
+
+#' Get the state's summarized information
+#' @get /summary
+#' @param state Two letter abbriviation of the state
+function(state = "MS") {
+  st_name <- toupper(state)
+  state_data <- hospitals[hospitals$state == st_name, ]
+  data.frame(
+    population = sum(state_data$population),
+    hospitals = sum(state_data$hospitals),
+    counties = nrow(state_data),
+    underserved = nrow(state_data[state_data$result == -1, ])
+  )
+}
 
 #' Prediction of number of hospitals based on population
 #' @get /model
@@ -29,23 +43,6 @@ function(state = "MS") {
   hospital_list[hospital_list$state == st_name, 2:3]
 }
 
-#' Get the state's summarized information
-#' @get /summary
-#' @param state Two letter abbriviation of the state
-function(state = "MS") {
-  st_name <- toupper(state)
-  state_data <- hospitals[hospitals$state == st_name, ]
-  data.frame(
-    population = sum(state_data$population),
-    hospitals = sum(state_data$hospitals),
-    counties = nrow(state_data),
-    underserved = nrow(state_data[state_data$result == -1, ])
-  )
-}
-
-import_files <- function() {
-  source_files <- fs::dir_ls("data", glob = "*.rds")
-  fs::file_copy(source_files, new_path = "./api", overwrite = TRUE)
-}
+# setwd("~/access-to-care/api")
 # myapi <- plumber::plumb("plumber.R")
 # myapi$run()

@@ -116,6 +116,17 @@ county_hospitals
 ```
 
 ```{r}
+
+path("..","data", c("county_hospitals.rds", "hospital_locations.rds")) %>%
+  file_copy("../dashboard")
+
+path("..","data", c("model.rds", "hospitals.rds", "hospital_locations.rds")) %>%
+  file_copy("../api")
+
+```
+
+
+```{r}
 states <- county_hospitals %>%
   group_by(state) %>%
   summarise() %>%
