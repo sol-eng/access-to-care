@@ -17,7 +17,6 @@ params:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = params$printcode)
 
-library(flexdashboard)
 library(dplyr)
 library(readr)
 library(purrr)

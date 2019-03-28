@@ -119,13 +119,13 @@ county_hospitals
 library(fs)
 
 path("..","data", c("county_hospitals.rds", "hospital_locations.rds")) %>%
-  file_copy("../dashboard", overwrite = TRUE)
+  file_copy("../flexdashboard", overwrite = TRUE)
 
 path("..","data", c("model.rds", "hospitals.rds", "hospital_locations.rds")) %>%
-  file_copy("../RMarkdown", overwrite = TRUE)
+  file_copy("../RMarkdown-html", overwrite = TRUE)
 
 path("..","data", c("model.rds", "hospitals.rds", "hospital_locations.rds")) %>%
-  file_copy("../api", overwrite = TRUE)
+  file_copy("../plumber-api", overwrite = TRUE)
 
 ```
 
