@@ -1,16 +1,27 @@
 ---
-title: "Access to care"
+title: "Access to Care Analysis"
 output: html_notebook
 ---
 
-```{r}
+```{r, include = FALSE}
 library(tidyverse)
 library(rlang)
 library(leaflet)
 ```
 
-```{r}
+```{r, eval = FALSE}
+library(tidyverse)
+library(rlang)
+library(leaflet)
+```
+
+```{r, echo = FALSE}
 hospitals <- read_csv("../data/hospital_list.csv")
+```
+
+
+```{r}
+
 hospitals
 ```
 
@@ -131,100 +142,6 @@ path("..","data", c("model.rds", "hospitals.rds", "hospital_locations.rds")) %>%
   file_copy("../plumber-api", overwrite = TRUE)
 
 ```
-
-
-```{r}
-states <- county_hospitals %>%
-  group_by(state) %>%
-  summarise() %>%
-  pull()
-
-```
-
-
-```{r}
-
-under <- "#CC79A7"
-over <- "#0072B2"
-at_level <- "#008b00"
-hospital_color <- "#F0E442"
-st <- c("LA")
-#st <- states
-include <- c(-1, 1, 0)
-add_hospitals <- 0
-
-initial_map <- leaflet() %>%
-  addProviderTiles(providers$CartoDB) %>%
-  addLegend("bottomright", 
-            color  = c(under,over ,at_level, hospital_color), 
-            labels = c("Less hopitals than expected",
-                       "More hospitals than expected", "Within Range", 
-                       "Hospital Location"), 
-            title  = "Legend",opacity = 0.5)
-
-locations <- hospital_locations %>%
-  filter(state %in% st) %>%
-  select(longitude, latitude) %>%
-  mutate_all(round, 3) %>%
-  count(longitude, latitude) %>%
-  mutate(popup = paste0("Hospitals: ", n))
-
-counties <- county_hospitals %>% 
-  filter(state %in% st,
-         result %in% include) %>%
-  mutate(popup = paste0("<b>", county, "</b>",
-                        "<br/>Population: ", prettyNum(population, big.mark = ","), 
-                        "<br/>Hospitals: ", hospitals,
-                        "<br/>Expected: ", fit
-                        )) %>%  
-  mutate(color = case_when(
-    result ==  0  ~ at_level,
-    result ==  1  ~ over,
-    result == -1  ~ under
-  )) 
-
-county_map <- counties %>%
-  transpose() %>%
-  map(~{
-    county <- .x
-     transpose(county$data)  %>%
-       map(~list(
-         data = .x$data, 
-         color = county$color,
-         popup = county$popup
-         ))
-    }) %>%
-  flatten() %>%
-  reduce(
-    ~ addPolygons(.x, 
-                  lng = .y$data$long, 
-                  lat = .y$data$lat, 
-                  color = .y$color, 
-                  popup = .y$popup,
-                  weight = 1, fillOpacity = 0.3), 
-    .init = initial_map)  
-
-
-if(add_hospitals == 1) {
-  county_map <- county_map %>%
-    addCircleMarkers(
-      lng = locations$longitude, 
-      lat = locations$latitude,
-      radius = 1.5 *locations$n,
-      popup = locations$popup,
-      fillColor = hospital_color, color = "gray", 
-      fillOpacity = 0.7,weight = 1)
-  } 
-
-county_map
-  
-```
-
-
-
-
-
-
 
 
 
