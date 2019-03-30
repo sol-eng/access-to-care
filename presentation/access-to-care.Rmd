@@ -1,0 +1,75 @@
+---
+title: "Access to Care"
+author: "RStudio"
+output:
+  xaringan::moon_reader:
+    css: "include/presentation.css"
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.width = 9, fig.height = 7, fig.align = "center")
+
+library(dplyr)
+library(ggplot2)
+library(readr)
+library(usmap)
+library(DT)
+
+model <- read_rds("model.rds")
+county_hospitals <- read_rds("county_hospitals.rds") %>%
+  inner_join(statepop, by = c("state" = "abbr")) 
+```
+
+## County population vs hospitals
+
+```{r}
+county_hospitals %>%
+  ggplot() +
+  geom_point(aes(hospitals, population), color = "#E69F00", alpha = 0.5) +
+  scale_y_continuous(breaks = 0:10 * 1000000, labels = paste0(0:10, "M")) +
+  theme_minimal() 
+```
+
+---
+
+## Model
+
+```{r}
+summary(model)
+```
+
+---
+
+## Overlay the model
+
+
+```{r}
+bounds <- county_hospitals %>%
+  summarise(mi = min(population), mx = max(population)) %>%
+  as.numeric()
+
+preds <- predict(
+  model, 
+  data.frame(population = bounds),
+  interval = "prediction")
+
+county_hospitals %>% 
+  group_by(population, hospitals) %>%
+  summarise() %>%
+  ggplot() +
+    geom_point(aes(hospitals, population), color = "#E69F00", alpha = 0.5) +
+    scale_y_continuous(breaks = 0:10 * 1000000, labels = paste0(0:10, "M")) +
+    geom_segment(x = preds[1,2], y = bounds[1], 
+                 xend = preds[2,2], yend = bounds[2], 
+                 color = "#009E73") +
+    geom_segment(x = preds[1,3], y = bounds[1], 
+                 xend = preds[2,3], yend = bounds[2], 
+                 color = "#CC79A7") +
+    theme_minimal()
+```
+
+

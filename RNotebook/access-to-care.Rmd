@@ -132,6 +132,9 @@ library(fs)
 path("..","data", c("county_hospitals.rds", "hospital_locations.rds", "model.rds")) %>%
   file_copy("../flexdashboard", overwrite = TRUE)
 
+path("..","data", c("county_hospitals.rds", "hospital_locations.rds", "model.rds")) %>%
+  file_copy("../presentation", overwrite = TRUE)
+
 path("..","data", c("county_hospitals.rds", "hospital_locations.rds")) %>%
   file_copy("../RMarkdown-html", overwrite = TRUE)
 
