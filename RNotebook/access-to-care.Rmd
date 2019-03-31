@@ -147,5 +147,9 @@ path("..","data", c("model.rds", "hospitals.rds", "hospital_locations.rds")) %>%
 path("..","data", c("model.rds", "county_hospitals.rds")) %>%
   file_copy("../powerpoint", overwrite = TRUE)
 
+path("..","data", c("model.rds", "county_hospitals.rds")) %>%
+  file_copy("../powerpoint-state", overwrite = TRUE)
+
+
 ```
 
