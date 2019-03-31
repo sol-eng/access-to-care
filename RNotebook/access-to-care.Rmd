@@ -144,26 +144,8 @@ path("..","data", c("county_hospitals.rds", "hospital_locations.rds")) %>%
 path("..","data", c("model.rds", "hospitals.rds", "hospital_locations.rds")) %>%
   file_copy("../plumber-api", overwrite = TRUE)
 
+path("..","data", c("model.rds", "county_hospitals.rds")) %>%
+  file_copy("../powerpoint", overwrite = TRUE)
+
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
