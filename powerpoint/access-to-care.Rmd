@@ -1,7 +1,9 @@
 ---
 title: "Access to Care"
 author: "RStudio"
-output: powerpoint_presentation
+output: 
+  powerpoint_presentation:
+    reference_doc: template.potx
 ---
 
 ```{r setup, include=FALSE}
@@ -18,25 +20,28 @@ county_hospitals <- read_rds("county_hospitals.rds") %>%
   inner_join(statepop, by = c("state" = "abbr")) 
 ```
 
-## County population vs hospitals
+### County population vs hospitals
 
-```{r}
+```{r, fig.width = 12, fig.height = 6}
 county_hospitals %>%
   ggplot() +
   geom_point(aes(hospitals, population), color = "#E69F00", alpha = 0.5) +
   scale_y_continuous(breaks = 0:10 * 1000000, labels = paste0(0:10, "M")) +
-  theme_minimal() 
+  theme_minimal() +
+  labs(title = "There is a positive relationships between the number of hospitals and the population of a given county.")
 ```
 
-## Model
+### Model
 
 ```{r}
-model
+x <- capture.output(summary(model))
+x <- x[x!=""]
+x[2:11]
 ```
 
-## Overlay the model
+### Overlay the model
 
-```{r}
+```{r, fig.width = 12, fig.height = 6}
 bounds <- county_hospitals %>%
   summarise(mi = min(population), mx = max(population)) %>%
   as.numeric()
