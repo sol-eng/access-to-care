@@ -24,7 +24,8 @@ library(fs)
 https://data.medicare.gov/Hospital-Compare/Structural-Measures-Hospital/4hje-vua3
 
 ```{r}
-hospitals_raw <- read_csv("../data/Structural_Measures_-_Hospital.csv")
+hospitals_raw <- read_csv("../data/Structural_Measures_-_Hospital.csv") # for csv file
+#hospitals_raw <- haven::read_sas("../data/Structural_Measures_-_Hospital.sas7bdat") # for SAS file 
 ``` 
 
 ```{r}
