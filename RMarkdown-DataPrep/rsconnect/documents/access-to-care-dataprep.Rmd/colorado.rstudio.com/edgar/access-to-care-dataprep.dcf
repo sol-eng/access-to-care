@@ -1,0 +1,13 @@
+name: access-to-care-dataprep
+title: access-to-care-dataprep
+username: edgar
+account: edgar
+server: colorado.rstudio.com
+hostUrl: https://colorado.rstudio.com/rsc/__api__
+appId: 3318
+bundleId: 31328
+url: https://colorado.rstudio.com/rsc/content/3318/
+when: 1573063272.89362
+asMultiple: FALSE
+asStatic: FALSE
+additionalFiles: config.yml

@@ -92,55 +92,57 @@ hospital_results <- state_hospitals %>%
 
 ## Build state shapes
 
-dir_create("shapes")
-all_paths <- path("shapes", state.abb, ext = "rds") %>%
-  set_names(state.abb)
-
-exist <- file_exists(all_paths)
-
-county_paths <- all_paths[!exist]
-
-imap(
-  county_paths,
-  ~ counties(.y) %>%
-    write_rds(.x)
-)
-
-select_row <- function(x, y) x %% y == 0
-
-extract_coordinates <- function(path, decimals = 2) {
-  state_rds <- readRDS(path)
-  state_rds@polygons %>%
-    map(~ {
-      map(
-        .x@Polygons,
-        ~ tibble(
-          long = .x@coords[, 1],
-          lat = .x@coords[, 2],
-          rn = 1:length(.x@coords[, 1]),
-          sel = select_row(rn, 12)
-        )) %>% 
-        set_names(paste0("s", seq_along(.x@Polygons))) %>%
-        map_df(~.x, .id = "shape_id")}) %>%
-    set_names(state_rds$NAME) %>%
-    map_df(~.x, .id = "county") %>%
-    filter(sel) %>%
-    select(-rn, -sel) %>%
-    mutate(step = row_number())
+get_state_shapes <- function(path = "data/shapes.rds") {
+  ## Should only rebuild if running on a local computer
+  if(Sys.getenv("R_CONFIG_ACTIVE") != "rsconnect")  {
+    dir_create("shapes")
+    all_paths <- path("shapes", state.abb, ext = "rds") %>%
+      set_names(state.abb)
+    exist <- file_exists(all_paths)
+    county_paths <- all_paths[!exist]
+    imap(
+      county_paths,
+      ~ counties(.y) %>%
+        write_rds(.x)
+    )
+    select_row <- function(x, y) x %% y == 0
+    extract_coordinates <- function(path, decimals = 2) {
+      state_rds <- readRDS(path)
+      state_rds@polygons %>%
+        map(~ {
+          map(
+            .x@Polygons,
+            ~ tibble(
+              long = .x@coords[, 1],
+              lat = .x@coords[, 2],
+              rn = 1:length(.x@coords[, 1]),
+              sel = select_row(rn, 12)
+            )) %>% 
+            set_names(paste0("s", seq_along(.x@Polygons))) %>%
+            map_df(~.x, .id = "shape_id")}) %>%
+        set_names(state_rds$NAME) %>%
+        map_df(~.x, .id = "county") %>%
+        filter(sel) %>%
+        select(-rn, -sel) %>%
+        mutate(step = row_number())
+    }
+    county_states <- map_dfr(
+      all_paths,
+      extract_coordinates,
+      .id = "state"
+    ) 
+    shapes <- county_states %>%
+      mutate(
+        county_key = str_to_lower(county),
+        county_key = str_remove_all(county_key, " "),
+        county_key = str_replace_all(county_key, "st. ", "saint")
+      ) 
+    readr::write_rds(shapes, path, compress = "gz")
+    shapes
+  } else {
+    readr::read_rds(path)
+  }
 }
-
-county_states <- map_dfr(
-  all_paths,
-  extract_coordinates,
-  .id = "state"
-) 
-
-shapes <- county_states %>%
-  mutate(
-    county_key = str_to_lower(county),
-    county_key = str_remove_all(county_key, " "),
-    county_key = str_replace_all(county_key, "st. ", "saint")
-  ) 
 
 ## Output - Register PINs inside RStudio Connect
 
@@ -177,7 +179,7 @@ pin(hospitals,
     board = boardname
     )
 
-pin(shapes,
+pin(get_state_shapes(),
      name = paste0(name_prefix, "atc_shapes"),
      board = boardname
      )
