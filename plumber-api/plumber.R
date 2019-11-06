@@ -1,8 +1,19 @@
 library(plumber)
-library(readr)
-model <- read_rds("model.rds")
-hospitals <- read_rds("hospitals.rds")
-hospital_list <- read_rds("hospital_locations.rds")
+library(pins)
+library(usmap)
+
+boardname <- config::get("boardname")
+if(boardname != "local") {
+  board_register(boardname, server = config::get("server"), key = config::get("key")
+  )
+} else {
+  board_register("local")  
+}
+
+model <- pin_get("edgar/atc-model", board = boardname) 
+hospitals <- pin_get("edgar/atc-county_hospitals", board = boardname) %>%
+  inner_join(statepop, by = c("state" = "abbr")) 
+hospital_list <- pin_get("edgar/atc-hospital-locations", board = boardname) 
 
 #* Get the state's summarized information
 #* @get /summary

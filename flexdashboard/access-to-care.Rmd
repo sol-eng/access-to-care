@@ -15,18 +15,26 @@ runtime: shiny
 ```{r setup, include=FALSE}
 library(flexdashboard)
 library(dplyr)
-library(readr)
 library(purrr)
 library(ggplot2)
 library(leaflet)
 library(DT)
 library(usmap)
 library(metricsgraphics)
+library(pins)
 
-county_hospitals <- read_rds("county_hospitals.rds") %>%
+boardname <- config::get("boardname")
+if(boardname != "local") {
+  board_register(boardname, server = config::get("server"), key = config::get("key")
+  )
+} else {
+  board_register("local")  
+}
+hospital_locations <- pin_get("edgar/atc-hospital-locations", board = boardname) 
+county_shapes <- pin_get("edgar/atc_shapes", board = boardname)
+county_hospitals <-  pin_get("edgar/atc-county_hospitals", board = boardname) %>%
   inner_join(statepop, by = c("state" = "abbr")) 
-hospital_locations <- read_rds("hospital_locations.rds") 
-model <- read_rds("model.rds")
+model <- pin_get("edgar/atc-model", board = boardname) 
 
 state_names <- county_hospitals %>%
   group_by(full) %>%
@@ -52,8 +60,12 @@ counties <- function(df, st, include) {
     mutate(color = case_when(
       result ==  0  ~ at_level,
       result ==  1  ~ over,
-      result == -1  ~ under
-    ))} 
+      result == -1  ~ under)
+      ) %>%
+  select(- county) %>%
+  left_join(county_shapes, by = c("state", "county_key")) %>%
+  filter(!is.na(county))
+  } 
 ```
 
 
@@ -140,47 +152,38 @@ initial_map <- leaflet() %>%
 
 
 renderLeaflet({
-county_map <- counties(county_hospitals, input$state, include) %>%
-  transpose() %>%
-  map(~{
-    county <- .x
-     transpose(county$data)  %>%
-       map(~list(
-         data = .x$data, 
-         color = county$color,
-         popup = county$popup
-         ))
-    }) %>%
-  flatten() %>%
+county_map <- counties(county_hospitals, input$state, include)  %>%
+  group_by(county_key, shape_id) %>%
+  group_map(~.x) %>%
   reduce(
     ~ addPolygons(.x, 
-                  lng = .y$data$long, 
-                  lat = .y$data$lat, 
-                  color = .y$color, 
-                  popup = .y$popup,
+                  lng = .y$long, 
+                  lat = .y$lat, 
+                  color = .y$color[[1]], 
+                  popup = .y$popup[[1]],
                   weight = 1, fillOpacity = 0.3), 
     .init = initial_map)  
-
-if(add_hospitals == 1) {
   
-  locations <- hospital_locations %>%
-    inner_join(statepop, by = c("state" = "abbr")) %>%
-    filter(full %in% input$state) %>%
-    select(longitude, latitude) %>%
-    mutate_all(round, 3) %>%
-    count(longitude, latitude) %>%
-    mutate(popup = paste0("Hospitals: ", n))
-  
-  county_map <- county_map %>%
-    addCircleMarkers(
-      lng = locations$longitude, 
-      lat = locations$latitude,
-      radius = 3 *locations$n,
-      popup = locations$popup,
-      fillColor = hospital_color, color = "gray", 
-      fillOpacity = 0.7,weight = 1)
-  } 
-county_map  
+  if(add_hospitals == 1) {
+    
+    locations <- hospital_locations %>%
+      inner_join(statepop, by = c("state" = "abbr")) %>%
+      filter(full %in% input$state) %>%
+      select(longitude, latitude) %>%
+      mutate_all(round, 3) %>%
+      count(longitude, latitude) %>%
+      mutate(popup = paste0("Hospitals: ", n))
+    
+    county_map <- county_map %>%
+      addCircleMarkers(
+        lng = locations$longitude, 
+        lat = locations$latitude,
+        radius = 3 *locations$n,
+        popup = locations$popup,
+        fillColor = hospital_color, color = "gray", 
+        fillOpacity = 0.7,weight = 1)
+    } 
+  county_map  
 })
 ```
 

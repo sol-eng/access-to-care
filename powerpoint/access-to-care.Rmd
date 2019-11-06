@@ -9,15 +9,24 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, fig.width = 9, fig.height = 7, fig.align = "center")
 
+
+
 library(dplyr)
 library(ggplot2)
-library(readr)
 library(usmap)
 library(DT)
+library(pins)
 
-model <- read_rds("model.rds")
-county_hospitals <- read_rds("county_hospitals.rds") %>%
+boardname <- config::get("boardname")
+if(boardname != "local") {
+  board_register(boardname, server = config::get("server"), key = config::get("key")
+  )
+} else {
+  board_register("local")  
+}
+county_hospitals <-  pin_get("edgar/atc-county_hospitals", board = boardname) %>%
   inner_join(statepop, by = c("state" = "abbr")) 
+model <- pin_get("edgar/atc-model", board = boardname) 
 ```
 
 ### County population vs hospitals

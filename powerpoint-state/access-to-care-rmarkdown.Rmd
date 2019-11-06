@@ -77,17 +77,25 @@ library(blastula)
 library(ggplot2)
 library(formattable)
 library(dplyr)
-library(readr)
 library(purrr)
 library(ggplot2)
 library(leaflet)
 library(DT)
 library(usmap)
 library(metricsgraphics)
+library(pins)
 
-county_hospitals <- read_rds("county_hospitals.rds") %>%
+boardname <- config::get("boardname")
+if(boardname != "local") {
+  board_register(boardname, server = config::get("server"), key = config::get("key")
+  )
+} else {
+  board_register("local")  
+}
+hospital_locations <- pin_get("edgar/atc-hospital-locations", board = boardname) 
+county_shapes <- pin_get("edgar/atc_shapes", board = boardname)
+county_hospitals <-  pin_get("edgar/atc-county_hospitals", board = boardname) %>%
   inner_join(statepop, by = c("state" = "abbr")) 
-hospital_locations <- read_rds("hospital_locations.rds") 
 
 state_names <- county_hospitals %>%
   group_by(full) %>%
@@ -113,7 +121,11 @@ counties <- county_hospitals %>%
       result ==  0  ~ at_level,
       result ==  1  ~ over,
       result == -1  ~ under
-    ))
+    )) %>%
+  select(- county) %>%
+  left_join(county_shapes, by = c("state", "county_key")) %>%
+  filter(!is.na(county))
+
 
 ```
 
@@ -129,24 +141,12 @@ A **statistical model using data from across the country** is used to identify t
 
 ```{r, fig.width = 10, fig.height = 6}
 
-cts <- counties %>%
-  transpose() %>%
-  map_df(
-    ~.x$data %>% 
-      transpose() %>% 
-      map_df(
-        ~.x$data %>% 
-          mutate(shape_id = .x$shape_id)) %>%
-      mutate(
-        county = .x$county,
-        color = .x$color,
-        group = paste(county, shape_id)
-        ))
-
-cts_map <- ggplot(cts) +
+cts_map <- counties %>%
+  mutate(group = paste(county, shape_id)) %>%
+  ggplot() +
   geom_polygon(
     aes(long, lat, group = group), 
-    fill = cts$color, 
+    fill = counties$color,
     alpha = 0.7,
     color = "#666666") +
   theme_minimal() +
@@ -154,9 +154,7 @@ cts_map <- ggplot(cts) +
     axis.title = element_blank(), 
     axis.text = element_blank(), 
     panel.grid = element_blank(),
-    panel.grid.major = element_blank()) +
-  labs(title = "Breakdown of counties and their status based on county population compared to the number of hospitals
-")
+    panel.grid.major = element_blank()) 
 
 cts_map
 ```

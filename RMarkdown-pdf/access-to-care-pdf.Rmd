@@ -29,16 +29,19 @@ library(DT)
 library(usmap)
 library(metricsgraphics)
 library(webshot)
+library(pins)
 
-county_hospitals <- read_rds("county_hospitals.rds") %>%
+boardname <- config::get("boardname")
+if(boardname != "local") {
+  board_register(boardname, server = config::get("server"), key = config::get("key")
+  )
+} else {
+  board_register("local")  
+}
+hospital_locations <- pin_get("edgar/atc-hospital-locations", board = boardname) 
+county_shapes <- pin_get("edgar/atc_shapes", board = boardname)
+county_hospitals <-  pin_get("edgar/atc-county_hospitals", board = boardname) %>%
   inner_join(statepop, by = c("state" = "abbr")) 
-hospital_locations <- read_rds("hospital_locations.rds") 
-model <- read_rds("model.rds")
-
-state_names <- county_hospitals %>%
-  group_by(full) %>%
-  summarise() %>%
-  pull()
 
 under <- "#CC79A7"
 over <- "#0072B2"
@@ -59,7 +62,10 @@ counties <- county_hospitals %>%
       result ==  0  ~ at_level,
       result ==  1  ~ over,
       result == -1  ~ under
-    ))
+    )) %>%
+  select(- county) %>%
+  left_join(county_shapes, by = c("state", "county_key")) %>%
+  filter(!is.na(county))
 
 ```
 
@@ -80,30 +86,27 @@ Breakdown of counties and their status based on county population compared to th
 
 ```{r, fig.width = 6, fig.height = 6}
 initial_map <- leaflet() %>%
-  addProviderTiles(providers$CartoDB) 
+  addProviderTiles(providers$CartoDB) %>%
+  addLegend("bottomright", 
+            color  = c(under,over ,at_level, hospital_color), 
+            labels = c("Less hopitals than expected",
+                       "More hospitals than expected", "Within Range", 
+                       "Hospital Location"), 
+            title  = "Legend",opacity = 0.5)
+
 county_map <- counties %>%
-  transpose() %>%
-  map(~{
-    county <- .x
-     transpose(county$data)  %>%
-       map(~list(
-         data = .x$data, 
-         color = county$color,
-         popup = county$popup
-         ))
-    }) %>%
-  flatten() %>%
+  group_by(county_key, shape_id) %>%
+  group_map(~.x) %>%
   reduce(
     ~ addPolygons(.x, 
-                  lng = .y$data$long, 
-                  lat = .y$data$lat, 
-                  color = .y$color, 
-                  popup = .y$popup,
+                  lng = .y$long, 
+                  lat = .y$lat, 
+                  color = .y$color[[1]], 
+                  popup = .y$popup[[1]],
                   weight = 1, fillOpacity = 0.3), 
     .init = initial_map)  
 
 if(add_hospitals == 1) {
-  
   locations <- hospital_locations %>%
     inner_join(statepop, by = c("state" = "abbr")) %>%
     filter(full %in% params$state) %>%
@@ -122,7 +125,7 @@ if(add_hospitals == 1) {
       fillOpacity = 0.7,weight = 1)
 } 
 
-county_map  
+county_map
 ```
 
 
