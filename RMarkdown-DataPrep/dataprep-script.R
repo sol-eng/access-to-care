@@ -1,9 +1,3 @@
----
-title: "Access to Care Analysis"
-output: html_document
----
-
-```{r}
 library(tidyverse)
 library(rlang)
 library(leaflet)
@@ -15,8 +9,10 @@ library(usmap)
 library(pins)
 library(config)
 
+## Read SAS dataset
 hospitals_raw <- haven::read_sas("data/Structural_Measures_-_Hospital.sas7bdat") 
 
+## Prepare hospital data
 hospitals <- hospitals_raw %>%
   rename_all(str_to_lower) %>%
   rename_all(str_replace_all, " ", "_") %>%
@@ -37,12 +33,10 @@ hospitals <- hospitals_raw %>%
     county_key = str_replace_all(county_key, "st. ", "saint"))  
 
 
+## Prepare location data
 hospital_locations <- hospitals  %>%
   filter(!is.na(longitude)) %>%
   select(state, longitude, latitude)
-
-write_rds(hospital_locations, "data/hospital_locations.rds")
-
 
 population <- usmap::countypop %>%
   mutate(
@@ -75,16 +69,13 @@ state_hospitals <- population %>%
   replace_na(list(hospitals = 0)) 
 
 
+## Fit model
 set.seed(100)
 
 hospital_sample <- state_hospitals %>%
   sample_frac(0.3)
 
-hospital_sample
-
 model <- lm(hospitals ~ population, data = hospital_sample)
-write_rds(model, "data/model.rds")
-summary(model)
 
 predictions <- predict(model, 
                        newdata = state_hospitals, 
@@ -99,7 +90,7 @@ hospital_results <- state_hospitals %>%
     hospitals > upr ~ 1,
     TRUE ~ 0))
 
-write_rds(hospital_results, "data/hospitals.rds")
+## Build state shapes
 
 dir_create("shapes")
 all_paths <- path("shapes", state.abb, ext = "rds") %>%
@@ -127,14 +118,15 @@ extract_coordinates <- function(path, decimals = 2) {
           long = .x@coords[, 1],
           lat = .x@coords[, 2],
           rn = 1:length(.x@coords[, 1]),
-          sel = select_row(rn, 10)
+          sel = select_row(rn, 12)
         )) %>% 
         set_names(paste0("s", seq_along(.x@Polygons))) %>%
         map_df(~.x, .id = "shape_id")}) %>%
     set_names(state_rds$NAME) %>%
     map_df(~.x, .id = "county") %>%
     filter(sel) %>%
-    select(-rn, -sel)
+    select(-rn, -sel) %>%
+    mutate(step = row_number())
 }
 
 county_states <- map_dfr(
@@ -143,11 +135,9 @@ county_states <- map_dfr(
   .id = "state"
 ) 
 
-nested_states <- county_states %>%
-  group_nest(state, county, shape_id) %>%
-  group_nest(state, county)
-
-write_rds(nested_states, "data/shapes.rds", compress = "gz")
+# nested_states <- county_states %>%
+#   group_nest(state, county, shape_id) %>%
+#   group_nest(state, county)
 
 shapes <- county_states %>%
   mutate(
@@ -156,47 +146,52 @@ shapes <- county_states %>%
     county_key = str_replace_all(county_key, "st. ", "saint")
   ) 
 
-county_hospitals_nested <- hospital_results  %>%
-  select(- county) %>%
-  left_join(shapes, by = c("state", "county_key")) %>%
-  filter(!is.na(county))
-
-write_rds(county_hospitals_nested, "data/county_hospitals.rds", compress = "gz")
-
-county_hospitals <- hospital_results  %>%
-  select(- county) %>%
-  left_join(shapes, by = c("state", "county_key")) %>%
-  filter(!is.na(county))
+# county_hospitals_nested <- hospital_results  %>%
+#   select(- county) %>%
+#   left_join(shapes, by = c("state", "county_key")) %>%
+#   filter(!is.na(county))
+# 
+# county_hospitals <- hospital_results  %>%
+#   select(- county) %>%
+#   left_join(shapes, by = c("state", "county_key")) %>%
+#   filter(!is.na(county))
 
 ## Output - Register PINs inside RStudio Connect
 
-board_register("rsconnect", 
-               server = "https://colorado.rstudio.com/rsc",
-               key = config::get("rsckey")
-               ) 
+boardname <- config::get("boardname")
 
-pin(county_hospitals, 
-    name = "atc-county_hospitals", board = "rsconnect"
+if(boardname != "local") {
+  board_register(boardname,
+                 server = config::get("server"),
+                 key = config::get("key")
+  )
+  name_prefix <- ""
+} else {
+  board_register("local")  
+  name_prefix <- paste0("edgar/")
+}
+
+pin(hospital_results,
+    name = paste0(name_prefix, "atc-county_hospitals"),
+    board = boardname
     )
 
-pin(model, 
-    name = "atc-model", 
-    board = "rsconnect"
+pin(model,
+    name = paste0(name_prefix, "atc-model"),
+    board = boardname
     )
-pin(hospital_locations, 
-    "atc-hospital-locations", 
-    board = "rsconnect")
 
-pin(hospitals, 
-    "atc-hospitals", 
-    board = "rsconnect"
+pin(hospital_locations,
+    name = paste0(name_prefix, "atc-hospital-locations"),
+    board = boardname
     )
-pint(county_states, 
-     name = "atc_shapes", 
-     board = "rsconnect"
+
+pin(hospitals,
+    name = paste0(name_prefix, "atc-hospitals"),
+    board = boardname
+    )
+
+pin(shapes,
+     name = paste0(name_prefix, "atc_shapes"),
+     board = boardname
      )
-glimpse(county_states, width = 100)
-
-
-```
-
