@@ -1,15 +1,22 @@
 ---
 title: "Access to Hospital Care Dashboard"
-output: 
-  flexdashboard::flex_dashboard:
-    orientation: rows
-    social: ["linkedin","twitter","menu"]
-    navbar:
-      - { title: "About",href: "https://solutions.rstudio.com/tour/access_to_care/", align: right }
-    theme: lumen
-    source_code: embed
-    logo: RStudio1.png
+resource_files:
+- config.yml
 runtime: shiny
+output:
+  flexdashboard::flex_dashboard:
+    logo: RStudio1.png
+    navbar:
+    - align: right
+      href: https://solutions.rstudio.com/tour/access_to_care/
+      title: About
+    orientation: rows
+    social:
+    - linkedin
+    - twitter
+    - menu
+    source_code: embed
+    theme: lumen
 ---
 
 ```{r setup, include=FALSE}
@@ -65,7 +72,13 @@ counties <- function(df, st, include) {
   select(- county) %>%
   left_join(county_shapes, by = c("state", "county_key")) %>%
   filter(!is.na(county))
-  } 
+} 
+
+state_data <- function(df, st, include) {
+  df %>% 
+    filter(full %in% st,
+           result %in% include) 
+  }
 ```
 
 
@@ -89,7 +102,7 @@ selectInput(
 
 ```{r}
 renderValueBox({
-  counties(county_hospitals, input$state, include) %>%
+  state_data(county_hospitals, input$state, include) %>%
     summarise(x = round(sum(population)/1000000, digits=0)) %>%
     mutate(x = paste0(prettyNum(x, big.mark = ","), "M") ) %>%
     pull(x) %>%
@@ -101,7 +114,7 @@ renderValueBox({
 
 ```{r}
 renderValueBox({
-  counties(county_hospitals, input$state, include) %>%
+  state_data(county_hospitals, input$state, include) %>%
     summarise(sum(hospitals)) %>%
     pull() %>%
     valueBox(icon="fa-ambulance",color="#E69F00")
@@ -112,7 +125,7 @@ renderValueBox({
 
 ```{r}
 renderValueBox({
-  counties(county_hospitals, input$state, include) %>%
+  state_data(county_hospitals, input$state, include) %>%
     nrow() %>%
     valueBox(icon="fa-map-marker",color="#009E73")
   })
@@ -123,7 +136,7 @@ renderValueBox({
 
 ```{r}
 renderValueBox({
-  counties(county_hospitals, input$state, include) %>%
+  state_data(county_hospitals, input$state, include) %>%
     filter(result == -1) %>%
     nrow() %>%
     valueBox(icon="fa-h-square", color="#CC79A7")
@@ -192,7 +205,7 @@ county_map <- counties(county_hospitals, input$state, include)  %>%
 
 ```{r}
 renderDataTable({
-  counties(county_hospitals, input$state, include) %>%
+  state_data(county_hospitals, input$state, include) %>%
     select(county, population, hospitals, expected = fit) %>%
     datatable(class = 'cell-border stripe')
 })

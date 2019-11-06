@@ -1,0 +1,12 @@
+name: access-to-care
+title: access-to-care
+username: edgar
+account: edgar
+server: colorado.rstudio.com
+hostUrl: https://colorado.rstudio.com/rsc/__api__
+appId: 3321
+bundleId: 31344
+url: https://colorado.rstudio.com/rsc/content/3321/
+when: 1573076714.7236
+asMultiple: FALSE
+asStatic: FALSE
