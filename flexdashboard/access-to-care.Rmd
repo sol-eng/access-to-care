@@ -22,11 +22,20 @@ library(leaflet)
 library(DT)
 library(usmap)
 library(metricsgraphics)
+library(pins)
 
-county_hospitals <- read_rds("county_hospitals.rds") %>%
+board_register("rsconnect", 
+               server = "https://colorado.rstudio.com/rsc",
+               key = config::get("rsckey")
+               ) 
+
+pinned_hospitals <- pin_get("edgar/atc-county_hospitals", board = "rsconnect") 
+
+county_hospitals <- pinned_hospitals %>%
   inner_join(statepop, by = c("state" = "abbr")) 
-hospital_locations <- read_rds("hospital_locations.rds") 
-model <- read_rds("model.rds")
+
+hospital_locations <- pin_get("edgar/atc-hospital-locations", board = "rsconnect")
+model <- pin_get("edgar/atc-model", board = "rsconnect") 
 
 state_names <- county_hospitals %>%
   group_by(full) %>%
@@ -140,47 +149,38 @@ initial_map <- leaflet() %>%
 
 
 renderLeaflet({
-county_map <- counties(county_hospitals, input$state, include) %>%
-  transpose() %>%
-  map(~{
-    county <- .x
-     transpose(county$data)  %>%
-       map(~list(
-         data = .x$data, 
-         color = county$color,
-         popup = county$popup
-         ))
-    }) %>%
-  flatten() %>%
+county_map <- counties(county_hospitals, input$state, include)  %>%
+  group_by(county_key) %>%
+  group_map(~.x) %>%
   reduce(
     ~ addPolygons(.x, 
-                  lng = .y$data$long, 
-                  lat = .y$data$lat, 
-                  color = .y$color, 
-                  popup = .y$popup,
+                  lng = .y$long, 
+                  lat = .y$lat, 
+                  color = .y$color[[1]], 
+                  popup = .y$popup[[1]],
                   weight = 1, fillOpacity = 0.3), 
     .init = initial_map)  
-
-if(add_hospitals == 1) {
   
-  locations <- hospital_locations %>%
-    inner_join(statepop, by = c("state" = "abbr")) %>%
-    filter(full %in% input$state) %>%
-    select(longitude, latitude) %>%
-    mutate_all(round, 3) %>%
-    count(longitude, latitude) %>%
-    mutate(popup = paste0("Hospitals: ", n))
-  
-  county_map <- county_map %>%
-    addCircleMarkers(
-      lng = locations$longitude, 
-      lat = locations$latitude,
-      radius = 3 *locations$n,
-      popup = locations$popup,
-      fillColor = hospital_color, color = "gray", 
-      fillOpacity = 0.7,weight = 1)
-  } 
-county_map  
+  if(add_hospitals == 1) {
+    
+    locations <- hospital_locations %>%
+      inner_join(statepop, by = c("state" = "abbr")) %>%
+      filter(full %in% input$state) %>%
+      select(longitude, latitude) %>%
+      mutate_all(round, 3) %>%
+      count(longitude, latitude) %>%
+      mutate(popup = paste0("Hospitals: ", n))
+    
+    county_map <- county_map %>%
+      addCircleMarkers(
+        lng = locations$longitude, 
+        lat = locations$latitude,
+        radius = 3 *locations$n,
+        popup = locations$popup,
+        fillColor = hospital_color, color = "gray", 
+        fillOpacity = 0.7,weight = 1)
+    } 
+  county_map  
 })
 ```
 
