@@ -1,8 +1,13 @@
 library(plumber)
 library(readr)
-model <- read_rds("model.rds")
-hospitals <- read_rds("hospitals.rds")
-hospital_list <- read_rds("hospital_locations.rds")
+library(pins)
+board_register("rsconnect", 
+               server = "https://colorado.rstudio.com/rsc",
+               key = config::get("rsckey")
+) 
+county_hospitals <- pin_get("edgar/atc-county_hospitals", board = "rsconnect") 
+hospital_locations <- pin_get("edgar/atc-hospital-locations", board = "rsconnect") 
+model <- pin_get("edgar/atc-model", board = "rsconnect") 
 
 #* Get the state's summarized information
 #* @get /summary

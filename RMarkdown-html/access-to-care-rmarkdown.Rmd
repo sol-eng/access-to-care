@@ -31,12 +31,9 @@ board_register("rsconnect",
                server = "https://colorado.rstudio.com/rsc",
                key = config::get("rsckey")
                ) 
-
 pinned_hospitals <- pin_get("edgar/atc-county_hospitals", board = "rsconnect") 
-
 county_hospitals <- pinned_hospitals %>%
   inner_join(statepop, by = c("state" = "abbr")) 
-
 hospital_locations <- pin_get("edgar/atc-hospital-locations", board = "rsconnect") 
 
 under <- "#CC79A7"

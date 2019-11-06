@@ -121,7 +121,7 @@ extract_coordinates <- function(path, decimals = 2) {
           long = .x@coords[, 1],
           lat = .x@coords[, 2],
           rn = 1:length(.x@coords[, 1]),
-          sel = select_row(rn, 10)
+          sel = select_row(rn, 8)
         )) %>% 
         set_names(paste0("s", seq_along(.x@Polygons))) %>%
         map_df(~.x, .id = "shape_id")}) %>%
