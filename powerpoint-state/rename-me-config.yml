@@ -1,0 +1,6 @@
+default:
+  boardname: local
+rsconnect:
+  boardname: rsconnect
+  server: 
+  key: 
