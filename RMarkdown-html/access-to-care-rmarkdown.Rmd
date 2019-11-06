@@ -25,15 +25,20 @@ library(leaflet)
 library(DT)
 library(usmap)
 library(metricsgraphics)
+library(pins)
 
-county_hospitals <- read_rds("county_hospitals.rds") %>%
+
+board_register("rsconnect", 
+               server = "https://colorado.rstudio.com/rsc",
+               key = config::get("rsckey")
+               ) 
+
+pinned_hospitals <- pin_get("edgar/atc-county_hospitals", board = "rsconnect") 
+
+county_hospitals <- pinned_hospitals %>%
   inner_join(statepop, by = c("state" = "abbr")) 
-hospital_locations <- read_rds("hospital_locations.rds") 
 
-state_names <- county_hospitals %>%
-  group_by(full) %>%
-  summarise() %>%
-  pull()
+hospital_locations <- pin_get("edgar/atc-hospital-locations", board = "rsconnect") 
 
 under <- "#CC79A7"
 over <- "#0072B2"
@@ -84,28 +89,18 @@ initial_map <- leaflet() %>%
             title  = "Legend",opacity = 0.5)
 
 county_map <- counties %>%
-  transpose() %>%
-  map(~{
-    county <- .x
-     transpose(county$data)  %>%
-       map(~list(
-         data = .x$data, 
-         color = county$color,
-         popup = county$popup
-         ))
-    }) %>%
-  flatten() %>%
+  group_by(county_key) %>%
+  group_map(~.x) %>%
   reduce(
     ~ addPolygons(.x, 
-                  lng = .y$data$long, 
-                  lat = .y$data$lat, 
-                  color = .y$color, 
-                  popup = .y$popup,
+                  lng = .y$long, 
+                  lat = .y$lat, 
+                  color = .y$color[[1]], 
+                  popup = .y$popup[[1]],
                   weight = 1, fillOpacity = 0.3), 
     .init = initial_map)  
 
 if(add_hospitals == 1) {
-  
   locations <- hospital_locations %>%
     inner_join(statepop, by = c("state" = "abbr")) %>%
     filter(full %in% params$state) %>%
@@ -134,7 +129,9 @@ Here is the county level data used in this report
 
 ```{r}
 display_table <- counties %>%
-  select(county, population,hospitals, fit, result) %>%
+  group_by(county, population,hospitals, fit, result) %>%
+  summarise() %>%
+  ungroup() %>%
   mutate(result = case_when(
       result ==  0  ~ "Acceptable",
       result ==  1  ~ "Above",
@@ -166,26 +163,14 @@ library(formattable)
 report_name <- Sys.getenv("RSC_REPORT_NAME")
 report_url <- Sys.getenv("RSC_REPORT_URL")  
 subscription_url <- Sys.getenv("RSC_REPORT_SUBSCRIPTION_URL")
-  
 
-cts <- counties %>%
-  transpose() %>%
-  map_df(
-    ~.x$data %>% 
-      transpose() %>% 
-      map_df(
-        ~.x$data %>% 
-          mutate(shape_id = .x$shape_id)) %>%
-      mutate(
-        county = .x$county,
-        color = .x$color,
-        group = paste(county, shape_id)
-        ))
 
-cts_map <- ggplot(cts) +
+cts_map <- counties %>%
+  mutate(group = paste(county, shape_id)) %>%
+  ggplot() +
   geom_polygon(
     aes(long, lat, group = group), 
-    fill = cts$color, 
+    fill = counties$color,
     alpha = 0.7,
     color = "#666666") +
   theme_minimal() +

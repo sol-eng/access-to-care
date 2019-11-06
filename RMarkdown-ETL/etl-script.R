@@ -170,7 +170,8 @@ board_register("rsconnect",
                ) 
 
 pin(county_hospitals, 
-    name = "atc-county_hospitals", board = "rsconnect"
+    name = "atc-county_hospitals", 
+    board = "rsconnect"
     )
 
 pin(model, 
@@ -189,5 +190,25 @@ pint(county_states,
      name = "atc_shapes", 
      board = "rsconnect"
      )
-glimpse(county_states, width = 100)
 
+## Copy config file
+
+library(fs)
+
+map(
+  c("../flexdashboard", "../presentation", 
+    "../RMarkdown-html", "../RMarkdown-pdf", 
+    "../plumber-api", "../powerpoint", 
+    "../powerpoint-state"
+    ),
+  ~ file_copy("config.yml", .x, overwrite = TRUE)
+)
+
+# map(
+#   c("../flexdashboard", "../presentation", 
+#     "../RMarkdown-html", "../RMarkdown-pdf", 
+#     "../plumber-api", "../powerpoint", 
+#     "../powerpoint-state"
+#   ),
+#   ~ writeLines("config.yml", file.path(.x, ".gitignore"))
+# )
