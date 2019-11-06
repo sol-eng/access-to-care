@@ -135,26 +135,12 @@ county_states <- map_dfr(
   .id = "state"
 ) 
 
-# nested_states <- county_states %>%
-#   group_nest(state, county, shape_id) %>%
-#   group_nest(state, county)
-
 shapes <- county_states %>%
   mutate(
     county_key = str_to_lower(county),
     county_key = str_remove_all(county_key, " "),
     county_key = str_replace_all(county_key, "st. ", "saint")
   ) 
-
-# county_hospitals_nested <- hospital_results  %>%
-#   select(- county) %>%
-#   left_join(shapes, by = c("state", "county_key")) %>%
-#   filter(!is.na(county))
-# 
-# county_hospitals <- hospital_results  %>%
-#   select(- county) %>%
-#   left_join(shapes, by = c("state", "county_key")) %>%
-#   filter(!is.na(county))
 
 ## Output - Register PINs inside RStudio Connect
 

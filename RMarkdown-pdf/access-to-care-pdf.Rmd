@@ -31,17 +31,17 @@ library(metricsgraphics)
 library(webshot)
 library(pins)
 
-board_register("rsconnect", 
-               server = "https://colorado.rstudio.com/rsc",
-               key = config::get("rsckey")
-               ) 
-
-pinned_hospitals <- pin_get("edgar/atc-county_hospitals", board = "rsconnect") 
-
-county_hospitals <- pinned_hospitals %>%
+boardname <- config::get("boardname")
+if(boardname != "local") {
+  board_register(boardname, server = config::get("server"), key = config::get("key")
+  )
+} else {
+  board_register("local")  
+}
+hospital_locations <- pin_get("edgar/atc-hospital-locations", board = boardname) 
+county_shapes <- pin_get("edgar/atc_shapes", board = boardname)
+county_hospitals <-  pin_get("edgar/atc-county_hospitals", board = boardname) %>%
   inner_join(statepop, by = c("state" = "abbr")) 
-
-hospital_locations <- pin_get("edgar/atc-hospital-locations", board = "rsconnect") 
 
 under <- "#CC79A7"
 over <- "#0072B2"
@@ -62,7 +62,10 @@ counties <- county_hospitals %>%
       result ==  0  ~ at_level,
       result ==  1  ~ over,
       result == -1  ~ under
-    ))
+    )) %>%
+  select(- county) %>%
+  left_join(county_shapes, by = c("state", "county_key")) %>%
+  filter(!is.na(county))
 
 ```
 
@@ -92,7 +95,7 @@ initial_map <- leaflet() %>%
             title  = "Legend",opacity = 0.5)
 
 county_map <- counties %>%
-  group_by(county_key) %>%
+  group_by(county_key, shape_id) %>%
   group_map(~.x) %>%
   reduce(
     ~ addPolygons(.x, 

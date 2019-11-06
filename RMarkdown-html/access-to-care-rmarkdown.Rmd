@@ -62,8 +62,7 @@ counties <- county_hospitals %>%
     )) %>%
   select(- county) %>%
   left_join(county_shapes, by = c("state", "county_key")) %>%
-  filter(!is.na(county)) %>%
-  group_by(county_key)
+  filter(!is.na(county))
 
 ```
 

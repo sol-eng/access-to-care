@@ -1,13 +1,19 @@
 library(plumber)
-library(readr)
 library(pins)
-board_register("rsconnect", 
-               server = "https://colorado.rstudio.com/rsc",
-               key = config::get("rsckey")
-) 
-county_hospitals <- pin_get("edgar/atc-county_hospitals", board = "rsconnect") 
-hospital_locations <- pin_get("edgar/atc-hospital-locations", board = "rsconnect") 
-model <- pin_get("edgar/atc-model", board = "rsconnect") 
+library(usmap)
+
+boardname <- config::get("boardname")
+if(boardname != "local") {
+  board_register(boardname, server = config::get("server"), key = config::get("key")
+  )
+} else {
+  board_register("local")  
+}
+
+model <- pin_get("edgar/atc-model", board = boardname) 
+hospitals <- pin_get("edgar/atc-county_hospitals", board = boardname) %>%
+  inner_join(statepop, by = c("state" = "abbr")) 
+hospital_list <- pin_get("edgar/atc-hospital-locations", board = boardname) 
 
 #* Get the state's summarized information
 #* @get /summary
