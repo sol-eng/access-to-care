@@ -30,18 +30,27 @@ library(usmap)
 library(metricsgraphics)
 library(pins)
 
-boardname <- config::get("boardname")
-if(boardname != "local") {
-  board_register(boardname, server = config::get("server"), key = config::get("key"))
+if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
+  boardname <- "rsconnect"
+  board_register_rsconnect(
+    server = Sys.getenv("connect_url"),
+    key = Sys.getenv("connect_key")
+    )
 } else {
-  board_register("local")  
+  boardname <- "local"
+  board_register(boardname)  
 }
+```
+
+```{r getdata, include=FALSE}
 hospital_locations <- pin_get("edgar/atc-hospital-locations", board = boardname) 
 county_shapes <- pin_get("edgar/atc_shapes", board = boardname)
 county_hospitals <-  pin_get("edgar/atc-county_hospitals", board = boardname) %>%
   inner_join(statepop, by = c("state" = "abbr")) 
-model <- pin_get("edgar/atc-model", board = boardname) 
+model <- pin_get("edgar/atc-model", board = boardname)
+```
 
+```{r, include=FALSE}
 state_names <- county_hospitals %>%
   group_by(full) %>%
   summarise() %>%
@@ -228,7 +237,7 @@ renderMetricsgraphics({
 
 ### Fitted a model to predict how many hospitals should be in a county
 
-```{r}
+```{r create-plot, eval = FALSE}
 bounds <- county_hospitals %>%
   summarise(mi = min(population), mx = max(population)) %>%
   as.numeric()
@@ -238,20 +247,28 @@ preds <- predict(
   data.frame(population = bounds),
   interval = "prediction")
 
+set.seed(100)
+
 county_hospitals %>% 
-  group_by(population, hospitals) %>%
-  summarise() %>%
   ggplot() +
     geom_point(aes(hospitals, population), color = "#E69F00", alpha = 0.5) +
     scale_y_continuous(breaks = 0:10 * 1000000, labels = paste0(0:10, "M")) +
-    geom_segment(x = preds[1,2], y = bounds[1], 
-                 xend = preds[2,2], yend = bounds[2], 
+    geom_segment(x = preds[1,2], y = bounds[1],
+                 xend = preds[2,2], yend = bounds[2],
                  color = "#009E73") +
-    geom_segment(x = preds[1,3], y = bounds[1], 
-                 xend = preds[2,3], yend = bounds[2], 
+    geom_segment(x = preds[1,3], y = bounds[1],
+                 xend = preds[2,3], yend = bounds[2],
                  color = "#CC79A7") +
     theme_minimal()
+```
 
+```{r printplot}
+knitr::include_graphics("model.png")
+
+```
+
+
+```{r}
 sm <- summary(model)
 ```
 

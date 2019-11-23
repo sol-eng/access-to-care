@@ -5,8 +5,8 @@ account: edgar
 server: colorado.rstudio.com
 hostUrl: https://colorado.rstudio.com/rsc/__api__
 appId: 3321
-bundleId: 31344
-url: https://colorado.rstudio.com/rsc/content/3321/
-when: 1573076714.7236
+bundleId: 31865
+url: https://colorado.rstudio.com/rsc/access-to-care/dashboard/
+when: 1574547312.79232
 asMultiple: FALSE
 asStatic: FALSE
