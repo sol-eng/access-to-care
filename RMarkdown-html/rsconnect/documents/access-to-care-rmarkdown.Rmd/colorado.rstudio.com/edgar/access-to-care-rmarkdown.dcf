@@ -1,0 +1,13 @@
+name: access-to-care-rmarkdown
+title: access-to-care-rmarkdown
+username: edgar
+account: edgar
+server: colorado.rstudio.com
+hostUrl: https://colorado.rstudio.com/rsc/__api__
+appId: 3657
+bundleId: 31864
+url: https://colorado.rstudio.com/rsc/content/3657/
+when: 1574543160.57305
+asMultiple: TRUE
+asStatic: FALSE
+ignoredFiles: config.yml

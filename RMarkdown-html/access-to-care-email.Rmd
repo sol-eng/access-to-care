@@ -1,0 +1,45 @@
+---
+title: "Access to Care by State"
+output: blastula::blastula_email
+---
+
+<img src="RStudio1.png"/>
+
+#  Access to Care 
+## `r params$state`
+
+### County Map - Hospital Coverage
+
+Breakdown of counties and their status based on county population compared to the number of hospitals
+
+```{r}
+counties %>%
+  mutate(group = paste(county, shape_id)) %>%
+  ggplot() +
+  geom_polygon(
+    aes(long, lat, group = group), 
+    fill = counties$color,
+    alpha = 0.5,
+    color = "#666666",
+    size = 0.1
+    ) +
+  theme_minimal() +
+  theme(
+    axis.title = element_blank(), 
+    axis.text = element_blank(), 
+    panel.grid = element_blank(),
+    panel.grid.major = element_blank()) 
+```
+
+### Counties Under or Over the exepected number of hospitals
+
+```{r}
+display_table %>%
+  filter(`Model Result` != "Acceptable") %>%
+  formattable::format_table()
+```
+
+### Background
+
+We are trying to determine which counties in **`r params$state`** have comparatively more access or less access to hospital care. A **statistical model using data from across the country** is used to identify those counties that have more or less than the model expects the specific county to have.
+
