@@ -77,7 +77,7 @@ counties <- function(df, st, include) {
       result ==  1  ~ over,
       result == -1  ~ under)
       ) %>%
-  select(- county) %>%
+  #select(- county) %>%
   left_join(county_shapes, by = c("state", "county_key")) %>%
   filter(!is.na(county))
 } 
@@ -173,7 +173,8 @@ initial_map <- leaflet() %>%
 
 
 renderLeaflet({
-county_map <- counties(county_hospitals, input$state, include)  %>%
+county_map <- county_hospitals %>%
+  counties(input$state, include)  %>%
   group_by(county_key, shape_id) %>%
   group_map(~.x) %>%
   reduce(

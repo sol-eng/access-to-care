@@ -5,9 +5,8 @@ account: edgar
 server: colorado.rstudio.com
 hostUrl: https://colorado.rstudio.com/rsc/__api__
 appId: 3318
-bundleId: 31328
-url: https://colorado.rstudio.com/rsc/content/3318/
-when: 1573063272.89362
+bundleId: 31869
+url: https://colorado.rstudio.com/rsc/access-to-care/data-preparation/
+when: 1574550191.4686
 asMultiple: FALSE
 asStatic: FALSE
-additionalFiles: config.yml

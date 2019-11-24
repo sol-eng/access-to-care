@@ -88,7 +88,8 @@ hospital_results <- state_hospitals %>%
   mutate(result = case_when(
     hospitals < lwr ~ -1,
     hospitals > upr ~ 1,
-    TRUE ~ 0))
+    TRUE ~ 0)) %>%
+  select(-county_name, -fips)
 
 ## Build state shapes
 
@@ -116,7 +117,7 @@ get_state_shapes <- function(path = "data/shapes.rds") {
               long = .x@coords[, 1],
               lat = .x@coords[, 2],
               rn = 1:length(.x@coords[, 1]),
-              sel = select_row(rn, 12)
+              sel = select_row(rn, 20)
             )) %>% 
             set_names(paste0("s", seq_along(.x@Polygons))) %>%
             map_df(~.x, .id = "shape_id")}) %>%
@@ -136,7 +137,8 @@ get_state_shapes <- function(path = "data/shapes.rds") {
         county_key = str_to_lower(county),
         county_key = str_remove_all(county_key, " "),
         county_key = str_replace_all(county_key, "st. ", "saint")
-      ) 
+      ) %>%
+      select(-county)
     readr::write_rds(shapes, path, compress = "gz")
     shapes
   } else {
@@ -149,37 +151,40 @@ get_state_shapes <- function(path = "data/shapes.rds") {
 boardname <- config::get("boardname")
 
 if(boardname != "local") {
-  board_register(boardname,
-                 server = config::get("server"),
-                 key = config::get("key")
+  board_register_rsconnect(
+    server = config::get("server"),
+    key = config::get("key")
   )
-  name_prefix <- ""
 } else {
   board_register("local")  
-  name_prefix <- paste0("edgar/")
 }
 
-pin(hospital_results,
-    name = paste0(name_prefix, "atc-county_hospitals"),
-    board = boardname
-    )
+pin(
+  hospital_results,
+  name = "atc-county_hospitals",
+  board = boardname
+  )
 
-pin(model,
-    name = paste0(name_prefix, "atc-model"),
-    board = boardname
-    )
+pin(
+  model,
+  name = "atc-model",
+  board = boardname
+  )
 
-pin(hospital_locations,
-    name = paste0(name_prefix, "atc-hospital-locations"),
-    board = boardname
-    )
+pin(
+  hospital_locations,
+  name = "atc-hospital-locations",
+  board = boardname
+  )
 
-pin(hospitals,
-    name = paste0(name_prefix, "atc-hospitals"),
-    board = boardname
-    )
+pin(
+  hospitals,
+  name = "atc-hospitals",
+  board = boardname
+  )
 
-pin(get_state_shapes(),
-     name = paste0(name_prefix, "atc_shapes"),
-     board = boardname
-     )
+pin(
+  get_state_shapes(),
+ name = "atc_shapes",
+ board = boardname
+ )
