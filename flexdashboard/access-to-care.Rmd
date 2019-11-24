@@ -43,11 +43,11 @@ if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
 ```
 
 ```{r getdata, include=FALSE}
-hospital_locations <- pin_get("edgar/atc-hospital-locations", board = boardname) 
-county_shapes <- pin_get("edgar/atc_shapes", board = boardname)
-county_hospitals <-  pin_get("edgar/atc-county_hospitals", board = boardname) %>%
+hospital_locations <- pin_get("atc-hospital-locations", board = boardname) 
+county_shapes <- pin_get("atc_shapes", board = boardname)
+county_hospitals <-  pin_get("atc-county_hospitals", board = boardname) %>%
   inner_join(statepop, by = c("state" = "abbr")) 
-model <- pin_get("edgar/atc-model", board = boardname)
+model <- pin_get("atc-model", board = boardname)
 ```
 
 ```{r, include=FALSE}
@@ -192,7 +192,7 @@ county_map <- county_hospitals %>%
       inner_join(statepop, by = c("state" = "abbr")) %>%
       filter(full %in% input$state) %>%
       select(longitude, latitude) %>%
-      mutate_all(round, 3) %>%
+      mutate_all(round, 1) %>%
       count(longitude, latitude) %>%
       mutate(popup = paste0("Hospitals: ", n))
     
@@ -200,7 +200,7 @@ county_map <- county_hospitals %>%
       addCircleMarkers(
         lng = locations$longitude, 
         lat = locations$latitude,
-        radius = 3 *locations$n,
+        radius = 2 * (1 + log(locations$n)),
         popup = locations$popup,
         fillColor = hospital_color, color = "gray", 
         fillOpacity = 0.7,weight = 1)

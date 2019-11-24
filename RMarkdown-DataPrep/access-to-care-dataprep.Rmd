@@ -58,12 +58,9 @@ hospitals <- hospitals_raw %>%
 ## Prepare location data
 hospital_locations <- hospitals  %>%
   filter(!is.na(longitude)) %>%
-  select(state, longitude, latitude)
+  select(state, longitude, latitude) %>%
+  mutate(state = as.factor(state))
 
-hospital_locations <- hospitals  %>%
-  filter(!is.na(longitude)) %>%
-  group_by(state, longitude, latitude) %>%
-  summarise()
 
 population <- usmap::countypop %>%
   mutate(
