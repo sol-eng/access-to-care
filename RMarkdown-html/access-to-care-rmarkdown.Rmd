@@ -114,7 +114,6 @@ counties <- county_hospitals %>%
       result ==  1  ~ over,
       result == -1  ~ under
     )) %>%
-  select(- county) %>%
   left_join(county_shapes, by = c("state", "county_key")) %>%
   filter(!is.na(county))
 
@@ -168,7 +167,7 @@ if(add_hospitals == 1) {
     addCircleMarkers(
       lng = locations$longitude, 
       lat = locations$latitude,
-      radius = 3 *locations$n,
+      radius = 2 * (1 + log(locations$n)),
       popup = locations$popup,
       fillColor = hospital_color, color = "gray", 
       fillOpacity = 0.7,weight = 1)
