@@ -6,8 +6,12 @@ output: html_document
 ---
 
 ```{r, include = FALSE}
-library(tidyverse)
+library(dplyr)
+library(readr)
+library(haven)
 library(rlang)
+library(tidyr)
+library(stringr)
 library(leaflet)
 library(purrr)
 library(tigris)
@@ -20,7 +24,12 @@ library(config)
 
 
 ```{r}
-library(tidyverse)
+library(dplyr)
+library(readr)
+library(haven)
+library(rlang)
+library(tidyr)
+library(stringr)
 library(rlang)
 library(leaflet)
 library(purrr)
@@ -52,9 +61,11 @@ hospitals <- hospitals_raw %>%
     county_key = str_remove_all(county_key, " city"),
     county_key = str_to_lower(county_key),
     county_key = str_remove_all(county_key, " "),
-    county_key = str_replace_all(county_key, "st. ", "saint"))  
+    county_key = str_replace_all(county_key, "st. ", "saint"))
+```
 
 
+```{r}
 ## Prepare location data
 hospital_locations <- hospitals  %>%
   filter(!is.na(longitude)) %>%
@@ -114,7 +125,10 @@ hospital_results <- state_hospitals %>%
     hospitals > upr ~ 1,
     TRUE ~ 0)) %>%
   select(-county_name, -fips)
+```
 
+
+```{r}
 ## Build state shapes
 
 get_state_shapes <- function(path = "data/shapes.rds") {
@@ -170,6 +184,34 @@ get_state_shapes <- function(path = "data/shapes.rds") {
   }
 }
 
+## Data Optimizations
+
+state_shapes <- get_state_shapes()
+
+county_hospitals_full <- state_shapes %>%
+  count(state, county_key) %>%
+  inner_join(hospital_results, by = c("state", "county_key")) %>%
+  mutate(county_id = row_number())
+
+county_shapes <- county_hospitals_full %>%
+  select(state, county_key, county_id) %>%
+  inner_join(state_shapes, by = c("state", "county_key")) %>%
+  ungroup() %>%
+  mutate(shape_id = as.integer(str_remove(shape_id, "s"))) %>%
+  select(-state, -county_key)  %>%
+  select(county_id, shape_id, step, everything()) %>%
+  arrange(county_id, shape_id, step)
+
+county_hospitals <- county_hospitals_full %>%
+  mutate(county = str_remove(county, "County")) %>%
+  mutate(county = str_squish(county)) %>%
+  select(-county_key, -n) %>%
+  select(county_id, everything()) %>%
+  mutate_if(is.character, as.factor)
+```
+
+
+```{r}
 ## Output - Register PINs inside RStudio Connect
 
 if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
@@ -182,33 +224,48 @@ if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
   boardname <- "local"
   board_register(boardname)  
 }
+```
 
+
+```{r}
 pin(
-  hospital_results,
+  county_hospitals,
   name = "atc-county_hospitals",
   board = boardname
   )
+```
 
-pin(
-  model,
-  name = "atc-model",
-  board = boardname
-  )
 
+```{r}
+# pin(
+#   model,
+#   name = "atc-model",
+#   board = boardname
+#   )
+```
+
+
+```{r}
 pin(
   hospital_locations,
   name = "atc-hospital-locations",
   board = boardname
   )
+```
 
+
+```{r}
 pin(
   hospitals,
   name = "atc-hospitals",
   board = boardname
   )
+```
 
+
+```{r}
 pin(
- get_state_shapes(),
+ county_shapes,
  name = "atc_shapes",
  board = boardname
  )

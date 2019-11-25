@@ -89,9 +89,10 @@ if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
   boardname <- "local"
   board_register(boardname)  
 }
-hospital_locations <- pin_get("edgar/atc-hospital-locations", board = boardname) 
-county_shapes <- pin_get("edgar/atc_shapes", board = boardname)
-county_hospitals <-  pin_get("edgar/atc-county_hospitals", board = boardname) %>%
+hospital_locations <- pin_get("atc-hospital-locations", board = boardname) 
+county_shapes <- pin_get("atc_shapes", board = boardname)
+county_hospitals <-  pin_get("atc-county_hospitals", board = boardname) %>%
+  mutate(state = as.character(state)) %>%
   inner_join(statepop, by = c("state" = "abbr")) 
 
 under <- "#CC79A7"
@@ -114,7 +115,7 @@ counties <- county_hospitals %>%
       result ==  1  ~ over,
       result == -1  ~ under
     )) %>%
-  left_join(county_shapes, by = c("state", "county_key")) %>%
+  left_join(county_shapes, by = "county_id") %>%
   filter(!is.na(county))
 
 ```
@@ -143,7 +144,7 @@ initial_map <- leaflet() %>%
             title  = "Legend",opacity = 0.5)
 
 county_map <- counties %>%
-  group_by(county_key, shape_id) %>%
+  group_by(county_id, shape_id) %>%
   group_map(~ .x) %>%
   reduce(
     ~ addPolygons(.x, 
@@ -156,6 +157,7 @@ county_map <- counties %>%
 
 if(add_hospitals == 1) {
   locations <- hospital_locations %>%
+    mutate(state = as.character(state)) %>%
     inner_join(statepop, by = c("state" = "abbr")) %>%
     filter(full %in% params$state) %>%
     select(longitude, latitude) %>%
