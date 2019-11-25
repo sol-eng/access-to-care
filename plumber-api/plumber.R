@@ -1,6 +1,7 @@
 library(plumber)
 library(pins)
 library(usmap)
+library(dplyr)
 
 if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
   boardname <- "rsconnect"
