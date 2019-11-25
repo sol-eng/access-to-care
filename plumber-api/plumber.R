@@ -2,18 +2,20 @@ library(plumber)
 library(pins)
 library(usmap)
 
-boardname <- config::get("boardname")
-if(boardname != "local") {
-  board_register(boardname, server = config::get("server"), key = config::get("key")
+if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
+  boardname <- "rsconnect"
+  board_register_rsconnect(
+    server = Sys.getenv("connect_url"),
+    key = Sys.getenv("connect_key")
   )
 } else {
-  board_register("local")  
+  boardname <- "local"
+  board_register(boardname)  
 }
 
-model <- pin_get("edgar/atc-model", board = boardname) 
-hospitals <- pin_get("edgar/atc-county_hospitals", board = boardname) %>%
+hospitals <- pin_get("atc-county_hospitals", board = boardname) %>%
+  mutate(state = as.character(state)) %>%
   inner_join(statepop, by = c("state" = "abbr")) 
-hospital_list <- pin_get("edgar/atc-hospital-locations", board = boardname) 
 
 #* Get the state's summarized information
 #* @get /summary
@@ -33,6 +35,7 @@ function(state = "MS") {
 #* @get /model
 #* @param population:numeric Number of people living in a given county
 function(population = 70000) {
+  model <- pin_get("atc-model", board = boardname) 
   pop <- as.numeric(population)
   predict(model, data.frame(population = pop))
 }
@@ -49,6 +52,7 @@ function(state = "MS") {
 #* @get /hospitals
 #* @param state Two letter abbriviation of the state
 function(state = "MS") {
+  hospital_list <- pin_get("atc-hospital-locations", board = boardname) 
   st_name <- toupper(state)
   hospital_list[hospital_list$state == st_name, 2:3]
 }
