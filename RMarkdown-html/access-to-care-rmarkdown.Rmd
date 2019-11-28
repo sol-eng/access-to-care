@@ -78,6 +78,12 @@ library(DT)
 library(usmap)
 library(pins)
 library(blastula)
+library(connections)
+
+under <- "#CC79A7"
+over <- "#0072B2"
+at_level <- "#008b00"
+hospital_color <- "#F0E442"
 
 if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
   boardname <- "rsconnect"
@@ -89,35 +95,21 @@ if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
   boardname <- "local"
   board_register(boardname)  
 }
-hospital_locations <- pin_get("atc-hospital-locations", board = boardname) 
-county_shapes <- pin_get("atc_shapes", board = boardname)
-county_hospitals <-  pin_get("atc-county_hospitals", board = boardname) %>%
-  mutate(state = as.character(state)) %>%
-  inner_join(statepop, by = c("state" = "abbr")) 
 
-under <- "#CC79A7"
-over <- "#0072B2"
-at_level <- "#008b00"
-hospital_color <- "#F0E442"
-include <- c(-1, 1, 0)
-add_hospitals <- 1
+counties <- pin_get("atc-db-county-map", boardname) %>%
+  filter(full %in% !! params$state) %>%
+  collect()
 
-counties <- county_hospitals %>% 
-    filter(full %in% params$state,
-           result %in% include) %>%
-    mutate(popup = paste0("<b>", county, "</b>",
-                          "<br/>Population: ", prettyNum(population, big.mark = ","), 
-                          "<br/>Hospitals: ", hospitals,
-                          "<br/>Expected: ", fit
-                          )) %>%  
-    mutate(color = case_when(
-      result ==  0  ~ at_level,
-      result ==  1  ~ over,
-      result == -1  ~ under
-    )) %>%
-  left_join(county_shapes, by = "county_id") %>%
-  filter(!is.na(county))
+counties_table <- pin_get("atc-db-county-table", boardname) %>%
+  filter(full %in% !! params$state) %>%
+  collect()
 
+state <- counties$state_id[1]
+
+hospital_locations <- pin_get("atc-db-hospitals", boardname) %>%
+  filter(state_id == !! state) %>%
+  select(-state_id) %>%
+  collect()
 ```
 
 ## `r params$state`
@@ -155,25 +147,20 @@ county_map <- counties %>%
                   weight = 1, fillOpacity = 0.3), 
     .init = initial_map)  
 
-if(add_hospitals == 1) {
-  locations <- hospital_locations %>%
-    mutate(state = as.character(state)) %>%
-    inner_join(statepop, by = c("state" = "abbr")) %>%
-    filter(full %in% params$state) %>%
-    select(longitude, latitude) %>%
-    mutate_all(round, 3) %>%
-    count(longitude, latitude) %>%
-    mutate(popup = paste0("Hospitals: ", n))
-  
-  county_map <- county_map %>%
-    addCircleMarkers(
-      lng = locations$longitude, 
-      lat = locations$latitude,
-      radius = 2 * (1 + log(locations$n)),
-      popup = locations$popup,
-      fillColor = hospital_color, color = "gray", 
-      fillOpacity = 0.7,weight = 1)
-} 
+locations <- hospital_locations %>%
+  mutate_all(round, 3) %>%
+  count(longitude, latitude) %>%
+  mutate(popup = paste0("Hospitals: ", n))
+
+county_map <- county_map %>%
+  addCircleMarkers(
+    lng = locations$longitude, 
+    lat = locations$latitude,
+    radius = 2 * (1 + log(locations$n)),
+    popup = locations$popup,
+    fillColor = hospital_color, color = "gray", 
+    fillOpacity = 0.7,weight = 1)
+
 
 county_map  
 ```
@@ -183,29 +170,8 @@ county_map
 Here is the county level data used in this report
 
 ```{r}
-display_table <- counties %>%
-  group_by(county, population,hospitals, fit, result) %>%
-  summarise() %>%
-  ungroup() %>%
-  mutate(result = case_when(
-      result ==  0  ~ "Acceptable",
-      result ==  1  ~ "Above",
-      result == -1  ~ "Under"
-    )) %>%
-  mutate(
-    population = ifelse(
-      population > 1000000, 
-      paste0(round(population / 1000000), "M"),
-      paste0(round(population / 1000), "K")
-      )) %>%
-  rename(
-    County = county,
-    Population = population,
-    Hospitals = hospitals,
-    Expected = fit,
-    `Model Result` = result
-    ) 
-
+display_table <- counties_table %>%
+  select(-full)
 datatable(display_table, class = "cell-border stripe")
 ```
 

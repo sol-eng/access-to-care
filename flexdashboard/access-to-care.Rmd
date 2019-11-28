@@ -23,12 +23,11 @@ output:
 library(flexdashboard)
 library(dplyr)
 library(purrr)
-library(ggplot2)
 library(leaflet)
 library(DT)
-library(usmap)
 library(metricsgraphics)
 library(pins)
+library(connections)
 
 if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
   boardname <- "rsconnect"
@@ -40,52 +39,27 @@ if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
   boardname <- "local"
   board_register(boardname)  
 }
-```
 
-```{r getdata, include=FALSE}
-hospital_locations <- pin_get("atc-hospital-locations", board = boardname) 
-county_shapes <- pin_get("atc_shapes", board = boardname)
-county_hospitals <-  pin_get("atc-county_hospitals", board = boardname) %>%
-  inner_join(statepop, by = c("state" = "abbr")) 
 model <- pin_get("atc-model", board = boardname)
+states <- pin_get("atc-db-states", board = boardname) %>% collect()
 ```
 
 ```{r, include=FALSE}
-state_names <- county_hospitals %>%
-  group_by(full) %>%
-  summarise() %>%
-  pull()
-
 under <- "#CC79A7"
 over <- "#0072B2"
 at_level <- "#008b00"
 hospital_color <- "#F0E442"
-include <- c(-1, 1, 0)
-add_hospitals <- 1
 
-counties <- function(df, st, include) {
-  df %>% 
-    filter(full %in% st,
-           result %in% include) %>%
-    mutate(popup = paste0("<b>", county, "</b>",
-                          "<br/>Population: ", prettyNum(population, big.mark = ","), 
-                          "<br/>Hospitals: ", hospitals,
-                          "<br/>Expected: ", fit
-                          )) %>%  
-    mutate(color = case_when(
-      result ==  0  ~ at_level,
-      result ==  1  ~ over,
-      result == -1  ~ under)
-      ) %>%
-  left_join(county_shapes, by = "county_id") %>%
-  filter(!is.na(county))
-} 
+county_map <-  reactive({
+  pin_get("atc-db-county-map", board = boardname) %>% 
+    filter(full == !! input$state) %>%
+    collect()
+})
 
-state_data <- function(df, st, include) {
-  df %>% 
-    filter(full %in% st,
-           result %in% include) 
-  }
+state_info <- reactive({
+  states %>% 
+    filter(full == input$state) 
+})
 ```
 
 
@@ -99,7 +73,7 @@ Row
 
 ```{r}
 selectInput(
-  "state","Select a State:", state_names,
+  "state","Select a State:", states$full,
   selected="California", selectize = FALSE
   )
 ```
@@ -109,10 +83,12 @@ selectInput(
 
 ```{r}
 renderValueBox({
-  state_data(county_hospitals, input$state, include) %>%
-    summarise(x = round(sum(population)/1000000, digits=0)) %>%
-    mutate(x = paste0(prettyNum(x, big.mark = ","), "M") ) %>%
-    pull(x) %>%
+  state_info() %>%
+    mutate(
+      x = round(sum(population)/1000000, digits=0),
+      x = paste0(x, "M")
+      ) %>%
+    pull() %>%
     valueBox(icon="fa-user")
     })
 ```
@@ -121,9 +97,8 @@ renderValueBox({
 
 ```{r}
 renderValueBox({
-  state_data(county_hospitals, input$state, include) %>%
-    summarise(sum(hospitals)) %>%
-    pull() %>%
+  state_info() %>%
+    pull(hospitals) %>%
     valueBox(icon="fa-ambulance",color="#E69F00")
   })
 ```
@@ -132,8 +107,8 @@ renderValueBox({
 
 ```{r}
 renderValueBox({
-  state_data(county_hospitals, input$state, include) %>%
-    nrow() %>%
+  state_info() %>%
+    pull(counties) %>%
     valueBox(icon="fa-map-marker",color="#009E73")
   })
 ```
@@ -143,9 +118,8 @@ renderValueBox({
 
 ```{r}
 renderValueBox({
-  state_data(county_hospitals, input$state, include) %>%
-    filter(result == -1) %>%
-    nrow() %>%
+  state_info() %>%
+    pull(under) %>%
     valueBox(icon="fa-h-square", color="#CC79A7")
   })
 ```
@@ -160,50 +134,54 @@ Breakdown of counties and their status based on county population compared to th
 
 
 ```{r}
-
 initial_map <- leaflet() %>%
   addProviderTiles(providers$CartoDB) %>%
-  addLegend("bottomright", 
-            color  = c(under,over ,at_level, hospital_color), 
-            labels = c("Less hopitals than expected",
-                       "More hospitals than expected", "Within Range", 
-                       "Hospital Location"), 
-            title  = "Legend",opacity = 0.5)
-
+  addLegend(
+    "bottomright", 
+    color  = c(under,over ,at_level, hospital_color), 
+    labels = c("Less hopitals than expected",
+               "More hospitals than expected", "Within Range", 
+               "Hospital Location"
+               ), 
+    title  = "Legend",opacity = 0.5
+    )
 
 renderLeaflet({
-county_map <- county_hospitals %>%
-  counties(input$state, include)  %>%
+county_map <- county_map() %>%
   group_by(county_id, shape_id) %>%
   group_map(~.x) %>%
   reduce(
-    ~ addPolygons(.x, 
-                  lng = .y$long, 
-                  lat = .y$lat, 
-                  color = .y$color[[1]], 
-                  popup = .y$popup[[1]],
-                  weight = 1, fillOpacity = 0.3), 
+    ~ addPolygons(
+      .x, 
+      lng = .y$long, 
+      lat = .y$lat, 
+      color = .y$color[[1]],
+      popup = .y$popup[[1]],
+      weight = 1, 
+      fillOpacity = 0.3
+      ), 
     .init = initial_map)  
+
+  curr_state <- state_info() %>%
+    pull(state_id)
+
+  locations <- pin_get("atc-db-hospitals", board = boardname) %>%
+    filter(state_id == !! curr_state) %>%
+    select(longitude, latitude) %>%
+    collect() %>%
+    mutate_all(round, 1) %>%
+    count(longitude, latitude) %>%
+    mutate(popup = paste0("Hospitals: ", n))
   
-  if(add_hospitals == 1) {
-    
-    locations <- hospital_locations %>%
-      inner_join(statepop, by = c("state" = "abbr")) %>%
-      filter(full %in% input$state) %>%
-      select(longitude, latitude) %>%
-      mutate_all(round, 1) %>%
-      count(longitude, latitude) %>%
-      mutate(popup = paste0("Hospitals: ", n))
-    
-    county_map <- county_map %>%
-      addCircleMarkers(
-        lng = locations$longitude, 
-        lat = locations$latitude,
-        radius = 2 * (1 + log(locations$n)),
-        popup = locations$popup,
-        fillColor = hospital_color, color = "gray", 
-        fillOpacity = 0.7,weight = 1)
-    } 
+  county_map <- county_map %>%
+    addCircleMarkers(
+      lng = locations$longitude, 
+      lat = locations$latitude,
+      radius = 2 * (1 + log(locations$n)),
+      popup = locations$popup,
+      fillColor = hospital_color, color = "gray", 
+      fillOpacity = 0.7,weight = 1)
+  
   county_map  
 })
 ```
@@ -213,8 +191,10 @@ county_map <- county_hospitals %>%
 
 ```{r}
 renderDataTable({
-  state_data(county_hospitals, input$state, include) %>%
-    select(county, population, hospitals, expected = fit) %>%
+  pin_get("atc-db-county-table", board = boardname)  %>%
+    filter(full == !! input$state) %>%
+    select(-full) %>%
+    collect() %>%
     datatable(class = 'cell-border stripe')
 })
 ```
@@ -226,7 +206,7 @@ Model {.storyboard}
 
 ```{r}
 renderMetricsgraphics({
-  county_hospitals %>%
+  county_map() %>%
     mutate(population = round(population / 1000)) %>%
     count(population, hospitals) %>%
     mjs_plot(x=population, y=hospitals, width=600, height=500) %>%

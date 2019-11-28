@@ -20,6 +20,7 @@ library(haven)
 library(usmap)
 library(pins)
 library(config)
+library(connections)
 ```
 
 
@@ -39,6 +40,7 @@ library(haven)
 library(usmap)
 library(pins)
 library(config)
+library(connections)
 
 ## Read SAS dataset
 hospitals_raw <- haven::read_sas("data/Structural_Measures_-_Hospital.sas7bdat") 
@@ -61,17 +63,23 @@ hospitals <- hospitals_raw %>%
     county_key = str_remove_all(county_key, " city"),
     county_key = str_to_lower(county_key),
     county_key = str_remove_all(county_key, " "),
-    county_key = str_replace_all(county_key, "st. ", "saint"))
-```
+    county_key = str_replace_all(county_key, "st. ", "saint")
+    )
 
+## Prepare state data
+states <- usmap::statepop %>%
+  select(-fips) %>%
+  select(state = abbr, full) %>%
+  mutate(state_id = row_number()) %>%
+  select(state_id, everything())
 
-```{r}
 ## Prepare location data
 hospital_locations <- hospitals  %>%
   filter(!is.na(longitude)) %>%
   select(state, longitude, latitude) %>%
-  mutate(state = as.factor(state))
-
+  mutate(state = as.factor(state)) %>%
+  inner_join(states, by = "state")  %>%
+  select(state_id,longitude, latitude)
 
 population <- usmap::countypop %>%
   mutate(
@@ -98,12 +106,13 @@ hospital_count <- hospitals %>%
     county_key = str_replace_all(county_key, "st.", "saint")) %>%
   rename(hospitals = n)
 
-
 state_hospitals <- population %>%
-  left_join(hospital_count, by = c("state" = "state", "county_key" = "county_key")) %>%
-  replace_na(list(hospitals = 0)) 
+  left_join(hospital_count, by = c("state", "county_key")) %>%
+  replace_na(list(hospitals = 0))
+```
 
 
+```{r}
 ## Fit model
 set.seed(100)
 
@@ -112,28 +121,30 @@ hospital_sample <- state_hospitals %>%
 
 model <- lm(hospitals ~ population, data = hospital_sample)
 
-predictions <- predict(model, 
-                       newdata = state_hospitals, 
-                       interval = "prediction") %>%
+predictions <- predict(
+  model, 
+  newdata = state_hospitals, 
+  interval = "prediction"
+  ) %>%
   as_tibble() %>%
   mutate_all(round)
 
 hospital_results <- state_hospitals %>%
+  inner_join(states, by = "state") %>%
   bind_cols(predictions) %>%
-  mutate(result = case_when(
-    hospitals < lwr ~ -1,
-    hospitals > upr ~ 1,
-    TRUE ~ 0)) %>%
-  select(-county_name, -fips)
-```
+  mutate(
+    result = case_when(
+      hospitals < lwr ~ -1,
+      hospitals > upr ~ 1,
+      TRUE ~ 0
+      )
+    ) %>%
+  select(-county_name, -fips, -full, -state) 
 
-
-```{r}
 ## Build state shapes
-
 get_state_shapes <- function(path = "data/shapes.rds") {
   ## Should only rebuild if running on a local computer
-  if(Sys.getenv("R_CONFIG_ACTIVE") != "rsconnect")  {
+  if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect")  {
     dir_create("shapes")
     all_paths <- path("shapes", state.abb, ext = "rds") %>%
       set_names(state.abb)
@@ -185,12 +196,12 @@ get_state_shapes <- function(path = "data/shapes.rds") {
 }
 
 ## Data Optimizations
-
 state_shapes <- get_state_shapes()
 
 county_hospitals_full <- state_shapes %>%
   count(state, county_key) %>%
-  inner_join(hospital_results, by = c("state", "county_key")) %>%
+  inner_join(states, by = "state") %>%
+  inner_join(hospital_results, by = c("state_id", "county_key")) %>%
   mutate(county_id = row_number())
 
 county_shapes <- county_hospitals_full %>%
@@ -203,17 +214,84 @@ county_shapes <- county_hospitals_full %>%
   arrange(county_id, shape_id, step)
 
 county_hospitals <- county_hospitals_full %>%
-  mutate(county = str_remove(county, "County")) %>%
-  mutate(county = str_squish(county)) %>%
-  select(-county_key, -n) %>%
-  select(county_id, everything()) %>%
-  mutate_if(is.character, as.factor)
+  mutate(
+    county = str_remove(county, "County"), 
+    county = str_squish(county)
+    ) %>%
+  select(-county_key, -n, -full, -state) %>%
+  select(county_id, everything()) 
+
+state_full <- county_hospitals_full %>%
+  group_by(state) %>%
+  summarise(
+    hospitals = sum(hospitals),
+    population = sum(population),
+    under = sum(ifelse(result == -1, 1, 0)),
+    counties = n()
+  ) %>%
+  ungroup() %>%
+  inner_join(states, by = "state")
+  
+```
+
+```{r}
+con <- connection_open(RSQLite::SQLite(), "/tmp/local.sqlite")
+copy_to(con, county_shapes, "shapes", overwrite = TRUE, temporary = FALSE)
+copy_to(con, county_hospitals, "counties", overwrite = TRUE, temporary = FALSE)
+copy_to(con, hospital_locations, "hospitals", overwrite = TRUE, temporary = FALSE)
+copy_to(con, state_full, "states", overwrite = TRUE, temporary = FALSE)
+```
+
+```{r} 
+base_map <-  tbl(con, "states") %>%
+  select(state_id, full, state) %>%
+  inner_join(tbl(con, "counties"), by = "state_id") %>%
+  mutate(
+    population_label = ifelse(
+      population > 1000000, 
+      paste0(as.integer(round(population / 1000000)), "M"),
+      paste0(as.integer(round(population / 1000)), "K")
+      ),
+    popup = paste0(
+      "<b>", county, "</b>", 
+      "<br/>Population: ", population_label, 
+      "<br/>Hospitals: ", as.integer(hospitals),
+      "<br/>Expected: ", as.integer(fit)
+      ), 
+    color = case_when(
+      result ==  0  ~ "#008b00",
+      result ==  1  ~ "#0072B2",
+      result == -1  ~ "#CC79A7"
+    ),
+    result = case_when(
+      result ==  0  ~ "Acceptable",
+      result ==  1  ~ "Above",
+      result == -1  ~ "Under"
+    )
+    )
 ```
 
 
+```{r} 
+county_map <- base_map %>% 
+  left_join(tbl(con, "shapes"), by = "county_id") %>%
+  filter(!is.na(county)) 
+```
+
+```{r}
+county_table <- base_map %>%
+  select(
+    full,
+    County = county,
+    Population = population_label,
+    Hospitals = hospitals,
+    Expected = fit,
+    `Model Result` = result
+    ) 
+```
+
 ```{r}
 ## Output - Register PINs inside RStudio Connect
-
 if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
   boardname <- "rsconnect"
   board_register_rsconnect(
@@ -226,49 +304,40 @@ if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
 }
 ```
 
+```{r}
+pin(
+  tbl(con, "states"),
+  "atc-db-states",
+  boardname
+)
+```
 
 ```{r}
 pin(
-  county_hospitals,
-  name = "atc-county_hospitals",
+  tbl(con, "hospitals"),
+  "atc-db-hospitals",
+  boardname
+)
+```
+
+```{r}
+pin(
+  county_map,
+  name = "atc-db-county-map",
   board = boardname
   )
 ```
 
-
-```{r}
-# pin(
-#   model,
-#   name = "atc-model",
-#   board = boardname
-#   )
-```
-
-
 ```{r}
 pin(
-  hospital_locations,
-  name = "atc-hospital-locations",
+  county_table,
+  name = "atc-db-county-table",
   board = boardname
   )
 ```
 
-
 ```{r}
-pin(
-  hospitals,
-  name = "atc-hospitals",
-  board = boardname
-  )
+connection_close(con)
 ```
 
-
-```{r}
-pin(
- county_shapes,
- name = "atc_shapes",
- board = boardname
- )
-
-```
 
