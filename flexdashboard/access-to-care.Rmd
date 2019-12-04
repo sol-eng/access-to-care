@@ -1,7 +1,5 @@
 ---
 title: "Access to Hospital Care Dashboard"
-resource_files:
-- config.yml
 runtime: shiny
 output:
   flexdashboard::flex_dashboard:
@@ -21,6 +19,7 @@ output:
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
+library(shiny)
 library(dplyr)
 library(purrr)
 library(leaflet)
@@ -50,15 +49,23 @@ over <- "#0072B2"
 at_level <- "#008b00"
 hospital_color <- "#F0E442"
 
-county_map <-  reactive({
-  pin_get("atc-db-county-map", board = boardname) %>% 
-    filter(full == !! input$state) %>%
-    collect()
-})
-
 state_info <- reactive({
   states %>% 
     filter(full == input$state) 
+})
+
+county_map <-  reactive({
+  curr_state <- state_info() %>%
+    pull(state_id)
+  pin_get("atc-db-county-map", board = boardname) %>% 
+    filter(state_id == !! curr_state) %>%
+    collect()
+})
+
+base_map <- reactive({
+  pin_get("atc-db-base-map", boardname) %>%
+    filter(full %in% !! input$state) %>%
+    collect()
 })
 ```
 
@@ -139,32 +146,18 @@ initial_map <- leaflet() %>%
   addLegend(
     "bottomright", 
     color  = c(under,over ,at_level, hospital_color), 
-    labels = c("Less hopitals than expected",
-               "More hospitals than expected", "Within Range", 
-               "Hospital Location"
-               ), 
-    title  = "Legend",opacity = 0.5
+    labels = c(
+      "Less hopitals than expected",
+      "More hospitals than expected", "Within Range", 
+      "Hospital Location"), 
+    title  = "Legend",
+    opacity = 0.5
     )
 
 renderLeaflet({
-county_map <- county_map() %>%
-  group_by(county_id, shape_id) %>%
-  group_map(~.x) %>%
-  reduce(
-    ~ addPolygons(
-      .x, 
-      lng = .y$long, 
-      lat = .y$lat, 
-      color = .y$color[[1]],
-      popup = .y$popup[[1]],
-      weight = 1, 
-      fillOpacity = 0.3
-      ), 
-    .init = initial_map)  
-
   curr_state <- state_info() %>%
     pull(state_id)
-
+  
   locations <- pin_get("atc-db-hospitals", board = boardname) %>%
     filter(state_id == !! curr_state) %>%
     select(longitude, latitude) %>%
@@ -173,16 +166,29 @@ county_map <- county_map() %>%
     count(longitude, latitude) %>%
     mutate(popup = paste0("Hospitals: ", n))
   
-  county_map <- county_map %>%
-    addCircleMarkers(
-      lng = locations$longitude, 
-      lat = locations$latitude,
-      radius = 2 * (1 + log(locations$n)),
-      popup = locations$popup,
-      fillColor = hospital_color, color = "gray", 
-      fillOpacity = 0.7,weight = 1)
-  
-  county_map  
+  base_map() %>%
+    select(popup, color, county_id) %>%
+    inner_join(county_map(), by = "county_id") %>%
+    group_by(county_id, shape_id) %>%
+    group_map(~.x) %>%
+    reduce(
+      ~ addPolygons(
+        .x, 
+        lng = .y$long, 
+        lat = .y$lat, 
+        color = .y$color[[1]],
+        popup = .y$popup[[1]],
+        weight = 1, 
+        fillOpacity = 0.3
+        ), 
+      .init = initial_map) %>%
+      addCircleMarkers(
+        lng = locations$longitude, 
+        lat = locations$latitude,
+        radius = 2 * (1 + log(locations$n)),
+        popup = locations$popup,
+        fillColor = hospital_color, color = "gray", 
+        fillOpacity = 0.7,weight = 1)
 })
 ```
 
@@ -206,7 +212,7 @@ Model {.storyboard}
 
 ```{r}
 renderMetricsgraphics({
-  county_map() %>%
+  base_map() %>%
     mutate(population = round(population / 1000)) %>%
     count(population, hospitals) %>%
     mjs_plot(x=population, y=hospitals, width=600, height=500) %>%

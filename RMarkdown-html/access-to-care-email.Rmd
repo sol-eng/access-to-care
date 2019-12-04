@@ -13,12 +13,12 @@ output: blastula::blastula_email
 Breakdown of counties and their status based on county population compared to the number of hospitals
 
 ```{r}
-counties %>%
-  mutate(group = paste(county, shape_id)) %>%
+full_map %>%
+  mutate(group = paste(county_id, shape_id)) %>%
   ggplot() +
   geom_polygon(
     aes(long, lat, group = group), 
-    fill = counties$color,
+    fill = full_map$color,
     alpha = 0.5,
     color = "#666666",
     size = 0.1

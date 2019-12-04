@@ -1,7 +1,5 @@
 ---
 title: "Access to Care Data Preparation"
-resource_files:
-- config.yml
 output: html_document
 ---
 
@@ -12,14 +10,12 @@ library(haven)
 library(rlang)
 library(tidyr)
 library(stringr)
-library(leaflet)
 library(purrr)
 library(tigris)
 library(fs)
 library(haven)
 library(usmap)
 library(pins)
-library(config)
 library(connections)
 ```
 
@@ -31,15 +27,12 @@ library(haven)
 library(rlang)
 library(tidyr)
 library(stringr)
-library(rlang)
-library(leaflet)
 library(purrr)
 library(tigris)
 library(fs)
 library(haven)
 library(usmap)
 library(pins)
-library(config)
 library(connections)
 
 ## Read SAS dataset
@@ -205,12 +198,12 @@ county_hospitals_full <- state_shapes %>%
   mutate(county_id = row_number())
 
 county_shapes <- county_hospitals_full %>%
-  select(state, county_key, county_id) %>%
+  select(state, state_id, county_key, county_id) %>%
   inner_join(state_shapes, by = c("state", "county_key")) %>%
   ungroup() %>%
   mutate(shape_id = as.integer(str_remove(shape_id, "s"))) %>%
   select(-state, -county_key)  %>%
-  select(county_id, shape_id, step, everything()) %>%
+  select(state_id, county_id, shape_id, step, everything()) %>%
   arrange(county_id, shape_id, step)
 
 county_hospitals <- county_hospitals_full %>%
@@ -271,13 +264,6 @@ base_map <-  tbl(con, "states") %>%
     )
 ```
 
-
-```{r} 
-county_map <- base_map %>% 
-  left_join(tbl(con, "shapes"), by = "county_id") %>%
-  filter(!is.na(county)) 
-```
-
 ```{r}
 county_table <- base_map %>%
   select(
@@ -322,11 +308,20 @@ pin(
 
 ```{r}
 pin(
-  county_map,
+  tbl(con, "shapes"),
   name = "atc-db-county-map",
   board = boardname
   )
 ```
+
+```{r}
+pin(
+  base_map,
+  name = "atc-db-base-map",
+  board = boardname
+  )
+```
+
 
 ```{r}
 pin(

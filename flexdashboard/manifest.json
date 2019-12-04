@@ -3,11 +3,11 @@
   "locale": "en_US",
   "platform": "3.6.1",
   "metadata": {
-    "appmode": "rmd-static",
-    "primary_rmd": "access-to-care-rmarkdown.Rmd",
+    "appmode": "rmd-shiny",
+    "primary_rmd": "access-to-care.Rmd",
     "primary_html": null,
     "content_category": null,
-    "has_parameters": true
+    "has_parameters": false
   },
   "packages": {
     "BH": {
@@ -368,40 +368,6 @@
         "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-07-29 13:46:16 UTC; unix"
       }
     },
-    "blastula": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Type": "Package",
-        "Package": "blastula",
-        "Title": "Easily Send HTML Email Messages",
-        "Version": "0.3.0",
-        "Authors@R": "c(\n    person(\"Richard\", \"Iannone\", role = c(\"aut\", \"cre\"), email = \"riannone@me.com\",\n           comment = c(ORCID = \"0000-0003-3925-190X\")),\n    person(\"Joe\", \"Cheng\", role = \"aut\", email = \"joe@rstudio.com\"),\n    person(\"Jeroen\", \"Ooms\", role = \"ctb\", email = \"jeroen@berkeley.edu\",\n      comment = c(ORCID = \"0000-0002-4035-0289\"))\n    )",
-        "Description": "Compose and send out responsive HTML email messages that render\n    perfectly across a range of email clients and device sizes. Helper functions\n    let the user insert embedded images, web link buttons, and 'ggplot2' plot\n    objects into the message body. Messages can be sent through an 'SMTP'\n    server, through the 'RStudio Connect' service, or through the 'Mailgun' API\n    service <http://mailgun.com/>.",
-        "License": "MIT + file LICENSE",
-        "URL": "https://github.com/rich-iannone/blastula",
-        "BugReports": "https://github.com/rich-iannone/blastula/issues",
-        "Depends": "R (>= 3.2.1)",
-        "Imports": "base64enc (>= 0.1-3), commonmark (>= 1.7), curl (>= 4.2),\ndplyr (>= 0.8.3), fs (>= 1.3.1), getPass (>= 0.2-2), here (>=\n0.1), htmltools (>= 0.3.6), httr (>= 1.4.0), jsonlite (>= 1.6),\nmagrittr (>= 1.5), mime (>= 0.6), rlang (>= 0.4.1), rmarkdown,\nstringr (>= 1.4.0), uuid (>= 0.1-2)",
-        "Suggests": "covr, ggplot2, glue, testthat (>= 2.1.0), keyring, knitr,\nspelling, xml2",
-        "Encoding": "UTF-8",
-        "LazyData": "true",
-        "RoxygenNote": "6.1.1",
-        "VignetteBuilder": "knitr",
-        "Language": "en-US",
-        "NeedsCompilation": "no",
-        "Packaged": "2019-11-21 19:07:01 UTC; rich",
-        "Author": "Richard Iannone [aut, cre] (<https://orcid.org/0000-0003-3925-190X>),\n  Joe Cheng [aut],\n  Jeroen Ooms [ctb] (<https://orcid.org/0000-0002-4035-0289>)",
-        "Maintainer": "Richard Iannone <riannone@me.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2019-11-22 07:00:02 UTC",
-        "Built": "R 3.6.1; ; 2019-11-22 22:54:49 UTC; unix"
-      }
-    },
     "cli": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -431,40 +397,6 @@
         "Repository": "CRAN",
         "Date/Publication": "2019-03-19 10:43:26 UTC",
         "Built": "R 3.6.0; ; 2019-04-28 15:01:13 UTC; unix"
-      }
-    },
-    "clipr": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Type": "Package",
-        "Package": "clipr",
-        "Title": "Read and Write from the System Clipboard",
-        "Version": "0.7.0",
-        "Authors@R": "\n    c(person(given = \"Matthew\",\n             family = \"Lincoln\",\n             role = c(\"aut\", \"cre\"),\n             email = \"matthew.d.lincoln@gmail.com\",\n             comment = c(ORCID = \"0000-0002-4387-3384\")),\n      person(given = \"Louis\",\n             family = \"Maddox\",\n             role = \"ctb\"),\n      person(given = \"Steve\",\n             family = \"Simpson\",\n             role = \"ctb\"),\n      person(given = \"Jennifer\",\n             family = \"Bryan\",\n             role = \"ctb\"))",
-        "Description": "Simple utility functions to read from and write to\n    the Windows, OS X, and X11 clipboards.",
-        "License": "GPL-3",
-        "URL": "https://github.com/mdlincoln/clipr",
-        "BugReports": "https://github.com/mdlincoln/clipr/issues",
-        "Imports": "utils",
-        "Suggests": "covr, knitr, rmarkdown, rstudioapi (>= 0.5), testthat (>=\n2.0.0)",
-        "VignetteBuilder": "knitr",
-        "Encoding": "UTF-8",
-        "Language": "en-US",
-        "LazyData": "TRUE",
-        "RoxygenNote": "6.1.1",
-        "SystemRequirements": "xclip (https://github.com/astrand/xclip) or xsel\n(http://www.vergenet.net/~conrad/software/xsel/) for accessing\nthe X11 clipboard",
-        "NeedsCompilation": "no",
-        "Packaged": "2019-07-23 02:33:48 UTC; admin",
-        "Author": "Matthew Lincoln [aut, cre] (<https://orcid.org/0000-0002-4387-3384>),\n  Louis Maddox [ctb],\n  Steve Simpson [ctb],\n  Jennifer Bryan [ctb]",
-        "Maintainer": "Matthew Lincoln <matthew.d.lincoln@gmail.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2019-07-23 05:00:03 UTC",
-        "Built": "R 3.6.1; ; 2019-09-03 14:27:55 UTC; unix"
       }
     },
     "colorspace": {
@@ -499,34 +431,6 @@
         "Built": "R 3.6.0; x86_64-pc-linux-gnu; 2019-04-28 14:50:24 UTC; unix"
       }
     },
-    "commonmark": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "commonmark",
-        "Type": "Package",
-        "Title": "High Performance CommonMark and Github Markdown Rendering in R",
-        "Version": "1.7",
-        "Authors@R": "c(\n    person(\"Jeroen\", \"Ooms\", ,\"jeroen@berkeley.edu\", role = c(\"aut\", \"cre\")),\n    person(\"John MacFarlane\", role = \"cph\", comment = \"Author of cmark\"))",
-        "URL": "http://github.com/jeroen/commonmark (devel)\nhttps://github.github.com/gfm/ (spec)",
-        "BugReports": "http://github.com/jeroen/commonmark/issues",
-        "Description": "The CommonMark specification defines a rationalized version of markdown\n    syntax. This package uses the 'cmark' reference implementation for converting\n    markdown text into various formats including html, latex and groff man. In\n    addition it exposes the markdown parse tree in xml format. Also includes opt-in\n    support for GFM extensions including tables, autolinks, and strikethrough text.",
-        "License": "BSD_2_clause + file LICENSE",
-        "Suggests": "curl, testthat, xml2",
-        "RoxygenNote": "6.0.1",
-        "NeedsCompilation": "yes",
-        "Packaged": "2018-12-01 11:57:14 UTC; jeroen",
-        "Author": "Jeroen Ooms [aut, cre],\n  John MacFarlane [cph] (Author of cmark)",
-        "Maintainer": "Jeroen Ooms <jeroen@berkeley.edu>",
-        "Repository": "CRAN",
-        "Date/Publication": "2018-12-01 12:30:03 UTC",
-        "Built": "R 3.6.0; x86_64-pc-linux-gnu; 2019-05-04 01:34:05 UTC; unix"
-      }
-    },
     "connections": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -541,16 +445,20 @@
         "Authors@R": "\n    person(\"Edgar\", \"Ruiz\", email = \"edgar@rstudio.com\", role = c(\"aut\", \"cre\"))",
         "Description": "Enables 'DBI' compliant packages to integrate with the 'RStudio' connections \n  pane, and the 'pins' package. It automates the display of schemata, tables, views, as well \n  as the preview of the table's top 1000 records. ",
         "License": "GPL-3",
-        "Imports": "DBI,\nmethods,\npins,\ndplyr,\ndbplyr,\nuuid,\nrscontract",
-        "Suggests": "RSQLite,\ntestthat (>= 2.1.0),\ncovr",
+        "Imports": "DBI, methods, pins, dplyr, dbplyr, uuid, rscontract",
+        "Suggests": "RSQLite, testthat (>= 2.1.0), covr",
         "Encoding": "UTF-8",
         "LazyData": "true",
-        "RoxygenNote": "7.0.1",
+        "RoxygenNote": "6.1.1",
         "URL": "https://github.com/edgararuiz/connections",
         "BugReports": "https://github.com/edgararuiz/connections/issues",
+        "NeedsCompilation": "no",
+        "Packaged": "2019-10-24 13:39:10 UTC; edgar",
         "Author": "Edgar Ruiz [aut, cre]",
         "Maintainer": "Edgar Ruiz <edgar@rstudio.com>",
-        "Built": "R 3.6.1; ; 2019-11-27 22:30:45 UTC; unix"
+        "Repository": "CRAN",
+        "Date/Publication": "2019-10-28 16:30:02 UTC",
+        "Built": "R 3.6.1; ; 2019-12-04 17:11:58 UTC; unix"
       }
     },
     "crayon": {
@@ -664,18 +572,21 @@
         "URL": "https://dbplyr.tidyverse.org/, https://github.com/tidyverse/dbplyr",
         "BugReports": "https://github.com/tidyverse/dbplyr/issues",
         "Depends": "R (>= 3.1)",
-        "Imports": "assertthat (>= 0.2.0),\nDBI (>= 1.0.0),\ndplyr (>= 0.8.0),\nglue (>= 1.2.0),\nmethods,\npurrr (>= 0.2.5),\nR6 (>= 2.2.2),\nrlang (>= 0.2.0),\ntibble (>= 1.4.2),\ntidyselect (>= 0.2.4),\nstringi,\nutils",
-        "Suggests": "bit64,\ncovr,\nknitr,\nLahman,\nnycflights13,\nRMariaDB (>= 1.0.2),\nrmarkdown,\nRMySQL (>= 0.10.11),\nRPostgreSQL (>= 0.4.1),\nRSQLite (>= 2.1.0),\ntestthat (>= 2.1.0),\nwithr (>= 2.1.2)",
+        "Imports": "assertthat (>= 0.2.0), DBI (>= 1.0.0), dplyr (>= 0.8.0), glue\n(>= 1.2.0), methods, purrr (>= 0.2.5), R6 (>= 2.2.2), rlang (>=\n0.2.0), tibble (>= 1.4.2), tidyselect (>= 0.2.4), utils",
+        "Suggests": "bit64, covr, knitr, Lahman, nycflights13, RMariaDB (>=\n1.0.2), rmarkdown, RMySQL (>= 0.10.11), RPostgreSQL (>= 0.4.1),\nRSQLite (>= 2.1.0), testthat (>= 2.0.0), withr (>= 2.1.2)",
         "VignetteBuilder": "knitr",
         "Encoding": "UTF-8",
         "Language": "en-gb",
         "LazyData": "yes",
-        "Roxygen": "list(markdown = TRUE)",
         "RoxygenNote": "6.1.1",
-        "Collate": "'utils.R'\n'sql.R'\n'escape.R'\n'translate-sql-quantile.R'\n'translate-sql-string.R'\n'translate-sql-paste.R'\n'translate-sql-helpers.R'\n'translate-sql-window.R'\n'translate-sql-conditional.R'\n'backend-.R'\n'backend-access.R'\n'backend-hive.R'\n'backend-impala.R'\n'backend-mssql.R'\n'backend-mysql.R'\n'backend-odbc.R'\n'backend-oracle.R'\n'backend-postgres.R'\n'backend-sqlite.R'\n'backend-teradata.R'\n'build-sql.R'\n'data-cache.R'\n'data-lahman.R'\n'data-nycflights13.R'\n'dbplyr.R'\n'explain.R'\n'ident.R'\n'lazy-ops.R'\n'memdb.R'\n'partial-eval.R'\n'query-join.R'\n'query-select.R'\n'query-semi-join.R'\n'query-set-op.R'\n'query.R'\n'remote.R'\n'schema.R'\n'simulate.R'\n'sql-build.R'\n'sql-expr.R'\n'src-sql.R'\n'src_dbi.R'\n'tbl-lazy.R'\n'tbl-sql.R'\n'test-frame.R'\n'testthat.R'\n'tidyr-pivot.R'\n'translate-sql-clause.R'\n'translate-sql.R'\n'utils-format.R'\n'verb-arrange.R'\n'verb-compute.R'\n'verb-copy-to.R'\n'verb-distinct.R'\n'verb-do-query.R'\n'verb-do.R'\n'verb-filter.R'\n'verb-group_by.R'\n'verb-head.R'\n'verb-joins.R'\n'verb-mutate.R'\n'verb-pull.R'\n'verb-select.R'\n'verb-set-ops.R'\n'verb-summarise.R'\n'verb-window.R'\n'zzz.R'",
+        "Collate": "'utils.R' 'sql.R' 'escape.R' 'translate-sql-quantile.R'\n'translate-sql-string.R' 'translate-sql-paste.R'\n'translate-sql-helpers.R' 'translate-sql-window.R'\n'translate-sql-conditional.R' 'backend-.R' 'backend-access.R'\n'backend-hive.R' 'backend-impala.R' 'backend-mssql.R'\n'backend-mysql.R' 'backend-odbc.R' 'backend-oracle.R'\n'backend-postgres.R' 'backend-sqlite.R' 'backend-teradata.R'\n'build-sql.R' 'data-cache.R' 'data-lahman.R'\n'data-nycflights13.R' 'dbplyr.R' 'explain.R' 'ident.R'\n'lazy-ops.R' 'memdb.R' 'partial-eval.R' 'query-join.R'\n'query-select.R' 'query-semi-join.R' 'query-set-op.R' 'query.R'\n'remote.R' 'schema.R' 'simulate.R' 'sql-build.R' 'sql-expr.R'\n'src-sql.R' 'src_dbi.R' 'tbl-lazy.R' 'tbl-sql.R' 'test-frame.R'\n'testthat.R' 'translate-sql-clause.R' 'translate-sql.R'\n'utils-format.R' 'verb-arrange.R' 'verb-compute.R'\n'verb-copy-to.R' 'verb-distinct.R' 'verb-do-query.R'\n'verb-do.R' 'verb-filter.R' 'verb-group_by.R' 'verb-head.R'\n'verb-joins.R' 'verb-mutate.R' 'verb-pull.R' 'verb-select.R'\n'verb-set-ops.R' 'verb-summarise.R' 'verb-window.R' 'zzz.R'",
+        "NeedsCompilation": "no",
+        "Packaged": "2019-06-17 19:32:57 UTC; hadley",
         "Author": "Hadley Wickham [aut, cre],\n  Edgar Ruiz [aut],\n  RStudio [cph, fnd]",
         "Maintainer": "Hadley Wickham <hadley@rstudio.com>",
-        "Built": "R 3.6.1; ; 2019-08-07 22:39:01 UTC; unix"
+        "Repository": "CRAN",
+        "Date/Publication": "2019-06-17 20:00:04 UTC",
+        "Built": "R 3.6.1; ; 2019-12-04 17:15:39 UTC; unix"
       }
     },
     "digest": {
@@ -738,7 +649,7 @@
         "Maintainer": "Hadley Wickham <hadley@rstudio.com>",
         "Repository": "CRAN",
         "Date/Publication": "2019-07-04 15:50:02 UTC",
-        "Built": "R 3.6.0; x86_64-pc-linux-gnu; 2019-07-11 20:24:57 UTC; unix"
+        "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-12-04 17:12:22 UTC; unix"
       }
     },
     "ellipsis": {
@@ -865,7 +776,7 @@
         "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-11-23 19:50:32 UTC; unix"
       }
     },
-    "formattable": {
+    "flexdashboard": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
       "GithubRepo": null,
@@ -873,97 +784,27 @@
       "GithubRef": null,
       "GithubSha1": null,
       "description": {
-        "Package": "formattable",
-        "Title": "Create 'Formattable' Data Structures",
-        "Version": "0.2.0.1",
-        "Authors@R": "c(\n    person(\"Kun\", \"Ren\", role = c(\"aut\", \"cre\"), email = \"ken@renkun.me\"),\n    person(\"Kenton\", \"Russell\", role = \"aut\", email = \"kent.russell@timelyportfolio.com\")\n    )",
-        "Description": "Provides functions to create formattable vectors and data frames.\n    'Formattable' vectors are printed with text formatting, and formattable\n    data frames are printed with multiple types of formatting in HTML\n    to improve the readability of data presented in tabular form rendered in\n    web pages.",
-        "Depends": "R (> 3.0.2)",
-        "Date": "2016-08-05",
-        "Imports": "methods, htmltools, htmlwidgets, knitr, rmarkdown",
-        "License": "MIT + file LICENSE",
-        "LazyData": "true",
-        "URL": "https://renkun.me/formattable,\nhttps://github.com/renkun-ken/formattable",
-        "BugReports": "https://github.com/renkun-ken/formattable/issues",
-        "ByteCompile": "TRUE",
-        "Suggests": "testthat, DT, shiny, covr",
-        "RoxygenNote": "5.0.1",
-        "VignetteBuilder": "knitr",
-        "NeedsCompilation": "no",
-        "Packaged": "2016-08-05 01:44:15 UTC; renkun",
-        "Author": "Kun Ren [aut, cre],\n  Kenton Russell [aut]",
-        "Maintainer": "Kun Ren <ken@renkun.me>",
-        "Repository": "CRAN",
-        "Date/Publication": "2016-08-05 11:53:18",
-        "Built": "R 3.6.0; ; 2019-06-25 23:37:34 UTC; unix"
-      }
-    },
-    "fs": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "fs",
-        "Title": "Cross-Platform File System Operations Based on 'libuv'",
-        "Version": "1.3.1",
-        "Authors@R": "c(\n    person(\"Jim\", \"Hester\", email = \"james.f.hester@gmail.com\", role = c(\"aut\", \"cre\")),\n    person(\"Hadley\", \"Wickham\", , \"hadley@rstudio.com\", \"aut\"),\n    person(\"libuv project contributors\", role = \"cph\", comment = \"libuv library\"),\n    person(\"Joyent, Inc. and other Node contributors\", role = \"cph\", comment = \"libuv library\"),\n    person(\"RStudio\", role = c(\"cph\", \"fnd\"))\n    )",
-        "Description": "A cross-platform interface to file system operations, built on\n  top of the 'libuv' C library.",
-        "Depends": "R (>= 3.1)",
-        "License": "GPL-3",
-        "Encoding": "UTF-8",
-        "LazyData": "true",
-        "ByteCompile": "true",
-        "LinkingTo": "Rcpp",
-        "Imports": "methods, Rcpp",
-        "SystemRequirements": "GNU make",
-        "RoxygenNote": "6.1.1",
-        "URL": "http://fs.r-lib.org, https://github.com/r-lib/fs",
-        "BugReports": "https://github.com/r-lib/fs/issues",
-        "Copyright": "file COPYRIGHTS",
-        "Suggests": "testthat, covr, pillar (>= 1.0.0), crayon, rmarkdown, knitr,\nwithr, spelling",
-        "VignetteBuilder": "knitr",
-        "Language": "en-US",
-        "NeedsCompilation": "yes",
-        "Packaged": "2019-05-06 20:39:49 UTC; jhester",
-        "Author": "Jim Hester [aut, cre],\n  Hadley Wickham [aut],\n  libuv project contributors [cph] (libuv library),\n  Joyent, Inc. and other Node contributors [cph] (libuv library),\n  RStudio [cph, fnd]",
-        "Maintainer": "Jim Hester <james.f.hester@gmail.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2019-05-06 22:50:03 UTC",
-        "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-07-29 13:47:01 UTC; unix"
-      }
-    },
-    "getPass": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "getPass",
+        "Package": "flexdashboard",
         "Type": "Package",
-        "Title": "Masked User Input",
-        "Version": "0.2-2",
-        "Description": "A micro-package for reading \"passwords\", i.e.  reading\n    user input with masking, so that the input is not displayed as it \n    is typed.  Currently we have support for 'RStudio', the command line\n    (every OS), and any platform where 'tcltk' is present.  ",
-        "License": "BSD 2-clause License + file LICENSE",
-        "Depends": "R (>= 3.0.0)",
-        "Imports": "utils, rstudioapi (>= 0.5)",
-        "Suggests": "argon2",
-        "NeedsCompilation": "yes",
-        "ByteCompile": "yes",
-        "Authors@R": "c(\n    person(\"Drew\", \"Schmidt\", role=c(\"aut\", \"cre\"), email=\"wrathematics@gmail.com\"),\n    person(\"Wei-Chen\", \"Chen\", role=\"aut\"),\n    person(\"Gabor\", \"Csardi\", role=\"ctb\", comment=\"Improved terminal detection\"),\n    person(\"Rich\", \"FitzJohn\", role=\"ctb\")\n    )",
-        "URL": "https://github.com/wrathematics/getPass",
-        "BugReports": "https://github.com/wrathematics/getPass/issues",
-        "Maintainer": "Drew Schmidt <wrathematics@gmail.com>",
+        "Title": "R Markdown Format for Flexible Dashboards",
+        "Version": "0.5.1.1",
+        "Description": "Format for converting an R Markdown document to a grid oriented\n  dashboard. The dashboard flexibly adapts the size of it's components to the\n  containing web page.",
+        "Authors@R": "c(\n  person(\"Richard\", \"Iannone\", role = c(\"aut\", \"cre\"), email = \"rich@rstudio.com\",\n         comment = c(ORCID = \"0000-0003-3925-190X\")),\n  person(\"JJ\", \"Allaire\", role = \"aut\", email = \"jj@rstudio.com\"),\n  person(\"Barbara\", \"Borges\", role = c(\"aut\"), email = \"barb.b.ribeiro@gmail.com\"),\n  person(family = \"RStudio\", role = \"cph\"),\n  person(family = \"Keen IO\", role = c(\"ctb\", \"cph\"), comment = \"Dashboard CSS\"),\n  person(\"Abdullah\", \"Almsaeed\", role = c(\"ctb\", \"cph\"), comment = \"Dashboard CSS\"),\n  person(\"Jonas\", \"Mosbech\", role = c(\"ctb\", \"cph\"), comment = \"StickyTableHeaders\"),\n  person(\"Noel\", \"Bossart\", role = c(\"ctb\", \"cph\"), comment = \"Featherlight\"),\n  person(\"Lea\", \"Verou\", role = c(\"ctb\", \"cph\"), comment = \"Prism\"),\n  person(\"Dmitry\", \"Baranovskiy\", role = c(\"ctb\", \"cph\"), comment = \"Raphael.js\"),\n  person(family = \"Sencha Labs\", role = c(\"ctb\", \"cph\"), comment = \"Raphael.js\"),\n  person(\"Bojan\", \"Djuricic\", role = c(\"ctb\", \"cph\"), comment = \"JustGage\"),\n  person(\"Tomas\", \"Sardyha\", role = c(\"ctb\", \"cph\"), comment = \"Sly\"),\n  person(\"Bryan\", \"Lewis\", role = c(\"ctb\", \"cph\"), comment = \"Examples\"),\n  person(\"Carson\", \"Sievert\", role = c(\"ctb\", \"cph\"), comment = \"Examples\"),\n  person(\"Joshua\", \"Kunst\", role = c(\"ctb\", \"cph\"), comment = \"Examples\"),\n  person(\"Ryan\", \"Hafen\", role = c(\"ctb\", \"cph\"), comment = \"Examples\"),\n  person(\"Bob\", \"Rudis\", role = c(\"ctb\", \"cph\"), comment = \"Examples\"),\n  person(\"Joe\", \"Cheng\", role = c(\"ctb\"), comment = \"Examples\")\n  )",
+        "URL": "http://rmarkdown.rstudio.com/flexdashboard",
+        "BugReports": "https://github.com/rstudio/flexdashboard/issues",
+        "Depends": "R (>= 3.0.2)",
+        "Imports": "tools, jsonlite, htmltools, knitr (>= 1.13), htmlwidgets (>=\n0.6), rmarkdown (>= 1.0), shiny (>= 0.13)",
+        "Suggests": "testthat",
+        "LazyData": "TRUE",
+        "License": "MIT + file LICENSE",
         "RoxygenNote": "6.0.1",
-        "Packaged": "2017-07-20 02:04:32 UTC; mschmid3",
-        "Author": "Drew Schmidt [aut, cre],\n  Wei-Chen Chen [aut],\n  Gabor Csardi [ctb] (Improved terminal detection),\n  Rich FitzJohn [ctb]",
+        "NeedsCompilation": "no",
+        "Packaged": "2018-06-28 21:44:36 UTC; jcheng",
+        "Author": "Richard Iannone [aut, cre] (<https://orcid.org/0000-0003-3925-190X>),\n  JJ Allaire [aut],\n  Barbara Borges [aut],\n  RStudio [cph],\n  Keen IO [ctb, cph] (Dashboard CSS),\n  Abdullah Almsaeed [ctb, cph] (Dashboard CSS),\n  Jonas Mosbech [ctb, cph] (StickyTableHeaders),\n  Noel Bossart [ctb, cph] (Featherlight),\n  Lea Verou [ctb, cph] (Prism),\n  Dmitry Baranovskiy [ctb, cph] (Raphael.js),\n  Sencha Labs [ctb, cph] (Raphael.js),\n  Bojan Djuricic [ctb, cph] (JustGage),\n  Tomas Sardyha [ctb, cph] (Sly),\n  Bryan Lewis [ctb, cph] (Examples),\n  Carson Sievert [ctb, cph] (Examples),\n  Joshua Kunst [ctb, cph] (Examples),\n  Ryan Hafen [ctb, cph] (Examples),\n  Bob Rudis [ctb, cph] (Examples),\n  Joe Cheng [ctb] (Examples)",
+        "Maintainer": "Richard Iannone <rich@rstudio.com>",
         "Repository": "CRAN",
-        "Date/Publication": "2017-07-21 09:20:34 UTC",
-        "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-11-22 22:54:42 UTC; unix"
+        "Date/Publication": "2018-06-29 21:23:17 UTC",
+        "Built": "R 3.6.1; ; 2019-07-29 13:48:07 UTC; unix"
       }
     },
     "ggplot2": {
@@ -1151,37 +992,6 @@
         "Repository": "CRAN",
         "Date/Publication": "2019-03-20 21:10:33 UTC",
         "Built": "R 3.6.1; ; 2019-07-29 13:45:45 UTC; unix"
-      }
-    },
-    "hms": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "hms",
-        "Title": "Pretty Time of Day",
-        "Date": "2019-10-30",
-        "Version": "0.5.2",
-        "Authors@R": "c(\n    person(\"Kirill\", \"Müller\", role = c(\"aut\", \"cre\"), email = \"krlmlr+r@mailbox.org\"),\n    person(\"The R Consortium\", role = \"fnd\"),\n    person(\"RStudio\", role = \"fnd\")\n    )",
-        "Description": "Implements an S3 class for storing and formatting time-of-day\n    values, based on the 'difftime' class.",
-        "Imports": "methods, pkgconfig, rlang, vctrs (>= 0.2.0)",
-        "Suggests": "crayon, lubridate, pillar (>= 1.1.0), testthat",
-        "License": "GPL-3",
-        "Encoding": "UTF-8",
-        "LazyData": "true",
-        "URL": "https://github.com/tidyverse/hms",
-        "BugReports": "https://github.com/tidyverse/hms/issues",
-        "RoxygenNote": "6.1.1",
-        "NeedsCompilation": "no",
-        "Packaged": "2019-10-29 23:52:19 UTC; kirill",
-        "Author": "Kirill Müller [aut, cre],\n  The R Consortium [fnd],\n  RStudio [fnd]",
-        "Maintainer": "Kirill Müller <krlmlr+r@mailbox.org>",
-        "Repository": "CRAN",
-        "Date/Publication": "2019-10-30 06:10:03 UTC",
-        "Built": "R 3.6.1; ; 2019-11-23 19:52:43 UTC; unix"
       }
     },
     "htmltools": {
@@ -1649,6 +1459,39 @@
         "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-09-06 13:19:18 UTC; unix"
       }
     },
+    "metricsgraphics": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Package": "metricsgraphics",
+        "Type": "Package",
+        "Title": "Create Interactive Charts with the JavaScript 'MetricsGraphics'\nLibrary",
+        "Version": "0.9.0",
+        "Date": "2015-12-21",
+        "Authors@R": "c(\n      person(\"Bob\", \"Rudis\", email = \"bob@rudis.net\", role = c(\"aut\", \"cre\")),\n      person(\"Ali\", \"Almossawi\", role = c(\"ctb\", \"cph\"), comment = \"MetricsGraphics library\"),\n      person(\"Hamilton\", \"Ulmer\", role = c(\"ctb\", \"cph\"), comment = \"MetricsGraphics library\"),\n      person(\"Mozilla\", role = c(\"cph\"), comment = \"MetricsGraphics library\"),\n      person(\"jQuery Foundation and contributors\", role = c(\"ctb\", \"cph\"), comment = \"jQuery library\")\n    )",
+        "Maintainer": "Bob Rudis <bob@rudis.net>",
+        "Description": "Provides an 'htmlwidgets' interface to the\n    'MetricsGraphics.js' ('D3'-based) charting library which is geared towards\n    displaying time-series data. Chart types include line charts, scatterplots,\n    histograms and rudimentary bar charts. Support for laying out multiple charts\n    into a grid layout is also provided. All charts are interactive and many\n    have an option for line, label and region annotations.",
+        "URL": "http://github.com/hrbrmstr/metricsgraphics",
+        "BugReports": "https://github.com/hrbrmstr/metricsgraphics/issues",
+        "License": "MIT + file LICENSE",
+        "Suggests": "testthat, RColorBrewer, ggplot2, ggplot2movies, jsonlite (>=\n0.9.16), knitr (>= 1.8), shiny (>= 0.12.0), binom, dplyr,\ngrDevices",
+        "Depends": "R (>= 3.0.0)",
+        "Imports": "magrittr, htmlwidgets, htmltools",
+        "VignetteBuilder": "knitr",
+        "RoxygenNote": "5.0.1",
+        "NeedsCompilation": "no",
+        "Packaged": "2015-12-21 12:19:51 UTC; hrbrmstr",
+        "Author": "Bob Rudis [aut, cre],\n  Ali Almossawi [ctb, cph] (MetricsGraphics library),\n  Hamilton Ulmer [ctb, cph] (MetricsGraphics library),\n  Mozilla [cph] (MetricsGraphics library),\n  jQuery Foundation and contributors [ctb, cph] (jQuery library)",
+        "Repository": "RSPM",
+        "Date/Publication": "2015-12-21 15:29:04",
+        "Encoding": "UTF-8",
+        "Built": "R 3.6.1; ; 2019-10-22 16:21:28 UTC; unix"
+      }
+    },
     "mgcv": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -1797,6 +1640,36 @@
         "Repository": "CRAN",
         "Date/Publication": "2019-07-18 06:35:27 UTC",
         "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-09-03 14:28:49 UTC; unix"
+      }
+    },
+    "packrat": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Package": "packrat",
+        "Type": "Package",
+        "Title": "A Dependency Management System for Projects and their R Package\nDependencies",
+        "Version": "0.5.0",
+        "Author": "Kevin Ushey, Jonathan McPherson, Joe Cheng, Aron Atkins, JJ Allaire",
+        "Maintainer": "Kevin Ushey <kevin@rstudio.com>",
+        "Description": "Manage the R packages your project depends\n    on in an isolated, portable, and reproducible way.",
+        "License": "GPL-2",
+        "Depends": "R (>= 3.0.0)",
+        "Imports": "tools, utils",
+        "Suggests": "testthat (>= 0.7), devtools, httr, knitr, rmarkdown",
+        "URL": "https://github.com/rstudio/packrat/",
+        "BugReports": "https://github.com/rstudio/packrat/issues",
+        "RoxygenNote": "6.1.1",
+        "Encoding": "UTF-8",
+        "NeedsCompilation": "no",
+        "Packaged": "2018-11-13 23:16:36 UTC; kevin",
+        "Repository": "CRAN",
+        "Date/Publication": "2018-11-14 08:40:02 UTC",
+        "Built": "R 3.6.0; ; 2019-04-28 14:50:21 UTC; unix"
       }
     },
     "pillar": {
@@ -2112,40 +1985,6 @@
         "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-11-23 19:53:51 UTC; unix"
       }
     },
-    "readr": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "readr",
-        "Version": "1.3.1",
-        "Title": "Read Rectangular Text Data",
-        "Description": "The goal of 'readr' is to provide a fast and friendly way to read\n    rectangular data (like 'csv', 'tsv', and 'fwf'). It is designed to flexibly\n    parse many types of data found in the wild, while still cleanly failing when\n    data unexpectedly changes.",
-        "Authors@R": "c(\n    person(\"Hadley\", \"Wickham\", , \"hadley@rstudio.com\", \"aut\"),\n    person(\"Jim\", \"Hester\", , \"james.hester@rstudio.com\", c(\"aut\", \"cre\")),\n    person(\"Romain\", \"Francois\", role = \"aut\"),\n    person(\"R Core Team\", role = \"ctb\", comment = \"Date time code adapted from R\"),\n    person(\"RStudio\", role = c(\"cph\", \"fnd\")),\n    person(\"Jukka\", \"Jylänki\", role = c(\"ctb\", \"cph\"), comment = \"grisu3 implementation\"),\n    person(\"Mikkel\", \"Jørgensen\", role = c(\"ctb\", \"cph\"), comment = \"grisu3 implementation\"))",
-        "Encoding": "UTF-8",
-        "Depends": "R (>= 3.1)",
-        "LinkingTo": "Rcpp, BH",
-        "Imports": "Rcpp (>= 0.12.0.5), tibble, hms (>= 0.4.1), R6, clipr, crayon,\nmethods",
-        "Suggests": "curl, testthat, knitr, rmarkdown, stringi, covr, spelling",
-        "License": "GPL (>= 2) | file LICENSE",
-        "BugReports": "https://github.com/tidyverse/readr/issues",
-        "URL": "http://readr.tidyverse.org, https://github.com/tidyverse/readr",
-        "VignetteBuilder": "knitr",
-        "RoxygenNote": "6.1.1",
-        "SystemRequirements": "GNU make",
-        "Language": "en-US",
-        "NeedsCompilation": "yes",
-        "Packaged": "2018-12-20 16:06:40 UTC; jhester",
-        "Author": "Hadley Wickham [aut],\n  Jim Hester [aut, cre],\n  Romain Francois [aut],\n  R Core Team [ctb] (Date time code adapted from R),\n  RStudio [cph, fnd],\n  Jukka Jylänki [ctb, cph] (grisu3 implementation),\n  Mikkel Jørgensen [ctb, cph] (grisu3 implementation)",
-        "Maintainer": "Jim Hester <james.hester@rstudio.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2018-12-21 09:40:02 UTC",
-        "Built": "R 3.6.0; x86_64-pc-linux-gnu; 2019-04-28 15:08:38 UTC; unix"
-      }
-    },
     "reshape2": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -2275,6 +2114,33 @@
         "Built": "R 3.6.1; ; 2019-07-29 13:45:40 UTC; unix"
       }
     },
+    "rsconnect": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Package": "rsconnect",
+        "Type": "Package",
+        "Title": "Deployment Interface for R Markdown Documents and Shiny\nApplications",
+        "Version": "0.8.15",
+        "Author": "JJ Allaire",
+        "Maintainer": "Jonathan McPherson <jonathan@rstudio.com>",
+        "Description": "Programmatic deployment interface for 'RPubs', 'shinyapps.io', and\n    'RStudio Connect'. Supported content types include R Markdown documents,\n    Shiny applications, Plumber APIs, plots, and static web content.",
+        "Depends": "R (>= 3.0.0)",
+        "Imports": "curl, jsonlite, openssl, packrat (>= 0.4.8-1), rstudioapi (>=\n0.5), yaml (>= 2.1.5)",
+        "Suggests": "RCurl, callr, httpuv, knitr, plumber (>= 0.3.2), reticulate,\nrmarkdown (>= 1.1), shiny, sourcetools, testthat, xtable",
+        "License": "GPL-2",
+        "RoxygenNote": "6.1.1",
+        "NeedsCompilation": "no",
+        "Packaged": "2019-07-22 21:53:14 UTC; jmcphers",
+        "Repository": "CRAN",
+        "Date/Publication": "2019-07-22 22:50:02 UTC",
+        "Built": "R 3.6.1; ; 2019-09-06 13:19:27 UTC; unix"
+      }
+    },
     "rscontract": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -2289,16 +2155,20 @@
         "Authors@R": "\n    person(\"Edgar\", \"Ruiz\", email = \"edgar@rstudio.com\", role = c(\"aut\", \"cre\"))",
         "Description": "Provides a generic implementation of the 'RStudio' connection contract to \n    make it easier for database connections, and other type of connections, opened \n    via R packages integrate with the connections pane inside the 'RStudio' interactive\n    development environment (IDE).",
         "License": "GPL-3",
-        "Suggests": "testthat (>= 2.1.0),\ncovr",
+        "Suggests": "testthat (>= 2.1.0), covr",
         "Encoding": "UTF-8",
         "LazyData": "true",
         "RoxygenNote": "6.1.1",
         "URL": "https://github.com/edgararuiz/rscontract",
         "BugReports": "https://github.com/edgararuiz/rscontract/issues",
         "Language": "en-US",
+        "NeedsCompilation": "no",
+        "Packaged": "2019-10-02 12:59:19 UTC; edgar",
         "Author": "Edgar Ruiz [aut, cre]",
         "Maintainer": "Edgar Ruiz <edgar@rstudio.com>",
-        "Built": "R 3.6.1; ; 2019-10-02 12:56:50 UTC; unix"
+        "Repository": "CRAN",
+        "Date/Publication": "2019-10-06 12:40:03 UTC",
+        "Built": "R 3.6.1; ; 2019-12-04 17:15:55 UTC; unix"
       }
     },
     "rstudioapi": {
@@ -2639,46 +2509,6 @@
         "Repository": "CRAN",
         "Date/Publication": "2019-10-30 23:00:02 UTC",
         "Built": "R 3.6.1; ; 2019-11-23 19:57:13 UTC; unix"
-      }
-    },
-    "usmap": {
-      "Source": "github",
-      "Repository": null,
-      "GithubRepo": "usmap",
-      "GithubUsername": "pdil",
-      "GithubRef": "master",
-      "GithubSha1": "919866662987c181027a5c1cefbb96c7aaeb15dc",
-      "description": {
-        "Package": "usmap",
-        "Version": "0.5.0.9999",
-        "Title": "US Maps Including Alaska and Hawaii",
-        "Description": "Obtain United States map data frames of varying region types (e.g. county, \n    state). The map data frames include Alaska and Hawaii conveniently placed to the\n    bottom left, as they appear in most maps of the US. Convenience functions for plotting\n    choropleths and working with FIPS codes are also provided.",
-        "Authors@R": "person(\"Paolo\", \"Di Lorenzo\", email = \"paolo@dilorenzo.pl\", role = c(\"aut\", \"cre\"))",
-        "Depends": "R (>= 3.2.0)",
-        "License": "GPL-3 | file LICENSE",
-        "Encoding": "UTF-8",
-        "LazyData": "true",
-        "URL": "https://usmap.dev",
-        "BugReports": "https://github.com/pdil/usmap/issues",
-        "Imports": "utils",
-        "Suggests": "ggplot2, ggrepel, knitr, maptools, proto, rgdal, rmarkdown,\nscales, sp, stringr, testthat",
-        "RoxygenNote": "6.1.1",
-        "VignetteBuilder": "knitr",
-        "RemoteType": "github",
-        "RemoteHost": "api.github.com",
-        "RemoteRepo": "usmap",
-        "RemoteUsername": "pdil",
-        "RemoteRef": "master",
-        "RemoteSha": "919866662987c181027a5c1cefbb96c7aaeb15dc",
-        "GithubRepo": "usmap",
-        "GithubUsername": "pdil",
-        "GithubRef": "master",
-        "GithubSHA1": "919866662987c181027a5c1cefbb96c7aaeb15dc",
-        "NeedsCompilation": "no",
-        "Packaged": "2019-09-16 19:00:55 UTC; edgar",
-        "Author": "Paolo Di Lorenzo [aut, cre]",
-        "Maintainer": "Paolo Di Lorenzo <paolo@dilorenzo.pl>",
-        "Built": "R 3.6.1; ; 2019-09-16 19:01:01 UTC; unix"
       }
     },
     "utf8": {
@@ -3022,11 +2852,14 @@
     }
   },
   "files": {
-    "access-to-care-email.Rmd": {
-      "checksum": "8fdb0d4d4bfbbe5ecacde74e6170613b"
+    "access-to-care.Rmd": {
+      "checksum": "0f92de972a806a6e209a8cd0d16149b3"
     },
-    "access-to-care-rmarkdown.Rmd": {
-      "checksum": "3334f16eff98581f95927b28d827c026"
+    "manifest.json": {
+      "checksum": "af40fdbb03d06e21de7602be75d906af"
+    },
+    "model.png": {
+      "checksum": "d43a7d18e1310610959315a3023f2020"
     },
     "packrat/desc/askpass": {
       "checksum": "adb6f14233aa229a9245fbe85bd572d6"
@@ -3043,23 +2876,14 @@
     "packrat/desc/BH": {
       "checksum": "198d2958d305790c2b2e83c2271a89a1"
     },
-    "packrat/desc/blastula": {
-      "checksum": "cf81fdab75d9c05978d4f4c36c37aa22"
-    },
     "packrat/desc/cli": {
       "checksum": "26bc32342ff6e339a36ad8dd1714152f"
-    },
-    "packrat/desc/clipr": {
-      "checksum": "39f81043012bf8758a207b1121472f50"
     },
     "packrat/desc/colorspace": {
       "checksum": "9accdaca7a2ff925abbb0983f52fdbf0"
     },
-    "packrat/desc/commonmark": {
-      "checksum": "d54312005434e0b16a8e99edf1b25de6"
-    },
     "packrat/desc/connections": {
-      "checksum": "7d48fa83877613b902ade98cfeac9be1"
+      "checksum": "63d9d65472ddfde18c3eeae52146b44e"
     },
     "packrat/desc/crayon": {
       "checksum": "b904732d2ef8151af8505f65ca9bf2c8"
@@ -3074,13 +2898,13 @@
       "checksum": "5d3487eef1c5fdb2800afaed547e7cf5"
     },
     "packrat/desc/dbplyr": {
-      "checksum": "f656ddbddff877ccac2ad378e80e8e18"
+      "checksum": "86dbe52f09bcdfeb975abcebf2cb37c1"
     },
     "packrat/desc/digest": {
       "checksum": "eb52a3dd6c1a94208b2abc95ba58d6f6"
     },
     "packrat/desc/dplyr": {
-      "checksum": "89cd0b292fd050b3c714f1e075be21e1"
+      "checksum": "82e3ea9c5300daca615045d4f0c0b991"
     },
     "packrat/desc/DT": {
       "checksum": "e0abd5abd8e77fa95dd845ca223c12e4"
@@ -3097,14 +2921,8 @@
     "packrat/desc/farver": {
       "checksum": "07c603486f2b57171ad31eab4ec12310"
     },
-    "packrat/desc/formattable": {
-      "checksum": "981d77860fc47965279d4cd8474ff2a8"
-    },
-    "packrat/desc/fs": {
-      "checksum": "1e5b95771fff782dc808002793a08e34"
-    },
-    "packrat/desc/getPass": {
-      "checksum": "97821eea1c23e08f044688e4700671af"
+    "packrat/desc/flexdashboard": {
+      "checksum": "de10f1f054082fa8afcecf17a22dce28"
     },
     "packrat/desc/ggplot2": {
       "checksum": "ad2db3c1f244c1ee38ff712c0fed5fdf"
@@ -3123,9 +2941,6 @@
     },
     "packrat/desc/highr": {
       "checksum": "f7b8c5c73dac0dc8c0dd3fa2d09f28ea"
-    },
-    "packrat/desc/hms": {
-      "checksum": "13ca9bbb21fc90a7e9e88a915779c04a"
     },
     "packrat/desc/htmltools": {
       "checksum": "096fd4286b92b5f2f7da730dfc36c477"
@@ -3178,6 +2993,9 @@
     "packrat/desc/Matrix": {
       "checksum": "d541ad7b2008153e6c90a32bf66aa3cc"
     },
+    "packrat/desc/metricsgraphics": {
+      "checksum": "31d3c6c2a91a9e3eecb5cefe4cee1528"
+    },
     "packrat/desc/mgcv": {
       "checksum": "3322e1ba5ad4d21f42dbfa87333048e7"
     },
@@ -3192,6 +3010,9 @@
     },
     "packrat/desc/openssl": {
       "checksum": "df489c9cc292f74875c80af9a7942ce7"
+    },
+    "packrat/desc/packrat": {
+      "checksum": "8a21d2e1a1c6643bcb1131ee35044ff0"
     },
     "packrat/desc/pillar": {
       "checksum": "5ed755f867065bd0b75e138ba094c383"
@@ -3232,9 +3053,6 @@
     "packrat/desc/Rcpp": {
       "checksum": "8f85a14a7dbfdd75e9546b77e4715fe2"
     },
-    "packrat/desc/readr": {
-      "checksum": "2cdfb58035a6ce45f7c5fd8b40706965"
-    },
     "packrat/desc/reshape2": {
       "checksum": "a1966f37efdca71c4a97f9a903ffce9e"
     },
@@ -3247,8 +3065,11 @@
     "packrat/desc/rprojroot": {
       "checksum": "32aa7a1cb8b1ebb268844386f2ece152"
     },
+    "packrat/desc/rsconnect": {
+      "checksum": "05c802981377dd65ad10f7c7b5f850d6"
+    },
     "packrat/desc/rscontract": {
-      "checksum": "aa2ed586222240b2da568b4c38513883"
+      "checksum": "9bd16fbced209bb89e781a3d4e5e875f"
     },
     "packrat/desc/rstudioapi": {
       "checksum": "32f3823157c7a2ac16e42dcc58a0b07c"
@@ -3282,9 +3103,6 @@
     },
     "packrat/desc/tinytex": {
       "checksum": "2004363d151216cdff7cbdf8c93a2130"
-    },
-    "packrat/desc/usmap": {
-      "checksum": "e44bd4beefdd3dda7144c01d30296936"
     },
     "packrat/desc/utf8": {
       "checksum": "1bf4fed895f4bcc93cc2ed9593338a30"
@@ -3320,7 +3138,10 @@
       "checksum": "df9935ffca693dfde7b99a6283f9db00"
     },
     "packrat/packrat.lock": {
-      "checksum": "9f5fbfc6e15f96260126a1f5d629515d"
+      "checksum": "18f4e156bd7b3c909ebe7a7279eae2d1"
+    },
+    "rs-connect-git.R": {
+      "checksum": "a8d0440bb3bfbdd47c3fd44e8aa8440c"
     },
     "RStudio1.png": {
       "checksum": "288da77036023512c0adbf27de9fe9c2"

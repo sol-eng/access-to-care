@@ -5,57 +5,7 @@ params:
     label: 'Display Code:'
     value: no
   state:
-    choices:
-    - Alabama
-    - Arizona
-    - Arkansas
-    - California
-    - Colorado
-    - Connecticut
-    - Delaware
-    - District of Columbia
-    - Florida
-    - Georgia
-    - Hawaii
-    - Idaho
-    - Illinois
-    - Indiana
-    - Iowa
-    - Kansas
-    - Kentucky
-    - Louisiana
-    - Maine
-    - Maryland
-    - Massachusetts
-    - Michigan
-    - Minnesota
-    - Mississippi
-    - Missouri
-    - Montana
-    - Nebraska
-    - Nevada
-    - New Hampshire
-    - New Jersey
-    - New Mexico
-    - New York
-    - North Carolina
-    - North Dakota
-    - Ohio
-    - Oklahoma
-    - Oregon
-    - Pennsylvania
-    - Rhode Island
-    - South Carolina
-    - South Dakota
-    - Tennessee
-    - Texas
-    - Utah
-    - Vermont
-    - Virginia
-    - Washington
-    - West Virginia
-    - Wisconsin
-    - Wyoming
+    choices: [Alabama, Arizona, Arkansas, California, Colorado, Connecticut, Delaware, District of Columbia, Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana, Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana, Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina, North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina, South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia, Wisconsin, Wyoming]
     input: select
     label: 'State:'
     value: California
@@ -96,15 +46,25 @@ if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
   board_register(boardname)  
 }
 
-counties <- pin_get("atc-db-county-map", boardname) %>%
-  filter(full %in% !! params$state) %>%
+states <- pin_get("atc-db-states", board = boardname) %>% 
+  filter(full == !! params$state) %>%
   collect()
+
+curr_state <- pull(states, state_id)
+
+counties <- pin_get("atc-db-county-map", boardname) %>%
+  filter(state_id == !! curr_state) %>%
+  collect()
+
+state <- counties$state_id[1]
 
 counties_table <- pin_get("atc-db-county-table", boardname) %>%
   filter(full %in% !! params$state) %>%
   collect()
 
-state <- counties$state_id[1]
+base_map <- pin_get("atc-db-base-map", boardname) %>%
+  filter(full %in% !! params$state) %>%
+  collect()
 
 hospital_locations <- pin_get("atc-db-hospitals", boardname) %>%
   filter(state_id == !! state) %>%
@@ -125,44 +85,54 @@ A **statistical model using data from across the country** is used to identify t
 Breakdown of counties and their status based on county population compared to the number of hospitals
 
 ```{r, fig.height = 7, fig.width = 9}
-
-initial_map <- leaflet() %>%
-  addProviderTiles(providers$CartoDB) %>%
-  addLegend("bottomright", 
-            color  = c(under,over ,at_level, hospital_color), 
-            labels = c("Less hopitals than expected",
-                       "More hospitals than expected", "Within Range", 
-                       "Hospital Location"), 
-            title  = "Legend",opacity = 0.5)
-
-county_map <- counties %>%
-  group_by(county_id, shape_id) %>%
-  group_map(~ .x) %>%
-  reduce(
-    ~ addPolygons(.x, 
-                  lng = .y$long, 
-                  lat = .y$lat, 
-                  color = .y$color[[1]], 
-                  popup = .y$popup[[1]],
-                  weight = 1, fillOpacity = 0.3), 
-    .init = initial_map)  
-
-locations <- hospital_locations %>%
-  mutate_all(round, 3) %>%
+locations <- pin_get("atc-db-hospitals", board = boardname) %>%
+  filter(state_id == !! curr_state) %>%
+  select(longitude, latitude) %>%
+  collect() %>%
+  mutate_all(round, 1) %>%
   count(longitude, latitude) %>%
   mutate(popup = paste0("Hospitals: ", n))
 
-county_map <- county_map %>%
+initial_map <- leaflet() %>%
+  addProviderTiles(providers$CartoDB) %>%
+  addLegend(
+    "bottomright", 
+    color  = c(under,over ,at_level, hospital_color), 
+    labels = c(
+      "Less hopitals than expected",
+      "More hospitals than expected", "Within Range", 
+      "Hospital Location"), 
+    title  = "Legend",
+    opacity = 0.5
+    )
+
+full_map <- base_map %>%
+  select(popup, color, county_id) %>%
+  inner_join(counties, by = "county_id")
+
+full_map %>%
+  group_by(county_id, shape_id) %>%
+  group_map(~ .x) %>%
+  reduce(
+    ~ addPolygons(
+      .x, 
+      lng = .y$long, 
+      lat = .y$lat, 
+      color = .y$color[[1]], 
+      popup = .y$popup[[1]],
+      weight = 1, 
+      fillOpacity = 0.3
+      ), 
+    .init = initial_map
+    ) %>%
   addCircleMarkers(
     lng = locations$longitude, 
     lat = locations$latitude,
     radius = 2 * (1 + log(locations$n)),
     popup = locations$popup,
     fillColor = hospital_color, color = "gray", 
-    fillOpacity = 0.7,weight = 1)
-
-
-county_map  
+    fillOpacity = 0.7,weight = 1
+    )
 ```
 
 ### County Data
