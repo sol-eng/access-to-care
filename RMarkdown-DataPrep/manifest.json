@@ -2643,6 +2643,9 @@
     "data/Structural_Measures_-_Hospital.sas7bdat": {
       "checksum": "07f55dc14b909799b2ec2d096157851c"
     },
+    "manifest.json": {
+      "checksum": "742fd54ddcc1a2076bd8527ef8e9d0a2"
+    },
     "packrat/desc/askpass": {
       "checksum": "adb6f14233aa229a9245fbe85bd572d6"
     },
@@ -2899,160 +2902,7 @@
       "checksum": "069e17f67f32ff1cb0c4dc12e9af6143"
     },
     "rs-connect-git.R": {
-      "checksum": "8a2829b17b14ae129651abb7a28a42f2"
-    },
-    "rsconnect/documents/access-to-care-dataprep.Rmd/colorado.rstudio.com/edgar/access-to-care-dataprep.dcf": {
-      "checksum": "45acc08185598751acf5e4f3f99adced"
-    },
-    "shapes/AK.rds": {
-      "checksum": "d4aa2394daaf95827f8a2f05471b559c"
-    },
-    "shapes/AL.rds": {
-      "checksum": "3b8810add8b449f929dd9b14443aa853"
-    },
-    "shapes/AR.rds": {
-      "checksum": "967afbbe519ed822f2ae3bda7eebdd1d"
-    },
-    "shapes/AZ.rds": {
-      "checksum": "c9823fe28a6b89df1a722ad093aea0f7"
-    },
-    "shapes/CA.rds": {
-      "checksum": "4105a4dd4f552083243192a51b9c071b"
-    },
-    "shapes/CO.rds": {
-      "checksum": "49234d8cf5ecbaddf2154d2cf5e7e84e"
-    },
-    "shapes/CT.rds": {
-      "checksum": "0dce277f5dded2773fed79b9e720d559"
-    },
-    "shapes/DE.rds": {
-      "checksum": "2635397ae5b3089e1e29edbd85b16c75"
-    },
-    "shapes/FL.rds": {
-      "checksum": "bd15b5387f198961edad17b9b8c880e8"
-    },
-    "shapes/GA.rds": {
-      "checksum": "12d25deab1979a26164a638556eb3046"
-    },
-    "shapes/HI.rds": {
-      "checksum": "58af59d4a2c60a663adea96719664542"
-    },
-    "shapes/IA.rds": {
-      "checksum": "ac3297982c11f5b9520274788170f7b9"
-    },
-    "shapes/ID.rds": {
-      "checksum": "e578fcb1945a863c176737f861b6fc39"
-    },
-    "shapes/IL.rds": {
-      "checksum": "490f01aff4f912176fb9665b43f4fe9a"
-    },
-    "shapes/IN.rds": {
-      "checksum": "adde49158eb56a4812a0bb497c4fdab9"
-    },
-    "shapes/KS.rds": {
-      "checksum": "3e597b0804548128e86e0ac093d14959"
-    },
-    "shapes/KY.rds": {
-      "checksum": "8282fc93c3eb5dda275f8403c78e44df"
-    },
-    "shapes/LA.rds": {
-      "checksum": "a5c5f33fdf18b4e7b5d5d109c08360b7"
-    },
-    "shapes/MA.rds": {
-      "checksum": "3a270793ebab415af505084c493801d5"
-    },
-    "shapes/MD.rds": {
-      "checksum": "120abd02ff5aa81d00836b3288569cfc"
-    },
-    "shapes/ME.rds": {
-      "checksum": "e3e222509b36a810ba1d4a4585d1e89f"
-    },
-    "shapes/MI.rds": {
-      "checksum": "394135509d40a1744a016a6c27292b0c"
-    },
-    "shapes/MN.rds": {
-      "checksum": "1d46992cbda335da4944196308e00acb"
-    },
-    "shapes/MO.rds": {
-      "checksum": "ed3a86862fc6e2ccaace46e2bacae314"
-    },
-    "shapes/MS.rds": {
-      "checksum": "9b6d156a73a9233fa0fc29aa7b4d75fe"
-    },
-    "shapes/MT.rds": {
-      "checksum": "f98a6938e2e646acd01399e0eba6a22e"
-    },
-    "shapes/NC.rds": {
-      "checksum": "7d4add65d6742520cccc2099a4de7156"
-    },
-    "shapes/ND.rds": {
-      "checksum": "90a4ef193c3f83065a68ea6582891d9b"
-    },
-    "shapes/NE.rds": {
-      "checksum": "80e0595a1ec1183170c8c2ddb8274db7"
-    },
-    "shapes/NH.rds": {
-      "checksum": "84ab3a1a96ee316b21142561ab4fbe74"
-    },
-    "shapes/NJ.rds": {
-      "checksum": "c853c9bc0352d13c9755b49dc854ad8b"
-    },
-    "shapes/NM.rds": {
-      "checksum": "2be3afaec8b21b2a0f233b3ddfe084d9"
-    },
-    "shapes/NV.rds": {
-      "checksum": "baa8b3ed033a94d44ec407545ce9f900"
-    },
-    "shapes/NY.rds": {
-      "checksum": "2b47da9933d03f13ef048602c58c86f7"
-    },
-    "shapes/OH.rds": {
-      "checksum": "56608fcfd155d932d13684baeb1f2d75"
-    },
-    "shapes/OK.rds": {
-      "checksum": "ad2f41dd3d319b39c9850e7f7a9b6419"
-    },
-    "shapes/OR.rds": {
-      "checksum": "cb1a928d913744b21625b8d3240caf37"
-    },
-    "shapes/PA.rds": {
-      "checksum": "0fb59b1d3936919b68bdb99264a0dd5c"
-    },
-    "shapes/RI.rds": {
-      "checksum": "8d13e95490e2d3462d893c03beea65de"
-    },
-    "shapes/SC.rds": {
-      "checksum": "f626a7a4642f7048d56a131b0ace8c47"
-    },
-    "shapes/SD.rds": {
-      "checksum": "e126f4450731a83b4c1c2e8c3c183932"
-    },
-    "shapes/TN.rds": {
-      "checksum": "6f8d421503b75827372b2c4b19af7104"
-    },
-    "shapes/TX.rds": {
-      "checksum": "103e68a251a6b3a4a67e26f8c6d19ef7"
-    },
-    "shapes/UT.rds": {
-      "checksum": "2e106a0af2f6d5c9ebad845e03302bd5"
-    },
-    "shapes/VA.rds": {
-      "checksum": "96a84f761ef0edb54ff52951f4455385"
-    },
-    "shapes/VT.rds": {
-      "checksum": "1dda91e20df4cf0b9c58c1a6db751708"
-    },
-    "shapes/WA.rds": {
-      "checksum": "dfb5a951ff97e2c14b78d3878ea10d61"
-    },
-    "shapes/WI.rds": {
-      "checksum": "2026570aa5ed892447c9a9ae592ba3fa"
-    },
-    "shapes/WV.rds": {
-      "checksum": "77b76155bf22665f8f1e96242360958e"
-    },
-    "shapes/WY.rds": {
-      "checksum": "443313e1dd37ed9481380d159058d162"
+      "checksum": "924121c4a71dc8d2461746cc1a480e76"
     }
   },
   "users": null
