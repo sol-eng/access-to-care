@@ -366,7 +366,7 @@
         "Maintainer": "Hadley Wickham <hadley@rstudio.com>",
         "Repository": "CRAN",
         "Date/Publication": "2019-07-04 15:50:02 UTC",
-        "Built": "R 3.6.0; x86_64-pc-linux-gnu; 2019-07-11 20:24:57 UTC; unix"
+        "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-12-04 17:12:22 UTC; unix"
       }
     },
     "ellipsis": {
@@ -463,6 +463,36 @@
         "Repository": "CRAN",
         "Date/Publication": "2019-03-12 22:30:02 UTC",
         "Built": "R 3.6.0; x86_64-pc-linux-gnu; 2019-04-28 14:52:26 UTC; unix"
+      }
+    },
+    "here": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Package": "here",
+        "Title": "A Simpler Way to Find Your Files",
+        "Version": "0.1",
+        "Authors@R": "person(\"Kirill\", \"Müller\", role = c(\"aut\", \"cre\"), email = \"krlmlr+r@mailbox.org\")",
+        "Description": "Constructs paths to your project's files.\n    The 'here()' function uses a reasonable heuristics to find your project's\n    files, based on the current working directory at the time when the package\n    is loaded. Use it as a drop-in replacement for 'file.path()', it will always\n    locate the files relative to your project root.",
+        "Imports": "rprojroot (>= 1.2)",
+        "License": "GPL-3",
+        "Encoding": "UTF-8",
+        "LazyData": "true",
+        "Date": "2017-05-27",
+        "URL": "https://github.com/krlmlr/here, http://krlmlr.github.io/here",
+        "BugReports": "https://github.com/krlmlr/here/issues",
+        "RoxygenNote": "6.0.1",
+        "NeedsCompilation": "no",
+        "Packaged": "2017-05-27 20:53:11 UTC; muelleki",
+        "Author": "Kirill Müller [aut, cre]",
+        "Maintainer": "Kirill Müller <krlmlr+r@mailbox.org>",
+        "Repository": "CRAN",
+        "Date/Publication": "2017-05-28 06:13:04 UTC",
+        "Built": "R 3.6.0; ; 2019-06-22 21:52:31 UTC; unix"
       }
     },
     "httpuv": {
@@ -676,6 +706,36 @@
         "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-09-03 14:28:49 UTC; unix"
       }
     },
+    "packrat": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Package": "packrat",
+        "Type": "Package",
+        "Title": "A Dependency Management System for Projects and their R Package\nDependencies",
+        "Version": "0.5.0",
+        "Author": "Kevin Ushey, Jonathan McPherson, Joe Cheng, Aron Atkins, JJ Allaire",
+        "Maintainer": "Kevin Ushey <kevin@rstudio.com>",
+        "Description": "Manage the R packages your project depends\n    on in an isolated, portable, and reproducible way.",
+        "License": "GPL-2",
+        "Depends": "R (>= 3.0.0)",
+        "Imports": "tools, utils",
+        "Suggests": "testthat (>= 0.7), devtools, httr, knitr, rmarkdown",
+        "URL": "https://github.com/rstudio/packrat/",
+        "BugReports": "https://github.com/rstudio/packrat/issues",
+        "RoxygenNote": "6.1.1",
+        "Encoding": "UTF-8",
+        "NeedsCompilation": "no",
+        "Packaged": "2018-11-13 23:16:36 UTC; kevin",
+        "Repository": "CRAN",
+        "Date/Publication": "2018-11-14 08:40:02 UTC",
+        "Built": "R 3.6.0; ; 2019-04-28 14:50:21 UTC; unix"
+      }
+    },
     "pillar": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -713,12 +773,12 @@
       "GithubRepo": "pins",
       "GithubUsername": "rstudio",
       "GithubRef": "master",
-      "GithubSha1": "7d0a027779512fbe1514b1a853832fa2c4ec9009",
+      "GithubSha1": "34b1528bec3ac1f3c1a6d8629a4a22cd7914a190",
       "description": {
         "Package": "pins",
         "Type": "Package",
         "Title": "Pin, Discover and Share Resources",
-        "Version": "0.2.0.0009",
+        "Version": "0.3.0",
         "Authors@R": "c(\n    person(\"Javier\", \"Luraschi\", email = \"javier@rstudio.com\", role = c(\"aut\", \"cre\")),\n    person(family = \"RStudio\", role = c(\"cph\"))\n    )",
         "Maintainer": "Javier Luraschi <javier@rstudio.com>",
         "Description": "Pin remote resources into a local cache to work offline,\n  improve speed and avoid recomputing; discover and share resources\n  in local folders, 'GitHub', 'Kaggle' or 'RStudio Connect'. Resources can \n  be anything from 'CSV', 'JSON', or image files to arbitrary R objects.",
@@ -737,15 +797,15 @@
         "RemoteRepo": "pins",
         "RemoteUsername": "rstudio",
         "RemoteRef": "master",
-        "RemoteSha": "7d0a027779512fbe1514b1a853832fa2c4ec9009",
+        "RemoteSha": "34b1528bec3ac1f3c1a6d8629a4a22cd7914a190",
         "GithubRepo": "pins",
         "GithubUsername": "rstudio",
         "GithubRef": "master",
-        "GithubSHA1": "7d0a027779512fbe1514b1a853832fa2c4ec9009",
+        "GithubSHA1": "34b1528bec3ac1f3c1a6d8629a4a22cd7914a190",
         "NeedsCompilation": "no",
-        "Packaged": "2019-11-23 20:51:08 UTC; edgar",
+        "Packaged": "2019-11-25 23:01:00 UTC; edgar",
         "Author": "Javier Luraschi [aut, cre],\n  RStudio [cph]",
-        "Built": "R 3.6.1; ; 2019-11-23 20:51:09 UTC; unix"
+        "Built": "R 3.6.1; ; 2019-11-25 23:01:02 UTC; unix"
       }
     },
     "pkgconfig": {
@@ -965,6 +1025,95 @@
         "Repository": "CRAN",
         "Date/Publication": "2019-11-23 11:20:02 UTC",
         "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-11-23 19:51:36 UTC; unix"
+      }
+    },
+    "rprojroot": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Package": "rprojroot",
+        "Title": "Finding Files in Project Subdirectories",
+        "Version": "1.3-2",
+        "Authors@R": "person(given = \"Kirill\", family = \"Müller\", role = c(\"aut\",\n        \"cre\"), email = \"krlmlr+r@mailbox.org\")",
+        "Description": "Robust, reliable and flexible paths to files below a\n    project root. The 'root' of a project is defined as a directory\n    that matches a certain criterion, e.g., it contains a certain\n    regular file.",
+        "Depends": "R (>= 3.0.0)",
+        "Imports": "backports",
+        "Suggests": "testthat, mockr, knitr, withr, rmarkdown",
+        "VignetteBuilder": "knitr",
+        "License": "GPL-3",
+        "LazyData": "true",
+        "Encoding": "UTF-8",
+        "URL": "https://github.com/krlmlr/rprojroot,\nhttps://krlmlr.github.io/rprojroot",
+        "BugReports": "https://github.com/krlmlr/rprojroot/issues",
+        "RoxygenNote": "6.0.1",
+        "Collate": "'rrmake.R' 'criterion.R' 'file.R' 'has-file.R' 'root.R'\n'rprojroot-package.R' 'shortcut.R' 'thisfile.R'",
+        "NeedsCompilation": "no",
+        "Packaged": "2018-01-03 13:27:15 UTC; muelleki",
+        "Author": "Kirill Müller [aut, cre]",
+        "Maintainer": "Kirill Müller <krlmlr+r@mailbox.org>",
+        "Repository": "CRAN",
+        "Date/Publication": "2018-01-03 15:36:24 UTC",
+        "Built": "R 3.6.1; ; 2019-07-29 13:45:40 UTC; unix"
+      }
+    },
+    "rsconnect": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Package": "rsconnect",
+        "Type": "Package",
+        "Title": "Deployment Interface for R Markdown Documents and Shiny\nApplications",
+        "Version": "0.8.15",
+        "Author": "JJ Allaire",
+        "Maintainer": "Jonathan McPherson <jonathan@rstudio.com>",
+        "Description": "Programmatic deployment interface for 'RPubs', 'shinyapps.io', and\n    'RStudio Connect'. Supported content types include R Markdown documents,\n    Shiny applications, Plumber APIs, plots, and static web content.",
+        "Depends": "R (>= 3.0.0)",
+        "Imports": "curl, jsonlite, openssl, packrat (>= 0.4.8-1), rstudioapi (>=\n0.5), yaml (>= 2.1.5)",
+        "Suggests": "RCurl, callr, httpuv, knitr, plumber (>= 0.3.2), reticulate,\nrmarkdown (>= 1.1), shiny, sourcetools, testthat, xtable",
+        "License": "GPL-2",
+        "RoxygenNote": "6.1.1",
+        "NeedsCompilation": "no",
+        "Packaged": "2019-07-22 21:53:14 UTC; jmcphers",
+        "Repository": "CRAN",
+        "Date/Publication": "2019-07-22 22:50:02 UTC",
+        "Built": "R 3.6.1; ; 2019-09-06 13:19:27 UTC; unix"
+      }
+    },
+    "rstudioapi": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Package": "rstudioapi",
+        "Title": "Safely Access the RStudio API",
+        "Description": "Access the RStudio API (if available) and provide informative error\n    messages when it's not.",
+        "Version": "0.10",
+        "Authors@R": "c(\n    person(\"Kevin\", \"Ushey\", role = c(\"aut\", \"cre\"), email = \"kevin@rstudio.com\"),\n    person(\"JJ\", \"Allaire\", role = c(\"aut\"), email = \"jj@rstudio.com\"),\n    person(\"Hadley\", \"Wickham\", role = c(\"aut\"), email = \"hadley@rstudio.com\"),\n    person(\"Gary\", \"Ritchie\", role = c(\"aut\"), email = \"gary@rstudio.com\"),\n    person(family = \"RStudio\", role = \"cph\")\n    )",
+        "Maintainer": "Kevin Ushey <kevin@rstudio.com>",
+        "License": "MIT + file LICENSE",
+        "URL": "https://github.com/rstudio/rstudioapi",
+        "BugReports": "https://github.com/rstudio/rstudioapi/issues",
+        "RoxygenNote": "6.1.1",
+        "Suggests": "testthat, knitr, rmarkdown",
+        "VignetteBuilder": "knitr",
+        "Encoding": "UTF-8",
+        "NeedsCompilation": "no",
+        "Packaged": "2019-03-19 18:45:29 UTC; kevin",
+        "Author": "Kevin Ushey [aut, cre],\n  JJ Allaire [aut],\n  Hadley Wickham [aut],\n  Gary Ritchie [aut],\n  RStudio [cph]",
+        "Repository": "CRAN",
+        "Date/Publication": "2019-03-19 20:30:03 UTC",
+        "Built": "R 3.6.0; ; 2019-04-28 14:55:11 UTC; unix"
       }
     },
     "stringi": {
@@ -1329,6 +1478,9 @@
     "app.R": {
       "checksum": "e9177bce5ab495b787f6da9d32b74374"
     },
+    "manifest.json": {
+      "checksum": "33a960ffcc3ef373ecd60800a638372e"
+    },
     "packrat/desc/askpass": {
       "checksum": "adb6f14233aa229a9245fbe85bd572d6"
     },
@@ -1357,7 +1509,7 @@
       "checksum": "eb52a3dd6c1a94208b2abc95ba58d6f6"
     },
     "packrat/desc/dplyr": {
-      "checksum": "89cd0b292fd050b3c714f1e075be21e1"
+      "checksum": "82e3ea9c5300daca615045d4f0c0b991"
     },
     "packrat/desc/ellipsis": {
       "checksum": "815b3786f5eaaa618c753e37d017f75c"
@@ -1367,6 +1519,9 @@
     },
     "packrat/desc/glue": {
       "checksum": "a37e19669d16e5ccff0e69bdc8835999"
+    },
+    "packrat/desc/here": {
+      "checksum": "90a3db301804ad2aeac0850ce8efb259"
     },
     "packrat/desc/httpuv": {
       "checksum": "30891e460cae502d6773fd2a9f70c1c5"
@@ -1389,11 +1544,14 @@
     "packrat/desc/openssl": {
       "checksum": "df489c9cc292f74875c80af9a7942ce7"
     },
+    "packrat/desc/packrat": {
+      "checksum": "8a21d2e1a1c6643bcb1131ee35044ff0"
+    },
     "packrat/desc/pillar": {
       "checksum": "5ed755f867065bd0b75e138ba094c383"
     },
     "packrat/desc/pins": {
-      "checksum": "e902d252fecc7da96ad7e3fe0c7621f7"
+      "checksum": "bbe064f4c25954a7a8dc04629e299847"
     },
     "packrat/desc/pkgconfig": {
       "checksum": "fc4964d60c231621cdf59f7bf241718c"
@@ -1421,6 +1579,15 @@
     },
     "packrat/desc/rlang": {
       "checksum": "dfbc99a8e4137b41412488efe6b1a8aa"
+    },
+    "packrat/desc/rprojroot": {
+      "checksum": "32aa7a1cb8b1ebb268844386f2ece152"
+    },
+    "packrat/desc/rsconnect": {
+      "checksum": "05c802981377dd65ad10f7c7b5f850d6"
+    },
+    "packrat/desc/rstudioapi": {
+      "checksum": "32f3823157c7a2ac16e42dcc58a0b07c"
     },
     "packrat/desc/stringi": {
       "checksum": "9e4df8d97d2fafb03ebf2cf04b36e1b1"
@@ -1456,7 +1623,10 @@
       "checksum": "df9935ffca693dfde7b99a6283f9db00"
     },
     "packrat/packrat.lock": {
-      "checksum": "254c49d0e7757353572f3f6c194aa532"
+      "checksum": "c23d675f7edb4583257264d83e5b9f2a"
+    },
+    "rs-connect-git.R": {
+      "checksum": "6804c0955462e8ba7e364937110c5fab"
     }
   },
   "users": null
