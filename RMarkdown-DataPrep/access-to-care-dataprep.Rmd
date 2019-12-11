@@ -16,7 +16,6 @@ library(fs)
 library(haven)
 library(usmap)
 library(pins)
-library(connections)
 ```
 
 
@@ -33,7 +32,6 @@ library(fs)
 library(haven)
 library(usmap)
 library(pins)
-library(connections)
 
 ## Read SAS dataset
 hospitals_raw <- haven::read_sas("data/Structural_Measures_-_Hospital.sas7bdat") 
@@ -228,17 +226,17 @@ state_full <- county_hospitals_full %>%
 ```
 
 ```{r}
-con <- connection_open(RSQLite::SQLite(), "local.sqlite")
-copy_to(con, county_shapes, "shapes", overwrite = TRUE, temporary = FALSE)
-copy_to(con, county_hospitals, "counties", overwrite = TRUE, temporary = FALSE)
-copy_to(con, hospital_locations, "hospitals", overwrite = TRUE, temporary = FALSE)
-copy_to(con, state_full, "states", overwrite = TRUE, temporary = FALSE)
+# con <- connection_open(RSQLite::SQLite(), "local.sqlite")
+# copy_to(con, county_shapes, "shapes", overwrite = TRUE, temporary = FALSE)
+# copy_to(con, county_hospitals, "counties", overwrite = TRUE, temporary = FALSE)
+# copy_to(con, hospital_locations, "hospitals", overwrite = TRUE, temporary = FALSE)
+# copy_to(con, state_full, "states", overwrite = TRUE, temporary = FALSE)
 ```
 
 ```{r} 
-base_map <-  tbl(con, "states") %>%
+base_map <-  state_full %>%
   select(state_id, full, state) %>%
-  inner_join(tbl(con, "counties"), by = "state_id") %>%
+  inner_join(county_hospitals, by = "state_id") %>%
   mutate(
     population_label = ifelse(
       population > 1000000, 
@@ -292,24 +290,24 @@ if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
 
 ```{r}
 pin(
-  tbl(con, "states"),
-  "atc-db-states",
+  state_full,
+  "atc-states",
   boardname
 )
 ```
 
 ```{r}
 pin(
-  tbl(con, "hospitals"),
-  "atc-db-hospitals",
+  hospital_locations,
+  "atc-hospitals",
   boardname
 )
 ```
 
 ```{r}
 pin(
-  tbl(con, "shapes"),
-  name = "atc-db-county-map",
+  county_shapes,
+  name = "atc-county-map",
   board = boardname
   )
 ```
@@ -317,7 +315,7 @@ pin(
 ```{r}
 pin(
   base_map,
-  name = "atc-db-base-map",
+  name = "atc-base-map",
   board = boardname
   )
 ```
@@ -326,13 +324,9 @@ pin(
 ```{r}
 pin(
   county_table,
-  name = "atc-db-county-table",
+  name = "atc-county-table",
   board = boardname
   )
-```
-
-```{r}
-connection_close(con)
 ```
 
 

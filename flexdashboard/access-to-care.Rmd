@@ -40,7 +40,7 @@ if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
 }
 
 model <- pin_get("atc-model", board = boardname)
-states <- pin_get("atc-db-states", board = boardname) %>% collect()
+states <- pin_get("atc-states", board = boardname) %>% collect()
 ```
 
 ```{r, include=FALSE}
@@ -57,13 +57,13 @@ state_info <- reactive({
 county_map <-  reactive({
   curr_state <- state_info() %>%
     pull(state_id)
-  pin_get("atc-db-county-map", board = boardname) %>% 
+  pin_get("atc-county-map", board = boardname) %>% 
     filter(state_id == !! curr_state) %>%
     collect()
 })
 
 base_map <- reactive({
-  pin_get("atc-db-base-map", boardname) %>%
+  pin_get("atc-base-map", boardname) %>%
     filter(full %in% !! input$state) %>%
     collect()
 })
@@ -158,7 +158,7 @@ renderLeaflet({
   curr_state <- state_info() %>%
     pull(state_id)
   
-  locations <- pin_get("atc-db-hospitals", board = boardname) %>%
+  locations <- pin_get("atc-hospitals", board = boardname) %>%
     filter(state_id == !! curr_state) %>%
     select(longitude, latitude) %>%
     collect() %>%
@@ -197,7 +197,7 @@ renderLeaflet({
 
 ```{r}
 renderDataTable({
-  pin_get("atc-db-county-table", board = boardname)  %>%
+  pin_get("atc-county-table", board = boardname)  %>%
     filter(full == !! input$state) %>%
     select(-full) %>%
     collect() %>%
