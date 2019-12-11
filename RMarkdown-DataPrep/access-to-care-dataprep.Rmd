@@ -225,14 +225,6 @@ state_full <- county_hospitals_full %>%
   
 ```
 
-```{r}
-# con <- connection_open(RSQLite::SQLite(), "local.sqlite")
-# copy_to(con, county_shapes, "shapes", overwrite = TRUE, temporary = FALSE)
-# copy_to(con, county_hospitals, "counties", overwrite = TRUE, temporary = FALSE)
-# copy_to(con, hospital_locations, "hospitals", overwrite = TRUE, temporary = FALSE)
-# copy_to(con, state_full, "states", overwrite = TRUE, temporary = FALSE)
-```
-
 ```{r} 
 base_map <-  state_full %>%
   select(state_id, full, state) %>%
@@ -294,6 +286,7 @@ pin(
   "atc-states",
   boardname
 )
+if(nrow(pin_find("atc-states", board = boardname)) == 0) stop("pin was not recorded")
 ```
 
 ```{r}
@@ -302,6 +295,7 @@ pin(
   "atc-hospitals",
   boardname
 )
+if(nrow(pin_find("atc-hospitals", board = boardname)) == 0) stop("pin was not recorded")
 ```
 
 ```{r}
@@ -310,6 +304,7 @@ pin(
   name = "atc-county-map",
   board = boardname
   )
+if(nrow(pin_find("atc-county-map", board = boardname)) == 0) stop("pin was not recorded")
 ```
 
 ```{r}
@@ -318,8 +313,8 @@ pin(
   name = "atc-base-map",
   board = boardname
   )
+if(nrow(pin_find("atc-base-map", board = boardname)) == 0) stop("pin was not recorded")
 ```
-
 
 ```{r}
 pin(
@@ -327,6 +322,5 @@ pin(
   name = "atc-county-table",
   board = boardname
   )
+if(nrow(pin_find("atc-county-table", board = boardname)) == 0) stop("pin was not recorded")
 ```
-
-
