@@ -228,7 +228,7 @@ state_full <- county_hospitals_full %>%
 ```
 
 ```{r}
-con <- connection_open(RSQLite::SQLite(), "/tmp/local.sqlite")
+con <- connection_open(RSQLite::SQLite(), "local.sqlite")
 copy_to(con, county_shapes, "shapes", overwrite = TRUE, temporary = FALSE)
 copy_to(con, county_hospitals, "counties", overwrite = TRUE, temporary = FALSE)
 copy_to(con, hospital_locations, "hospitals", overwrite = TRUE, temporary = FALSE)
