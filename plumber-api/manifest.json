@@ -283,27 +283,27 @@
         "Package": "curl",
         "Type": "Package",
         "Title": "A Modern and Flexible Web Client for R",
-        "Version": "4.2",
+        "Version": "4.3",
         "Authors@R": "c(\n    person(\"Jeroen\", \"Ooms\", role = c(\"aut\", \"cre\"), email = \"jeroen@berkeley.edu\",\n      comment = c(ORCID = \"0000-0002-4035-0289\")),\n    person(\"Hadley\", \"Wickham\", , \"hadley@rstudio.com\", role = \"ctb\"),\n    person(\"RStudio\", role = \"cph\")\n    )",
         "Description": "The curl() and curl_download() functions provide highly\n    configurable drop-in replacements for base url() and download.file() with\n    better performance, support for encryption (https, ftps), gzip compression,\n    authentication, and other 'libcurl' goodies. The core of the package implements a\n    framework for performing fully customized requests where data can be processed\n    either in memory, on disk, or streaming via the callback or connection\n    interfaces. Some knowledge of 'libcurl' is recommended; for a more-user-friendly\n    web client see the 'httr' package which builds on this package with http\n    specific tools and logic.",
         "License": "MIT + file LICENSE",
         "SystemRequirements": "libcurl: libcurl-devel (rpm) or\nlibcurl4-openssl-dev (deb).",
         "URL": "https://jeroen.cran.dev/curl (docs)\nhttps://github.com/jeroen/curl#readme (devel)\nhttps://curl.haxx.se/libcurl/ (upstream)",
         "BugReports": "https://github.com/jeroen/curl/issues",
-        "Suggests": "askpass, spelling, testthat (>= 1.0.0), knitr, jsonlite,\nrmarkdown, magrittr, httpuv (>= 1.4.4), webutils",
+        "Suggests": "spelling, testthat (>= 1.0.0), knitr, jsonlite, rmarkdown,\nmagrittr, httpuv (>= 1.4.4), webutils",
         "VignetteBuilder": "knitr",
         "Depends": "R (>= 3.0.0)",
         "LazyData": "true",
-        "RoxygenNote": "6.1.1",
+        "RoxygenNote": "7.0.1",
         "Encoding": "UTF-8",
         "Language": "en-US",
         "NeedsCompilation": "yes",
-        "Packaged": "2019-09-24 10:59:35 UTC; jeroen",
+        "Packaged": "2019-12-02 12:33:03 UTC; jeroen",
         "Author": "Jeroen Ooms [aut, cre] (<https://orcid.org/0000-0002-4035-0289>),\n  Hadley Wickham [ctb],\n  RStudio [cph]",
         "Maintainer": "Jeroen Ooms <jeroen@berkeley.edu>",
         "Repository": "CRAN",
-        "Date/Publication": "2019-09-24 12:20:02 UTC",
-        "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-11-22 22:54:38 UTC; unix"
+        "Date/Publication": "2019-12-02 14:00:03 UTC",
+        "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-12-06 18:31:00 UTC; unix"
       }
     },
     "digest": {
@@ -366,7 +366,7 @@
         "Maintainer": "Hadley Wickham <hadley@rstudio.com>",
         "Repository": "CRAN",
         "Date/Publication": "2019-07-04 15:50:02 UTC",
-        "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-12-04 17:12:22 UTC; unix"
+        "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-12-05 14:56:48 UTC; unix"
       }
     },
     "ellipsis": {
@@ -960,9 +960,9 @@
         "Packaged": "2019-10-17 08:02:23 UTC; lionel",
         "Author": "Lionel Henry [aut, cre],\n  Hadley Wickham [aut],\n  RStudio [cph, fnd]",
         "Maintainer": "Lionel Henry <lionel@rstudio.com>",
-        "Repository": "CRAN",
+        "Repository": "RSPM",
         "Date/Publication": "2019-10-18 12:40:05 UTC",
-        "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-11-23 19:53:47 UTC; unix"
+        "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-12-05 14:35:05 UTC; unix"
       }
     },
     "rappdirs": {
@@ -1319,40 +1319,40 @@
       "GithubRepo": "vctrs",
       "GithubUsername": "r-lib",
       "GithubRef": "master",
-      "GithubSha1": "25ab51ef6d9e75ff2ec0f68c8e3cbe4f3377fbcc",
+      "GithubSha1": "fb03c046456828a86bb42e4eb7009e1fe9e7beed",
       "description": {
         "Package": "vctrs",
         "Title": "Vector Helpers",
-        "Version": "0.2.0.9003",
+        "Version": "0.2.0.9007",
         "Authors@R": "\n    c(person(given = \"Hadley\",\n             family = \"Wickham\",\n             role = c(\"aut\", \"cre\"),\n             email = \"hadley@rstudio.com\"),\n      person(given = \"Lionel\",\n             family = \"Henry\",\n             role = \"aut\",\n             email = \"lionel@rstudio.com\"),\n      person(given = \"Davis\",\n             family = \"Vaughan\",\n             role = \"aut\",\n             email = \"davis@rstudio.com\"),\n      person(given = \"RStudio\",\n             role = \"cph\"))",
         "Description": "Defines new notions of prototype and size that are\n    used to provide tools for consistent and well-founded type-coercion\n    and size-recycling, and are in turn connected to ideas of type- and\n    size-stability useful for analysing function interfaces.",
         "License": "GPL-3",
         "URL": "https://github.com/r-lib/vctrs",
         "BugReports": "https://github.com/r-lib/vctrs/issues",
         "Depends": "R (>= 3.2)",
-        "Imports": "backports, ellipsis (>= 0.2.0), digest, glue, rlang (>=\n0.4.0), zeallot",
-        "Suggests": "bit64, covr, crayon, generics, knitr, pillar (>= 1.4.1),\npkgdown, rmarkdown, testthat, tibble",
+        "Imports": "ellipsis (>= 0.2.0), digest, glue, rlang (>= 0.4.2)",
+        "Suggests": "bit64, covr, crayon, generics, knitr, pillar (>= 1.4.1),\npkgdown, rmarkdown, testthat (>= 2.3.0), tibble, xml2, zeallot",
         "VignetteBuilder": "knitr",
         "Encoding": "UTF-8",
         "Language": "en-GB",
         "LazyData": "true",
         "Roxygen": "list(markdown = TRUE)",
-        "RoxygenNote": "6.1.1",
+        "RoxygenNote": "7.0.1",
         "RemoteType": "github",
         "RemoteHost": "api.github.com",
         "RemoteRepo": "vctrs",
         "RemoteUsername": "r-lib",
         "RemoteRef": "master",
-        "RemoteSha": "25ab51ef6d9e75ff2ec0f68c8e3cbe4f3377fbcc",
+        "RemoteSha": "fb03c046456828a86bb42e4eb7009e1fe9e7beed",
         "GithubRepo": "vctrs",
         "GithubUsername": "r-lib",
         "GithubRef": "master",
-        "GithubSHA1": "25ab51ef6d9e75ff2ec0f68c8e3cbe4f3377fbcc",
+        "GithubSHA1": "fb03c046456828a86bb42e4eb7009e1fe9e7beed",
         "NeedsCompilation": "yes",
-        "Packaged": "2019-09-26 13:30:37 UTC; edgar",
+        "Packaged": "2019-12-06 20:33:09 UTC; edgar",
         "Author": "Hadley Wickham [aut, cre],\n  Lionel Henry [aut],\n  Davis Vaughan [aut],\n  RStudio [cph]",
         "Maintainer": "Hadley Wickham <hadley@rstudio.com>",
-        "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-09-26 13:30:37 UTC; unix"
+        "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-12-06 20:33:10 UTC; unix"
       }
     },
     "withr": {
@@ -1415,36 +1415,6 @@
         "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-07-29 13:45:46 UTC; unix"
       }
     },
-    "zeallot": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "zeallot",
-        "Type": "Package",
-        "Title": "Multiple, Unpacking, and Destructuring Assignment",
-        "Version": "0.1.0",
-        "Authors@R": "c(\n    person(given = \"Nathan\", family = \"Teetor\", email = \"nathanteetor@gmail.com\", role = c(\"aut\", \"cre\")),\n    person(given = \"Paul\", family = \"Teetor\", role = \"ctb\"))",
-        "Description": "Provides a %<-% operator to perform multiple,\n    unpacking, and destructuring assignment in R. The \n    operator unpacks the right-hand side of an assignment\n    into multiple values and assigns these values to \n    variables on the left-hand side of the assignment.",
-        "URL": "https://github.com/nteetor/zeallot",
-        "BugReports": "https://github.com/nteetor/zeallot/issues",
-        "License": "MIT + file LICENSE",
-        "Encoding": "UTF-8",
-        "RoxygenNote": "6.0.1",
-        "VignetteBuilder": "knitr",
-        "Suggests": "testthat, knitr, rmarkdown, purrr, magrittr",
-        "NeedsCompilation": "no",
-        "Packaged": "2018-01-27 17:18:33 UTC; nteetor",
-        "Author": "Nathan Teetor [aut, cre],\n  Paul Teetor [ctb]",
-        "Maintainer": "Nathan Teetor <nathanteetor@gmail.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2018-01-28 16:14:13 UTC",
-        "Built": "R 3.6.0; ; 2019-04-28 23:06:44 UTC; unix"
-      }
-    },
     "zip": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -1478,8 +1448,11 @@
     "app.R": {
       "checksum": "e9177bce5ab495b787f6da9d32b74374"
     },
+    "local.sqlite": {
+      "checksum": "e00e3a1e7827a257e2605bcb0637234f"
+    },
     "manifest.json": {
-      "checksum": "33a960ffcc3ef373ecd60800a638372e"
+      "checksum": "1c3d0dfab1da290c232eb2ff4c0082d1"
     },
     "packrat/desc/askpass": {
       "checksum": "adb6f14233aa229a9245fbe85bd572d6"
@@ -1503,13 +1476,13 @@
       "checksum": "b904732d2ef8151af8505f65ca9bf2c8"
     },
     "packrat/desc/curl": {
-      "checksum": "38c796a9eb8549df89c62b9b2baff832"
+      "checksum": "bd3c8ced68e5f75a2491165227db1c76"
     },
     "packrat/desc/digest": {
       "checksum": "eb52a3dd6c1a94208b2abc95ba58d6f6"
     },
     "packrat/desc/dplyr": {
-      "checksum": "82e3ea9c5300daca615045d4f0c0b991"
+      "checksum": "53e6401db1734aa27c5de477bbf86bba"
     },
     "packrat/desc/ellipsis": {
       "checksum": "815b3786f5eaaa618c753e37d017f75c"
@@ -1566,7 +1539,7 @@
       "checksum": "e759eeef96e2395e5c81beeb8eda1460"
     },
     "packrat/desc/purrr": {
-      "checksum": "3275a956a99d57696a8bdbdd12f5b935"
+      "checksum": "e835a6eec8e8fdefef2be10cab65549a"
     },
     "packrat/desc/R6": {
       "checksum": "b0dc134d088affcb344c4dce629a5941"
@@ -1608,7 +1581,7 @@
       "checksum": "1bf4fed895f4bcc93cc2ed9593338a30"
     },
     "packrat/desc/vctrs": {
-      "checksum": "742f7ca40725c421e3870979867cc8d6"
+      "checksum": "be5263b54c168f8ff81d45ff7b61e9d5"
     },
     "packrat/desc/withr": {
       "checksum": "7e8c9f5d08e946c8fdd2f25bc3883de2"
@@ -1616,17 +1589,14 @@
     "packrat/desc/yaml": {
       "checksum": "8bc153008a9c1767a35689eb7e2328b2"
     },
-    "packrat/desc/zeallot": {
-      "checksum": "a337e490c4a71494af84588ba9ec8f0a"
-    },
     "packrat/desc/zip": {
       "checksum": "df9935ffca693dfde7b99a6283f9db00"
     },
     "packrat/packrat.lock": {
-      "checksum": "c23d675f7edb4583257264d83e5b9f2a"
+      "checksum": "7eaa36f782210f02bf6b3dd49846cf35"
     },
     "rs-connect-git.R": {
-      "checksum": "6804c0955462e8ba7e364937110c5fab"
+      "checksum": "206535e4da43aac85af40265c0e09711"
     }
   },
   "users": null
