@@ -46,27 +46,27 @@ if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
   board_register(boardname)  
 }
 
-states <- pin_get("atc-db-states", board = boardname) %>% 
+states <- pin_get("atc-states", board = boardname) %>% 
   filter(full == !! params$state) %>%
   collect()
 
 curr_state <- pull(states, state_id)
 
-counties <- pin_get("atc-db-county-map", boardname) %>%
+counties <- pin_get("atc-county-map", boardname) %>%
   filter(state_id == !! curr_state) %>%
   collect()
 
 state <- counties$state_id[1]
 
-counties_table <- pin_get("atc-db-county-table", boardname) %>%
+counties_table <- pin_get("atc-county-table", boardname) %>%
   filter(full %in% !! params$state) %>%
   collect()
 
-base_map <- pin_get("atc-db-base-map", boardname) %>%
+base_map <- pin_get("atc-base-map", boardname) %>%
   filter(full %in% !! params$state) %>%
   collect()
 
-hospital_locations <- pin_get("atc-db-hospitals", boardname) %>%
+hospital_locations <- pin_get("atc-hospitals", boardname) %>%
   filter(state_id == !! state) %>%
   select(-state_id) %>%
   collect()
@@ -85,7 +85,7 @@ A **statistical model using data from across the country** is used to identify t
 Breakdown of counties and their status based on county population compared to the number of hospitals
 
 ```{r, fig.height = 7, fig.width = 9}
-locations <- pin_get("atc-db-hospitals", board = boardname) %>%
+locations <- pin_get("atc-hospitals", board = boardname) %>%
   filter(state_id == !! curr_state) %>%
   select(longitude, latitude) %>%
   collect() %>%
