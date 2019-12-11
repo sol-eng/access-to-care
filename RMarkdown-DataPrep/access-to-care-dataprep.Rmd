@@ -283,19 +283,17 @@ if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
 ```{r}
 pin(
   state_full,
-  "atc-all-states",
-  boardname
+  "atc-states",
+  board = boardname
 )
-if(nrow(pin_find("atc-all-states", board = boardname)) == 0) stop("pin was not recorded")
 ```
 
 ```{r}
 pin(
   hospital_locations,
   "atc-hospitals",
-  boardname
+  board = boardname
 )
-if(nrow(pin_find("atc-hospitals", board = boardname)) == 0) stop("pin was not recorded")
 ```
 
 ```{r}
@@ -304,7 +302,6 @@ pin(
   name = "atc-county-map",
   board = boardname
   )
-if(nrow(pin_find("atc-county-map", board = boardname)) == 0) stop("pin was not recorded")
 ```
 
 ```{r}
@@ -313,7 +310,6 @@ pin(
   name = "atc-base-map",
   board = boardname
   )
-if(nrow(pin_find("atc-base-map", board = boardname)) == 0) stop("pin was not recorded")
 ```
 
 ```{r}
@@ -322,5 +318,4 @@ pin(
   name = "atc-county-table",
   board = boardname
   )
-if(nrow(pin_find("atc-county-table", board = boardname)) == 0) stop("pin was not recorded")
 ```
