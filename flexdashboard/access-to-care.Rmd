@@ -26,7 +26,6 @@ library(leaflet)
 library(DT)
 library(metricsgraphics)
 library(pins)
-library(connections)
 
 if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
   boardname <- "rsconnect"
