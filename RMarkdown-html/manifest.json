@@ -3094,13 +3094,10 @@
       "checksum": "38c26fae49c76255ae0d3bd1db9bc2c2"
     },
     "access-to-care-rmarkdown.Rmd": {
-      "checksum": "10f642a4f9d584332a1a98d8af2f9ab4"
-    },
-    "local.sqlite": {
-      "checksum": "e00e3a1e7827a257e2605bcb0637234f"
+      "checksum": "f22bede4a6b6de97f189e2b810879584"
     },
     "manifest.json": {
-      "checksum": "46ca9d07169a7b00090c76c81f14f5a4"
+      "checksum": "e8c891b031f3aa66836aa4b7901d2479"
     },
     "packrat/desc/askpass": {
       "checksum": "adb6f14233aa229a9245fbe85bd572d6"
@@ -3403,7 +3400,7 @@
       "checksum": "cb4ec62765f0b521beb8330f5a2c73e3"
     },
     "rs-connect-git.R": {
-      "checksum": "5f5c422171ae7c82a22e743d6fc85ec5"
+      "checksum": "6a93632ea28c429f9b526a4d907d1269"
     },
     "RStudio1.png": {
       "checksum": "288da77036023512c0adbf27de9fe9c2"
