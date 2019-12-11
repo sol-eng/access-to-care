@@ -9,56 +9,64 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, fig.width = 9, fig.height = 7, fig.align = "center")
 
-
-
 library(dplyr)
 library(ggplot2)
-library(usmap)
-library(DT)
 library(pins)
+library(connections)
 
-boardname <- config::get("boardname")
-if(boardname != "local") {
-  board_register(boardname, server = config::get("server"), key = config::get("key")
-  )
+if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
+  boardname <- "rsconnect"
+  board_register_rsconnect(
+    server = Sys.getenv("connect_url"),
+    key = Sys.getenv("connect_key")
+    )
 } else {
-  board_register("local")  
+  boardname <- "local"
+  board_register(boardname)  
 }
-county_hospitals <-  pin_get("edgar/atc-county_hospitals", board = boardname) %>%
-  inner_join(statepop, by = c("state" = "abbr")) 
-model <- pin_get("edgar/atc-model", board = boardname) 
+
+model <- pin_get("atc-model", board = boardname)
+states <- pin_get("atc-db-states", board = boardname) %>% collect()
+county_hospitals <- pin_get("atc-db-base-map", boardname)
 ```
 
-### County population vs hospitals
+## County population vs hospitals
 
-```{r, fig.width = 12, fig.height = 6}
+```{r}
 county_hospitals %>%
   ggplot() +
   geom_point(aes(hospitals, population), color = "#E69F00", alpha = 0.5) +
   scale_y_continuous(breaks = 0:10 * 1000000, labels = paste0(0:10, "M")) +
-  theme_minimal() +
-  labs(title = "There is a positive relationships between the number of hospitals and the population of a given county.")
+  theme_minimal() 
 ```
 
-### Model
+---
+
+## Model
 
 ```{r}
-x <- capture.output(summary(model))
-x <- x[x!=""]
-x[2:11]
+summary(model)
 ```
 
-### Overlay the model
+---
 
-```{r, fig.width = 12, fig.height = 6}
+## Overlay the model
+
+
+```{r}
 bounds <- county_hospitals %>%
-  summarise(mi = min(population), mx = max(population)) %>%
+  summarise(
+    mi = min(population, na.rm = TRUE), 
+    mx = max(population, na.rm = TRUE)
+    ) %>% 
+  collect() %>%
   as.numeric()
 
 preds <- predict(
   model, 
   data.frame(population = bounds),
-  interval = "prediction")
+  interval = "prediction"
+  )
 
 county_hospitals %>% 
   group_by(population, hospitals) %>%

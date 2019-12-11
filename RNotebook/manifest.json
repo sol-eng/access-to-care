@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "locale": "en_US",
+  "platform": "3.6.1",
+  "metadata": {
+    "appmode": "static",
+    "primary_rmd": null,
+    "primary_html": "access-to-care.nb.html",
+    "content_category": null,
+    "has_parameters": false
+  },
+  "packages": null,
+  "files": {
+    "access-to-care.nb.html": {
+      "checksum": "451ac999b64019c4c321a8bfdef974ad"
+    },
+    "local.sqlite": {
+      "checksum": "e00e3a1e7827a257e2605bcb0637234f"
+    },
+    "manifest.json": {
+      "checksum": "bbafc9de9526d8b9afbb48fb6e578e2b"
+    },
+    "rs-connect-git.R": {
+      "checksum": "53f2b120f008da52ffe3401c201b0218"
+    }
+  },
+  "users": null
+}

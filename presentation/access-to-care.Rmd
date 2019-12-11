@@ -15,21 +15,23 @@ knitr::opts_chunk$set(echo = FALSE, fig.width = 9, fig.height = 7, fig.align = "
 
 library(dplyr)
 library(ggplot2)
-library(readr)
-library(usmap)
-library(DT)
 library(pins)
+library(connections)
 
-boardname <- config::get("boardname")
-if(boardname != "local") {
-  board_register(boardname, server = config::get("server"), key = config::get("key")
-  )
+if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
+  boardname <- "rsconnect"
+  board_register_rsconnect(
+    server = Sys.getenv("connect_url"),
+    key = Sys.getenv("connect_key")
+    )
 } else {
-  board_register("local")  
+  boardname <- "local"
+  board_register(boardname)  
 }
-county_hospitals <-  pin_get("edgar/atc-county_hospitals", board = boardname) %>%
-  inner_join(statepop, by = c("state" = "abbr")) 
-model <- pin_get("edgar/atc-model", board = boardname) 
+
+model <- pin_get("atc-model", board = boardname)
+states <- pin_get("atc-db-states", board = boardname) %>% collect()
+county_hospitals <- pin_get("atc-db-base-map", boardname)
 ```
 
 ## County population vs hospitals
@@ -57,13 +59,18 @@ summary(model)
 
 ```{r}
 bounds <- county_hospitals %>%
-  summarise(mi = min(population), mx = max(population)) %>%
+  summarise(
+    mi = min(population, na.rm = TRUE), 
+    mx = max(population, na.rm = TRUE)
+    ) %>% 
+  collect() %>%
   as.numeric()
 
 preds <- predict(
   model, 
   data.frame(population = bounds),
-  interval = "prediction")
+  interval = "prediction"
+  )
 
 county_hospitals %>% 
   group_by(population, hospitals) %>%
