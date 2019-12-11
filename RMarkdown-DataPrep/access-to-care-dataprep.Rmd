@@ -283,10 +283,10 @@ if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
 ```{r}
 pin(
   state_full,
-  "atc-states",
+  "atc-all-states",
   boardname
 )
-if(nrow(pin_find("atc-states", board = boardname)) == 0) stop("pin was not recorded")
+if(nrow(pin_find("atc-all-states", board = boardname)) == 0) stop("pin was not recorded")
 ```
 
 ```{r}
