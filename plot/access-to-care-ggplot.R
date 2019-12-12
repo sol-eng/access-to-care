@@ -58,6 +58,6 @@ writeLines("<img src=map.png width = 1000>", con = here::here("plot/map.html"))
 full_path <- here::here("plot")
 rsconnect::writeManifest(
   appDir = full_path,
-  appPrimaryDoc = "target.html"
+  appPrimaryDoc = "map.html"
 )
 
