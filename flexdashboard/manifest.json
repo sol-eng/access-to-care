@@ -6,7 +6,7 @@
     "appmode": "rmd-shiny",
     "primary_rmd": "access-to-care.Rmd",
     "primary_html": null,
-    "content_category": null,
+    "content_category": "document",
     "has_parameters": false
   },
   "packages": {
@@ -2523,7 +2523,7 @@
       "checksum": "1de4eada59cf2625a2df68b3dce98fa3"
     },
     "manifest.json": {
-      "checksum": "3b5bd24549fba765f58c674900b7d690"
+      "checksum": "9e2c5be6f50c244a846a812177647c68"
     },
     "model.png": {
       "checksum": "d43a7d18e1310610959315a3023f2020"

@@ -10,5 +10,6 @@ primary_doc <- app_files[primary_id]
 rsconnect::writeManifest(
   appDir = full_path,
   appFiles = app_files,
-  appPrimaryDoc = primary_doc
+  appPrimaryDoc = primary_doc,
+  contentCategory = "document"
 )
