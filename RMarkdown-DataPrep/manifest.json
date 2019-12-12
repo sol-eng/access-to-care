@@ -2327,7 +2327,7 @@
   },
   "files": {
     "access-to-care-dataprep.Rmd": {
-      "checksum": "f5bd68741e8e138e276da921aa302313"
+      "checksum": "ca4c30924456dbb1749cc9ebbf80012d"
     },
     "data/shapes.rds": {
       "checksum": "c08dbd1a30b27909558147851c22a206"
@@ -2338,11 +2338,8 @@
     "data/Structural_Measures_-_Hospital.sas7bdat": {
       "checksum": "07f55dc14b909799b2ec2d096157851c"
     },
-    "local.sqlite": {
-      "checksum": "4989d008060ec05ee4877c137777224d"
-    },
     "manifest.json": {
-      "checksum": "9a4b934ada6e4fbd16e011122026abad"
+      "checksum": "363c1af90280c1fdf3a2e7aaf8d185ec"
     },
     "packrat/desc/askpass": {
       "checksum": "adb6f14233aa229a9245fbe85bd572d6"

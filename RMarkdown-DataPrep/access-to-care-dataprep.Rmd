@@ -133,9 +133,9 @@ hospital_results <- state_hospitals %>%
   select(-county_name, -fips, -full, -state) 
 
 ## Build state shapes
-get_state_shapes <- function(path = "data/shapes.rds") {
+get_state_shapes <- function(path = "data/shapes.rds", rebuild = FALSE) {
   ## Should only rebuild if running on a local computer
-  if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect")  {
+  if(rebuild)  {
     dir_create("shapes")
     all_paths <- path("shapes", state.abb, ext = "rds") %>%
       set_names(state.abb)
