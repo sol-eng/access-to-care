@@ -1446,13 +1446,10 @@
   },
   "files": {
     "app.R": {
-      "checksum": "e9177bce5ab495b787f6da9d32b74374"
-    },
-    "local.sqlite": {
-      "checksum": "e00e3a1e7827a257e2605bcb0637234f"
+      "checksum": "5cf05690031b1116dd491329143e560f"
     },
     "manifest.json": {
-      "checksum": "1c3d0dfab1da290c232eb2ff4c0082d1"
+      "checksum": "45356a985e75386472ed14bfa162e95a"
     },
     "packrat/desc/askpass": {
       "checksum": "adb6f14233aa229a9245fbe85bd572d6"
@@ -1596,7 +1593,7 @@
       "checksum": "7eaa36f782210f02bf6b3dd49846cf35"
     },
     "rs-connect-git.R": {
-      "checksum": "206535e4da43aac85af40265c0e09711"
+      "checksum": "6804c0955462e8ba7e364937110c5fab"
     }
   },
   "users": null
