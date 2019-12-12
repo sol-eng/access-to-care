@@ -6,13 +6,13 @@
     "appmode": "static",
     "primary_rmd": null,
     "primary_html": "map.html",
-    "content_category": null,
+    "content_category": "plot",
     "has_parameters": false
   },
   "packages": null,
   "files": {
     "access-to-care-ggplot.R": {
-      "checksum": "f9bcf43abcbc92ee8df4867de9747b7f"
+      "checksum": "208d361dd3678e428ddcc319b9a77e35"
     },
     "map.html": {
       "checksum": "0af1e82f555c9268c93461c9d039bccb"
