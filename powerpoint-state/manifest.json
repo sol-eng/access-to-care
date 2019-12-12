@@ -68,37 +68,6 @@
         "Built": "R 3.6.0; ; 2019-04-28 14:55:23 UTC; unix"
       }
     },
-    "DT": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "DT",
-        "Type": "Package",
-        "Title": "A Wrapper of the JavaScript Library 'DataTables'",
-        "Version": "0.10",
-        "Authors@R": "c(\n    person(\"Yihui\", \"Xie\", email = \"xie@yihui.name\", role = c(\"aut\", \"cre\")),\n    person(\"Joe\", \"Cheng\", role = \"aut\"),\n    person(\"Xianying\", \"Tan\", role = \"aut\"),\n    person(\"JJ\", \"Allaire\", role = \"ctb\"),\n    person(\"Maximilian\", \"Girlich\", role = \"ctb\"),\n    person(\"Greg\", \"Freedman Ellis\", role = \"ctb\"),\n    person(\"Johannes\", \"Rauh\", role = \"ctb\"),\n    person(\"jQuery contributors\", role = c(\"ctb\", \"cph\"), comment = \"jQuery in htmlwidgets/lib\"),\n    person(\"SpryMedia Limited\", role = c(\"ctb\", \"cph\"), comment = \"DataTables in htmlwidgets/lib\"),\n    person(\"Brian\", \"Reavis\", role = c(\"ctb\", \"cph\"), comment = \"selectize.js in htmlwidgets/lib\"),\n    person(\"Leon\", \"Gersen\", role = c(\"ctb\", \"cph\"), comment = \"noUiSlider in htmlwidgets/lib\"),\n    person(\"Bartek\", \"Szopka\", role = c(\"ctb\", \"cph\"), comment = \"jquery.highlight.js in htmlwidgets/lib\"),\n    person(\"RStudio Inc\", role = \"cph\")\n    )",
-        "Maintainer": "Yihui Xie <xie@yihui.name>",
-        "Description": "Data objects in R can be rendered as HTML tables using the\n    JavaScript library 'DataTables' (typically via R Markdown or Shiny). The\n    'DataTables' library has been included in this R package. The package name\n    'DT' is an abbreviation of 'DataTables'.",
-        "URL": "https://github.com/rstudio/DT",
-        "BugReports": "https://github.com/rstudio/DT/issues",
-        "License": "GPL-3 | file LICENSE",
-        "Imports": "htmltools (>= 0.3.6), htmlwidgets (>= 1.3), jsonlite (>=\n0.9.16), magrittr, crosstalk, promises",
-        "Suggests": "knitr (>= 1.8), rmarkdown, shiny (>= 1.1.0)",
-        "VignetteBuilder": "knitr",
-        "RoxygenNote": "6.1.1",
-        "Encoding": "UTF-8",
-        "NeedsCompilation": "no",
-        "Packaged": "2019-11-12 16:36:57 UTC; yihui",
-        "Author": "Yihui Xie [aut, cre],\n  Joe Cheng [aut],\n  Xianying Tan [aut],\n  JJ Allaire [ctb],\n  Maximilian Girlich [ctb],\n  Greg Freedman Ellis [ctb],\n  Johannes Rauh [ctb],\n  jQuery contributors [ctb, cph] (jQuery in htmlwidgets/lib),\n  SpryMedia Limited [ctb, cph] (DataTables in htmlwidgets/lib),\n  Brian Reavis [ctb, cph] (selectize.js in htmlwidgets/lib),\n  Leon Gersen [ctb, cph] (noUiSlider in htmlwidgets/lib),\n  Bartek Szopka [ctb, cph] (jquery.highlight.js in htmlwidgets/lib),\n  RStudio Inc [cph]",
-        "Repository": "CRAN",
-        "Date/Publication": "2019-11-12 18:10:11 UTC",
-        "Built": "R 3.6.1; ; 2019-11-23 20:08:35 UTC; unix"
-      }
-    },
     "MASS": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -490,34 +459,6 @@
         "Repository": "CRAN",
         "Date/Publication": "2017-09-16 19:49:46 UTC",
         "Built": "R 3.6.0; ; 2019-04-28 14:55:14 UTC; unix"
-      }
-    },
-    "crosstalk": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "crosstalk",
-        "Type": "Package",
-        "Title": "Inter-Widget Interactivity for HTML Widgets",
-        "Version": "1.0.0",
-        "Authors@R": "c(\n    person(\"Joe\", \"Cheng\", role = c(\"aut\", \"cre\"), email = \"joe@rstudio.com\"),\n    person(family = \"RStudio\", role = \"cph\"),\n    person(family = \"jQuery Foundation\", role = \"cph\",\n    comment = \"jQuery library and jQuery UI library\"),\n    person(family = \"jQuery contributors\", role = c(\"ctb\", \"cph\"),\n    comment = \"jQuery library; authors listed in inst/www/shared/jquery-AUTHORS.txt\"),\n    person(\"Mark\", \"Otto\", role = \"ctb\",\n    comment = \"Bootstrap library\"),\n    person(\"Jacob\", \"Thornton\", role = \"ctb\",\n    comment = \"Bootstrap library\"),\n    person(family = \"Bootstrap contributors\", role = \"ctb\",\n    comment = \"Bootstrap library\"),\n    person(family = \"Twitter, Inc\", role = \"cph\",\n    comment = \"Bootstrap library\"),\n    person(\"Brian\", \"Reavis\", role = c(\"ctb\", \"cph\"),\n    comment = \"selectize.js library\"),\n    person(\"Kristopher Michael\", \"Kowal\", role = c(\"ctb\", \"cph\"),\n    comment = \"es5-shim library\"),\n    person(family = \"es5-shim contributors\", role = c(\"ctb\", \"cph\"),\n    comment = \"es5-shim library\"),\n    person(\"Denis\", \"Ineshin\", role = c(\"ctb\", \"cph\"),\n    comment = \"ion.rangeSlider library\"),\n    person(\"Sami\", \"Samhuri\", role = c(\"ctb\", \"cph\"),\n    comment = \"Javascript strftime library\")\n    )",
-        "Description": "Provides building blocks for allowing HTML widgets to communicate\n    with each other, with Shiny or without (i.e. static .html files). Currently\n    supports linked brushing and filtering.",
-        "License": "MIT + file LICENSE",
-        "Imports": "htmltools (>= 0.3.5), jsonlite, lazyeval, R6, shiny (>= 0.11),\nggplot2",
-        "URL": "https://rstudio.github.io/crosstalk/",
-        "BugReports": "https://github.com/rstudio/crosstalk/issues",
-        "RoxygenNote": "5.0.1",
-        "NeedsCompilation": "no",
-        "Packaged": "2016-12-20 20:01:51 UTC; jcheng",
-        "Author": "Joe Cheng [aut, cre],\n  RStudio [cph],\n  jQuery Foundation [cph] (jQuery library and jQuery UI library),\n  jQuery contributors [ctb, cph] (jQuery library; authors listed in\n    inst/www/shared/jquery-AUTHORS.txt),\n  Mark Otto [ctb] (Bootstrap library),\n  Jacob Thornton [ctb] (Bootstrap library),\n  Bootstrap contributors [ctb] (Bootstrap library),\n  Twitter, Inc [cph] (Bootstrap library),\n  Brian Reavis [ctb, cph] (selectize.js library),\n  Kristopher Michael Kowal [ctb, cph] (es5-shim library),\n  es5-shim contributors [ctb, cph] (es5-shim library),\n  Denis Ineshin [ctb, cph] (ion.rangeSlider library),\n  Sami Samhuri [ctb, cph] (Javascript strftime library)",
-        "Maintainer": "Joe Cheng <joe@rstudio.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2016-12-21 08:30:32",
-        "Built": "R 3.6.0; ; 2019-04-28 15:10:38 UTC; unix"
       }
     },
     "curl": {
@@ -995,37 +936,6 @@
         "Repository": "CRAN",
         "Date/Publication": "2019-10-04 23:00:08 UTC",
         "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-11-23 19:52:45 UTC; unix"
-      }
-    },
-    "htmlwidgets": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "htmlwidgets",
-        "Type": "Package",
-        "Title": "HTML Widgets for R",
-        "Version": "1.5.1",
-        "Authors@R": "c(\n    person(\"Ramnath\", \"Vaidyanathan\", role = c(\"aut\", \"cph\")),\n    person(\"Yihui\", \"Xie\", role = c(\"aut\")),\n    person(\"JJ\", \"Allaire\", role = c(\"aut\")),\n    person(\"Joe\", \"Cheng\", role = c(\"aut\", \"cre\"), email = \"joe@rstudio.com\"),\n    person(\"Kenton\", \"Russell\", role = c(\"aut\", \"cph\")),\n    person(family = \"RStudio\", role = \"cph\")\n    )",
-        "Description": "A framework for creating HTML widgets that render in various\n    contexts including the R console, 'R Markdown' documents, and 'Shiny'\n    web applications.",
-        "License": "MIT + file LICENSE",
-        "VignetteBuilder": "knitr",
-        "Imports": "grDevices, htmltools (>= 0.3), jsonlite (>= 0.9.16), yaml",
-        "Suggests": "knitr (>= 1.8)",
-        "Enhances": "shiny (>= 1.1)",
-        "URL": "https://github.com/ramnathv/htmlwidgets",
-        "BugReports": "https://github.com/ramnathv/htmlwidgets/issues",
-        "RoxygenNote": "6.1.1",
-        "NeedsCompilation": "no",
-        "Packaged": "2019-10-07 21:55:31 UTC; jcheng",
-        "Author": "Ramnath Vaidyanathan [aut, cph],\n  Yihui Xie [aut],\n  JJ Allaire [aut],\n  Joe Cheng [aut, cre],\n  Kenton Russell [aut, cph],\n  RStudio [cph]",
-        "Maintainer": "Joe Cheng <joe@rstudio.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2019-10-08 08:40:02 UTC",
-        "Built": "R 3.6.1; ; 2019-11-23 20:01:15 UTC; unix"
       }
     },
     "httpuv": {
@@ -2576,10 +2486,10 @@
   },
   "files": {
     "access-to-care-rmarkdown.Rmd": {
-      "checksum": "cd2daf0363d8aaf631935275514b6b1f"
+      "checksum": "850971231a443ddc9ab3e308b0ca7fa8"
     },
     "manifest.json": {
-      "checksum": "1296350e0d9a49868dc54fd3e0d76462"
+      "checksum": "766fae96cf38732eda9932043715b14b"
     },
     "packrat/desc/askpass": {
       "checksum": "adb6f14233aa229a9245fbe85bd572d6"
@@ -2608,9 +2518,6 @@
     "packrat/desc/crayon": {
       "checksum": "b904732d2ef8151af8505f65ca9bf2c8"
     },
-    "packrat/desc/crosstalk": {
-      "checksum": "b9ad1fd2b802a888562cb46fde1bce26"
-    },
     "packrat/desc/curl": {
       "checksum": "bd3c8ced68e5f75a2491165227db1c76"
     },
@@ -2625,9 +2532,6 @@
     },
     "packrat/desc/dplyr": {
       "checksum": "53e6401db1734aa27c5de477bbf86bba"
-    },
-    "packrat/desc/DT": {
-      "checksum": "e0abd5abd8e77fa95dd845ca223c12e4"
     },
     "packrat/desc/ellipsis": {
       "checksum": "815b3786f5eaaa618c753e37d017f75c"
@@ -2661,9 +2565,6 @@
     },
     "packrat/desc/htmltools": {
       "checksum": "096fd4286b92b5f2f7da730dfc36c477"
-    },
-    "packrat/desc/htmlwidgets": {
-      "checksum": "ff99f614cf244fc94033f1f7089e2242"
     },
     "packrat/desc/httpuv": {
       "checksum": "30891e460cae502d6773fd2a9f70c1c5"
@@ -2831,7 +2732,7 @@
       "checksum": "df9935ffca693dfde7b99a6283f9db00"
     },
     "packrat/packrat.lock": {
-      "checksum": "09cb47f1b16a37f30134270b7e279094"
+      "checksum": "4a86aae0df2d761650a1ab3422969519"
     },
     "rs-connect-git.R": {
       "checksum": "2093088738220180451e450c928c97b7"
