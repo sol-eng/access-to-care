@@ -321,32 +321,6 @@ pin(
 ```
 
 ```{r}
-pin.lm <- function(x, name = NULL, description = NULL, board = NULL, ...) {
-  path <- tempfile()
-  dir.create(path)
-  on.exit(unlink(path))
-
-  # save model
-  saveRDS(x, file.path(path, "data.rds"), version = 2)
-  
-  # save summary
-  writeLines(capture.output(summary(lm(iris))), file.path(path, "summary.txt"))
-  
-  # save residuals vs fitted plot
-  grDevices::png(file.path(path, "residuals.png"))
-  plot(x)
-  dev.off()
-  
-  metadata <- list(
-    columns = list(formula = deparse(formula(x)))
-  )
-
-  board_pin_store(board, path, name, description, "linear_model", metadata, ...)
-}
-
-```
-
-```{r}
 pin(
   model,
   name = "atc-model",
@@ -355,6 +329,6 @@ pin(
 ```
 
 ```{r}
-pin_get("atc-lm", board = boardname)
+pin_get("atc-model", board = boardname)
 ```
 

@@ -1343,12 +1343,12 @@
       "GithubRepo": "pins",
       "GithubUsername": "rstudio",
       "GithubRef": "master",
-      "GithubSha1": "34b1528bec3ac1f3c1a6d8629a4a22cd7914a190",
+      "GithubSha1": "a43f3d3ea9b4899f2887a2a59f119c8653a48ad0",
       "description": {
         "Package": "pins",
         "Type": "Package",
         "Title": "Pin, Discover and Share Resources",
-        "Version": "0.3.0",
+        "Version": "0.3.0.9000",
         "Authors@R": "c(\n    person(\"Javier\", \"Luraschi\", email = \"javier@rstudio.com\", role = c(\"aut\", \"cre\")),\n    person(family = \"RStudio\", role = c(\"cph\"))\n    )",
         "Maintainer": "Javier Luraschi <javier@rstudio.com>",
         "Description": "Pin remote resources into a local cache to work offline,\n  improve speed and avoid recomputing; discover and share resources\n  in local folders, 'GitHub', 'Kaggle' or 'RStudio Connect'. Resources can \n  be anything from 'CSV', 'JSON', or image files to arbitrary R objects.",
@@ -1367,15 +1367,15 @@
         "RemoteRepo": "pins",
         "RemoteUsername": "rstudio",
         "RemoteRef": "master",
-        "RemoteSha": "34b1528bec3ac1f3c1a6d8629a4a22cd7914a190",
+        "RemoteSha": "a43f3d3ea9b4899f2887a2a59f119c8653a48ad0",
         "GithubRepo": "pins",
         "GithubUsername": "rstudio",
         "GithubRef": "master",
-        "GithubSHA1": "34b1528bec3ac1f3c1a6d8629a4a22cd7914a190",
+        "GithubSHA1": "a43f3d3ea9b4899f2887a2a59f119c8653a48ad0",
         "NeedsCompilation": "no",
-        "Packaged": "2019-11-25 23:01:00 UTC; edgar",
+        "Packaged": "2019-12-12 17:58:40 UTC; edgar",
         "Author": "Javier Luraschi [aut, cre],\n  RStudio [cph]",
-        "Built": "R 3.6.1; ; 2019-11-25 23:01:02 UTC; unix"
+        "Built": "R 3.6.1; ; 2019-12-12 17:58:42 UTC; unix"
       }
     },
     "pkgconfig": {
@@ -2327,7 +2327,7 @@
   },
   "files": {
     "access-to-care-dataprep.Rmd": {
-      "checksum": "f1e28364a69c5c916da3787733d9f95f"
+      "checksum": "22dc1c3add798fa13f0f1c06e43a35ec"
     },
     "data/shapes.rds": {
       "checksum": "c08dbd1a30b27909558147851c22a206"
@@ -2339,7 +2339,7 @@
       "checksum": "07f55dc14b909799b2ec2d096157851c"
     },
     "manifest.json": {
-      "checksum": "b9e9dee318949b6f4892d5857af1b483"
+      "checksum": "790c321297f452faa22c03995737a4a3"
     },
     "packrat/desc/askpass": {
       "checksum": "adb6f14233aa229a9245fbe85bd572d6"
@@ -2465,7 +2465,7 @@
       "checksum": "5ed755f867065bd0b75e138ba094c383"
     },
     "packrat/desc/pins": {
-      "checksum": "bbe064f4c25954a7a8dc04629e299847"
+      "checksum": "f2d184a459fd2baf2b7756fd2376f27f"
     },
     "packrat/desc/pkgconfig": {
       "checksum": "fc4964d60c231621cdf59f7bf241718c"
@@ -2564,7 +2564,7 @@
       "checksum": "df9935ffca693dfde7b99a6283f9db00"
     },
     "packrat/packrat.lock": {
-      "checksum": "3882f5e6e7abba7128403c3a3ec963b0"
+      "checksum": "70cf729ffbabec15f8274467d922fd48"
     },
     "rs-connect-git.R": {
       "checksum": "924121c4a71dc8d2461746cc1a480e76"
