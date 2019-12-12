@@ -279,37 +279,6 @@
         "Built": "R 3.6.0; ; 2019-04-28 14:55:21 UTC; unix"
       }
     },
-    "backports": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "backports",
-        "Type": "Package",
-        "Title": "Reimplementations of Functions Introduced Since R-3.0.0",
-        "Version": "1.1.5",
-        "Authors@R": "c(\n    person(\"Michel\", \"Lang\", NULL, \"michellang@gmail.com\",\n      role = c(\"cre\", \"aut\"), comment = c(ORCID = \"0000-0001-9754-0393\")),\n    person(\"R Core Team\", role = \"aut\"))",
-        "Maintainer": "Michel Lang <michellang@gmail.com>",
-        "Description": "\n    Functions introduced or changed since R v3.0.0 are re-implemented in this\n    package. The backports are conditionally exported in order to let R resolve\n    the function name to either the implemented backport, or the respective base\n    version, if available. Package developers can make use of new functions or\n    arguments by selectively importing specific backports to\n    support older installations.",
-        "URL": "https://github.com/r-lib/backports",
-        "BugReports": "https://github.com/r-lib/backports/issues",
-        "License": "GPL-2 | GPL-3",
-        "NeedsCompilation": "yes",
-        "ByteCompile": "yes",
-        "Depends": "R (>= 3.0.0)",
-        "Imports": "utils",
-        "Encoding": "UTF-8",
-        "RoxygenNote": "6.1.1",
-        "Packaged": "2019-10-02 18:35:28 UTC; michel",
-        "Author": "Michel Lang [cre, aut] (<https://orcid.org/0000-0001-9754-0393>),\n  R Core Team [aut]",
-        "Repository": "CRAN",
-        "Date/Publication": "2019-10-02 20:20:02 UTC",
-        "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-11-23 19:50:20 UTC; unix"
-      }
-    },
     "base64enc": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -863,36 +832,6 @@
         "Repository": "CRAN",
         "Date/Publication": "2019-03-25 19:50:02 UTC",
         "Built": "R 3.6.0; ; 2019-04-28 14:53:12 UTC; unix"
-      }
-    },
-    "here": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "here",
-        "Title": "A Simpler Way to Find Your Files",
-        "Version": "0.1",
-        "Authors@R": "person(\"Kirill\", \"Müller\", role = c(\"aut\", \"cre\"), email = \"krlmlr+r@mailbox.org\")",
-        "Description": "Constructs paths to your project's files.\n    The 'here()' function uses a reasonable heuristics to find your project's\n    files, based on the current working directory at the time when the package\n    is loaded. Use it as a drop-in replacement for 'file.path()', it will always\n    locate the files relative to your project root.",
-        "Imports": "rprojroot (>= 1.2)",
-        "License": "GPL-3",
-        "Encoding": "UTF-8",
-        "LazyData": "true",
-        "Date": "2017-05-27",
-        "URL": "https://github.com/krlmlr/here, http://krlmlr.github.io/here",
-        "BugReports": "https://github.com/krlmlr/here/issues",
-        "RoxygenNote": "6.0.1",
-        "NeedsCompilation": "no",
-        "Packaged": "2017-05-27 20:53:11 UTC; muelleki",
-        "Author": "Kirill Müller [aut, cre]",
-        "Maintainer": "Kirill Müller <krlmlr+r@mailbox.org>",
-        "Repository": "CRAN",
-        "Date/Publication": "2017-05-28 06:13:04 UTC",
-        "Built": "R 3.6.0; ; 2019-06-22 21:52:31 UTC; unix"
       }
     },
     "highr": {
@@ -1573,36 +1512,6 @@
         "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-09-03 14:28:49 UTC; unix"
       }
     },
-    "packrat": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "packrat",
-        "Type": "Package",
-        "Title": "A Dependency Management System for Projects and their R Package\nDependencies",
-        "Version": "0.5.0",
-        "Author": "Kevin Ushey, Jonathan McPherson, Joe Cheng, Aron Atkins, JJ Allaire",
-        "Maintainer": "Kevin Ushey <kevin@rstudio.com>",
-        "Description": "Manage the R packages your project depends\n    on in an isolated, portable, and reproducible way.",
-        "License": "GPL-2",
-        "Depends": "R (>= 3.0.0)",
-        "Imports": "tools, utils",
-        "Suggests": "testthat (>= 0.7), devtools, httr, knitr, rmarkdown",
-        "URL": "https://github.com/rstudio/packrat/",
-        "BugReports": "https://github.com/rstudio/packrat/issues",
-        "RoxygenNote": "6.1.1",
-        "Encoding": "UTF-8",
-        "NeedsCompilation": "no",
-        "Packaged": "2018-11-13 23:16:36 UTC; kevin",
-        "Repository": "CRAN",
-        "Date/Publication": "2018-11-14 08:40:02 UTC",
-        "Built": "R 3.6.0; ; 2019-04-28 14:50:21 UTC; unix"
-      }
-    },
     "pillar": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -2010,95 +1919,6 @@
         "Repository": "CRAN",
         "Date/Publication": "2019-11-27 07:40:03 UTC",
         "Built": "R 3.6.1; ; 2019-12-06 18:36:36 UTC; unix"
-      }
-    },
-    "rprojroot": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "rprojroot",
-        "Title": "Finding Files in Project Subdirectories",
-        "Version": "1.3-2",
-        "Authors@R": "person(given = \"Kirill\", family = \"Müller\", role = c(\"aut\",\n        \"cre\"), email = \"krlmlr+r@mailbox.org\")",
-        "Description": "Robust, reliable and flexible paths to files below a\n    project root. The 'root' of a project is defined as a directory\n    that matches a certain criterion, e.g., it contains a certain\n    regular file.",
-        "Depends": "R (>= 3.0.0)",
-        "Imports": "backports",
-        "Suggests": "testthat, mockr, knitr, withr, rmarkdown",
-        "VignetteBuilder": "knitr",
-        "License": "GPL-3",
-        "LazyData": "true",
-        "Encoding": "UTF-8",
-        "URL": "https://github.com/krlmlr/rprojroot,\nhttps://krlmlr.github.io/rprojroot",
-        "BugReports": "https://github.com/krlmlr/rprojroot/issues",
-        "RoxygenNote": "6.0.1",
-        "Collate": "'rrmake.R' 'criterion.R' 'file.R' 'has-file.R' 'root.R'\n'rprojroot-package.R' 'shortcut.R' 'thisfile.R'",
-        "NeedsCompilation": "no",
-        "Packaged": "2018-01-03 13:27:15 UTC; muelleki",
-        "Author": "Kirill Müller [aut, cre]",
-        "Maintainer": "Kirill Müller <krlmlr+r@mailbox.org>",
-        "Repository": "CRAN",
-        "Date/Publication": "2018-01-03 15:36:24 UTC",
-        "Built": "R 3.6.1; ; 2019-07-29 13:45:40 UTC; unix"
-      }
-    },
-    "rsconnect": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "rsconnect",
-        "Type": "Package",
-        "Title": "Deployment Interface for R Markdown Documents and Shiny\nApplications",
-        "Version": "0.8.15",
-        "Author": "JJ Allaire",
-        "Maintainer": "Jonathan McPherson <jonathan@rstudio.com>",
-        "Description": "Programmatic deployment interface for 'RPubs', 'shinyapps.io', and\n    'RStudio Connect'. Supported content types include R Markdown documents,\n    Shiny applications, Plumber APIs, plots, and static web content.",
-        "Depends": "R (>= 3.0.0)",
-        "Imports": "curl, jsonlite, openssl, packrat (>= 0.4.8-1), rstudioapi (>=\n0.5), yaml (>= 2.1.5)",
-        "Suggests": "RCurl, callr, httpuv, knitr, plumber (>= 0.3.2), reticulate,\nrmarkdown (>= 1.1), shiny, sourcetools, testthat, xtable",
-        "License": "GPL-2",
-        "RoxygenNote": "6.1.1",
-        "NeedsCompilation": "no",
-        "Packaged": "2019-07-22 21:53:14 UTC; jmcphers",
-        "Repository": "CRAN",
-        "Date/Publication": "2019-07-22 22:50:02 UTC",
-        "Built": "R 3.6.1; ; 2019-09-06 13:19:27 UTC; unix"
-      }
-    },
-    "rstudioapi": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "rstudioapi",
-        "Title": "Safely Access the RStudio API",
-        "Description": "Access the RStudio API (if available) and provide informative error\n    messages when it's not.",
-        "Version": "0.10",
-        "Authors@R": "c(\n    person(\"Kevin\", \"Ushey\", role = c(\"aut\", \"cre\"), email = \"kevin@rstudio.com\"),\n    person(\"JJ\", \"Allaire\", role = c(\"aut\"), email = \"jj@rstudio.com\"),\n    person(\"Hadley\", \"Wickham\", role = c(\"aut\"), email = \"hadley@rstudio.com\"),\n    person(\"Gary\", \"Ritchie\", role = c(\"aut\"), email = \"gary@rstudio.com\"),\n    person(family = \"RStudio\", role = \"cph\")\n    )",
-        "Maintainer": "Kevin Ushey <kevin@rstudio.com>",
-        "License": "MIT + file LICENSE",
-        "URL": "https://github.com/rstudio/rstudioapi",
-        "BugReports": "https://github.com/rstudio/rstudioapi/issues",
-        "RoxygenNote": "6.1.1",
-        "Suggests": "testthat, knitr, rmarkdown",
-        "VignetteBuilder": "knitr",
-        "Encoding": "UTF-8",
-        "NeedsCompilation": "no",
-        "Packaged": "2019-03-19 18:45:29 UTC; kevin",
-        "Author": "Kevin Ushey [aut, cre],\n  JJ Allaire [aut],\n  Hadley Wickham [aut],\n  Gary Ritchie [aut],\n  RStudio [cph]",
-        "Repository": "CRAN",
-        "Date/Publication": "2019-03-19 20:30:03 UTC",
-        "Built": "R 3.6.0; ; 2019-04-28 14:55:11 UTC; unix"
       }
     },
     "scales": {
@@ -2703,7 +2523,7 @@
       "checksum": "1de4eada59cf2625a2df68b3dce98fa3"
     },
     "manifest.json": {
-      "checksum": "fda0d139a2499010e5c9275f3859034d"
+      "checksum": "3b5bd24549fba765f58c674900b7d690"
     },
     "model.png": {
       "checksum": "d43a7d18e1310610959315a3023f2020"
@@ -2713,9 +2533,6 @@
     },
     "packrat/desc/assertthat": {
       "checksum": "225699cd8daad6332ccb6c6e9f4497f6"
-    },
-    "packrat/desc/backports": {
-      "checksum": "0888112ce71591f75395290de75b5fe2"
     },
     "packrat/desc/base64enc": {
       "checksum": "362ea9ff1fc894a11fd5f13c6c7044d5"
@@ -2776,9 +2593,6 @@
     },
     "packrat/desc/gtable": {
       "checksum": "91ab96944a3121b8303398c43d1aed99"
-    },
-    "packrat/desc/here": {
-      "checksum": "90a3db301804ad2aeac0850ce8efb259"
     },
     "packrat/desc/highr": {
       "checksum": "f7b8c5c73dac0dc8c0dd3fa2d09f28ea"
@@ -2852,9 +2666,6 @@
     "packrat/desc/openssl": {
       "checksum": "df489c9cc292f74875c80af9a7942ce7"
     },
-    "packrat/desc/packrat": {
-      "checksum": "8a21d2e1a1c6643bcb1131ee35044ff0"
-    },
     "packrat/desc/pillar": {
       "checksum": "5ed755f867065bd0b75e138ba094c383"
     },
@@ -2902,15 +2713,6 @@
     },
     "packrat/desc/rmarkdown": {
       "checksum": "1e566d960aca4096fd40726a7afeba9d"
-    },
-    "packrat/desc/rprojroot": {
-      "checksum": "32aa7a1cb8b1ebb268844386f2ece152"
-    },
-    "packrat/desc/rsconnect": {
-      "checksum": "05c802981377dd65ad10f7c7b5f850d6"
-    },
-    "packrat/desc/rstudioapi": {
-      "checksum": "32f3823157c7a2ac16e42dcc58a0b07c"
     },
     "packrat/desc/scales": {
       "checksum": "7bd55442221f5eda225e5dbd1cc53300"
@@ -2970,10 +2772,7 @@
       "checksum": "df9935ffca693dfde7b99a6283f9db00"
     },
     "packrat/packrat.lock": {
-      "checksum": "b5b3f198efa9e80a31434789add418f5"
-    },
-    "rs-connect-git.R": {
-      "checksum": "a8d0440bb3bfbdd47c3fd44e8aa8440c"
+      "checksum": "9f90423f6a815ca25cd03462fb82a25d"
     },
     "RStudio1.png": {
       "checksum": "288da77036023512c0adbf27de9fe9c2"
