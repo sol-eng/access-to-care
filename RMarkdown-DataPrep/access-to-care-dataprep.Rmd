@@ -323,7 +323,7 @@ pin(
 ```{r}
 pin(
   model,
-  name = "atc-model",
+  name = "atc-lm",
   board = boardname
   )
 ```
