@@ -30,8 +30,8 @@ if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
 }
 
 model <- pin_get("atc-model", board = boardname)
-states <- pin_get("atc-db-states", board = boardname) %>% collect()
-county_hospitals <- pin_get("atc-db-base-map", boardname)
+states <- pin_get("atc-states", board = boardname) %>% collect()
+county_hospitals <- pin_get("atc-base-map", boardname)
 ```
 
 ## County population vs hospitals

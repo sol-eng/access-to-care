@@ -1,6 +1,5 @@
 sub_folder <- "powerpoint"
 full_path <- here::here(sub_folder)
-file.copy("RMarkdown-DataPrep/local.sqlite", full_path, overwrite = TRUE)
 app_files <- dir(full_path)
 app_files <- app_files[app_files != "config.yml"]
 app_files <- app_files[!grepl(".html", app_files)]
