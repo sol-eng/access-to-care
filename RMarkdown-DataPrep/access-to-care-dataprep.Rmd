@@ -319,3 +319,12 @@ pin(
   board = boardname
   )
 ```
+
+
+```{r}
+pin(
+  model,
+  name = "atc-model",
+  board = boardname
+  )
+```
