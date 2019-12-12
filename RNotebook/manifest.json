@@ -12,16 +12,13 @@
   "packages": null,
   "files": {
     "access-to-care.nb.html": {
-      "checksum": "451ac999b64019c4c321a8bfdef974ad"
-    },
-    "local.sqlite": {
-      "checksum": "e00e3a1e7827a257e2605bcb0637234f"
+      "checksum": "f9c9c29f30b30993cb386518e4e5495c"
     },
     "manifest.json": {
-      "checksum": "bbafc9de9526d8b9afbb48fb6e578e2b"
+      "checksum": "9f48ef0343a752319aacf6268408fc90"
     },
     "rs-connect-git.R": {
-      "checksum": "53f2b120f008da52ffe3401c201b0218"
+      "checksum": "6486e1a77a7f38cc8b5dc1c550622120"
     }
   },
   "users": null
