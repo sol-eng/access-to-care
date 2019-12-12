@@ -1,24 +1,18 @@
 {
   "version": 1,
-  "locale": "en_US",
-  "platform": "3.6.1",
+  "locale": "C",
+  "platform": "3.6.0",
   "metadata": {
     "appmode": "static",
     "primary_rmd": null,
-    "primary_html": "access-to-care.ipynb",
+    "primary_html": "access-to-care.html",
     "content_category": null,
     "has_parameters": false
   },
   "packages": null,
   "files": {
-    "access-to-care.ipynb": {
-      "checksum": "49ca134aeea9dda87520e2bada94c354"
-    },
-    "manifest.json": {
-      "checksum": "2ec7d9da75ba5a7d6aa40d921a6ba07a"
-    },
-    "rs-connect-git.R": {
-      "checksum": "5d4a63f8fcf67d3ad7dc07a1b831bfed"
+    "access-to-care.html": {
+      "checksum": "c688e5d31d3c1b0d637367110256608a"
     }
   },
   "users": null
