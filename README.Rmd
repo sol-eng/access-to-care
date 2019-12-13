@@ -60,7 +60,9 @@ contents <- dr %>%
   bind_rows() %>%
   filter(folder != "readme-files") %>%
   select(-folder) %>%
-  arrange(Type)
+  arrange(Type) %>%
+  mutate(No = row_number()) %>%
+  select(No, everything())
 ```
 
 ```{r, echo = FALSE}
