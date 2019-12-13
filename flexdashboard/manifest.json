@@ -1549,12 +1549,12 @@
       "GithubRepo": "pins",
       "GithubUsername": "rstudio",
       "GithubRef": "master",
-      "GithubSha1": "34b1528bec3ac1f3c1a6d8629a4a22cd7914a190",
+      "GithubSha1": "a43f3d3ea9b4899f2887a2a59f119c8653a48ad0",
       "description": {
         "Package": "pins",
         "Type": "Package",
         "Title": "Pin, Discover and Share Resources",
-        "Version": "0.3.0",
+        "Version": "0.3.0.9000",
         "Authors@R": "c(\n    person(\"Javier\", \"Luraschi\", email = \"javier@rstudio.com\", role = c(\"aut\", \"cre\")),\n    person(family = \"RStudio\", role = c(\"cph\"))\n    )",
         "Maintainer": "Javier Luraschi <javier@rstudio.com>",
         "Description": "Pin remote resources into a local cache to work offline,\n  improve speed and avoid recomputing; discover and share resources\n  in local folders, 'GitHub', 'Kaggle' or 'RStudio Connect'. Resources can \n  be anything from 'CSV', 'JSON', or image files to arbitrary R objects.",
@@ -1573,15 +1573,15 @@
         "RemoteRepo": "pins",
         "RemoteUsername": "rstudio",
         "RemoteRef": "master",
-        "RemoteSha": "34b1528bec3ac1f3c1a6d8629a4a22cd7914a190",
+        "RemoteSha": "a43f3d3ea9b4899f2887a2a59f119c8653a48ad0",
         "GithubRepo": "pins",
         "GithubUsername": "rstudio",
         "GithubRef": "master",
-        "GithubSHA1": "34b1528bec3ac1f3c1a6d8629a4a22cd7914a190",
+        "GithubSHA1": "a43f3d3ea9b4899f2887a2a59f119c8653a48ad0",
         "NeedsCompilation": "no",
-        "Packaged": "2019-11-25 23:01:00 UTC; edgar",
+        "Packaged": "2019-12-12 17:58:40 UTC; edgar",
         "Author": "Javier Luraschi [aut, cre],\n  RStudio [cph]",
-        "Built": "R 3.6.1; ; 2019-11-25 23:01:02 UTC; unix"
+        "Built": "R 3.6.1; ; 2019-12-12 17:58:42 UTC; unix"
       }
     },
     "pkgconfig": {
@@ -2520,7 +2520,7 @@
   },
   "files": {
     "access-to-care.Rmd": {
-      "checksum": "1de4eada59cf2625a2df68b3dce98fa3"
+      "checksum": "f9afc7613b647328ad5d1d886397a6fb"
     },
     "model.png": {
       "checksum": "d43a7d18e1310610959315a3023f2020"
@@ -2667,7 +2667,7 @@
       "checksum": "5ed755f867065bd0b75e138ba094c383"
     },
     "packrat/desc/pins": {
-      "checksum": "bbe064f4c25954a7a8dc04629e299847"
+      "checksum": "f2d184a459fd2baf2b7756fd2376f27f"
     },
     "packrat/desc/pkgconfig": {
       "checksum": "fc4964d60c231621cdf59f7bf241718c"
@@ -2769,13 +2769,7 @@
       "checksum": "df9935ffca693dfde7b99a6283f9db00"
     },
     "packrat/packrat.lock": {
-      "checksum": "e32cab8d82381189a119d8d94e3f6222"
-    },
-    "rsconnect/documents/access-to-care.Rmd/beta.rstudioconnect.com/edgar/access-to-care-flexdashboard.dcf": {
-      "checksum": "3da11428f459e8e2aa849295a6993f3e"
-    },
-    "rsconnect/documents/access-to-care.Rmd/colorado.rstudio.com/edgar/access-to-care-flexdashboard2.dcf": {
-      "checksum": "a3e82f116eb92ffdc7d4923772a3144a"
+      "checksum": "5fc8afe5ae14bc3d8da8c47820e47a8a"
     },
     "RStudio1.png": {
       "checksum": "288da77036023512c0adbf27de9fe9c2"

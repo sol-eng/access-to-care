@@ -2,6 +2,7 @@ library(plumber)
 library(pins)
 library(usmap)
 library(dplyr)
+library(tidypredict)
 
 if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
   boardname <- "rsconnect"
@@ -16,7 +17,8 @@ if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
 
 states <-pin_get("atc-states", board = boardname)  
 counties <- pin_get("atc-base-map", boardname)
-model <- pin_get("atc-model", board = boardname) 
+model <- pin_get("atc-parsed-model", board = boardname) %>%
+  as_parsed_model()
 
 #* Get the state's summarized information
 #* @get /summary
@@ -32,7 +34,8 @@ function(state = "MS") {
 #* @param population:numeric Number of people living in a given county
 function(population = 70000) {
   pop <- as.numeric(population)
-  predict(model, data.frame(population = pop))
+  data.frame(population = 70000) %>%
+    tidypredict_to_column(model, add_interval = TRUE)
 }
 
 #* Prediction of number of hospitals based on population

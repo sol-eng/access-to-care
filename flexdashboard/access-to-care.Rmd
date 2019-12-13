@@ -38,7 +38,6 @@ if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
   board_register(boardname)  
 }
 
-model <- pin_get("atc-model", board = boardname)
 states <- pin_get("atc-states", board = boardname) %>% collect()
 ```
 
@@ -251,22 +250,3 @@ county_hospitals %>%
 knitr::include_graphics("model.png")
 
 ```
-
-
-```{r}
-sm <- summary(model)
-```
-
-***
-
-The results of the model where:
-
-- Multiple R-squared:  `r sm$r.squared`
-
-- Adjusted ***R-squared:  `r sm$adj.r.squared` ***
-
-And the formula was: 
-
-- lm(formula = hospitals ~ population)
-
-

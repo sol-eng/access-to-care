@@ -12,7 +12,8 @@ knitr::opts_chunk$set(echo = FALSE, fig.width = 9, fig.height = 7, fig.align = "
 library(dplyr)
 library(ggplot2)
 library(pins)
-library(connections)
+library(broom)
+library(tidypredict)
 
 if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
   boardname <- "rsconnect"
@@ -25,7 +26,7 @@ if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
   board_register(boardname)  
 }
 
-model <- pin_get("atc-model", board = boardname)
+model <- pin_get("atc-parsed-model", board = boardname)
 states <- pin_get("atc-states", board = boardname) %>% collect()
 county_hospitals <- pin_get("atc-base-map", boardname)
 ```
@@ -45,7 +46,7 @@ county_hospitals %>%
 ## Model
 
 ```{r}
-summary(model)
+tidy(model)
 ```
 
 ---
@@ -62,11 +63,8 @@ bounds <- county_hospitals %>%
   collect() %>%
   as.numeric()
 
-preds <- predict(
-  model, 
-  data.frame(population = bounds),
-  interval = "prediction"
-  )
+preds <- data.frame(population = bounds) %>%
+  tidypredict_to_column(model, add_interval = TRUE)
 
 county_hospitals %>% 
   group_by(population, hospitals) %>%

@@ -35,39 +35,6 @@
         "Built": "R 3.6.1; ; 2019-09-10 15:06:41 UTC; unix"
       }
     },
-    "DBI": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "DBI",
-        "Version": "1.0.0",
-        "Date": "2018-05-02",
-        "Title": "R Database Interface",
-        "Description": "A database interface definition for communication\n    between R and relational database management systems.  All\n    classes in this package are virtual and need to be extended by\n    the various R/DBMS implementations.",
-        "Authors@R": "c(\n    person(\"R Special Interest Group on Databases (R-SIG-DB)\", role = \"aut\"),\n    person(\"Hadley\", \"Wickham\", role = \"aut\"),\n    person(\"Kirill\", \"M\\u00fcller\", role = c(\"aut\", \"cre\"), email = \"krlmlr+r@mailbox.org\", comment = c(ORCID = \"0000-0002-1416-3412\")),\n    person(\"R Consortium\", role = \"fnd\")\n    )",
-        "Depends": "R (>= 3.0.0), methods",
-        "Suggests": "blob, covr, hms, knitr, magrittr, rprojroot, rmarkdown,\nRSQLite (>= 1.1-2), testthat, xml2",
-        "Encoding": "UTF-8",
-        "License": "LGPL (>= 2)",
-        "URL": "http://r-dbi.github.io/DBI",
-        "URLNote": "https://github.com/r-dbi/DBI",
-        "BugReports": "https://github.com/r-dbi/DBI/issues",
-        "Collate": "'hidden.R' 'DBObject.R' 'DBDriver.R' 'table.R'\n'DBConnection.R' 'ANSI.R' 'DBI-package.R' 'DBResult.R'\n'data-types.R' 'data.R' 'deprecated.R' 'interpolate.R'\n'list-pairs.R' 'quote.R' 'rd.R' 'rownames.R' 'table-create.R'\n'table-insert.R' 'transactions.R'",
-        "VignetteBuilder": "knitr",
-        "RoxygenNote": "6.0.1.9000",
-        "NeedsCompilation": "no",
-        "Packaged": "2018-05-02 00:38:32 UTC; kirill",
-        "Author": "R Special Interest Group on Databases (R-SIG-DB) [aut],\n  Hadley Wickham [aut],\n  Kirill Müller [aut, cre] (<https://orcid.org/0000-0002-1416-3412>),\n  R Consortium [fnd]",
-        "Maintainer": "Kirill Müller <krlmlr+r@mailbox.org>",
-        "Repository": "CRAN",
-        "Date/Publication": "2018-05-02 11:24:41 UTC",
-        "Built": "R 3.6.0; ; 2019-04-28 14:55:23 UTC; unix"
-      }
-    },
     "MASS": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -337,6 +304,38 @@
         "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-07-29 13:46:16 UTC; unix"
       }
     },
+    "broom": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Type": "Package",
+        "Package": "broom",
+        "Title": "Convert Statistical Analysis Objects into Tidy Tibbles",
+        "Version": "0.5.2",
+        "Authors@R": "\n    c(person(given = \"David\",\n             family = \"Robinson\",\n             role = \"aut\",\n             email = \"admiral.david@gmail.com\"),\n      person(given = \"Alex\",\n             family = \"Hayes\",\n             role = c(\"aut\", \"cre\"),\n             email = \"alexpghayes@gmail.com\",\n             comment = c(ORCID = \"0000-0002-4985-5160\")),\n      person(given = \"Matthieu\",\n             family = \"Gomez\",\n             role = \"ctb\",\n             email = \"mattg@princeton.edu\"),\n      person(given = \"Boris\",\n             family = \"Demeshev\",\n             role = \"ctb\",\n             email = \"boris.demeshev@gmail.com\"),\n      person(given = \"Dieter\",\n             family = \"Menne\",\n             role = \"ctb\",\n             email = \"dieter.menne@menne-biomed.de\"),\n      person(given = \"Benjamin\",\n             family = \"Nutter\",\n             role = \"ctb\",\n             email = \"nutter@battelle.org\"),\n      person(given = \"Luke\",\n             family = \"Johnston\",\n             role = \"ctb\",\n             email = \"luke.johnston@mail.utoronto.ca\"),\n      person(given = \"Ben\",\n             family = \"Bolker\",\n             role = \"ctb\",\n             email = \"bolker@mcmaster.ca\"),\n      person(given = \"Francois\",\n             family = \"Briatte\",\n             role = \"ctb\",\n             email = \"f.briatte@gmail.com\"),\n      person(given = \"Jeffrey\",\n             family = \"Arnold\",\n             role = \"ctb\",\n             email = \"jeffrey.arnold@gmail.com\"),\n      person(given = \"Jonah\",\n             family = \"Gabry\",\n             role = \"ctb\",\n             email = \"jsg2201@columbia.edu\"),\n      person(given = \"Luciano\",\n             family = \"Selzer\",\n             role = \"ctb\",\n             email = \"luciano.selzer@gmail.com\"),\n      person(given = \"Gavin\",\n             family = \"Simpson\",\n             role = \"ctb\",\n             email = \"ucfagls@gmail.com\"),\n      person(given = \"Jens\",\n             family = \"Preussner\",\n             role = \"ctb\",\n             email = \" jens.preussner@mpi-bn.mpg.de\"),\n      person(given = \"Jay\",\n             family = \"Hesselberth\",\n             role = \"ctb\",\n             email = \"jay.hesselberth@gmail.com\"),\n      person(given = \"Hadley\",\n             family = \"Wickham\",\n             role = \"ctb\",\n             email = \"hadley@rstudio.com\"),\n      person(given = \"Matthew\",\n             family = \"Lincoln\",\n             role = \"ctb\",\n             email = \"matthew.d.lincoln@gmail.com\"),\n      person(given = \"Alessandro\",\n             family = \"Gasparini\",\n             role = \"ctb\",\n             email = \"ag475@leicester.ac.uk\"),\n      person(given = \"Lukasz\",\n             family = \"Komsta\",\n             role = \"ctb\",\n             email = \"lukasz.komsta@umlub.pl\"),\n      person(given = \"Frederick\",\n             family = \"Novometsky\",\n             role = \"ctb\"),\n      person(given = \"Wilson\",\n             family = \"Freitas\",\n             role = \"ctb\"),\n      person(given = \"Michelle\",\n             family = \"Evans\",\n             role = \"ctb\"),\n      person(given = \"Jason Cory\",\n             family = \"Brunson\",\n             role = \"ctb\",\n             email = \"cornelioid@gmail.com\"),\n      person(given = \"Simon\",\n             family = \"Jackson\",\n             role = \"ctb\",\n             email = \"drsimonjackson@gmail.com\"),\n      person(given = \"Ben\",\n             family = \"Whalley\",\n             role = \"ctb\",\n             email = \"ben.whalley@plymouth.ac.uk\"),\n      person(given = \"Michael\",\n             family = \"Kuehn\",\n             role = \"ctb\",\n             email = \"mkuehn10@gmail.com\"),\n      person(given = \"Jorge\",\n             family = \"Cimentada\",\n             role = \"ctb\",\n             email = \"cimentadaj@gmail.com\"),\n      person(given = \"Erle\",\n             family = \"Holgersen\",\n             role = \"ctb\",\n             email = \"erle.holgersen@gmail.com\"),\n      person(given = \"Karl\",\n             family = \"Dunkle Werner\",\n             role = \"ctb\"))",
+        "Description": "Summarizes key information about statistical\n    objects in tidy tibbles. This makes it easy to report results, create\n    plots and consistently work with large numbers of models at once.\n    Broom provides three verbs that each provide different types of\n    information about a model. tidy() summarizes information about model\n    components such as coefficients of a regression. glance() reports\n    information about an entire model, such as goodness of fit measures\n    like AIC and BIC. augment() adds information about individual\n    observations to a dataset, such as fitted values or influence\n    measures.",
+        "License": "MIT + file LICENSE",
+        "URL": "http://github.com/tidyverse/broom",
+        "BugReports": "http://github.com/tidyverse/broom/issues",
+        "Depends": "R (>= 3.1)",
+        "Imports": "backports, dplyr, generics (>= 0.0.2), methods, nlme, purrr,\nreshape2, stringr, tibble, tidyr",
+        "Suggests": "AER, akima, AUC, bbmle, betareg, biglm, binGroup, boot, brms,\nbtergm, car, caret, coda, covr, e1071, emmeans, ergm, gam (>=\n1.15), gamlss, gamlss.data, gamlss.dist, geepack, ggplot2,\nglmnet, gmm, Hmisc, irlba, joineRML, Kendall, knitr, ks,\nLahman, lavaan, lfe, lme4, lmodel2, lmtest, lsmeans, maps,\nmaptools, MASS, Matrix, mclust, mgcv, muhaz, multcomp, network,\nnnet, orcutt (>= 2.2), ordinal, plm, plyr, poLCA, psych,\nquantreg, rgeos, rmarkdown, robust, rsample, rstan, rstanarm,\nsp, speedglm, statnet.common, survey, survival, testthat,\ntseries, xergm, zoo",
+        "VignetteBuilder": "knitr",
+        "LazyData": "true",
+        "RoxygenNote": "6.1.1",
+        "NeedsCompilation": "no",
+        "Packaged": "2019-04-07 19:01:07 UTC; alex",
+        "Author": "David Robinson [aut],\n  Alex Hayes [aut, cre] (<https://orcid.org/0000-0002-4985-5160>),\n  Matthieu Gomez [ctb],\n  Boris Demeshev [ctb],\n  Dieter Menne [ctb],\n  Benjamin Nutter [ctb],\n  Luke Johnston [ctb],\n  Ben Bolker [ctb],\n  Francois Briatte [ctb],\n  Jeffrey Arnold [ctb],\n  Jonah Gabry [ctb],\n  Luciano Selzer [ctb],\n  Gavin Simpson [ctb],\n  Jens Preussner [ctb],\n  Jay Hesselberth [ctb],\n  Hadley Wickham [ctb],\n  Matthew Lincoln [ctb],\n  Alessandro Gasparini [ctb],\n  Lukasz Komsta [ctb],\n  Frederick Novometsky [ctb],\n  Wilson Freitas [ctb],\n  Michelle Evans [ctb],\n  Jason Cory Brunson [ctb],\n  Simon Jackson [ctb],\n  Ben Whalley [ctb],\n  Michael Kuehn [ctb],\n  Jorge Cimentada [ctb],\n  Erle Holgersen [ctb],\n  Karl Dunkle Werner [ctb]",
+        "Maintainer": "Alex Hayes <alexpghayes@gmail.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2019-04-07 19:52:53 UTC",
+        "Built": "R 3.6.0; ; 2019-04-28 15:19:24 UTC; unix"
+      }
+    },
     "cli": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -398,36 +397,6 @@
         "Repository": "CRAN",
         "Date/Publication": "2019-03-18 14:43:29 UTC",
         "Built": "R 3.6.0; x86_64-pc-linux-gnu; 2019-04-28 14:50:24 UTC; unix"
-      }
-    },
-    "connections": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "connections",
-        "Title": "Integrates with the 'RStudio' Connections Pane and 'pins'",
-        "Version": "0.1.0",
-        "Authors@R": "\n    person(\"Edgar\", \"Ruiz\", email = \"edgar@rstudio.com\", role = c(\"aut\", \"cre\"))",
-        "Description": "Enables 'DBI' compliant packages to integrate with the 'RStudio' connections \n  pane, and the 'pins' package. It automates the display of schemata, tables, views, as well \n  as the preview of the table's top 1000 records. ",
-        "License": "GPL-3",
-        "Imports": "DBI, methods, pins, dplyr, dbplyr, uuid, rscontract",
-        "Suggests": "RSQLite, testthat (>= 2.1.0), covr",
-        "Encoding": "UTF-8",
-        "LazyData": "true",
-        "RoxygenNote": "6.1.1",
-        "URL": "https://github.com/edgararuiz/connections",
-        "BugReports": "https://github.com/edgararuiz/connections/issues",
-        "NeedsCompilation": "no",
-        "Packaged": "2019-10-24 13:39:10 UTC; edgar",
-        "Author": "Edgar Ruiz [aut, cre]",
-        "Maintainer": "Edgar Ruiz <edgar@rstudio.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2019-10-28 16:30:02 UTC",
-        "Built": "R 3.6.1; ; 2019-12-04 17:11:58 UTC; unix"
       }
     },
     "crayon": {
@@ -493,41 +462,6 @@
         "Repository": "CRAN",
         "Date/Publication": "2019-12-02 14:00:03 UTC",
         "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-12-06 18:31:00 UTC; unix"
-      }
-    },
-    "dbplyr": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Type": "Package",
-        "Package": "dbplyr",
-        "Title": "A 'dplyr' Back End for Databases",
-        "Version": "1.4.2",
-        "Authors@R": "\n    c(person(given = \"Hadley\",\n             family = \"Wickham\",\n             role = c(\"aut\", \"cre\"),\n             email = \"hadley@rstudio.com\"),\n      person(given = \"Edgar\",\n             family = \"Ruiz\",\n             role = \"aut\"),\n      person(given = \"RStudio\",\n             role = c(\"cph\", \"fnd\")))",
-        "Description": "A 'dplyr' back end for databases that allows you to\n    work with remote database tables as if they are in-memory data frames.\n    Basic features works with any database that has a 'DBI' back end; more\n    advanced features require 'SQL' translation to be provided by the\n    package author.",
-        "License": "MIT + file LICENSE",
-        "URL": "https://dbplyr.tidyverse.org/, https://github.com/tidyverse/dbplyr",
-        "BugReports": "https://github.com/tidyverse/dbplyr/issues",
-        "Depends": "R (>= 3.1)",
-        "Imports": "assertthat (>= 0.2.0), DBI (>= 1.0.0), dplyr (>= 0.8.0), glue\n(>= 1.2.0), methods, purrr (>= 0.2.5), R6 (>= 2.2.2), rlang (>=\n0.2.0), tibble (>= 1.4.2), tidyselect (>= 0.2.4), utils",
-        "Suggests": "bit64, covr, knitr, Lahman, nycflights13, RMariaDB (>=\n1.0.2), rmarkdown, RMySQL (>= 0.10.11), RPostgreSQL (>= 0.4.1),\nRSQLite (>= 2.1.0), testthat (>= 2.0.0), withr (>= 2.1.2)",
-        "VignetteBuilder": "knitr",
-        "Encoding": "UTF-8",
-        "Language": "en-gb",
-        "LazyData": "yes",
-        "RoxygenNote": "6.1.1",
-        "Collate": "'utils.R' 'sql.R' 'escape.R' 'translate-sql-quantile.R'\n'translate-sql-string.R' 'translate-sql-paste.R'\n'translate-sql-helpers.R' 'translate-sql-window.R'\n'translate-sql-conditional.R' 'backend-.R' 'backend-access.R'\n'backend-hive.R' 'backend-impala.R' 'backend-mssql.R'\n'backend-mysql.R' 'backend-odbc.R' 'backend-oracle.R'\n'backend-postgres.R' 'backend-sqlite.R' 'backend-teradata.R'\n'build-sql.R' 'data-cache.R' 'data-lahman.R'\n'data-nycflights13.R' 'dbplyr.R' 'explain.R' 'ident.R'\n'lazy-ops.R' 'memdb.R' 'partial-eval.R' 'query-join.R'\n'query-select.R' 'query-semi-join.R' 'query-set-op.R' 'query.R'\n'remote.R' 'schema.R' 'simulate.R' 'sql-build.R' 'sql-expr.R'\n'src-sql.R' 'src_dbi.R' 'tbl-lazy.R' 'tbl-sql.R' 'test-frame.R'\n'testthat.R' 'translate-sql-clause.R' 'translate-sql.R'\n'utils-format.R' 'verb-arrange.R' 'verb-compute.R'\n'verb-copy-to.R' 'verb-distinct.R' 'verb-do-query.R'\n'verb-do.R' 'verb-filter.R' 'verb-group_by.R' 'verb-head.R'\n'verb-joins.R' 'verb-mutate.R' 'verb-pull.R' 'verb-select.R'\n'verb-set-ops.R' 'verb-summarise.R' 'verb-window.R' 'zzz.R'",
-        "NeedsCompilation": "no",
-        "Packaged": "2019-06-17 19:32:57 UTC; hadley",
-        "Author": "Hadley Wickham [aut, cre],\n  Edgar Ruiz [aut],\n  RStudio [cph, fnd]",
-        "Maintainer": "Hadley Wickham <hadley@rstudio.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2019-06-17 20:00:04 UTC",
-        "Built": "R 3.6.1; ; 2019-12-04 17:15:39 UTC; unix"
       }
     },
     "digest": {
@@ -715,6 +649,37 @@
         "Repository": "CRAN",
         "Date/Publication": "2019-11-13 22:20:13 UTC",
         "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-11-23 19:50:32 UTC; unix"
+      }
+    },
+    "generics": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Package": "generics",
+        "Version": "0.0.2",
+        "Title": "Common S3 Generics not Provided by Base R Methods Related to\nModel Fitting",
+        "Description": "In order to reduce potential package dependencies and conflicts, \n    generics provides a number of commonly used S3 generics.",
+        "Authors@R": "c(\n    person(\"Max\", \"Kuhn\", , \"max@rstudio.com\", c(\"aut\", \"cre\")),\n    person(\"Hadley\", \"Wickham\", , \"hadley@rstudio.com\", \"aut\"),\n    person(\"Davis\", \"Vaughan\", , \"davis@rstudio.com\", \"aut\"),\n    person(\"RStudio\", role = \"cph\"))",
+        "License": "GPL-2",
+        "Encoding": "UTF-8",
+        "LazyData": "true",
+        "RoxygenNote": "6.1.1",
+        "URL": "https://github.com/r-lib/generics",
+        "BugReports": "https://github.com/r-lib/generics",
+        "Depends": "R (>= 3.1)",
+        "Suggests": "covr, pkgload, testthat, tibble",
+        "Imports": "methods",
+        "NeedsCompilation": "no",
+        "Packaged": "2018-11-29 13:00:32 UTC; max",
+        "Author": "Max Kuhn [aut, cre],\n  Hadley Wickham [aut],\n  Davis Vaughan [aut],\n  RStudio [cph]",
+        "Maintainer": "Max Kuhn <max@rstudio.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2018-11-29 13:20:03 UTC",
+        "Built": "R 3.6.0; ; 2019-04-28 14:55:25 UTC; unix"
       }
     },
     "ggplot2": {
@@ -1398,12 +1363,12 @@
       "GithubRepo": "pins",
       "GithubUsername": "rstudio",
       "GithubRef": "master",
-      "GithubSha1": "34b1528bec3ac1f3c1a6d8629a4a22cd7914a190",
+      "GithubSha1": "a43f3d3ea9b4899f2887a2a59f119c8653a48ad0",
       "description": {
         "Package": "pins",
         "Type": "Package",
         "Title": "Pin, Discover and Share Resources",
-        "Version": "0.3.0",
+        "Version": "0.3.0.9000",
         "Authors@R": "c(\n    person(\"Javier\", \"Luraschi\", email = \"javier@rstudio.com\", role = c(\"aut\", \"cre\")),\n    person(family = \"RStudio\", role = c(\"cph\"))\n    )",
         "Maintainer": "Javier Luraschi <javier@rstudio.com>",
         "Description": "Pin remote resources into a local cache to work offline,\n  improve speed and avoid recomputing; discover and share resources\n  in local folders, 'GitHub', 'Kaggle' or 'RStudio Connect'. Resources can \n  be anything from 'CSV', 'JSON', or image files to arbitrary R objects.",
@@ -1422,15 +1387,15 @@
         "RemoteRepo": "pins",
         "RemoteUsername": "rstudio",
         "RemoteRef": "master",
-        "RemoteSha": "34b1528bec3ac1f3c1a6d8629a4a22cd7914a190",
+        "RemoteSha": "a43f3d3ea9b4899f2887a2a59f119c8653a48ad0",
         "GithubRepo": "pins",
         "GithubUsername": "rstudio",
         "GithubRef": "master",
-        "GithubSHA1": "34b1528bec3ac1f3c1a6d8629a4a22cd7914a190",
+        "GithubSHA1": "a43f3d3ea9b4899f2887a2a59f119c8653a48ad0",
         "NeedsCompilation": "no",
-        "Packaged": "2019-11-25 23:01:00 UTC; edgar",
+        "Packaged": "2019-12-12 17:58:40 UTC; edgar",
         "Author": "Javier Luraschi [aut, cre],\n  RStudio [cph]",
-        "Built": "R 3.6.1; ; 2019-11-25 23:01:02 UTC; unix"
+        "Built": "R 3.6.1; ; 2019-12-12 17:58:42 UTC; unix"
       }
     },
     "pkgconfig": {
@@ -1740,36 +1705,6 @@
         "Built": "R 3.6.1; ; 2019-09-06 13:19:27 UTC; unix"
       }
     },
-    "rscontract": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "rscontract",
-        "Title": "Generic implementation of the 'RStudio' connections contract",
-        "Version": "0.1.0",
-        "Authors@R": "\n    person(\"Edgar\", \"Ruiz\", email = \"edgar@rstudio.com\", role = c(\"aut\", \"cre\"))",
-        "Description": "Provides a generic implementation of the 'RStudio' connection contract to \n    make it easier for database connections, and other type of connections, opened \n    via R packages integrate with the connections pane inside the 'RStudio' interactive\n    development environment (IDE).",
-        "License": "GPL-3",
-        "Suggests": "testthat (>= 2.1.0), covr",
-        "Encoding": "UTF-8",
-        "LazyData": "true",
-        "RoxygenNote": "6.1.1",
-        "URL": "https://github.com/edgararuiz/rscontract",
-        "BugReports": "https://github.com/edgararuiz/rscontract/issues",
-        "Language": "en-US",
-        "NeedsCompilation": "no",
-        "Packaged": "2019-10-02 12:59:19 UTC; edgar",
-        "Author": "Edgar Ruiz [aut, cre]",
-        "Maintainer": "Edgar Ruiz <edgar@rstudio.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2019-10-06 12:40:03 UTC",
-        "Built": "R 3.6.1; ; 2019-12-04 17:15:55 UTC; unix"
-      }
-    },
     "rstudioapi": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -1958,6 +1893,66 @@
         "Built": "R 3.6.0; x86_64-pc-linux-gnu; 2019-06-11 22:17:32 UTC; unix"
       }
     },
+    "tidypredict": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Package": "tidypredict",
+        "Version": "0.4.3",
+        "Title": "Run Predictions Inside the Database",
+        "Description": "It parses a fitted 'R' model object, and returns a formula\n    in 'Tidy Eval' code that calculates the predictions.\n    It works with several databases back-ends because it leverages 'dplyr'\n    and 'dbplyr' for the final 'SQL' translation of the algorithm. It currently\n    supports lm(), glm(), randomForest(), ranger(), earth(), xgb.Booster.complete(),\n    cubist(), and ctree() models. ",
+        "Authors@R": "\n    person(\"Edgar\", \"Ruiz\", email = \"edgar@rstudio.com\", role = c(\"aut\", \"cre\"))",
+        "Depends": "R (>= 3.1)",
+        "Imports": "dplyr (>= 0.7),\nrlang,\npurrr,\nknitr,\ngenerics,\ntibble",
+        "Suggests": "dbplyr,\ntestthat (>= 2.1.0),\nrandomForest,\nranger,\nearth,\nrmarkdown,\nnycflights13,\nRSQLite,\nmethods,\nDBI,\ncovr,\nxgboost,\nCubist,\nmlbench,\npartykit,\nyaml,\nparsnip",
+        "License": "GPL-3",
+        "URL": "https://tidymodels.github.io/tidypredict",
+        "BugReports": "https://github.com/tidymodels/tidypredict/issues",
+        "RoxygenNote": "6.1.1",
+        "Encoding": "UTF-8",
+        "VignetteBuilder": "knitr",
+        "Author": "Edgar Ruiz [aut, cre]",
+        "Maintainer": "Edgar Ruiz <edgar@rstudio.com>",
+        "Built": "R 3.6.1; ; 2019-09-03 17:08:38 UTC; unix"
+      }
+    },
+    "tidyr": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Package": "tidyr",
+        "Title": "Tidy Messy Data",
+        "Version": "1.0.0",
+        "Authors@R": "\n    c(person(given = \"Hadley\",\n             family = \"Wickham\",\n             role = c(\"aut\", \"cre\"),\n             email = \"hadley@rstudio.com\"),\n      person(given = \"Lionel\",\n             family = \"Henry\",\n             role = \"aut\",\n             email = \"lionel@rstudio.com\"),\n      person(given = \"RStudio\",\n             role = \"cph\"))",
+        "Description": "Tools to help to create tidy data, where each column is a \n    variable, each row is an observation, and each cell contains a single value.  \n    'tidyr' contains tools for changing the shape (pivoting) and hierarchy\n    (nesting and 'unnesting') of a dataset, turning deeply nested lists\n    into rectangular data frames ('rectangling'), and extracting values out \n    of string columns. It also includes tools for working with missing values \n    (both implicit and explicit).",
+        "License": "MIT + file LICENSE",
+        "URL": "https://tidyr.tidyverse.org, https://github.com/tidyverse/tidyr",
+        "BugReports": "https://github.com/tidyverse/tidyr/issues",
+        "Depends": "R (>= 3.1)",
+        "Imports": "dplyr (>= 0.8.2), ellipsis (>= 0.1.0), glue, magrittr, purrr,\nRcpp, rlang, stringi, tibble (>= 2.1.1), tidyselect (>= 0.2.5),\nutils, vctrs (>= 0.2.0), lifecycle",
+        "Suggests": "covr, jsonlite, knitr, repurrrsive (>= 1.0.0), rmarkdown,\nreadr, testthat (>= 2.1.0)",
+        "LinkingTo": "Rcpp",
+        "VignetteBuilder": "knitr",
+        "Encoding": "UTF-8",
+        "LazyData": "true",
+        "RoxygenNote": "6.1.1",
+        "NeedsCompilation": "yes",
+        "Packaged": "2019-09-10 12:06:26 UTC; hadley",
+        "Author": "Hadley Wickham [aut, cre],\n  Lionel Henry [aut],\n  RStudio [cph]",
+        "Maintainer": "Hadley Wickham <hadley@rstudio.com>",
+        "Repository": "RSPM",
+        "Date/Publication": "2019-09-11 23:00:03 UTC",
+        "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-09-22 13:51:26 UTC; unix"
+      }
+    },
     "tidyselect": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -2048,30 +2043,6 @@
         "Repository": "CRAN",
         "Date/Publication": "2018-05-24 17:09:15 UTC",
         "Built": "R 3.6.0; x86_64-pc-linux-gnu; 2019-04-28 14:54:11 UTC; unix"
-      }
-    },
-    "uuid": {
-      "Source": "CRAN",
-      "Repository": "https://cloud.r-project.org",
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
-      "description": {
-        "Package": "uuid",
-        "Version": "0.1-2",
-        "Title": "Tools for generating and handling of UUIDs",
-        "Author": "Simon Urbanek <Simon.Urbanek@r-project.org> (R package), Theodore Ts'o <tytso@thunk.org> (libuuid)",
-        "Maintainer": "Simon Urbanek <Simon.Urbanek@r-project.org>",
-        "Depends": "R (>= 2.9.0)",
-        "Description": "Tools for generating and handling of UUIDs (Universally Unique Identifiers).",
-        "License": "MIT + file LICENSE",
-        "URL": "http://www.rforge.net/uuid",
-        "NeedsCompilation": "yes",
-        "Packaged": "2015-07-27 20:57:43 UTC; svnuser",
-        "Repository": "CRAN",
-        "Date/Publication": "2015-07-28 08:03:46",
-        "Built": "R 3.6.0; x86_64-pc-linux-gnu; 2019-05-03 20:50:20 UTC; unix"
       }
     },
     "vctrs": {
@@ -2270,10 +2241,10 @@
   },
   "files": {
     "access-to-care.Rmd": {
-      "checksum": "b5995cac63e90e443641f7626fbf52d7"
+      "checksum": "26cfdef66f8ed148f7556af495beec88"
     },
     "manifest.json": {
-      "checksum": "756c2ccaa1b0329feebaf4122ca1e27f"
+      "checksum": "5e8f49818b339c790db908a2d9bb96a5"
     },
     "packrat/desc/askpass": {
       "checksum": "adb6f14233aa229a9245fbe85bd572d6"
@@ -2290,26 +2261,20 @@
     "packrat/desc/BH": {
       "checksum": "198d2958d305790c2b2e83c2271a89a1"
     },
+    "packrat/desc/broom": {
+      "checksum": "a8636ba20f7e83dae5d60a4341b8feb3"
+    },
     "packrat/desc/cli": {
       "checksum": "26bc32342ff6e339a36ad8dd1714152f"
     },
     "packrat/desc/colorspace": {
       "checksum": "9accdaca7a2ff925abbb0983f52fdbf0"
     },
-    "packrat/desc/connections": {
-      "checksum": "63d9d65472ddfde18c3eeae52146b44e"
-    },
     "packrat/desc/crayon": {
       "checksum": "b904732d2ef8151af8505f65ca9bf2c8"
     },
     "packrat/desc/curl": {
       "checksum": "bd3c8ced68e5f75a2491165227db1c76"
-    },
-    "packrat/desc/DBI": {
-      "checksum": "5d3487eef1c5fdb2800afaed547e7cf5"
-    },
-    "packrat/desc/dbplyr": {
-      "checksum": "86dbe52f09bcdfeb975abcebf2cb37c1"
     },
     "packrat/desc/digest": {
       "checksum": "eb52a3dd6c1a94208b2abc95ba58d6f6"
@@ -2328,6 +2293,9 @@
     },
     "packrat/desc/farver": {
       "checksum": "07c603486f2b57171ad31eab4ec12310"
+    },
+    "packrat/desc/generics": {
+      "checksum": "0b92d6837b7fbca5dc937dc3ec9c504a"
     },
     "packrat/desc/ggplot2": {
       "checksum": "ad2db3c1f244c1ee38ff712c0fed5fdf"
@@ -2402,7 +2370,7 @@
       "checksum": "5ed755f867065bd0b75e138ba094c383"
     },
     "packrat/desc/pins": {
-      "checksum": "bbe064f4c25954a7a8dc04629e299847"
+      "checksum": "f2d184a459fd2baf2b7756fd2376f27f"
     },
     "packrat/desc/pkgconfig": {
       "checksum": "fc4964d60c231621cdf59f7bf241718c"
@@ -2443,9 +2411,6 @@
     "packrat/desc/rsconnect": {
       "checksum": "05c802981377dd65ad10f7c7b5f850d6"
     },
-    "packrat/desc/rscontract": {
-      "checksum": "9bd16fbced209bb89e781a3d4e5e875f"
-    },
     "packrat/desc/rstudioapi": {
       "checksum": "32f3823157c7a2ac16e42dcc58a0b07c"
     },
@@ -2464,6 +2429,12 @@
     "packrat/desc/tibble": {
       "checksum": "d30896a4c06b43a3196d1630c70da048"
     },
+    "packrat/desc/tidypredict": {
+      "checksum": "10f06d4a1eed4f4df6a89a8c7728952d"
+    },
+    "packrat/desc/tidyr": {
+      "checksum": "593b19e8bcf7a5ba2eb9354fc5346c93"
+    },
     "packrat/desc/tidyselect": {
       "checksum": "a45200e9c6943a298d53337efb7c0670"
     },
@@ -2472,9 +2443,6 @@
     },
     "packrat/desc/utf8": {
       "checksum": "1bf4fed895f4bcc93cc2ed9593338a30"
-    },
-    "packrat/desc/uuid": {
-      "checksum": "31f22bacc9387514698e59785c0542c8"
     },
     "packrat/desc/vctrs": {
       "checksum": "be5263b54c168f8ff81d45ff7b61e9d5"
@@ -2495,7 +2463,7 @@
       "checksum": "df9935ffca693dfde7b99a6283f9db00"
     },
     "packrat/packrat.lock": {
-      "checksum": "0bac13f9365e94ca4591293c82bb8636"
+      "checksum": "e24232039a954d7f1e6e59fb4b6c19f3"
     },
     "rs-connect-git.R": {
       "checksum": "f3aca4c080c41b05fc340ce4ed365537"
