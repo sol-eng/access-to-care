@@ -2,3 +2,4 @@ title: "Data preparation"
 description: "Scheduled data preparation script dropped inside an RMarkdown"
 schedule: "Once a week"
 published: https://colorado.rstudio.com/rsc/access-to-care/data-preparation/access-to-care-dataprep.html
+type: Scheduled R Script

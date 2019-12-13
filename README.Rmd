@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-<img src="readme-files/access-to-care-diagram.png" width = "600px">
+<img src="readme-files/access-to-care-diagram.png" width = "1000px">
 
 **Background:** This project combines US CENSUS population data with hospital data provided by Medicare. A linear model is used to determine if a county is over, or under served based on the size of the population.
 
@@ -38,6 +38,7 @@ contents <- dr %>%
     description <- ""
     schedule <- ""
     published <- ""
+    type <- ""
     if(file_exists(mt)) {
       yf <- yaml::read_yaml(here::here(mt))
       print(yf)
@@ -45,8 +46,10 @@ contents <- dr %>%
       description <- yf$description 
       schedule <- ifelse(!is.null(yf$schedule), yf$schedule, "")
       published <- ifelse(!is.null(yf$published), yf$published, "") 
+      type <- ifelse(!is.null(yf$type), yf$type, "") 
     } 
     tibble(
+      Type = type,
       Content = ifelse(published != "", paste0("[", content,"](", published,")" ), content), 
       Code = paste0("[Code](", base_repo, .y,")" ),
       Refresh = schedule, 
@@ -56,7 +59,8 @@ contents <- dr %>%
   }) %>%
   bind_rows() %>%
   filter(folder != "readme-files") %>%
-  select(-folder)
+  select(-folder) %>%
+  arrange(Type)
 ```
 
 ```{r, echo = FALSE}
