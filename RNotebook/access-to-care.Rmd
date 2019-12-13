@@ -73,3 +73,59 @@ county_hospitals %>%
                  color = "#CC79A7") +
     theme_minimal()
 ```
+
+## Tensorflow / Keras model
+
+```{r}
+library(keras)
+library(dplyr)
+library(rsample)
+library(pins)
+library(ggplot2)
+
+counties <- pin_get("atc-base-map", "local") %>%
+  select(population, hospitals)
+
+set.seed(100)
+train_test_split <- initial_split(
+  counties, 
+  prop = 0.8)
+train_tbl <- training(train_test_split)
+test_tbl  <- testing(train_test_split)
+
+model_keras <- keras_model_sequential() %>%
+  layer_dense(
+    units = 16,
+    kernel_initializer = "uniform",
+    activation = "relu",
+    input_shape = 1) %>%
+  layer_dense(units = 16, activation = "relu") %>%
+  layer_dense(units = 16, activation = "relu") %>%
+  layer_dense(units = 1) %>%
+  compile(
+    loss = "mse",
+    optimizer = optimizer_rmsprop(),
+    metrics = list("mean_absolute_error")
+  )
+
+history <-  model_keras %>%
+  fit(
+    x = train_tbl$population,
+    y = train_tbl$hospitals,
+    epochs = 50,
+    validation_split = 0.3,
+    verbose = 0
+)
+plot(history)
+```
+
+
+```{r}
+export_savedmodel(model_keras, here::here("tensorflow"))
+
+full_path <- here::here("tensorflow")
+rsconnect::writeManifest(
+  appDir = full_path
+)
+```
+
