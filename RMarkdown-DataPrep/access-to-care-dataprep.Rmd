@@ -335,3 +335,29 @@ if(boardname == "local") {
 ```
 
 
+
+```{r}
+pin.parsed_model <- function(x, name = NULL, description = NULL, board = NULL, ...) {
+  path <- tempfile()
+  dir.create(path)
+  on.exit(unlink(path))
+
+  saveRDS(x, file.path(path, "data.rds"), version = 2)
+  
+  metadata <- list(
+    columns = pm$general
+  )
+
+  board_pin_store(board, path, name, description, "pm_model", metadata, ...)
+}
+```
+
+```{r}
+library(tidypredict)
+pm <- parse_model(model)
+pin(
+  pm,
+  name = "atc-parsed-model",
+  board = boardname
+  )
+```
