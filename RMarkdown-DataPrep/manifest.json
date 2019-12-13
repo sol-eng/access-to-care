@@ -777,6 +777,37 @@
         "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-12-05 14:49:16 UTC; unix"
       }
     },
+    "generics": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Package": "generics",
+        "Version": "0.0.2",
+        "Title": "Common S3 Generics not Provided by Base R Methods Related to\nModel Fitting",
+        "Description": "In order to reduce potential package dependencies and conflicts, \n    generics provides a number of commonly used S3 generics.",
+        "Authors@R": "c(\n    person(\"Max\", \"Kuhn\", , \"max@rstudio.com\", c(\"aut\", \"cre\")),\n    person(\"Hadley\", \"Wickham\", , \"hadley@rstudio.com\", \"aut\"),\n    person(\"Davis\", \"Vaughan\", , \"davis@rstudio.com\", \"aut\"),\n    person(\"RStudio\", role = \"cph\"))",
+        "License": "GPL-2",
+        "Encoding": "UTF-8",
+        "LazyData": "true",
+        "RoxygenNote": "6.1.1",
+        "URL": "https://github.com/r-lib/generics",
+        "BugReports": "https://github.com/r-lib/generics",
+        "Depends": "R (>= 3.1)",
+        "Suggests": "covr, pkgload, testthat, tibble",
+        "Imports": "methods",
+        "NeedsCompilation": "no",
+        "Packaged": "2018-11-29 13:00:32 UTC; max",
+        "Author": "Max Kuhn [aut, cre],\n  Hadley Wickham [aut],\n  Davis Vaughan [aut],\n  RStudio [cph]",
+        "Maintainer": "Max Kuhn <max@rstudio.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2018-11-29 13:20:03 UTC",
+        "Built": "R 3.6.0; ; 2019-04-28 14:55:25 UTC; unix"
+      }
+    },
     "glue": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -1907,6 +1938,33 @@
         "Built": "R 3.6.0; x86_64-pc-linux-gnu; 2019-06-11 22:17:32 UTC; unix"
       }
     },
+    "tidypredict": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Package": "tidypredict",
+        "Version": "0.4.3",
+        "Title": "Run Predictions Inside the Database",
+        "Description": "It parses a fitted 'R' model object, and returns a formula\n    in 'Tidy Eval' code that calculates the predictions.\n    It works with several databases back-ends because it leverages 'dplyr'\n    and 'dbplyr' for the final 'SQL' translation of the algorithm. It currently\n    supports lm(), glm(), randomForest(), ranger(), earth(), xgb.Booster.complete(),\n    cubist(), and ctree() models. ",
+        "Authors@R": "\n    person(\"Edgar\", \"Ruiz\", email = \"edgar@rstudio.com\", role = c(\"aut\", \"cre\"))",
+        "Depends": "R (>= 3.1)",
+        "Imports": "dplyr (>= 0.7),\nrlang,\npurrr,\nknitr,\ngenerics,\ntibble",
+        "Suggests": "dbplyr,\ntestthat (>= 2.1.0),\nrandomForest,\nranger,\nearth,\nrmarkdown,\nnycflights13,\nRSQLite,\nmethods,\nDBI,\ncovr,\nxgboost,\nCubist,\nmlbench,\npartykit,\nyaml,\nparsnip",
+        "License": "GPL-3",
+        "URL": "https://tidymodels.github.io/tidypredict",
+        "BugReports": "https://github.com/tidymodels/tidypredict/issues",
+        "RoxygenNote": "6.1.1",
+        "Encoding": "UTF-8",
+        "VignetteBuilder": "knitr",
+        "Author": "Edgar Ruiz [aut, cre]",
+        "Maintainer": "Edgar Ruiz <edgar@rstudio.com>",
+        "Built": "R 3.6.1; ; 2019-09-03 17:08:38 UTC; unix"
+      }
+    },
     "tidyr": {
       "Source": "CRAN",
       "Repository": "https://cloud.r-project.org",
@@ -2327,7 +2385,7 @@
   },
   "files": {
     "access-to-care-dataprep.Rmd": {
-      "checksum": "22dc1c3add798fa13f0f1c06e43a35ec"
+      "checksum": "4499c99bf87c5b94077877c9abfb4e7a"
     },
     "data/shapes.rds": {
       "checksum": "c08dbd1a30b27909558147851c22a206"
@@ -2339,7 +2397,7 @@
       "checksum": "07f55dc14b909799b2ec2d096157851c"
     },
     "manifest.json": {
-      "checksum": "790c321297f452faa22c03995737a4a3"
+      "checksum": "0ac5d181c03728b5d4534bfbe9e29889"
     },
     "packrat/desc/askpass": {
       "checksum": "adb6f14233aa229a9245fbe85bd572d6"
@@ -2403,6 +2461,9 @@
     },
     "packrat/desc/fs": {
       "checksum": "5d25f16e4370924adee54cfae95e500e"
+    },
+    "packrat/desc/generics": {
+      "checksum": "0b92d6837b7fbca5dc937dc3ec9c504a"
     },
     "packrat/desc/glue": {
       "checksum": "a37e19669d16e5ccff0e69bdc8835999"
@@ -2524,6 +2585,9 @@
     "packrat/desc/tibble": {
       "checksum": "d30896a4c06b43a3196d1630c70da048"
     },
+    "packrat/desc/tidypredict": {
+      "checksum": "10f06d4a1eed4f4df6a89a8c7728952d"
+    },
     "packrat/desc/tidyr": {
       "checksum": "593b19e8bcf7a5ba2eb9354fc5346c93"
     },
@@ -2564,7 +2628,7 @@
       "checksum": "df9935ffca693dfde7b99a6283f9db00"
     },
     "packrat/packrat.lock": {
-      "checksum": "70cf729ffbabec15f8274467d922fd48"
+      "checksum": "422fdd590c0f81b2e3d59f204402a2c9"
     },
     "rs-connect-git.R": {
       "checksum": "924121c4a71dc8d2461746cc1a480e76"
