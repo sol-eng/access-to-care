@@ -321,14 +321,17 @@ pin(
 ```
 
 ```{r}
-pin(
-  model,
-  name = "atc-model",
-  board = boardname
+hospital_list <- hospitals %>%
+  mutate_if(is.character, str_to_title) %>%
+  filter(!is.na(longitude))
+
+if(boardname == "local") {
+  pin(
+    hospital_list,
+    name = "atc-hospital-list",
+    board = boardname
   )
+}
 ```
 
-```{r}
-pin_get("atc-model", board = boardname)
-```
 

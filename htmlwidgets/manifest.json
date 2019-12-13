@@ -12,7 +12,7 @@
   "packages": null,
   "files": {
     "access-to-care-hospitals.R": {
-      "checksum": "93c2ab73617ffac08db275f2d19e11ca"
+      "checksum": "653dd16c0812eec374851b56bedf4a1b"
     },
     "map_files/htmlwidgets-1.5.1/htmlwidgets.js": {
       "checksum": "4ea5c55cd0143175643435a640086c16"
@@ -81,7 +81,7 @@
       "checksum": "71ac350889ff148fab73f0a9450addda"
     },
     "map.html": {
-      "checksum": "6fe09d24f12524275b3de1a59efbc5dd"
+      "checksum": "a294e2b1e84ae5a4912e9c71261fdcf5"
     }
   },
   "users": null
