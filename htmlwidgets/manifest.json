@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "locale": "en_US",
+  "platform": "3.6.1",
+  "metadata": {
+    "appmode": "static",
+    "primary_rmd": null,
+    "primary_html": "map.html",
+    "content_category": "plot",
+    "has_parameters": false
+  },
+  "packages": null,
+  "files": {
+    "access-to-care-hospitals.R": {
+      "checksum": "93c2ab73617ffac08db275f2d19e11ca"
+    },
+    "map_files/htmlwidgets-1.5.1/htmlwidgets.js": {
+      "checksum": "4ea5c55cd0143175643435a640086c16"
+    },
+    "map_files/jquery-1.12.4/jquery.min.js": {
+      "checksum": "4f252523d4af0b478c810c2547a63e19"
+    },
+    "map_files/leaflet-1.3.1/images/layers-2x.png": {
+      "checksum": "4f0283c6ce28e888000e978e537a6a56"
+    },
+    "map_files/leaflet-1.3.1/images/layers.png": {
+      "checksum": "a6137456ed160d7606981aa57c559898"
+    },
+    "map_files/leaflet-1.3.1/images/marker-icon-2x.png": {
+      "checksum": "401d815dc206b8dc1b17cd0e37695975"
+    },
+    "map_files/leaflet-1.3.1/images/marker-icon.png": {
+      "checksum": "2273e3d8ad9264b7daa5bdbf8e6b47f8"
+    },
+    "map_files/leaflet-1.3.1/images/marker-shadow.png": {
+      "checksum": "44a526eed258222515aa21eaffd14a96"
+    },
+    "map_files/leaflet-1.3.1/leaflet.css": {
+      "checksum": "58da535d4980b4c71b74a41bbee8a510"
+    },
+    "map_files/leaflet-1.3.1/leaflet.js": {
+      "checksum": "244e15299eb3715351e6cc53bf49aaba"
+    },
+    "map_files/leaflet-binding-2.0.3/leaflet.js": {
+      "checksum": "d5a930aadd6bb2911a067aa5e295612e"
+    },
+    "map_files/leaflet-markercluster-1.0.5/leaflet.markercluster.freezable.js": {
+      "checksum": "51116a1dd35da2f756743ca3e7aa3288"
+    },
+    "map_files/leaflet-markercluster-1.0.5/leaflet.markercluster.js": {
+      "checksum": "b28919e69b47689dd6e60185b74e53af"
+    },
+    "map_files/leaflet-markercluster-1.0.5/leaflet.markercluster.layersupport.js": {
+      "checksum": "ec78b520f1573bb9bff475fc24a797f3"
+    },
+    "map_files/leaflet-markercluster-1.0.5/MarkerCluster.css": {
+      "checksum": "7bc4f5bc3ef97f61a122253681687894"
+    },
+    "map_files/leaflet-markercluster-1.0.5/MarkerCluster.Default.css": {
+      "checksum": "0ba3d71ad0980967a4d3c7dc2ad819ef"
+    },
+    "map_files/leaflet-markercluster-1.0.5/MIT-LICENCE.txt": {
+      "checksum": "f4f84157ded9988586b6d1effec4684c"
+    },
+    "map_files/leaflet-markercluster-1.0.5/package.json": {
+      "checksum": "d27c0ae37857ddb98cbcb2f285304a12"
+    },
+    "map_files/leafletfix-1.0.0/leafletfix.css": {
+      "checksum": "f4b863df17301af3515da5260a02d2d2"
+    },
+    "map_files/Proj4Leaflet-1.0.1/proj4-compressed.js": {
+      "checksum": "38aad9a670e708ad10feeccc71d5fc12"
+    },
+    "map_files/Proj4Leaflet-1.0.1/proj4leaflet.js": {
+      "checksum": "4c72a5a790e066510f9eb68541280646"
+    },
+    "map_files/rstudio_leaflet-1.3.1/images/1px.png": {
+      "checksum": "978c1bee49d7ad5fc1a4d81099b13e18"
+    },
+    "map_files/rstudio_leaflet-1.3.1/rstudio_leaflet.css": {
+      "checksum": "71ac350889ff148fab73f0a9450addda"
+    },
+    "map.html": {
+      "checksum": "6fe09d24f12524275b3de1a59efbc5dd"
+    }
+  },
+  "users": null
+}

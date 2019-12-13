@@ -1,8 +1,6 @@
 library(pins)
 library(dplyr)
 library(ggplot2)
-library(plotly)
-library(htmlwidgets)
 
 under <- "#CC79A7"
 over <- "#0072B2"
