@@ -7,7 +7,7 @@ hospitals <- pin_get("atc-hospital-list", "local")
 
 hospital_maps <- hospitals %>%
   leaflet() %>%
-  addTiles() %>%
+  addProviderTiles(providers$CartoDB) %>%
   addMarkers(
     ~longitude, 
     ~latitude, 

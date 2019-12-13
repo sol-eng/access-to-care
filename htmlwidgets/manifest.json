@@ -12,7 +12,7 @@
   "packages": null,
   "files": {
     "access-to-care-hospitals.R": {
-      "checksum": "653dd16c0812eec374851b56bedf4a1b"
+      "checksum": "a94ba0d8baede13ef8bda562313d66fb"
     },
     "map_files/htmlwidgets-1.5.1/htmlwidgets.js": {
       "checksum": "4ea5c55cd0143175643435a640086c16"
@@ -65,6 +65,12 @@
     "map_files/leaflet-markercluster-1.0.5/package.json": {
       "checksum": "d27c0ae37857ddb98cbcb2f285304a12"
     },
+    "map_files/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js": {
+      "checksum": "df38a3cf54f5b2c79edd680a15deae82"
+    },
+    "map_files/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js": {
+      "checksum": "8fb426b3cfaa7d730f3b56a104012882"
+    },
     "map_files/leafletfix-1.0.0/leafletfix.css": {
       "checksum": "f4b863df17301af3515da5260a02d2d2"
     },
@@ -81,7 +87,7 @@
       "checksum": "71ac350889ff148fab73f0a9450addda"
     },
     "map.html": {
-      "checksum": "a294e2b1e84ae5a4912e9c71261fdcf5"
+      "checksum": "164155ffdaaec24c261d097edb03e249"
     }
   },
   "users": null
