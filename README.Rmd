@@ -19,3 +19,47 @@ knitr::opts_chunk$set(
 <img src="readme-files/access-to-care-diagram.png" width = "600px">
 
 **Background:** This project combines US CENSUS population data with hospital data provided by Medicare. A linear model is used to determine if a county is over, or under served based on the size of the population.
+
+## Individual content
+
+```{r, include = FALSE}
+library(fs)
+library(purrr)
+library(dplyr)
+
+dr <-  dir_ls(type = "directory")
+
+base_repo <- "https://github.com/sol-eng/access-to-care/tree/master/"
+
+contents <- dr %>%
+  imap(~ {
+    mt <- path(.x, "metadata.yml")
+    content <- ""
+    description <- ""
+    schedule <- ""
+    published <- ""
+    if(file_exists(mt)) {
+      yf <- yaml::read_yaml(here::here(mt))
+      print(yf)
+      content <- yf$title
+      description <- yf$description 
+      schedule <- ifelse(!is.null(yf$schedule), yf$schedule, "")
+      published <- ifelse(!is.null(yf$published), yf$published, "") 
+    } 
+    tibble(
+      Content = ifelse(published != "", paste0("[", content,"](", published,")" ), content), 
+      Code = paste0("[Code](", base_repo, .y,")" ),
+      Refresh = schedule, 
+      Description = description,
+      folder = .y
+      )
+  }) %>%
+  bind_rows() %>%
+  filter(folder != "readme-files") %>%
+  select(-folder)
+```
+
+```{r, echo = FALSE}
+knitr::kable(contents)
+```
+
