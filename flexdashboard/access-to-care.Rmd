@@ -26,6 +26,7 @@ library(leaflet)
 library(DT)
 library(metricsgraphics)
 library(pins)
+library(shinymeta)
 
 if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
   boardname <- "rsconnect"
@@ -47,22 +48,25 @@ over <- "#0072B2"
 at_level <- "#008b00"
 hospital_color <- "#F0E442"
 
-state_info <- reactive({
+state_info <- metaReactive({
   states %>% 
-    filter(full == input$state) 
+    filter(full == ..(input$state)) 
 })
 
-county_map <-  reactive({
-  curr_state <- state_info() %>%
+curr_state <- metaReactive({
+  ..(state_info()) %>% 
     pull(state_id)
+})
+
+county_map <-  metaReactive({
   pin_get("atc-county-map", board = boardname) %>% 
-    filter(state_id == !! curr_state) %>%
+    filter(state_id == !! ..(curr_state())) %>%
     collect()
 })
 
-base_map <- reactive({
+base_map <- metaReactive({
   pin_get("atc-base-map", boardname) %>%
-    filter(full %in% !! input$state) %>%
+    filter(full %in% ..(input$state)) %>%
     collect()
 })
 ```
@@ -130,16 +134,16 @@ renderValueBox({
 ```
 
 
-Row {.tabset}
+Row {.tabset data-height=950}
 -----------------------------------------------------------------------
 
 ### County Map
 
 Breakdown of counties and their status based on county population compared to the number of hospitals
 
-
 ```{r}
-initial_map <- leaflet() %>%
+output$map <- metaRender(renderLeaflet, {
+  initial_map <- leaflet() %>%
   addProviderTiles(providers$CartoDB) %>%
   addLegend(
     "bottomright", 
@@ -151,22 +155,18 @@ initial_map <- leaflet() %>%
     title  = "Legend",
     opacity = 0.5
     )
-
-renderLeaflet({
-  curr_state <- state_info() %>%
-    pull(state_id)
   
   locations <- pin_get("atc-hospitals", board = boardname) %>%
-    filter(state_id == !! curr_state) %>%
+    filter(state_id == !! ..(curr_state())) %>%
     select(longitude, latitude) %>%
     collect() %>%
     mutate_all(round, 1) %>%
     count(longitude, latitude) %>%
     mutate(popup = paste0("Hospitals: ", n))
   
-  base_map() %>%
+  ..(base_map()) %>%
     select(popup, color, county_id) %>%
-    inner_join(county_map(), by = "county_id") %>%
+    inner_join(..(county_map()), by = "county_id") %>%
     group_by(county_id, shape_id) %>%
     group_map(~.x) %>%
     reduce(
@@ -188,20 +188,70 @@ renderLeaflet({
         fillColor = hospital_color, color = "gray", 
         fillOpacity = 0.7,weight = 1)
 })
+
+leafletOutput("map")
 ```
 
 ### County summary
 
 
 ```{r}
-renderDataTable({
+output$table <- metaRender(renderDataTable, {
   pin_get("atc-county-table", board = boardname)  %>%
-    filter(full == !! input$state) %>%
+    filter(full == ..(input$state)) %>%
     select(-full) %>%
     collect() %>%
     datatable(class = 'cell-border stripe')
 })
+
+DTOutput("table")
 ```
+
+Row {data-height=50}
+-----------------------------------------------------------------------
+```{r}
+actionButton("code", "R code", icon("code"))
+observeEvent(input$code, {
+  code <- expandChain(
+    "# Environment setup ----",
+    quote({
+      library(dplyr)
+      library(purrr)
+      library(leaflet)
+      library(DT)
+      library(pins)
+      
+      if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
+        boardname <- "rsconnect"
+        board_register_rsconnect(
+          server = Sys.getenv("connect_url"),
+          key = Sys.getenv("connect_key")
+        )
+      } else {
+        boardname <- "local"
+        board_register(boardname)  
+      }
+      
+      states <- pin_get("atc-states", board = boardname) %>% collect()
+      under <- "#CC79A7"
+      over <- "#0072B2"
+      at_level <- "#008b00"
+      hospital_color <- "#F0E442"
+    }),
+    "# Leaflet plot ----",
+    output$map(),
+    "# County details DataTable ----",
+    output$table()
+  )
+  displayCodeModal(
+    code,
+    title = "Access to Care Code",
+    size = "l",
+    fontSize = 16
+  )
+})
+```
+
 
 Model {.storyboard}
 ======================================================================
