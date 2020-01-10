@@ -405,6 +405,40 @@
         "Built": "R 3.6.1; ; 2019-09-26 13:43:51 UTC; unix"
       }
     },
+    "clipr": {
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Type": "Package",
+        "Package": "clipr",
+        "Title": "Read and Write from the System Clipboard",
+        "Version": "0.6.0",
+        "Authors@R": "\n    c(person(given = \"Matthew\",\n             family = \"Lincoln\",\n             role = c(\"aut\", \"cre\"),\n             email = \"matthew.d.lincoln@gmail.com\",\n             comment = c(ORCID = \"0000-0002-4387-3384\")),\n      person(given = \"Louis\",\n             family = \"Maddox\",\n             role = \"ctb\"),\n      person(given = \"Steve\",\n             family = \"Simpson\",\n             role = \"ctb\"),\n      person(given = \"Jennifer\",\n             family = \"Bryan\",\n             role = \"ctb\"))",
+        "Description": "Simple utility functions to read from and write to\n    the Windows, OS X, and X11 clipboards.",
+        "License": "GPL-3",
+        "URL": "https://github.com/mdlincoln/clipr",
+        "BugReports": "https://github.com/mdlincoln/clipr/issues",
+        "Imports": "utils",
+        "Suggests": "covr, knitr, rmarkdown, rstudioapi (>= 0.5), testthat (>=\n2.0.0)",
+        "VignetteBuilder": "knitr",
+        "Encoding": "UTF-8",
+        "Language": "en-US",
+        "LazyData": "TRUE",
+        "RoxygenNote": "6.1.1",
+        "SystemRequirements": "xclip (https://github.com/astrand/xclip) or xsel\n(http://www.vergenet.net/~conrad/software/xsel/) for accessing\nthe X11 clipboard",
+        "NeedsCompilation": "no",
+        "Packaged": "2019-04-14 19:41:05 UTC; mlincoln",
+        "Author": "Matthew Lincoln [aut, cre] (<https://orcid.org/0000-0002-4387-3384>),\n  Louis Maddox [ctb],\n  Steve Simpson [ctb],\n  Jennifer Bryan [ctb]",
+        "Maintainer": "Matthew Lincoln <matthew.d.lincoln@gmail.com>",
+        "Repository": "RSPM",
+        "Date/Publication": "2019-04-15 15:22:49 UTC",
+        "Built": "R 3.6.1; ; 2019-08-05 10:30:31 UTC; unix"
+      }
+    },
     "colorspace": {
       "Source": "latest",
       "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
@@ -2846,7 +2880,7 @@
   },
   "files": {
     "access-to-care.Rmd": {
-      "checksum": "cd8ed9932aa2dcc78f17a209f87567cf"
+      "checksum": "a1cf2452a0bc9a938751dc40af4bfdfb"
     },
     "metadata.yml": {
       "checksum": "6a089bf7d5d485378e5a4f92cad4ad42"
@@ -2874,6 +2908,9 @@
     },
     "packrat/desc/cli": {
       "checksum": "a65c30681395287318eddb8c16cc4eec"
+    },
+    "packrat/desc/clipr": {
+      "checksum": "f2766360d0275acd9e99ede1131ebc1d"
     },
     "packrat/desc/colorspace": {
       "checksum": "ca7b0eb3d7b8bafd2b6631c90ac81cea"
@@ -3125,7 +3162,7 @@
       "checksum": "e3293f6b22b641db2a78a50f8c24d8eb"
     },
     "packrat/packrat.lock": {
-      "checksum": "a74cc28cc84108032b7026430c9d9fab"
+      "checksum": "6805d5600a9111fa86adae46f00df07b"
     },
     "RStudio1.png": {
       "checksum": "288da77036023512c0adbf27de9fe9c2"
