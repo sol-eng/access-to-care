@@ -2179,6 +2179,37 @@
         "Built": "R 3.6.2; ; 2019-12-27 20:42:36 UTC; unix"
       }
     },
+    "shinyAce": {
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Package": "shinyAce",
+        "Type": "Package",
+        "Title": "Ace Editor Bindings for Shiny",
+        "Version": "0.4.0",
+        "Date": "2019-7-9",
+        "Authors@R": "c(\n  person(\"Vincent\", \"Nijs\", role = c(\"aut\", \"cre\"), email = \"radiant@rady.ucsd.edu\"),\n  person(\"Forest\", \"Fang\", role = \"aut\", email = \"forest.fang@outlook.com\"),\n  person(family = \"Trestle Technology, LLC\", role = \"aut\", email = \"cran@trestletechnology.net\"),\n  person(\"Jeff\", \"Allen\", role = \"aut\", email = \"cran@trestletechnology.net\"),\n  person(family = \"Institut de Radioprotection et de Surete Nucleaire\", role = c(\"cph\"), email = \"yann.richet@irsn.fr\"),\n  person(family = \"Ajax.org B.V.\", role = c(\"ctb\", \"cph\"), comment = \"Ace\"))",
+        "Description": "Ace editor bindings to enable a rich text editing environment\n    within Shiny.",
+        "License": "MIT + file LICENSE",
+        "Depends": "R (>= 3.3.0)",
+        "Imports": "shiny (>= 1.0.5), jsonlite",
+        "Suggests": "testthat (>= 2.0.0), dplyr (>= 0.8.3)",
+        "BugReports": "https://github.com/trestletech/shinyAce/issues",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "6.1.1",
+        "NeedsCompilation": "no",
+        "Packaged": "2019-07-09 16:14:01 UTC; vnijs",
+        "Author": "Vincent Nijs [aut, cre],\n  Forest Fang [aut],\n  Trestle Technology, LLC [aut],\n  Jeff Allen [aut],\n  Institut de Radioprotection et de Surete Nucleaire [cph],\n  Ajax.org B.V. [ctb, cph] (Ace)",
+        "Maintainer": "Vincent Nijs <radiant@rady.ucsd.edu>",
+        "Repository": "RSPM",
+        "Date/Publication": "2019-07-09 16:50:04 UTC",
+        "Built": "R 3.6.1; ; 2019-09-21 13:23:29 UTC; unix"
+      }
+    },
     "shinymeta": {
       "Source": "github",
       "Repository": null,
@@ -2815,7 +2846,7 @@
   },
   "files": {
     "access-to-care.Rmd": {
-      "checksum": "0001b62e1832dd58f0f9dcac549c0d72"
+      "checksum": "cd8ed9932aa2dcc78f17a209f87567cf"
     },
     "metadata.yml": {
       "checksum": "6a089bf7d5d485378e5a4f92cad4ad42"
@@ -3030,6 +3061,9 @@
     "packrat/desc/shiny": {
       "checksum": "71028b0db6da338537425e45f4e96ce3"
     },
+    "packrat/desc/shinyAce": {
+      "checksum": "c5b368a626347b0fecc6cc57ab54be7d"
+    },
     "packrat/desc/shinymeta": {
       "checksum": "23e8bfe686aa192bf8cd2c4b398b5480"
     },
@@ -3091,7 +3125,7 @@
       "checksum": "e3293f6b22b641db2a78a50f8c24d8eb"
     },
     "packrat/packrat.lock": {
-      "checksum": "6d7fa167f14526aff78cf1fd3eb9ebbc"
+      "checksum": "a74cc28cc84108032b7026430c9d9fab"
     },
     "RStudio1.png": {
       "checksum": "288da77036023512c0adbf27de9fe9c2"

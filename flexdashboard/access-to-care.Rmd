@@ -27,6 +27,7 @@ library(DT)
 library(metricsgraphics)
 library(pins)
 library(shinymeta)
+library(shinyAce)
 
 if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
   boardname <- "rsconnect"
