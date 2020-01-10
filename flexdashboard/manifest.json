@@ -11,8 +11,8 @@
   },
   "packages": {
     "BH": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -37,8 +37,8 @@
       }
     },
     "DT": {
-      "Source": "CRAN",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -47,29 +47,29 @@
         "Package": "DT",
         "Type": "Package",
         "Title": "A Wrapper of the JavaScript Library 'DataTables'",
-        "Version": "0.9",
+        "Version": "0.11",
         "Authors@R": "c(\n    person(\"Yihui\", \"Xie\", email = \"xie@yihui.name\", role = c(\"aut\", \"cre\")),\n    person(\"Joe\", \"Cheng\", role = \"aut\"),\n    person(\"Xianying\", \"Tan\", role = \"aut\"),\n    person(\"JJ\", \"Allaire\", role = \"ctb\"),\n    person(\"Maximilian\", \"Girlich\", role = \"ctb\"),\n    person(\"Greg\", \"Freedman Ellis\", role = \"ctb\"),\n    person(\"Johannes\", \"Rauh\", role = \"ctb\"),\n    person(\"jQuery contributors\", role = c(\"ctb\", \"cph\"), comment = \"jQuery in htmlwidgets/lib\"),\n    person(\"SpryMedia Limited\", role = c(\"ctb\", \"cph\"), comment = \"DataTables in htmlwidgets/lib\"),\n    person(\"Brian\", \"Reavis\", role = c(\"ctb\", \"cph\"), comment = \"selectize.js in htmlwidgets/lib\"),\n    person(\"Leon\", \"Gersen\", role = c(\"ctb\", \"cph\"), comment = \"noUiSlider in htmlwidgets/lib\"),\n    person(\"Bartek\", \"Szopka\", role = c(\"ctb\", \"cph\"), comment = \"jquery.highlight.js in htmlwidgets/lib\"),\n    person(\"RStudio Inc\", role = \"cph\")\n    )",
         "Maintainer": "Yihui Xie <xie@yihui.name>",
         "Description": "Data objects in R can be rendered as HTML tables using the\n    JavaScript library 'DataTables' (typically via R Markdown or Shiny). The\n    'DataTables' library has been included in this R package. The package name\n    'DT' is an abbreviation of 'DataTables'.",
-        "URL": "https://rstudio.github.io/DT",
+        "URL": "https://github.com/rstudio/DT",
         "BugReports": "https://github.com/rstudio/DT/issues",
         "License": "GPL-3 | file LICENSE",
         "Imports": "htmltools (>= 0.3.6), htmlwidgets (>= 1.3), jsonlite (>=\n0.9.16), magrittr, crosstalk, promises",
-        "Suggests": "knitr (>= 1.8), rmarkdown, shiny (>= 1.1.0)",
+        "Suggests": "knitr (>= 1.8), rmarkdown, shiny (>= 1.2.0)",
         "VignetteBuilder": "knitr",
-        "RoxygenNote": "6.1.1",
+        "RoxygenNote": "7.0.2",
         "Encoding": "UTF-8",
         "NeedsCompilation": "no",
-        "Packaged": "2019-09-17 04:12:43 UTC; yihui",
+        "Packaged": "2019-12-19 17:35:58 UTC; yihui",
         "Author": "Yihui Xie [aut, cre],\n  Joe Cheng [aut],\n  Xianying Tan [aut],\n  JJ Allaire [ctb],\n  Maximilian Girlich [ctb],\n  Greg Freedman Ellis [ctb],\n  Johannes Rauh [ctb],\n  jQuery contributors [ctb, cph] (jQuery in htmlwidgets/lib),\n  SpryMedia Limited [ctb, cph] (DataTables in htmlwidgets/lib),\n  Brian Reavis [ctb, cph] (selectize.js in htmlwidgets/lib),\n  Leon Gersen [ctb, cph] (noUiSlider in htmlwidgets/lib),\n  Bartek Szopka [ctb, cph] (jquery.highlight.js in htmlwidgets/lib),\n  RStudio Inc [cph]",
-        "Repository": "CRAN",
-        "Date/Publication": "2019-09-17 09:10:10 UTC",
-        "Built": "R 3.6.0; ; 2019-10-31 15:53:47 UTC; unix"
+        "Repository": "RSPM",
+        "Date/Publication": "2019-12-19 18:50:09 UTC",
+        "Built": "R 3.6.2; ; 2020-01-06 15:00:50 UTC; unix"
       }
     },
     "MASS": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -102,8 +102,8 @@
       }
     },
     "Matrix": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -138,8 +138,8 @@
       }
     },
     "R6": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -168,8 +168,8 @@
       }
     },
     "RColorBrewer": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -194,8 +194,8 @@
       }
     },
     "Rcpp": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -226,8 +226,8 @@
       }
     },
     "askpass": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -258,8 +258,8 @@
       }
     },
     "assertthat": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -286,8 +286,8 @@
       }
     },
     "backports": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -317,8 +317,8 @@
       }
     },
     "base64enc": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -343,8 +343,8 @@
       }
     },
     "callr": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -375,8 +375,8 @@
       }
     },
     "cli": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -406,8 +406,8 @@
       }
     },
     "colorspace": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -439,8 +439,8 @@
       }
     },
     "crayon": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -470,8 +470,8 @@
       }
     },
     "crosstalk": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -499,8 +499,8 @@
       }
     },
     "curl": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -534,7 +534,7 @@
     },
     "digest": {
       "Source": "CRAN",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -562,8 +562,8 @@
       }
     },
     "dplyr": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -592,12 +592,12 @@
         "Maintainer": "Hadley Wickham <hadley@rstudio.com>",
         "Repository": "RSPM",
         "Date/Publication": "2019-07-04 15:50:02 UTC",
-        "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-08-05 17:06:48 UTC; unix"
+        "Built": "R 3.6.2; x86_64-pc-linux-gnu; 2020-01-09 17:40:05 UTC; unix"
       }
     },
     "ellipsis": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -627,8 +627,8 @@
       }
     },
     "evaluate": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -658,8 +658,8 @@
       }
     },
     "fansi": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -727,8 +727,8 @@
       }
     },
     "flexdashboard": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -759,8 +759,8 @@
       }
     },
     "fs": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -796,8 +796,8 @@
       }
     },
     "ggplot2": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -830,8 +830,8 @@
       }
     },
     "glue": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -863,8 +863,8 @@
       }
     },
     "gridExtra": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -892,8 +892,8 @@
       }
     },
     "gtable": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -924,8 +924,8 @@
       }
     },
     "highr": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -996,8 +996,8 @@
       }
     },
     "htmlwidgets": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1028,8 +1028,8 @@
       }
     },
     "httpuv": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1061,8 +1061,8 @@
       }
     },
     "httr": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1092,8 +1092,8 @@
       }
     },
     "jsonlite": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1121,8 +1121,8 @@
       }
     },
     "knitr": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1155,8 +1155,8 @@
       }
     },
     "labeling": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1186,7 +1186,7 @@
     },
     "later": {
       "Source": "CRAN",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1216,8 +1216,8 @@
       }
     },
     "lattice": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1249,8 +1249,8 @@
       }
     },
     "lazyeval": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1278,8 +1278,8 @@
       }
     },
     "leaflet": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1288,30 +1288,63 @@
         "Package": "leaflet",
         "Type": "Package",
         "Title": "Create Interactive Web Maps with the JavaScript 'Leaflet'\nLibrary",
-        "Version": "2.0.2",
-        "Authors@R": "c(\n      person(\"Joe\", \"Cheng\", email = \"joe@rstudio.com\", role = c(\"aut\", \"cre\")),\n      person(\"Bhaskar\", \"Karambelkar\", role = c(\"aut\")),\n      person(\"Yihui\", \"Xie\", role = c(\"aut\")),\n      person(\"Hadley\", \"Wickham\", role = c(\"ctb\")),\n      person(\"Kenton\", \"Russell\", role = c(\"ctb\")),\n      person(\"Kent\", \"Johnson\", role = c(\"ctb\")),\n      person(\"Barret\", \"Schloerke\", role = c(\"ctb\")),\n      person(\"jQuery Foundation and contributors\", role = c(\"ctb\", \"cph\"), comment = \"jQuery library\"),\n      person(\"Vladimir\", \"Agafonkin\", role = c(\"ctb\", \"cph\"), comment = \"Leaflet library\"),\n      person(\"CloudMade\", role = c(\"cph\"), comment = \"Leaflet library\"),\n      person(\"Leaflet contributors\", role = c(\"ctb\"), comment = \"Leaflet library\"),\n      person(\"Leaflet Providers contributors\", role = c(\"ctb\", \"cph\"), comment = \"Leaflet Providers plugin\"),\n      person(\"Brandon Copeland\", role = c(\"ctb\", \"cph\"), comment = \"leaflet-measure plugin\"),\n      person(\"Joerg Dietrich\", role = c(\"ctb\", \"cph\"), comment = \"Leaflet.Terminator plugin\"),\n      person(\"Benjamin Becquet\", role = c(\"ctb\", \"cph\"), comment = \"Leaflet.MagnifyingGlass plugin\"),\n      person(\"Norkart AS\", role = c(\"ctb\", \"cph\"), comment = \"Leaflet.MiniMap plugin\"),\n      person(\"L. Voogdt\", role = c(\"ctb\", \"cph\"), comment = \"Leaflet.awesome-markers plugin\"),\n      person(\"Daniel Montague\", role = c(\"ctb\", \"cph\"), comment = \"Leaflet.EasyButton plugin\"),\n      person(\"Kartena AB\", role = c(\"ctb\", \"cph\"), comment = \"Proj4Leaflet plugin\"),\n      person(\"Robert Kajic\", role = c(\"ctb\", \"cph\"), comment = \"leaflet-locationfilter plugin\"),\n      person(\"Mapbox\", role = c(\"ctb\", \"cph\"), comment = \"leaflet-omnivore plugin\"),\n      person(\"Michael Bostock\", role = c(\"ctb\", \"cph\"), comment = \"topojson\"),\n      person(\"RStudio\", role = c(\"cph\"))\n    )",
-        "Maintainer": "Joe Cheng <joe@rstudio.com>",
+        "Version": "2.0.3",
+        "Authors@R": "c(\n      person(\"Joe\", \"Cheng\", email = \"joe@rstudio.com\", role = c(\"aut\", \"cre\")),\n      person(\"Bhaskar\", \"Karambelkar\", role = c(\"aut\")),\n      person(\"Yihui\", \"Xie\", role = c(\"aut\")),\n      person(\"Hadley\", \"Wickham\", role = c(\"ctb\")),\n      person(\"Kenton\", \"Russell\", role = c(\"ctb\")),\n      person(\"Kent\", \"Johnson\", role = c(\"ctb\")),\n      person(\"Barret\", \"Schloerke\", role = c(\"ctb\")),\n      person(\"jQuery Foundation and contributors\", role = c(\"ctb\", \"cph\"), comment = \"jQuery library\"),\n      person(\"Vladimir\", \"Agafonkin\", role = c(\"ctb\", \"cph\"), comment = \"Leaflet library\"),\n      person(\"CloudMade\", role = c(\"cph\"), comment = \"Leaflet library\"),\n      person(\"Leaflet contributors\", role = c(\"ctb\"), comment = \"Leaflet library\"),\n      person(\"Brandon Copeland\", role = c(\"ctb\", \"cph\"), comment = \"leaflet-measure plugin\"),\n      person(\"Joerg Dietrich\", role = c(\"ctb\", \"cph\"), comment = \"Leaflet.Terminator plugin\"),\n      person(\"Benjamin Becquet\", role = c(\"ctb\", \"cph\"), comment = \"Leaflet.MagnifyingGlass plugin\"),\n      person(\"Norkart AS\", role = c(\"ctb\", \"cph\"), comment = \"Leaflet.MiniMap plugin\"),\n      person(\"L. Voogdt\", role = c(\"ctb\", \"cph\"), comment = \"Leaflet.awesome-markers plugin\"),\n      person(\"Daniel Montague\", role = c(\"ctb\", \"cph\"), comment = \"Leaflet.EasyButton plugin\"),\n      person(\"Kartena AB\", role = c(\"ctb\", \"cph\"), comment = \"Proj4Leaflet plugin\"),\n      person(\"Robert Kajic\", role = c(\"ctb\", \"cph\"), comment = \"leaflet-locationfilter plugin\"),\n      person(\"Mapbox\", role = c(\"ctb\", \"cph\"), comment = \"leaflet-omnivore plugin\"),\n      person(\"Michael Bostock\", role = c(\"ctb\", \"cph\"), comment = \"topojson\"),\n      person(\"RStudio\", role = c(\"cph\"))\n    )",
         "Description": "Create and customize interactive maps using the 'Leaflet'\n    JavaScript library and the 'htmlwidgets' package. These maps can be used\n    directly from the R console, from 'RStudio', in Shiny applications and R Markdown\n    documents.",
         "License": "GPL-3",
         "URL": "http://rstudio.github.io/leaflet/",
         "BugReports": "https://github.com/rstudio/leaflet/issues",
         "Depends": "R (>= 3.1.0)",
-        "Imports": "base64enc, crosstalk, htmlwidgets, htmltools, magrittr,\nmarkdown, methods, png, RColorBrewer, raster, scales (>=\n1.0.0), sp, stats, viridis (>= 0.5.1)",
-        "Suggests": "knitr, maps, sf, shiny, testit (>= 0.4), rgdal, rgeos, R6,\nRJSONIO, purrr, testthat",
-        "RoxygenNote": "6.1.0",
+        "Imports": "base64enc, crosstalk, htmlwidgets, htmltools, magrittr,\nmarkdown, methods, png, RColorBrewer, raster, scales (>=\n1.0.0), sp, stats, viridis (>= 0.5.1), leaflet.providers (>=\n1.8.0)",
+        "Suggests": "knitr, maps, sf, shiny, rgdal, rgeos, R6, RJSONIO, purrr,\ntestthat",
+        "RoxygenNote": "6.1.1",
         "Encoding": "UTF-8",
         "LazyData": "true",
         "NeedsCompilation": "no",
-        "Packaged": "2018-08-24 20:03:55 UTC; barret",
-        "Author": "Joe Cheng [aut, cre],\n  Bhaskar Karambelkar [aut],\n  Yihui Xie [aut],\n  Hadley Wickham [ctb],\n  Kenton Russell [ctb],\n  Kent Johnson [ctb],\n  Barret Schloerke [ctb],\n  jQuery Foundation and contributors [ctb, cph] (jQuery library),\n  Vladimir Agafonkin [ctb, cph] (Leaflet library),\n  CloudMade [cph] (Leaflet library),\n  Leaflet contributors [ctb] (Leaflet library),\n  Leaflet Providers contributors [ctb, cph] (Leaflet Providers plugin),\n  Brandon Copeland [ctb, cph] (leaflet-measure plugin),\n  Joerg Dietrich [ctb, cph] (Leaflet.Terminator plugin),\n  Benjamin Becquet [ctb, cph] (Leaflet.MagnifyingGlass plugin),\n  Norkart AS [ctb, cph] (Leaflet.MiniMap plugin),\n  L. Voogdt [ctb, cph] (Leaflet.awesome-markers plugin),\n  Daniel Montague [ctb, cph] (Leaflet.EasyButton plugin),\n  Kartena AB [ctb, cph] (Proj4Leaflet plugin),\n  Robert Kajic [ctb, cph] (leaflet-locationfilter plugin),\n  Mapbox [ctb, cph] (leaflet-omnivore plugin),\n  Michael Bostock [ctb, cph] (topojson),\n  RStudio [cph]",
+        "Packaged": "2019-11-14 18:00:03 UTC; barret",
+        "Author": "Joe Cheng [aut, cre],\n  Bhaskar Karambelkar [aut],\n  Yihui Xie [aut],\n  Hadley Wickham [ctb],\n  Kenton Russell [ctb],\n  Kent Johnson [ctb],\n  Barret Schloerke [ctb],\n  jQuery Foundation and contributors [ctb, cph] (jQuery library),\n  Vladimir Agafonkin [ctb, cph] (Leaflet library),\n  CloudMade [cph] (Leaflet library),\n  Leaflet contributors [ctb] (Leaflet library),\n  Brandon Copeland [ctb, cph] (leaflet-measure plugin),\n  Joerg Dietrich [ctb, cph] (Leaflet.Terminator plugin),\n  Benjamin Becquet [ctb, cph] (Leaflet.MagnifyingGlass plugin),\n  Norkart AS [ctb, cph] (Leaflet.MiniMap plugin),\n  L. Voogdt [ctb, cph] (Leaflet.awesome-markers plugin),\n  Daniel Montague [ctb, cph] (Leaflet.EasyButton plugin),\n  Kartena AB [ctb, cph] (Proj4Leaflet plugin),\n  Robert Kajic [ctb, cph] (leaflet-locationfilter plugin),\n  Mapbox [ctb, cph] (leaflet-omnivore plugin),\n  Michael Bostock [ctb, cph] (topojson),\n  RStudio [cph]",
+        "Maintainer": "Joe Cheng <joe@rstudio.com>",
         "Repository": "RSPM",
-        "Date/Publication": "2018-08-27 14:12:16 UTC",
-        "Built": "R 3.6.1; ; 2019-09-21 13:25:53 UTC; unix"
+        "Date/Publication": "2019-11-16 05:50:05 UTC",
+        "Built": "R 3.6.1; ; 2019-11-18 12:10:30 UTC; unix"
+      }
+    },
+    "leaflet.providers": {
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Package": "leaflet.providers",
+        "Type": "Package",
+        "Title": "Leaflet Providers",
+        "Version": "1.9.0",
+        "Authors@R": "c(\n      person(\"Leslie\", \"Huang\", email = \"lesliehuang@nyu.edu\", role = c(\"aut\")),\n      person(\"Barret\", \"Schloerke\", email = \"barret@rstudio.com\", role = c(\"ctb\", \"cre\"),\n        comment = c(ORCID = \"0000-0001-9986-114X\")),\n      person(\"Leaflet Providers contributors\", role = c(\"ctb\", \"cph\"), comment = \"Leaflet Providers plugin\"),\n      person(\"RStudio\", role = c(\"cph\", \"fnd\"))\n    )",
+        "Description": "Contains third-party map tile provider information from\n    'Leaflet.js', <https://github.com/leaflet-extras/leaflet-providers>, to be\n    used with the 'leaflet' R package. Additionally, 'leaflet.providers'\n    enables users to retrieve up-to-date provider information between package\n    updates.",
+        "License": "BSD_2_clause + file LICENSE",
+        "Encoding": "UTF-8",
+        "LazyData": "true",
+        "Depends": "R (>= 2.10)",
+        "Suggests": "V8, jsonlite, testthat (>= 2.1.0)",
+        "Language": "en-US",
+        "RoxygenNote": "6.1.1",
+        "URL": "https://github.com/rstudio/leaflet.providers",
+        "BugReports": "https://github.com/rstudio/leaflet.providers/issues",
+        "Collate": "'providers_data.R' 'get_current_providers.R'",
+        "NeedsCompilation": "no",
+        "Packaged": "2019-11-08 22:12:22 UTC; barret",
+        "Author": "Leslie Huang [aut],\n  Barret Schloerke [ctb, cre] (<https://orcid.org/0000-0001-9986-114X>),\n  Leaflet Providers contributors [ctb, cph] (Leaflet Providers plugin),\n  RStudio [cph, fnd]",
+        "Maintainer": "Barret Schloerke <barret@rstudio.com>",
+        "Repository": "RSPM",
+        "Date/Publication": "2019-11-09 23:40:09 UTC",
+        "Built": "R 3.6.1; ; 2019-11-11 20:38:55 UTC; unix"
       }
     },
     "magrittr": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1337,8 +1370,8 @@
       }
     },
     "markdown": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1369,8 +1402,8 @@
       }
     },
     "metricsgraphics": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1402,8 +1435,8 @@
       }
     },
     "mgcv": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1431,8 +1464,8 @@
       }
     },
     "mime": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1461,8 +1494,8 @@
       }
     },
     "munsell": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1489,8 +1522,8 @@
       }
     },
     "nlme": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1522,8 +1555,8 @@
       }
     },
     "openssl": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1554,8 +1587,8 @@
       }
     },
     "pillar": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1585,17 +1618,17 @@
       }
     },
     "pins": {
-      "Source": "github",
-      "Repository": null,
-      "GithubRepo": "pins",
-      "GithubUsername": "rstudio",
-      "GithubRef": "master",
-      "GithubSha1": "e826fea0281e796ef5359a708ffc46d80b546a7c",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
       "description": {
         "Package": "pins",
         "Type": "Package",
         "Title": "Pin, Discover and Share Resources",
-        "Version": "0.2.0.0004",
+        "Version": "0.3.0",
         "Authors@R": "c(\n    person(\"Javier\", \"Luraschi\", email = \"javier@rstudio.com\", role = c(\"aut\", \"cre\")),\n    person(family = \"RStudio\", role = c(\"cph\"))\n    )",
         "Maintainer": "Javier Luraschi <javier@rstudio.com>",
         "Description": "Pin remote resources into a local cache to work offline,\n  improve speed and avoid recomputing; discover and share resources\n  in local folders, 'GitHub', 'Kaggle' or 'RStudio Connect'. Resources can \n  be anything from 'CSV', 'JSON', or image files to arbitrary R objects.",
@@ -1604,30 +1637,22 @@
         "LazyData": "true",
         "RoxygenNote": "6.1.1",
         "Depends": "R (>= 3.2.0)",
-        "Imports": "base64enc, httr, jsonlite, magrittr, mime, openssl, rappdirs,\nwithr, yaml, zip",
+        "Imports": "base64enc, crayon, httr, jsonlite, magrittr, mime, openssl,\nrappdirs, withr, yaml, zip",
         "Suggests": "knitr, rmarkdown, R6, testthat",
         "VignetteBuilder": "knitr",
         "URL": "https://github.com/rstudio/pins",
         "BugReports": "https://github.com/rstudio/pins/issues",
-        "RemoteType": "github",
-        "RemoteHost": "api.github.com",
-        "RemoteRepo": "pins",
-        "RemoteUsername": "rstudio",
-        "RemoteRef": "master",
-        "RemoteSha": "e826fea0281e796ef5359a708ffc46d80b546a7c",
-        "GithubRepo": "pins",
-        "GithubUsername": "rstudio",
-        "GithubRef": "master",
-        "GithubSHA1": "e826fea0281e796ef5359a708ffc46d80b546a7c",
         "NeedsCompilation": "no",
-        "Packaged": "2019-11-08 01:28:59 UTC; james",
+        "Packaged": "2019-11-26 12:12:46 UTC; javierluraschi",
         "Author": "Javier Luraschi [aut, cre],\n  RStudio [cph]",
-        "Built": "R 3.6.0; ; 2019-11-08 01:29:00 UTC; unix"
+        "Repository": "RSPM",
+        "Date/Publication": "2019-11-26 12:40:02 UTC",
+        "Built": "R 3.6.1; ; 2019-12-02 13:02:20 UTC; unix"
       }
     },
     "pkgconfig": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1654,8 +1679,8 @@
       }
     },
     "plogr": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1684,8 +1709,8 @@
       }
     },
     "plyr": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1716,8 +1741,8 @@
       }
     },
     "png": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1742,8 +1767,8 @@
       }
     },
     "processx": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1773,7 +1798,7 @@
     },
     "promises": {
       "Source": "CRAN",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1805,8 +1830,8 @@
       }
     },
     "ps": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1836,8 +1861,8 @@
       }
     },
     "purrr": {
-      "Source": "CRAN",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1862,14 +1887,14 @@
         "Packaged": "2019-10-17 08:02:23 UTC; lionel",
         "Author": "Lionel Henry [aut, cre],\n  Hadley Wickham [aut],\n  RStudio [cph, fnd]",
         "Maintainer": "Lionel Henry <lionel@rstudio.com>",
-        "Repository": "CRAN",
+        "Repository": "RSPM",
         "Date/Publication": "2019-10-18 12:40:05 UTC",
-        "Built": "R 3.6.0; x86_64-pc-linux-gnu; 2019-11-08 21:28:40 UTC; unix"
+        "Built": "R 3.6.1; x86_64-pc-linux-gnu; 2019-10-21 10:48:05 UTC; unix"
       }
     },
     "rappdirs": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1899,8 +1924,8 @@
       }
     },
     "raster": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1932,8 +1957,8 @@
       }
     },
     "rematch2": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1962,8 +1987,8 @@
       }
     },
     "reshape2": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -1993,8 +2018,8 @@
       }
     },
     "rlang": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -2025,8 +2050,8 @@
       }
     },
     "rmarkdown": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -2058,8 +2083,8 @@
       }
     },
     "rprojroot": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -2091,8 +2116,8 @@
       }
     },
     "scales": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -2123,44 +2148,35 @@
       }
     },
     "shiny": {
-      "Source": "github",
-      "Repository": null,
-      "GithubRepo": "shiny",
-      "GithubUsername": "rstudio",
-      "GithubRef": "master",
-      "GithubSha1": "e07c7483a79cc641d464cd7496872a28eedbe4a4",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
       "description": {
         "Package": "shiny",
         "Type": "Package",
         "Title": "Web Application Framework for R",
-        "Version": "1.4.0.9001",
+        "Version": "1.4.0",
         "Authors@R": "c(\n    person(\"Winston\", \"Chang\", role = c(\"aut\", \"cre\"), email = \"winston@rstudio.com\"),\n    person(\"Joe\", \"Cheng\", role = \"aut\", email = \"joe@rstudio.com\"),\n    person(\"JJ\", \"Allaire\", role = \"aut\", email = \"jj@rstudio.com\"),\n    person(\"Yihui\", \"Xie\", role = \"aut\", email = \"yihui@rstudio.com\"),\n    person(\"Jonathan\", \"McPherson\", role = \"aut\", email = \"jonathan@rstudio.com\"),\n    person(family = \"RStudio\", role = \"cph\"),\n    person(family = \"jQuery Foundation\", role = \"cph\",\n    comment = \"jQuery library and jQuery UI library\"),\n    person(family = \"jQuery contributors\", role = c(\"ctb\", \"cph\"),\n    comment = \"jQuery library; authors listed in inst/www/shared/jquery-AUTHORS.txt\"),\n    person(family = \"jQuery UI contributors\", role = c(\"ctb\", \"cph\"),\n    comment = \"jQuery UI library; authors listed in inst/www/shared/jqueryui/AUTHORS.txt\"),\n    person(\"Mark\", \"Otto\", role = \"ctb\",\n    comment = \"Bootstrap library\"),\n    person(\"Jacob\", \"Thornton\", role = \"ctb\",\n    comment = \"Bootstrap library\"),\n    person(family = \"Bootstrap contributors\", role = \"ctb\",\n    comment = \"Bootstrap library\"),\n    person(family = \"Twitter, Inc\", role = \"cph\",\n    comment = \"Bootstrap library\"),\n    person(\"Alexander\", \"Farkas\", role = c(\"ctb\", \"cph\"),\n    comment = \"html5shiv library\"),\n    person(\"Scott\", \"Jehl\", role = c(\"ctb\", \"cph\"),\n    comment = \"Respond.js library\"),\n    person(\"Stefan\", \"Petre\", role = c(\"ctb\", \"cph\"),\n    comment = \"Bootstrap-datepicker library\"),\n    person(\"Andrew\", \"Rowls\", role = c(\"ctb\", \"cph\"),\n    comment = \"Bootstrap-datepicker library\"),\n    person(\"Dave\", \"Gandy\", role = c(\"ctb\", \"cph\"),\n    comment = \"Font-Awesome font\"),\n    person(\"Brian\", \"Reavis\", role = c(\"ctb\", \"cph\"),\n    comment = \"selectize.js library\"),\n    person(\"Kristopher Michael\", \"Kowal\", role = c(\"ctb\", \"cph\"),\n    comment = \"es5-shim library\"),\n    person(family = \"es5-shim contributors\", role = c(\"ctb\", \"cph\"),\n    comment = \"es5-shim library\"),\n    person(\"Denis\", \"Ineshin\", role = c(\"ctb\", \"cph\"),\n    comment = \"ion.rangeSlider library\"),\n    person(\"Sami\", \"Samhuri\", role = c(\"ctb\", \"cph\"),\n    comment = \"Javascript strftime library\"),\n    person(family = \"SpryMedia Limited\", role = c(\"ctb\", \"cph\"),\n    comment = \"DataTables library\"),\n    person(\"John\", \"Fraser\", role = c(\"ctb\", \"cph\"),\n    comment = \"showdown.js library\"),\n    person(\"John\", \"Gruber\", role = c(\"ctb\", \"cph\"),\n    comment = \"showdown.js library\"),\n    person(\"Ivan\", \"Sagalaev\", role = c(\"ctb\", \"cph\"),\n    comment = \"highlight.js library\"),\n    person(family = \"R Core Team\", role = c(\"ctb\", \"cph\"),\n    comment = \"tar implementation from R\")\n    )",
         "Description": "Makes it incredibly easy to build interactive web\n    applications with R. Automatic \"reactive\" binding between inputs and\n    outputs and extensive prebuilt widgets make it possible to build\n    beautiful, responsive, and powerful applications with minimal effort.",
         "License": "GPL-3 | file LICENSE",
         "Depends": "R (>= 3.0.2), methods",
-        "Imports": "utils, grDevices, httpuv (>= 1.5.2), mime (>= 0.3), jsonlite\n(>= 0.9.16), xtable, digest, htmltools (>= 0.4.0), R6 (>= 2.0),\nsourcetools, later (>= 1.0.0), promises (>= 1.1.0), tools,\ncrayon, rlang (>= 0.4.0), fastmap (>= 1.0.0), withr",
-        "Suggests": "datasets, Cairo (>= 1.5-5), testthat (>= 2.1.1), knitr (>=\n1.6), markdown, rmarkdown, ggplot2, reactlog (>= 1.0.0),\nmagrittr, shinytest, yaml, future, dygraphs",
+        "Imports": "utils, grDevices, httpuv (>= 1.5.2), mime (>= 0.3), jsonlite\n(>= 0.9.16), xtable, digest, htmltools (>= 0.4.0), R6 (>= 2.0),\nsourcetools, later (>= 1.0.0), promises (>= 1.1.0), tools,\ncrayon, rlang (>= 0.4.0), fastmap (>= 1.0.0)",
+        "Suggests": "datasets, Cairo (>= 1.5-5), testthat (>= 2.1.1), knitr (>=\n1.6), markdown, rmarkdown, ggplot2, reactlog (>= 1.0.0),\nmagrittr, yaml",
         "URL": "http://shiny.rstudio.com",
         "BugReports": "https://github.com/rstudio/shiny/issues",
-        "Collate": "'app.R' 'bookmark-state-local.R' 'stack.R' 'bookmark-state.R'\n'bootstrap-deprecated.R' 'bootstrap-layout.R' 'globals.R'\n'conditions.R' 'map.R' 'utils.R' 'bootstrap.R'\n'cache-context.R' 'cache-disk.R' 'cache-memory.R'\n'cache-utils.R' 'diagnose.R' 'fileupload.R' 'font-awesome.R'\n'graph.R' 'reactives.R' 'reactive-domains.R' 'history.R'\n'hooks.R' 'html-deps.R' 'htmltools.R' 'image-interact-opts.R'\n'image-interact.R' 'imageutils.R' 'input-action.R'\n'input-checkbox.R' 'input-checkboxgroup.R' 'input-date.R'\n'input-daterange.R' 'input-file.R' 'input-numeric.R'\n'input-password.R' 'input-radiobuttons.R' 'input-select.R'\n'input-slider.R' 'input-submit.R' 'input-text.R'\n'input-textarea.R' 'input-utils.R' 'insert-tab.R' 'insert-ui.R'\n'jqueryui.R' 'middleware-shiny.R' 'middleware.R' 'timer.R'\n'mock-session.R' 'modal.R' 'modules.R' 'notifications.R'\n'priorityqueue.R' 'progress.R' 'react.R' 'render-cached-plot.R'\n'render-plot.R' 'render-table.R' 'run-url.R' 'serializers.R'\n'server-input-handlers.R' 'server.R' 'shiny-options.R'\n'shiny.R' 'shinyui.R' 'shinywrappers.R' 'showcase.R'\n'snapshot.R' 'tar.R' 'test-export.R' 'test-module.R' 'test.R'\n'update-input.R'",
-        "RoxygenNote": "7.0.2",
+        "Collate": "'app.R' 'bookmark-state-local.R' 'stack.R' 'bookmark-state.R'\n'bootstrap-deprecated.R' 'bootstrap-layout.R' 'globals.R'\n'conditions.R' 'map.R' 'utils.R' 'bootstrap.R'\n'cache-context.R' 'cache-disk.R' 'cache-memory.R'\n'cache-utils.R' 'diagnose.R' 'fileupload.R' 'font-awesome.R'\n'graph.R' 'reactives.R' 'reactive-domains.R' 'history.R'\n'hooks.R' 'html-deps.R' 'htmltools.R' 'image-interact-opts.R'\n'image-interact.R' 'imageutils.R' 'input-action.R'\n'input-checkbox.R' 'input-checkboxgroup.R' 'input-date.R'\n'input-daterange.R' 'input-file.R' 'input-numeric.R'\n'input-password.R' 'input-radiobuttons.R' 'input-select.R'\n'input-slider.R' 'input-submit.R' 'input-text.R'\n'input-textarea.R' 'input-utils.R' 'insert-tab.R' 'insert-ui.R'\n'jqueryui.R' 'middleware-shiny.R' 'middleware.R' 'modal.R'\n'modules.R' 'notifications.R' 'priorityqueue.R' 'progress.R'\n'react.R' 'render-cached-plot.R' 'render-plot.R'\n'render-table.R' 'run-url.R' 'serializers.R'\n'server-input-handlers.R' 'server.R' 'shiny-options.R'\n'shiny.R' 'shinyui.R' 'shinywrappers.R' 'showcase.R'\n'snapshot.R' 'tar.R' 'test-export.R' 'timer.R' 'update-input.R'",
+        "RoxygenNote": "6.1.1",
         "Encoding": "UTF-8",
-        "Roxygen": "list(markdown = TRUE)",
-        "RemoteType": "github",
-        "RemoteHost": "api.github.com",
-        "RemoteRepo": "shiny",
-        "RemoteUsername": "rstudio",
-        "RemoteRef": "master",
-        "RemoteSha": "e07c7483a79cc641d464cd7496872a28eedbe4a4",
-        "GithubRepo": "shiny",
-        "GithubUsername": "rstudio",
-        "GithubRef": "master",
-        "GithubSHA1": "e07c7483a79cc641d464cd7496872a28eedbe4a4",
         "NeedsCompilation": "no",
-        "Packaged": "2019-12-04 21:10:14 UTC; james",
+        "Packaged": "2019-10-08 16:21:27 UTC; winston",
         "Author": "Winston Chang [aut, cre],\n  Joe Cheng [aut],\n  JJ Allaire [aut],\n  Yihui Xie [aut],\n  Jonathan McPherson [aut],\n  RStudio [cph],\n  jQuery Foundation [cph] (jQuery library and jQuery UI library),\n  jQuery contributors [ctb, cph] (jQuery library; authors listed in\n    inst/www/shared/jquery-AUTHORS.txt),\n  jQuery UI contributors [ctb, cph] (jQuery UI library; authors listed in\n    inst/www/shared/jqueryui/AUTHORS.txt),\n  Mark Otto [ctb] (Bootstrap library),\n  Jacob Thornton [ctb] (Bootstrap library),\n  Bootstrap contributors [ctb] (Bootstrap library),\n  Twitter, Inc [cph] (Bootstrap library),\n  Alexander Farkas [ctb, cph] (html5shiv library),\n  Scott Jehl [ctb, cph] (Respond.js library),\n  Stefan Petre [ctb, cph] (Bootstrap-datepicker library),\n  Andrew Rowls [ctb, cph] (Bootstrap-datepicker library),\n  Dave Gandy [ctb, cph] (Font-Awesome font),\n  Brian Reavis [ctb, cph] (selectize.js library),\n  Kristopher Michael Kowal [ctb, cph] (es5-shim library),\n  es5-shim contributors [ctb, cph] (es5-shim library),\n  Denis Ineshin [ctb, cph] (ion.rangeSlider library),\n  Sami Samhuri [ctb, cph] (Javascript strftime library),\n  SpryMedia Limited [ctb, cph] (DataTables library),\n  John Fraser [ctb, cph] (showdown.js library),\n  John Gruber [ctb, cph] (showdown.js library),\n  Ivan Sagalaev [ctb, cph] (highlight.js library),\n  R Core Team [ctb, cph] (tar implementation from R)",
         "Maintainer": "Winston Chang <winston@rstudio.com>",
-        "Built": "R 3.6.0; ; 2019-12-04 21:10:17 UTC; unix"
+        "Repository": "RSPM",
+        "Date/Publication": "2019-10-10 12:50:02 UTC",
+        "Built": "R 3.6.2; ; 2019-12-27 20:42:36 UTC; unix"
       }
     },
     "shinymeta": {
@@ -2206,8 +2222,8 @@
       }
     },
     "sourcetools": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -2235,8 +2251,8 @@
       }
     },
     "sp": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -2265,8 +2281,8 @@
       }
     },
     "stringi": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -2298,8 +2314,8 @@
       }
     },
     "stringr": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -2330,8 +2346,8 @@
       }
     },
     "styler": {
-      "Source": "CRAN",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -2357,14 +2373,14 @@
         "Packaged": "2019-10-17 18:22:11 UTC; lorenz",
         "Author": "Kirill Müller [aut],\n  Lorenz Walthert [cre, aut]",
         "Maintainer": "Lorenz Walthert <lorenz.walthert@icloud.com>",
-        "Repository": "CRAN",
+        "Repository": "RSPM",
         "Date/Publication": "2019-10-17 20:20:02 UTC",
-        "Built": "R 3.6.0; ; 2019-11-08 21:28:48 UTC; unix"
+        "Built": "R 3.6.1; ; 2019-10-21 10:55:33 UTC; unix"
       }
     },
     "sys": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -2394,8 +2410,8 @@
       }
     },
     "tibble": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -2427,8 +2443,8 @@
       }
     },
     "tidyselect": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -2458,8 +2474,8 @@
       }
     },
     "tinytex": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -2489,8 +2505,8 @@
       }
     },
     "utf8": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -2519,8 +2535,8 @@
       }
     },
     "vctrs": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -2552,8 +2568,8 @@
       }
     },
     "viridis": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -2585,8 +2601,8 @@
       }
     },
     "viridisLite": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -2616,8 +2632,8 @@
       }
     },
     "withr": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -2650,7 +2666,7 @@
     },
     "xfun": {
       "Source": "CRAN",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -2681,8 +2697,8 @@
       }
     },
     "xtable": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -2711,8 +2727,8 @@
       }
     },
     "yaml": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -2739,8 +2755,8 @@
       }
     },
     "zeallot": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -2769,8 +2785,8 @@
       }
     },
     "zip": {
-      "Source": "RSPM",
-      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/1654",
+      "Source": "latest",
+      "Repository": "https://demo.rstudiopm.com/all/__linux__/bionic/latest",
       "GithubRepo": null,
       "GithubUsername": null,
       "GithubRef": null,
@@ -2844,10 +2860,10 @@
       "checksum": "db95b45f9e17608bedb6e3ebc8f7434c"
     },
     "packrat/desc/dplyr": {
-      "checksum": "0654cfd2c84e841c51027d8240119875"
+      "checksum": "4970487a14f6953e04aaf0bc0861aa16"
     },
     "packrat/desc/DT": {
-      "checksum": "0160e099f0199076be97cd0b1d40a5be"
+      "checksum": "e239c8bd258195a2d6267757d99bf9cc"
     },
     "packrat/desc/ellipsis": {
       "checksum": "f8940115c3de14708d5d809ae710a122"
@@ -2913,7 +2929,10 @@
       "checksum": "8f68250532bafe421c42056ee807493b"
     },
     "packrat/desc/leaflet": {
-      "checksum": "89ac4bd5e5020e7e791f5ad69604e9dd"
+      "checksum": "8626aae5c568509c3c0656cdc996cd08"
+    },
+    "packrat/desc/leaflet.providers": {
+      "checksum": "6e0a71533cc5d0d14ba3b159300746e8"
     },
     "packrat/desc/magrittr": {
       "checksum": "dcce0bdbd647711dae3d552ebbf280aa"
@@ -2949,7 +2968,7 @@
       "checksum": "b3ba10f4887f52e13532e5469b875af4"
     },
     "packrat/desc/pins": {
-      "checksum": "0b70570f2108b49e713a4b6ccd6b2106"
+      "checksum": "c01f791afc06e84adfb4456acb44ad4b"
     },
     "packrat/desc/pkgconfig": {
       "checksum": "1d82067bb8c76ebb7ed1513fd287b138"
@@ -2973,7 +2992,7 @@
       "checksum": "1c84fa678ea6c67537dd47074a43f340"
     },
     "packrat/desc/purrr": {
-      "checksum": "5ebea74629afd41c612756716d442050"
+      "checksum": "39b16becf00febf6e00858d1cef855c1"
     },
     "packrat/desc/R6": {
       "checksum": "77d6a69ea384a72bb1886dffe4cafdf1"
@@ -3009,7 +3028,7 @@
       "checksum": "02dd17cd0e15fdf6aaa64f09f39305cf"
     },
     "packrat/desc/shiny": {
-      "checksum": "ae9028e249107ae8e103e8f3840af5a3"
+      "checksum": "71028b0db6da338537425e45f4e96ce3"
     },
     "packrat/desc/shinymeta": {
       "checksum": "23e8bfe686aa192bf8cd2c4b398b5480"
@@ -3027,7 +3046,7 @@
       "checksum": "b50ca25c58190e25272b7c7319b1b15f"
     },
     "packrat/desc/styler": {
-      "checksum": "0cbf9f137f9d784887f10250602753ed"
+      "checksum": "95fc27ea3e3601312694221e968ad854"
     },
     "packrat/desc/sys": {
       "checksum": "702075f86d37f9daf353a7f1cb153768"
@@ -3072,7 +3091,7 @@
       "checksum": "e3293f6b22b641db2a78a50f8c24d8eb"
     },
     "packrat/packrat.lock": {
-      "checksum": "09132b3263cc30e02a413b4b3af4d79e"
+      "checksum": "6d7fa167f14526aff78cf1fd3eb9ebbc"
     },
     "RStudio1.png": {
       "checksum": "288da77036023512c0adbf27de9fe9c2"
