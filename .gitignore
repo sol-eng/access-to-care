@@ -34,3 +34,6 @@ vignettes/*.pdf
 
 shapes/
 .Rproj.user
+
+# Ignore .Rprofile, which contains sensitive environment variables
+.Rprofile
