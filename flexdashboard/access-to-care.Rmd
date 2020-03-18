@@ -223,16 +223,11 @@ observeEvent(input$code, {
       library(DT)
       library(pins)
       
-      if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
-        boardname <- "rsconnect"
-        board_register_rsconnect(
-          server = Sys.getenv("connect_url"),
-          key = Sys.getenv("connect_key")
-        )
-      } else {
-        boardname <- "local"
-        board_register(boardname)  
-      }
+      boardname <- "rsconnect"
+      board_register_rsconnect(
+        server = Sys.getenv("connect_url"),
+        key = Sys.getenv("connect_key")
+      )
       
       states <- pin_get("atc-states", board = boardname) %>% collect()
       under <- "#CC79A7"
@@ -248,8 +243,10 @@ observeEvent(input$code, {
   displayCodeModal(
     code,
     title = "Access to Care Code",
+    clip = NULL,
     size = "l",
-    fontSize = 16
+    fontSize = 16,
+    
   )
 })
 ```
