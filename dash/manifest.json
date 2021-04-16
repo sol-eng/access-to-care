@@ -1,7 +1,7 @@
 {
   "version": 1,
   "metadata": {
-    "appmode": "python-api",
+    "appmode": "python-dash ",
     "entrypoint": "app"
   },
   "locale": "en_US.UTF-8",
@@ -17,9 +17,6 @@
     "requirements.txt": {
       "checksum": "88c031dd3672a24acab9807bdd685798"
     },
-    ".DS_Store": {
-      "checksum": "a4ab452ebfd2057d4d4bf3a72465ab41"
-    },
     "app.py": {
       "checksum": "651728958a0cdcbf6c7e12b584a323c7"
     },
@@ -34,9 +31,6 @@
     },
     "assets/dashboard.css": {
       "checksum": "f46c3368cbb1507d3ad67a3e2158172d"
-    },
-    "rs-connect-git.R": {
-      "checksum": "9fe75a267007407446c889d425161180"
     }
   }
 }
