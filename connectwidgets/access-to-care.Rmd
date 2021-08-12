@@ -1,0 +1,188 @@
+---
+title: "Access to Care"
+output: html_document
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+
+library(connectwidgets)
+library(dplyr)
+library(purrr)
+library(stringr)
+library(fs)
+library(readr)
+
+connect_server <- Sys.getenv("CONNECT_SERVER")
+connect_key <- Sys.getenv("CONNECT_API_KEY")
+
+client <- connect(server  = connect_server, api_key = connect_key)
+
+# Pull data from RStudio Connect
+all_content <- content(client) 
+
+atc_content <- all_content %>% 
+  by_tags("Access to Care") %>% 
+  mutate(title = str_remove(title, "Access to Care - ")) 
+
+# Pull vanity URLs for ATC content
+c_file <- "vanity_content.rds"
+if(file_exists(c_file)) {
+  vanity_content <- read_rds(c_file)
+} else {
+  c_connect <- connectapi::connect(server  = connect_server, api_key = connect_key)
+  vanity_content <- atc_content %>% 
+    select(guid) %>% 
+    transpose() %>% 
+    map_dfr(~{
+      vurl <- connectapi::content_item(c_connect, .x$guid) %>% 
+        connectapi::get_vanity_url()
+      tibble(
+        guid = .x$guid,
+        vanity_url = vurl
+      )
+    })
+  write_rds(vanity_content, c_file)
+}
+
+# Compile data from metadata.yml files in the Repo
+
+r_file <- "repo_content.rds"
+if(file_exists(r_file)) {
+  repo_content <- read_rds(r_file)
+} else {
+base_repo <- "https://github.com/sol-eng/access-to-care/tree/master/"
+  repo_content <- dir_ls(here::here(), type = "directory") %>%
+    imap_dfr(~ {
+      mt <- path(.x, "metadata.yml")
+      content <- ""
+      description <- ""
+      published <- ""
+      type <- ""
+      if(file_exists(mt)) {
+        yf <- yaml::read_yaml(here::here(mt))
+        print(yf)
+        content <- yf$title
+        description <- yf$description 
+        published <- ifelse(!is.null(yf$published), yf$published, "") 
+        type <- ifelse(!is.null(yf$type), yf$type, "") 
+      } 
+      tibble(
+        repo_type = type,
+        repo_title = content,
+        repo_description = description,
+        vanity_url = published,
+        )
+    }) 
+  write_rds(repo_content, r_file)
+}
+
+full_content <- vanity_content %>% 
+  mutate(vanity_url = path(connect_server, vanity_url)) %>% 
+  right_join(atc_content, by = "guid") %>% 
+  left_join(repo_content, by = "vanity_url") %>% 
+  mutate(
+    title = ifelse(is.na(repo_title), title, repo_title),
+    description = ifelse(is.na(repo_description), description, repo_description),
+    title_search = str_to_lower(title)
+    )
+```
+
+
+**Background:** This project combines US CENSUS population data with hospital data provided by Medicare. A linear model is used to determine if a county is over, or under served based on the size of the population.
+
+
+<img src="access-to-care-diagram.png" width = "600px">
+
+
+## Components 
+
+- [Data Preparation](#data-preparation)
+- [Rest APIs](#rest-apis)
+- [Pins](#pins)
+- [Dashboards](#dashboards)
+- [Reports](#reports)
+- [Notebooks](#notebooks)
+- [Presentations](#presentations)
+- [Plots](#plots)
+
+### Data Preparation
+
+[Back to top](#components)
+
+```{r}
+full_content %>%
+  filter(str_detect(title_search, "data preparation")) %>% 
+  rsc_card()
+```
+
+### Pins
+
+[Back to top](#components)
+
+```{r}
+full_content %>%
+  filter(content_category == "pin") %>% 
+  rsc_card()
+```
+
+### REST APIs
+
+[Back to top](#components)
+
+```{r}
+full_content %>%
+  filter(str_detect(app_mode, "api") ) %>% 
+  rsc_card()
+```
+
+
+### Dashboards
+
+[Back to top](#components)
+
+```{r}
+full_content %>%
+  filter(str_detect(app_mode, "shiny|python") ) %>% 
+ rsc_card()
+```
+
+### Reports
+
+[Back to top](#components)
+
+```{r}
+full_content %>% 
+  filter(str_detect(title_search, "email|pdf")) %>% 
+  rsc_card()
+```
+
+### Notebooks
+
+[Back to top](#components)
+
+```{r}
+full_content %>% 
+  filter(str_detect(title_search, "notebook")) %>% 
+  rsc_card()
+```
+
+### Presentations
+
+[Back to top](#components)
+
+```{r}
+full_content %>% 
+  filter(str_detect(title_search, "presentation|powerPoint")) %>% 
+  rsc_card()
+```
+
+### Plots
+
+[Back to top](#components)
+
+```{r}
+full_content %>%
+  filter(content_category == "plot") %>% 
+  rsc_card()
+```

@@ -7,8 +7,8 @@ library(tidypredict)
 if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
   boardname <- "rsconnect"
   board_register_rsconnect(
-    server = Sys.getenv("connect_url"),
-    key = Sys.getenv("connect_key")
+    server = Sys.getenv("CONNECT_SERVER"),
+    key = Sys.getenv("CONNECT_API_KEY")
   )
 } else {
   boardname <- "local"
@@ -34,7 +34,7 @@ function(state = "MS") {
 #* @param population:numeric Number of people living in a given county
 function(population = 70000) {
   pop <- as.numeric(population)
-  data.frame(population = 70000) %>%
+  data.frame(population = pop) %>%
     tidypredict_to_column(model, add_interval = TRUE)
 }
 

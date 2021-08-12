@@ -33,8 +33,8 @@ library(clipr)
 if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
   boardname <- "rsconnect"
   board_register_rsconnect(
-    server = Sys.getenv("connect_url"),
-    key = Sys.getenv("connect_key")
+    server = Sys.getenv("CONNECT_SERVER"),
+    key = Sys.getenv("CONNECT_API_KEY")
     )
 } else {
   boardname <- "local"
@@ -46,10 +46,13 @@ states <- pin_get("atc-states", board = boardname) %>% collect()
 
 ```{r, include=FALSE}
 under <- "#CC79A7"
-over <- "#0072B2"
+over <- "#0072B2"  #009E73
 at_level <- "#008b00"
 hospital_color <- "#F0E442"
+```
 
+
+```{r, include=FALSE}
 state_info <- metaReactive({
   states %>% 
     filter(full == ..(input$state)) 
@@ -120,7 +123,7 @@ renderValueBox({
 renderValueBox({
   state_info() %>%
     pull(counties) %>%
-    valueBox(icon="fa-map-marker",color="#009E73")
+    valueBox(icon="fa-map-marker",color = over)
   })
 ```
 
@@ -131,7 +134,7 @@ renderValueBox({
 renderValueBox({
   state_info() %>%
     pull(under) %>%
-    valueBox(icon="fa-h-square", color="#CC79A7")
+    valueBox(icon="fa-h-square", color = under)
   })
 ```
 
@@ -225,15 +228,11 @@ observeEvent(input$code, {
       
       boardname <- "rsconnect"
       board_register_rsconnect(
-        server = Sys.getenv("connect_url"),
-        key = Sys.getenv("connect_key")
+        server = Sys.getenv("CONNECT_SERVER"),
+        key = Sys.getenv("CONNECT_API_KEY")
       )
       
       states <- pin_get("atc-states", board = boardname) %>% collect()
-      under <- "#CC79A7"
-      over <- "#0072B2"
-      at_level <- "#008b00"
-      hospital_color <- "#F0E442"
     }),
     "# Leaflet plot ----",
     output$map(),
@@ -288,10 +287,10 @@ county_hospitals %>%
     scale_y_continuous(breaks = 0:10 * 1000000, labels = paste0(0:10, "M")) +
     geom_segment(x = preds[1,2], y = bounds[1],
                  xend = preds[2,2], yend = bounds[2],
-                 color = "#009E73") +
+                 color = over) +
     geom_segment(x = preds[1,3], y = bounds[1],
                  xend = preds[2,3], yend = bounds[2],
-                 color = "#CC79A7") +
+                 color = under) +
     theme_minimal()
 ```
 
