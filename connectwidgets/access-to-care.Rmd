@@ -11,6 +11,7 @@ library(dplyr)
 library(purrr)
 library(stringr)
 library(fs)
+library(readr)
 
 connect_server <- Sys.getenv("CONNECT_SERVER")
 connect_key <- Sys.getenv("CONNECT_API_KEY")
@@ -25,7 +26,7 @@ atc_content <- all_content %>%
   mutate(title = str_remove(title, "Access to Care - ")) 
 
 # Pull vanity URLs for ATC content
-c_file <- here::here("connectwidgets/vanity_content.rds")
+c_file <- "vanity_content.rds"
 if(file_exists(c_file)) {
   vanity_content <- read_rds(c_file)
 } else {
@@ -41,33 +42,40 @@ if(file_exists(c_file)) {
         vanity_url = vurl
       )
     })
-  readr::write_rds(vanity_content, c_file)
+  write_rds(vanity_content, c_file)
 }
 
 # Compile data from metadata.yml files in the Repo
+
+r_file <- "repo_content.rds"
+if(file_exists(r_file)) {
+  repo_content <- read_rds(r_file)
+} else {
 base_repo <- "https://github.com/sol-eng/access-to-care/tree/master/"
-repo_content <- dir_ls(here::here(), type = "directory") %>%
-  imap_dfr(~ {
-    mt <- path(.x, "metadata.yml")
-    content <- ""
-    description <- ""
-    published <- ""
-    type <- ""
-    if(file_exists(mt)) {
-      yf <- yaml::read_yaml(here::here(mt))
-      print(yf)
-      content <- yf$title
-      description <- yf$description 
-      published <- ifelse(!is.null(yf$published), yf$published, "") 
-      type <- ifelse(!is.null(yf$type), yf$type, "") 
-    } 
-    tibble(
-      repo_type = type,
-      repo_title = content,
-      repo_description = description,
-      vanity_url = published,
-      )
-  }) 
+  repo_content <- dir_ls(here::here(), type = "directory") %>%
+    imap_dfr(~ {
+      mt <- path(.x, "metadata.yml")
+      content <- ""
+      description <- ""
+      published <- ""
+      type <- ""
+      if(file_exists(mt)) {
+        yf <- yaml::read_yaml(here::here(mt))
+        print(yf)
+        content <- yf$title
+        description <- yf$description 
+        published <- ifelse(!is.null(yf$published), yf$published, "") 
+        type <- ifelse(!is.null(yf$type), yf$type, "") 
+      } 
+      tibble(
+        repo_type = type,
+        repo_title = content,
+        repo_description = description,
+        vanity_url = published,
+        )
+    }) 
+  write_rds(repo_content, r_file)
+}
 
 full_content <- vanity_content %>% 
   mutate(vanity_url = path(connect_server, vanity_url)) %>% 
