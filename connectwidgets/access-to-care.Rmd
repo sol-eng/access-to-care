@@ -88,12 +88,27 @@ full_content <- vanity_content %>%
     )
 ```
 
+
+**Background:** This project combines US CENSUS population data with hospital data provided by Medicare. A linear model is used to determine if a county is over, or under served based on the size of the population.
+
+
 <img src="access-to-care-diagram.png" width = "600px">
 
 
-## Components {.tabset}
+## Components 
+
+- [Data Preparation](#data-preparation)
+- [Rest APIs](#rest-apis)
+- [Pins](#pins)
+- [Dashboards](#dashboards)
+- [Reports](#reports)
+- [Notebooks](#notebooks)
+- [Presentations](#presentations)
+- [Plots](#plots)
 
 ### Data Preparation
+
+[Back to top](#components)
 
 ```{r}
 full_content %>%
@@ -103,6 +118,8 @@ full_content %>%
 
 ### Pins
 
+[Back to top](#components)
+
 ```{r}
 full_content %>%
   filter(content_category == "pin") %>% 
@@ -110,6 +127,8 @@ full_content %>%
 ```
 
 ### REST APIs
+
+[Back to top](#components)
 
 ```{r}
 full_content %>%
@@ -120,6 +139,8 @@ full_content %>%
 
 ### Dashboards
 
+[Back to top](#components)
+
 ```{r}
 full_content %>%
   filter(str_detect(app_mode, "shiny|python") ) %>% 
@@ -127,6 +148,8 @@ full_content %>%
 ```
 
 ### Reports
+
+[Back to top](#components)
 
 ```{r}
 full_content %>% 
@@ -136,13 +159,17 @@ full_content %>%
 
 ### Notebooks
 
+[Back to top](#components)
+
 ```{r}
 full_content %>% 
   filter(str_detect(title_search, "notebook")) %>% 
   rsc_card()
 ```
 
-### Presentations 
+### Presentations
+
+[Back to top](#components)
 
 ```{r}
 full_content %>% 
@@ -151,6 +178,8 @@ full_content %>%
 ```
 
 ### Plots
+
+[Back to top](#components)
 
 ```{r}
 full_content %>%
