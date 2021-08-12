@@ -27,4 +27,4 @@ shapes/
 # Ignore .Rprofile, which contains sensitive environment variables
 .Rprofile
 .DS_Store
-
+README.html
