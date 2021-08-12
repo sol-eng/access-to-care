@@ -1,0 +1,87 @@
+---
+title: "Access to Care"
+output: html_document
+---
+
+```{r setup, include = FALSE}
+library(connectwidgets)
+library(dplyr)
+library(purrr)
+library(stringr)
+library(fs)
+
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+
+client <- connect(
+  server  = Sys.getenv("CONNECT_SERVER"),
+  api_key = Sys.getenv("CONNECT_API_KEY")
+  )
+
+all_content <- content(client) 
+
+atc_content <- all_content %>% 
+  by_tags("Access to Care") %>% 
+  mutate(title = str_remove(title, "Access to Care - ")) 
+
+```
+
+<img src="access-to-care-diagram.png" width = "500px">
+
+
+## Components
+
+### Dashboards
+
+```{r}
+atc_content %>%
+  filter(str_detect(app_mode, "shiny|python") ) %>% 
+  rsc_grid()
+```
+
+### Notebook 
+
+```{r}
+atc_content %>% 
+  filter(str_detect(title, "Notebook")) %>% 
+  rsc_grid()
+```
+
+### Reports
+
+```{r}
+atc_content %>% 
+  filter(str_detect(title, "Email|PDF")) %>% 
+  rsc_grid()
+```
+
+### Presentations 
+
+```{r}
+atc_content %>% 
+  filter(str_detect(title, "Presentation|PowerPoint")) %>% 
+  rsc_grid()
+```
+
+### Pins
+
+```{r}
+atc_content %>%
+  filter(content_category == "pin") %>% 
+  rsc_grid()
+```
+
+### Plots
+
+```{r}
+atc_content %>%
+  filter(content_category == "plot") %>% 
+  rsc_grid()
+```
+
+### Data Preparation
+
+```{r}
+atc_content %>%
+  filter(str_detect(title, "Data Preparation")) %>% 
+  rsc_grid()
+```
