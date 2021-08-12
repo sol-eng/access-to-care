@@ -10,14 +10,12 @@ library(connectwidgets)
 library(dplyr)
 library(purrr)
 library(stringr)
-library(readr)
 library(fs)
 
 connect_server <- Sys.getenv("CONNECT_SERVER")
 connect_key <- Sys.getenv("CONNECT_API_KEY")
 
 client <- connect(server  = connect_server, api_key = connect_key)
-
 
 # Pull data from RStudio Connect
 all_content <- content(client) 
@@ -43,7 +41,7 @@ if(file_exists(c_file)) {
         vanity_url = vurl
       )
     })
-  write_rds(vanity_content, c_file)
+  readr::write_rds(vanity_content, c_file)
 }
 
 # Compile data from metadata.yml files in the Repo
