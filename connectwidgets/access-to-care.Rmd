@@ -91,37 +91,13 @@ full_content <- vanity_content %>%
 <img src="access-to-care-diagram.png" width = "600px">
 
 
-## Components
+## Components {.tabset}
 
-### Dashboards
+### Data Preparation
 
 ```{r}
 full_content %>%
-  filter(str_detect(app_mode, "shiny|python") ) %>% 
- rsc_card()
-```
-
-### Notebook 
-
-```{r}
-full_content %>% 
-  filter(str_detect(title_search, "notebook")) %>% 
-  rsc_card()
-```
-
-### Reports
-
-```{r}
-full_content %>% 
-  filter(str_detect(title_search, "email|pdf")) %>% 
-  rsc_card()
-```
-
-### Presentations 
-
-```{r}
-full_content %>% 
-  filter(str_detect(title_search, "presentation|powerPoint")) %>% 
+  filter(str_detect(title_search, "data preparation")) %>% 
   rsc_card()
 ```
 
@@ -133,18 +109,51 @@ full_content %>%
   rsc_card()
 ```
 
+### REST APIs
+
+```{r}
+full_content %>%
+  filter(str_detect(app_mode, "api") ) %>% 
+  rsc_card()
+```
+
+
+### Dashboards
+
+```{r}
+full_content %>%
+  filter(str_detect(app_mode, "shiny|python") ) %>% 
+ rsc_card()
+```
+
+### Reports
+
+```{r}
+full_content %>% 
+  filter(str_detect(title_search, "email|pdf")) %>% 
+  rsc_card()
+```
+
+### Notebooks
+
+```{r}
+full_content %>% 
+  filter(str_detect(title_search, "notebook")) %>% 
+  rsc_card()
+```
+
+### Presentations 
+
+```{r}
+full_content %>% 
+  filter(str_detect(title_search, "presentation|powerPoint")) %>% 
+  rsc_card()
+```
+
 ### Plots
 
 ```{r}
 full_content %>%
   filter(content_category == "plot") %>% 
-  rsc_card()
-```
-
-### Data Preparation
-
-```{r}
-full_content %>%
-  filter(str_detect(title_search, "data preparation")) %>% 
   rsc_card()
 ```
