@@ -34,7 +34,7 @@ function(state = "MS") {
 #* @param population:numeric Number of people living in a given county
 function(population = 70000) {
   pop <- as.numeric(population)
-  data.frame(population = 70000) %>%
+  data.frame(population = pop) %>%
     tidypredict_to_column(model, add_interval = TRUE)
 }
 
