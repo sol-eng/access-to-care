@@ -225,6 +225,13 @@ state_full <- county_hospitals_full %>%
   
 ```
 
+```{r}
+under <- "#CC79A7"
+over <- "#0072B2"  #009E73
+at_level <- "#008b00"
+hospital_color <- "#F0E442"
+```
+
 ```{r} 
 base_map <-  state_full %>%
   select(state_id, full, state) %>%
@@ -242,9 +249,9 @@ base_map <-  state_full %>%
       "<br/>Expected: ", as.integer(fit)
       ), 
     color = case_when(
-      result ==  0  ~ "#008b00",
-      result ==  1  ~ "#0072B2",
-      result == -1  ~ "#CC79A7"
+      result ==  0  ~ at_level,
+      result ==  1  ~ over,
+      result == -1  ~ under
     ),
     result = case_when(
       result ==  0  ~ "Acceptable",
