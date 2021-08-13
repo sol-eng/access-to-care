@@ -45,7 +45,7 @@ if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
 states <- pin_get("atc-states", board = boardname)
 
 state_info <- reactive({
-  pin_get("atc-states", board = boardname) %>% 
+  states %>% 
     filter(full == input$state) 
 })
 
