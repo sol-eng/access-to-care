@@ -195,8 +195,8 @@ output$map <- renderGirafe({
     gp <- ss %>% 
       inner_join(cs, by = c("state_key", "county_key")) %>% 
       ggplot() +
-      geom_polygon(
-        aes(long, lat, group = group), 
+      geom_polygon_interactive(
+        aes(long, lat, group = group, data_id = region, tooltip = region), 
         fill = "#999999", color = "#dddddd", size = 3, data = states_map
         ) +
       geom_polygon_interactive(
@@ -229,10 +229,18 @@ output$map <- renderGirafe({
       ))
 })
 
+
+
 girafeOutput("map")
 ```
 
 
+```{r}
+observeEvent(
+  input$map_selected, 
+  updateSelectInput(inputId = "state", selected = str_to_title(input$map_selected))
+)
+```
 
 
 
