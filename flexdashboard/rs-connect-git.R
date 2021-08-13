@@ -5,6 +5,7 @@ app_files <- app_files[app_files != "config.yml"]
 app_files <- app_files[app_files != "rs-connect-git.R"]
 app_files <- app_files[app_files != ".gitignore"]
 app_files <- app_files[app_files != "manifest.json"]
+app_files <- app_files[app_files != "access-to-care-old.Rmd"]
 primary_id <- grepl(".Rmd", app_files)
 if(sum(primary_id) > 1) stop("There are more then one Rmd document, please identify the proper primary doc")
 primary_doc <- app_files[primary_id]
