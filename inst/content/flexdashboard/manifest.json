@@ -169,11 +169,11 @@
       "GithubRepo": "access-to-care",
       "GithubUsername": "sol-eng",
       "GithubRef": "updates",
-      "GithubSha1": "f218da02edbfc11cc6c80438536bfb2865e2af76",
+      "GithubSha1": "b349204ba91f00c12eaf70a458d4d8349115f2ab",
       "description": {
         "Package": "accesstocare",
         "Title": "Example content of Access to Care project",
-        "Version": "0.0.1.9005",
+        "Version": "0.0.1.9006",
         "Authors@R": "\n    person(given = \"Edgar\",\n           family = \"Ruiz\",\n           role = c(\"aut\", \"cre\"),\n           email = \"edgar@rstudio.com\"\n           )",
         "Description": "Contains example content, data, and common functions used within the\n    examples",
         "License": "MIT + file LICENSE",
@@ -187,16 +187,16 @@
         "RemoteRepo": "access-to-care",
         "RemoteUsername": "sol-eng",
         "RemoteRef": "updates",
-        "RemoteSha": "f218da02edbfc11cc6c80438536bfb2865e2af76",
+        "RemoteSha": "b349204ba91f00c12eaf70a458d4d8349115f2ab",
         "GithubRepo": "access-to-care",
         "GithubUsername": "sol-eng",
         "GithubRef": "updates",
-        "GithubSHA1": "f218da02edbfc11cc6c80438536bfb2865e2af76",
+        "GithubSHA1": "b349204ba91f00c12eaf70a458d4d8349115f2ab",
         "NeedsCompilation": "no",
-        "Packaged": "2021-08-20 21:08:22 UTC; edgar",
+        "Packaged": "2021-08-20 21:30:28 UTC; edgar",
         "Author": "Edgar Ruiz [aut, cre]",
         "Maintainer": "Edgar Ruiz <edgar@rstudio.com>",
-        "Built": "R 4.1.0; ; 2021-08-20 21:08:23 UTC; unix"
+        "Built": "R 4.1.0; ; 2021-08-20 21:30:29 UTC; unix"
       }
     },
     "base64enc": {
@@ -2273,7 +2273,7 @@
   },
   "files": {
     "access-to-care.Rmd": {
-      "checksum": "6f2e939d03e2a7904f1e7d8cbb0a078e"
+      "checksum": "d8f426f91c5cf7879c82ade89444e41f"
     },
     "metadata.yml": {
       "checksum": "6a089bf7d5d485378e5a4f92cad4ad42"
