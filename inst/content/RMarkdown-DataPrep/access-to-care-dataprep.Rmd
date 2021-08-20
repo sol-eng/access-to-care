@@ -327,6 +327,15 @@ us_states %>%
   theme_void() +
   theme(legend.position = "bottom")
 ```
+```{r, eval = FALSE}
+library(usethis)
+
+use_data(us_hex_positions, overwrite = TRUE)
+use_data(us_hex_polygons, overwrite = TRUE)
+use_data(us_hospitals, overwrite = TRUE)
+use_data(us_counties, overwrite = TRUE)
+use_data(us_states, overwrite = TRUE)
+```
 
 
 
