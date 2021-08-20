@@ -16,9 +16,14 @@ library(maps)
 library(ggplot2)
 library(purrr)
 library(tidyr)
+library(accesstocare)
+library(usethis)
 ```
 
 ```{r}
+set.seed(100)
+options(scipen=999)
+
 library(dplyr)
 library(haven)
 library(usmap)
@@ -30,6 +35,7 @@ library(maps)
 library(ggplot2)
 library(purrr)
 library(tidyr)
+library(accesstocare)
 library(usethis)
 
 ```
@@ -38,25 +44,27 @@ Data provider: CMS
 Data website: https://data.cms.gov/
 Data URL: https://data.cms.gov/provider-data/dataset/xubh-q36u
 
+It pulls the data from the package instead of the site.  By default, the following code chunk does not run, unless an update is needed.
 
 ```{r, eval = FALSE}
 data_url <- "https://data.cms.gov/provider-data/sites/default/files/resources/092256becd267d9eeccf73bf7d16c46b_1623902717/Hospital_General_Information.csv"
 
-data_raw <- read_csv(data_url)
+cms_data <- read_csv(data_url)
 
-data_clean <- clean_names(data_raw)
+cms_raw_data <- clean_names(cms_data[, 1:9])
+
+use_data(cms_raw_data)
 ```
 
+Prepares the CMS data by removing Psychiatric hospitals, and thos from states not included in the FIPS files.
 
-```{r, eval = FALSE}
-set.seed(100)
-options(scipen=999)
-
-hospital_tbl <- data_clean %>% 
+```{r}
+hospital_tbl <- cms_raw_data %>% 
   filter(
     hospital_type != "Psychiatric", 
-    state != "PR", state != "VI", state != "AS" , 
-    state != "GU", , state != "MP"
+    state != "PR", state != "VI", 
+    state != "AS", state != "GU",  
+    state != "MP"
     ) %>% 
   select(
     facility_id, 
@@ -97,7 +105,11 @@ hospital_tbl <- data_clean %>%
     county_name = str_replace_all(county_name, " ", ""),
     county_name = str_replace_all(county_name, "'", "")
   )
+```
 
+Uses the `usmap` data to retrieve the FIPS code for each county.  Performs close to the same transformations to the county names to produce the matches
+
+```{r}
 states <- usmap::statepop %>% 
   mutate(full = str_to_lower(full)) %>% 
   select(state = abbr, full)
@@ -123,7 +135,11 @@ county_list <- countypop %>%
     county_name = str_replace_all(county_name, "'", ""),
     county_name = str_replace_all(county_name, "Ð", "N")
   )
+```
 
+Confirms that there are no unmtached counties
+
+```{r}
 hospital_counties <- hospital_tbl %>% 
   group_by(state, county_name) %>% 
   summarise() %>% 
@@ -131,8 +147,12 @@ hospital_counties <- hospital_tbl %>%
 
 hospital_counties %>% 
   left_join(county_list, by = c("state", "county_name")) %>% 
-  filter(is.na(fips)) 
+  filter(is.na(fips))
+```
 
+Prepares the `us_hospitals` data set.
+
+```{r}
 county_tbl <- countypop %>% 
   select(
     fips, 
@@ -150,7 +170,11 @@ us_hospitals <- hospital_tbl %>%
     city = str_to_upper(city)
     ) %>% 
   select(-population)
+```
 
+Prepares data for the model, and produces the `us_model` variable.
+
+```{r}
 cnt_hosp <- us_hospitals %>% 
   count(fips, name = "hospitals") %>% 
   right_join(county_tbl, by = "fips")
@@ -172,18 +196,44 @@ preds <- predict(
   ) %>% 
   as_tibble() %>% 
   rename_all(function(x) paste0("pred_", x))
+```
 
+Matches the county data with the predictions to create the `us_counties` data set
+
+```{r}
 us_counties <- cnt_hosp2 %>% 
   bind_cols(preds) %>% 
   mutate(
+    pred_lwr = round(pred_lwr),
+    pred_fit = round(pred_fit),
+    pred_upr = round(pred_upr),
+    pred_lwr = ifelse(pred_lwr < 0, 0, pred_lwr),
+    pred_fit = ifelse(pred_fit < 0, 0, pred_fit),
+    pred_upr = ifelse(pred_upr < 0, 0, pred_upr),
     pred_status = case_when(
       hospitals < pred_lwr ~ "below",
       hospitals > pred_upr ~ "above",
       TRUE ~ "ok"
     )
   )
+
+us_counties %>% 
+  count(pred_status)
 ```
 
+```{r}
+us_states <- us_counties %>% 
+  group_by(state) %>% 
+  summarise(
+    hospitals = sum(hospitals),
+    population = sum(population)
+  ) %>% 
+  ungroup() %>% 
+  mutate(
+    per_person = round(population / hospitals),
+    per_person_quartile = ntile(per_person, 4)
+  )
+```
 
 
 ```{r}
@@ -245,36 +295,38 @@ st_locations_list <- list(
   list(state = "HI", x = -5, y = -1.5)
 )
 
-st_locations <- st_locations_list %>% 
+us_hex_positions <- st_locations_list %>% 
   map_dfr(~.x)
 
-us_hex_map <- map_dfr(
+us_hex_polygons <- map_dfr(
   st_locations_list,
   ~{
     tibble(
       x = sh$x + .x$x,
       y = sh$y + .x$y,
-      group = .x$state
+      state = .x$state
     )
   }
 )
 
-gp <- us_hex_map %>% 
+us_hex_polygons %>% 
   ggplot() +
-  geom_polygon_interactive(aes(x, y, group = group, data_id = group), fill = "lightgray", color = "white") +
-  geom_text(aes(x, y, label = state), data = st_locations) +
+  geom_polygon(aes(x, y, group = state), fill = "lightgray", color = "white") +
+  geom_text(aes(x, y, label = state), data = us_hex_positions) +
   theme_void() +
   theme(legend.position = "none") 
-
-#girafe(ggobj = gp)
-
-gp
 ```
-
 
 ```{r}
-plot_usmap(regions = "county", data = us_counties, values = "pred_status") +
-  scale_fill_manual(breaks = c("below", "above", "ok"), values = c("red", "blue", "green")) +
+us_states %>% 
+  select(state, `Hospitals per capita` = per_person) %>% 
+  inner_join(us_hex_polygons, by = "state") %>% 
+  ggplot() +
+  geom_polygon(aes(x, y, group = state, fill = `Hospitals per capita`), color = "white") +
+  geom_text(aes(x, y, label = state), data = us_hex_positions) +
+  theme_void() +
   theme(legend.position = "bottom")
 ```
+
+
 
