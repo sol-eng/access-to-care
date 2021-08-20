@@ -1,0 +1,248 @@
+---
+title: "Access to Hospital Care Dashboard"
+runtime: shiny
+output:
+  flexdashboard::flex_dashboard:
+    logo: RStudio1.png
+    navbar:
+    - align: right
+      href: https://solutions.rstudio.com/tour/access_to_care/
+      title: About
+    orientation: rows
+    social:
+    - linkedin
+    - twitter
+    - menu
+    source_code: embed
+    theme: lumen
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(ggplot2)
+library(ggiraph)
+library(stringr)
+library(dplyr)
+library(shiny)
+library(pins)
+library(maps)
+
+states_map <- map_data("state") 
+
+county_map <- map_data("county") 
+
+if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
+  boardname <- "rsconnect"
+  board_register_rsconnect(
+    server = Sys.getenv("CONNECT_SERVER"),
+    key = Sys.getenv("CONNECT_API_KEY")
+    )
+} else {
+  boardname <- "local"
+  board_register(boardname)  
+}
+
+states <- pin_get("atc-states", board = boardname)
+
+state_info <- reactive({
+  states %>% 
+    filter(full == input$state) 
+})
+
+base_map <- reactive({
+  pin_get("atc-base-map", boardname) %>%
+    filter(full == input$state) 
+})
+
+single_state <- reactive({
+  county_map %>% 
+    filter(region == tolower(input$state))
+})
+```
+
+```{r, include=FALSE}
+under <- "#CC79A7"
+over <- "#0072B2"  #009E73
+at_level <- "#008b00"
+hospital_color <- "#F0E442"
+```
+
+State Info
+======================================================================
+
+
+Row 
+-----------------------------------------------------------------------
+### Options
+
+```{r}
+selectInput(
+  "state","Select a State:", states$full,
+  selected="California", selectize = FALSE
+  )
+```
+
+### Population
+
+```{r}
+renderValueBox({
+  state_info() %>%
+    mutate(
+      x = round(sum(population)/1000000, digits=0),
+      x = paste0(x, "M")
+      ) %>%
+    pull() %>%
+    valueBox(icon="fa-user")
+    })
+```
+
+### Hospitals
+
+```{r}
+renderValueBox({
+  state_info() %>%
+    pull(hospitals) %>%
+    valueBox(icon="fa-ambulance",color="#E69F00")
+  })
+```
+
+### Counties
+
+```{r}
+renderValueBox({
+  state_info() %>%
+    pull(counties) %>%
+    valueBox(icon="fa-map-marker",color = over)
+  })
+```
+
+
+### Underserved Counties
+
+```{r}
+renderValueBox({
+  state_info() %>%
+    pull(under) %>%
+    valueBox(icon="fa-h-square", color = under)
+  })
+```
+
+Row {.tabset data-height=950}
+-----------------------------------------------------------------------
+
+### County Map
+
+Breakdown of counties and their status based on county population compared to the number of hospitals
+
+```{r, eval = FALSE}
+library(DT)
+
+output$table <- renderDT(mtcars)
+
+renderDT("table")
+```
+
+```{r, fig.width=12, fig.height=20, eval = TRUE}
+output$map <- renderGirafe({
+  
+  cs <- base_map() %>% 
+  mutate(
+    state_key = str_to_lower(full), 
+    state_key = str_remove_all(state_key, " "),
+    state_key = str_remove_all(state_key, "\\."),
+    county_key = str_to_lower(county), 
+    county_key = str_remove_all(county_key, " parish"),
+    county_key = str_remove_all(county_key, " city"),
+    county_key = str_remove_all(county_key, " "),
+    county_key = str_remove_all(county_key, "\\.")
+    )
+  
+  ss <- single_state() %>% 
+    mutate(
+      state_key = str_to_lower(region), 
+      state_key = str_remove_all(state_key, " "),
+      state_key = str_remove_all(state_key, "\\."),
+      county_key = str_to_lower(subregion), 
+      county_key = str_remove_all(county_key, " parish"),
+      county_key = str_remove_all(county_key, " city"),
+      county_key = str_remove_all(county_key, " "),
+      county_key = str_remove_all(county_key, "\\.")
+      
+      )
+  
+  st_limits <- ss %>% 
+    summarise(
+      min_long = min(long), max_long = max(long),
+      min_lat = min(lat), max_lat = max(lat)
+    ) %>% 
+    mutate(
+      mid_long = ((max_long - min_long) / 2) + min_long,
+      mid_lat = ((max_lat - min_lat) / 2) + min_lat,
+      size_long = (max_long - min_long) / 2,
+      size_lat = max_lat - min_lat,
+      y_add = case_when(
+        size_lat > size_long ~ size_lat / 2,
+        size_lat < size_long ~ size_long / 2
+      ),
+      x_add = case_when(
+        size_lat > size_long ~ size_lat,
+        size_lat < size_long ~ size_long
+      ),
+      x_min = mid_long - x_add, x_max = mid_long + x_add,
+      y_min = mid_lat - y_add, y_max = mid_lat + y_add
+      )
+  
+  print(st_limits)
+    
+    gp <- ss %>% 
+      inner_join(cs, by = c("state_key", "county_key")) %>% 
+      ggplot() +
+      geom_polygon_interactive(
+        aes(long, lat, group = group, data_id = region, tooltip = region), 
+        fill = "#999999", color = "#dddddd", size = 3, data = states_map
+        ) +
+      geom_polygon_interactive(
+        aes(long, lat, fill = result, group = group, 
+            data_id = subregion, tooltip = popup
+            ), 
+        color = "white"
+        ) +
+      scale_fill_manual(
+        breaks = c("Above", "Acceptable", "Under"), 
+        values = c(over, at_level, under)
+        ) +
+      # coord_fixed(
+      #   xlim = c(st_limits$x_min, st_limits$x_max),
+      #   ylim = c(st_limits$y_min, st_limits$y_max)
+      #   ) +
+      theme_void() +
+      theme(
+        legend.position = "none", 
+        panel.background = element_blank(),
+        panel.border = element_blank()
+        )
+    
+    girafe(
+      ggobj = gp, 
+      width = 50, height = 25,
+      options = list(
+        opts_selection(type = "single", only_shiny = FALSE),
+        opts_tooltip(opacity = 0.7)
+      ))
+})
+
+
+
+girafeOutput("map")
+```
+
+
+```{r}
+observeEvent(
+  input$map_selected,
+  updateSelectInput(inputId = "state", selected = str_to_title(input$map_selected))
+)
+```
+
+
+

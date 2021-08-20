@@ -17,55 +17,40 @@ output:
     theme: lumen
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
 library(flexdashboard)
+library(accesstocare)
 library(ggplot2)
 library(ggiraph)
-library(stringr)
+library(usmap)
 library(dplyr)
 library(shiny)
-library(pins)
-library(maps)
 
-states_map <- map_data("state") 
+state_list <- c("All US", us_states$state_name)
 
-county_map <- map_data("county") 
-
-if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
-  boardname <- "rsconnect"
-  board_register_rsconnect(
-    server = Sys.getenv("CONNECT_SERVER"),
-    key = Sys.getenv("CONNECT_API_KEY")
-    )
-} else {
-  boardname <- "local"
-  board_register(boardname)  
-}
-
-states <- pin_get("atc-states", board = boardname)
-
-state_info <- reactive({
-  states %>% 
-    filter(full == input$state) 
+sel_state <- reactive({
+  if(input$state == "All US") {
+    us_states
+  } else {
+    us_states %>% 
+      filter(state_name == input$state) 
+  }
 })
 
-base_map <- reactive({
-  pin_get("atc-base-map", boardname) %>%
-    filter(full == input$state) 
+sel_county <- reactive({
+  if(input$state == "All US") {
+    us_counties
+  } else {
+    us_counties %>% 
+      filter(state_name == input$state) 
+  }
 })
-
-single_state <- reactive({
-  county_map %>% 
-    filter(region == tolower(input$state))
-})
-```
-
-```{r, include=FALSE}
+  
 under <- "#CC79A7"
 over <- "#0072B2"  #009E73
 at_level <- "#008b00"
-hospital_color <- "#F0E442"
 ```
+
 
 State Info
 ======================================================================
@@ -73,12 +58,17 @@ State Info
 
 Row 
 -----------------------------------------------------------------------
+
 ### Options
+
 
 ```{r}
 selectInput(
-  "state","Select a State:", states$full,
-  selected="California", selectize = FALSE
+  inputId = "state",
+  label = "Select a State:",
+  choices = state_list,
+  selected = "All US", 
+  selectize = FALSE
   )
 ```
 
@@ -86,12 +76,10 @@ selectInput(
 
 ```{r}
 renderValueBox({
-  state_info() %>%
-    mutate(
-      x = round(sum(population)/1000000, digits=0),
-      x = paste0(x, "M")
-      ) %>%
+  sel_state() %>% 
+    summarise(sum(population)) %>% 
     pull() %>%
+    format_number() %>% 
     valueBox(icon="fa-user")
     })
 ```
@@ -100,8 +88,10 @@ renderValueBox({
 
 ```{r}
 renderValueBox({
-  state_info() %>%
-    pull(hospitals) %>%
+  sel_state() %>%
+    summarise(sum(hospitals)) %>%
+    pull() %>% 
+    format_number() %>% 
     valueBox(icon="fa-ambulance",color="#E69F00")
   })
 ```
@@ -110,139 +100,49 @@ renderValueBox({
 
 ```{r}
 renderValueBox({
-  state_info() %>%
-    pull(counties) %>%
+  sel_county() %>%
+    count() %>% 
+    pull() %>% 
+    format_number() %>% 
     valueBox(icon="fa-map-marker",color = over)
   })
 ```
-
 
 ### Underserved Counties
 
 ```{r}
 renderValueBox({
-  state_info() %>%
-    pull(under) %>%
+  sel_county() %>%
+    filter(pred_status == "below") %>% 
+    count() %>% 
+    pull() %>% 
     valueBox(icon="fa-h-square", color = under)
   })
 ```
 
-Row {.tabset data-height=950}
+Row {data-height=1150}
 -----------------------------------------------------------------------
 
-### County Map
+###  Map
 
-Breakdown of counties and their status based on county population compared to the number of hospitals
+```{r, fig.width=12, fig.height=5, eval = TRUE}
+gp <- us_states %>% 
+  select(state, `Hospitals per capita` = per_person) %>% 
+  inner_join(us_hex_polygons, by = "state") %>% 
+  ggplot() +
+  geom_polygon_interactive(aes(x, y, group = state, fill = `Hospitals per capita`, data_id = state), color = "white") +
+  geom_text_interactive(aes(x, y, label = state, data_id = state), size = 20, data = us_hex_positions) +
+  theme_void() +
+  theme(legend.position = "none")
 
-```{r, eval = FALSE}
-library(DT)
-
-output$table <- renderDT(mtcars)
-
-renderDT("table")
-```
-
-```{r, fig.width=12, fig.height=20, eval = TRUE}
-output$map <- renderGirafe({
-  
-  cs <- base_map() %>% 
-  mutate(
-    state_key = str_to_lower(full), 
-    state_key = str_remove_all(state_key, " "),
-    state_key = str_remove_all(state_key, "\\."),
-    county_key = str_to_lower(county), 
-    county_key = str_remove_all(county_key, " parish"),
-    county_key = str_remove_all(county_key, " city"),
-    county_key = str_remove_all(county_key, " "),
-    county_key = str_remove_all(county_key, "\\.")
+girafe(
+  ggobj = gp,
+  width = 50, height = 25,
+  options = list(
+    opts_selection(type = "single", only_shiny = FALSE),
+    opts_tooltip(opacity = 0.7)
     )
-  
-  ss <- single_state() %>% 
-    mutate(
-      state_key = str_to_lower(region), 
-      state_key = str_remove_all(state_key, " "),
-      state_key = str_remove_all(state_key, "\\."),
-      county_key = str_to_lower(subregion), 
-      county_key = str_remove_all(county_key, " parish"),
-      county_key = str_remove_all(county_key, " city"),
-      county_key = str_remove_all(county_key, " "),
-      county_key = str_remove_all(county_key, "\\.")
-      
-      )
-  
-  st_limits <- ss %>% 
-    summarise(
-      min_long = min(long), max_long = max(long),
-      min_lat = min(lat), max_lat = max(lat)
-    ) %>% 
-    mutate(
-      mid_long = ((max_long - min_long) / 2) + min_long,
-      mid_lat = ((max_lat - min_lat) / 2) + min_lat,
-      size_long = (max_long - min_long) / 2,
-      size_lat = max_lat - min_lat,
-      y_add = case_when(
-        size_lat > size_long ~ size_lat / 2,
-        size_lat < size_long ~ size_long / 2
-      ),
-      x_add = case_when(
-        size_lat > size_long ~ size_lat,
-        size_lat < size_long ~ size_long
-      ),
-      x_min = mid_long - x_add, x_max = mid_long + x_add,
-      y_min = mid_lat - y_add, y_max = mid_lat + y_add
-      )
-  
-  print(st_limits)
-    
-    gp <- ss %>% 
-      inner_join(cs, by = c("state_key", "county_key")) %>% 
-      ggplot() +
-      geom_polygon_interactive(
-        aes(long, lat, group = group, data_id = region, tooltip = region), 
-        fill = "#999999", color = "#dddddd", size = 3, data = states_map
-        ) +
-      geom_polygon_interactive(
-        aes(long, lat, fill = result, group = group, 
-            data_id = subregion, tooltip = popup
-            ), 
-        color = "white"
-        ) +
-      scale_fill_manual(
-        breaks = c("Above", "Acceptable", "Under"), 
-        values = c(over, at_level, under)
-        ) +
-      # coord_fixed(
-      #   xlim = c(st_limits$x_min, st_limits$x_max),
-      #   ylim = c(st_limits$y_min, st_limits$y_max)
-      #   ) +
-      theme_void() +
-      theme(
-        legend.position = "none", 
-        panel.background = element_blank(),
-        panel.border = element_blank()
-        )
-    
-    girafe(
-      ggobj = gp, 
-      width = 50, height = 25,
-      options = list(
-        opts_selection(type = "single", only_shiny = FALSE),
-        opts_tooltip(opacity = 0.7)
-      ))
-})
+  )
 
-
-
-girafeOutput("map")
 ```
-
-
-```{r}
-observeEvent(
-  input$map_selected,
-  updateSelectInput(inputId = "state", selected = str_to_title(input$map_selected))
-)
-```
-
-
 

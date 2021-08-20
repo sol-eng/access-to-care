@@ -111,8 +111,7 @@ Uses the `usmap` data to retrieve the FIPS code for each county.  Performs close
 
 ```{r}
 states <- usmap::statepop %>% 
-  mutate(full = str_to_lower(full)) %>% 
-  select(state = abbr, full)
+  select(state = abbr, state_name = full)
 
 county_list <- countypop %>% 
   select(
@@ -169,7 +168,8 @@ us_hospitals <- hospital_tbl %>%
     county_name = str_to_upper(county_name),
     city = str_to_upper(city)
     ) %>% 
-  select(-population)
+  select(-population) %>% 
+  left_join(states, by = "state")
 ```
 
 Prepares data for the model, and produces the `us_model` variable.
@@ -215,10 +215,9 @@ us_counties <- cnt_hosp2 %>%
       hospitals > pred_upr ~ "above",
       TRUE ~ "ok"
     )
-  )
+  ) %>% 
+  left_join(states, by = "state")
 
-us_counties %>% 
-  count(pred_status)
 ```
 
 ```{r}
@@ -232,7 +231,8 @@ us_states <- us_counties %>%
   mutate(
     per_person = round(population / hospitals),
     per_person_quartile = ntile(per_person, 4)
-  )
+  ) %>% 
+  left_join(states, by = "state")
 ```
 
 
@@ -296,7 +296,8 @@ st_locations_list <- list(
 )
 
 us_hex_positions <- st_locations_list %>% 
-  map_dfr(~.x)
+  map_dfr(~.x) %>% 
+  left_join(states, by = "state")
 
 us_hex_polygons <- map_dfr(
   st_locations_list,
@@ -327,6 +328,7 @@ us_states %>%
   theme_void() +
   theme(legend.position = "bottom")
 ```
+
 ```{r, eval = FALSE}
 library(usethis)
 
