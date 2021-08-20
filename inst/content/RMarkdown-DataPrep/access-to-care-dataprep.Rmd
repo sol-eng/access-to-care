@@ -1,0 +1,280 @@
+---
+title: "Access to Care Data Preparation"
+output: html_document
+---
+
+
+```{r setup, include = FALSE}
+library(dplyr)
+library(haven)
+library(usmap)
+library(janitor)
+library(stringr)
+library(readr)
+library(httr)
+library(maps)
+library(ggplot2)
+library(purrr)
+library(tidyr)
+```
+
+```{r}
+library(dplyr)
+library(haven)
+library(usmap)
+library(janitor)
+library(stringr)
+library(readr)
+library(httr)
+library(maps)
+library(ggplot2)
+library(purrr)
+library(tidyr)
+library(usethis)
+
+```
+
+Data provider: CMS
+Data website: https://data.cms.gov/
+Data URL: https://data.cms.gov/provider-data/dataset/xubh-q36u
+
+
+```{r, eval = FALSE}
+data_url <- "https://data.cms.gov/provider-data/sites/default/files/resources/092256becd267d9eeccf73bf7d16c46b_1623902717/Hospital_General_Information.csv"
+
+data_raw <- read_csv(data_url)
+
+data_clean <- clean_names(data_raw)
+```
+
+
+```{r, eval = FALSE}
+set.seed(100)
+options(scipen=999)
+
+hospital_tbl <- data_clean %>% 
+  filter(
+    hospital_type != "Psychiatric", 
+    state != "PR", state != "VI", state != "AS" , 
+    state != "GU", , state != "MP"
+    ) %>% 
+  select(
+    facility_id, 
+    facility_name, 
+    address, 
+    city, 
+    state, 
+    zip_code,
+    county_name
+    ) %>% 
+  mutate(county_name = str_to_upper(county_name)) %>% 
+  group_by(address, city, state, zip_code, county_name) %>% 
+  summarise(
+    facility_id = first(facility_id),
+    facility_name = first(facility_name)
+    ) %>% 
+  select(contains("facility"), everything()) %>% 
+  arrange(state, city, address, facility_name) %>% 
+  ungroup() %>% 
+  mutate(
+    county_name = str_to_upper(county_name),
+    county_name = str_remove(
+      county_name, 
+      " MUNICIPALITY| CENSUS AREA| COUNTY| PARISH| CITY AND| BOROUGH"
+      ),
+    county_name = str_remove(county_name, "BOROUGH"),
+    county_name = str_replace(county_name, "ST. ", "SAINT "),
+    county_name = str_replace(county_name, "STE. ", "SAINTE "),
+    county_name = str_replace(county_name, "-", " "),
+    county_name = case_when(
+      state == "AL" & county_name == "NEW YORK" ~ "CHAMBERS",
+      state == "AZ" & county_name == "DUPAGE" ~ "MARICOPA",
+      state == "IN" & county_name == "ST JOSEPH" ~ "SAINT JOSEPH",
+      state == "VA" & county_name == "SALEM" ~ "SALEM CITY",
+      TRUE ~ county_name
+    ),
+    county_name = str_trim(county_name),
+    county_name = str_replace_all(county_name, " ", ""),
+    county_name = str_replace_all(county_name, "'", "")
+  )
+
+states <- usmap::statepop %>% 
+  mutate(full = str_to_lower(full)) %>% 
+  select(state = abbr, full)
+
+county_list <- countypop %>% 
+  select(
+    fips,
+    state = abbr,
+    county_name = county
+  ) %>% 
+  mutate(
+    county_name = str_to_upper(county_name),
+    county_name = str_remove(
+      county_name, 
+      " MUNICIPALITY| CENSUS AREA| COUNTY| PARISH| CITY AND| BOROUGH"
+      ),
+    county_name = str_remove(county_name, "BOROUGH"),
+    county_name = str_replace(county_name, "ST. ", "SAINT "),
+    county_name = str_replace(county_name, "STE. ", "SAINTE "),
+    county_name = str_replace(county_name, "-", " "),
+    county_name = str_trim(county_name),
+    county_name = str_replace_all(county_name, " ", ""),
+    county_name = str_replace_all(county_name, "'", ""),
+    county_name = str_replace_all(county_name, "Ð", "N")
+  )
+
+hospital_counties <- hospital_tbl %>% 
+  group_by(state, county_name) %>% 
+  summarise() %>% 
+  ungroup() 
+
+hospital_counties %>% 
+  left_join(county_list, by = c("state", "county_name")) %>% 
+  filter(is.na(fips)) 
+
+county_tbl <- countypop %>% 
+  select(
+    fips, 
+    state = abbr, 
+    county_name = county, 
+    population = pop_2015
+    )
+
+us_hospitals <- hospital_tbl %>% 
+  left_join(county_list, by = c("state", "county_name")) %>% 
+  select(-county_name, -state) %>% 
+  left_join(county_tbl, by = c("fips")) %>% 
+  mutate(
+    county_name = str_to_upper(county_name),
+    city = str_to_upper(city)
+    ) %>% 
+  select(-population)
+
+cnt_hosp <- us_hospitals %>% 
+  count(fips, name = "hospitals") %>% 
+  right_join(county_tbl, by = "fips")
+
+cnt_hosp2 <- cnt_hosp %>% 
+  replace_na(list(hospitals = 0)) %>% 
+  select(fips, state, county_name, hospitals, population) %>% 
+  arrange(state, county_name)
+
+us_model <- cnt_hosp2 %>% 
+  sample_frac(0.3) %>% 
+  lm(hospitals ~ population, data = .) 
+
+preds <- predict(
+  us_model, 
+  newdata = cnt_hosp2, 
+  interval = "prediction",
+  level = 0.99
+  ) %>% 
+  as_tibble() %>% 
+  rename_all(function(x) paste0("pred_", x))
+
+us_counties <- cnt_hosp2 %>% 
+  bind_cols(preds) %>% 
+  mutate(
+    pred_status = case_when(
+      hospitals < pred_lwr ~ "below",
+      hospitals > pred_upr ~ "above",
+      TRUE ~ "ok"
+    )
+  )
+```
+
+
+
+```{r}
+library(hexbin)
+
+sh <- hexcoords(0.5, 0.5)
+
+st_locations_list <- list(
+  list(state = "MS", x = 0, y = 0),
+  list(state = "AL", x = 1, y = 0),
+  list(state = "GA", x = 2, y = 0),
+  list(state = "FL", x = 1.5, y = -1.5),
+  list(state = "LA", x = -1, y = 0),
+  list(state = "OK", x = -2, y = 0),
+  list(state = "TX", x = -1.5, y = -1.5),
+  list(state = "AZ", x = -3, y = 0),
+  list(state = "TN", x = 0.5, y = 1.5),
+  list(state = "AR", x = -0.5, y = 1.5),
+  list(state = "KS", x = -1.5, y = 1.5),
+  list(state = "NM", x = -2.5, y = 1.5),
+  list(state = "UT", x = -3.5, y = 1.5),
+  list(state = "CA", x = -4.5, y = 1.5),
+  list(state = "NC", x = 1.5, y = 1.5),
+  list(state = "SC", x = 2.5, y = 1.5),
+  list(state = "DC", x = 3.5, y = 1.5),
+  list(state = "OR", x = -5, y = 3),
+  list(state = "NV", x = -4, y = 3),
+  list(state = "CO", x = -3, y = 3),
+  list(state = "NE", x = -2, y = 3),
+  list(state = "MO", x = -1, y = 3),
+  list(state = "KY", x = 0, y = 3),
+  list(state = "WV", x = 1, y = 3),
+  list(state = "VA", x = 2, y = 3),
+  list(state = "MD", x = 3, y = 3),
+  list(state = "DE", x = 4, y = 3),
+  list(state = "CT", x = 4.5, y = 4.5),
+  list(state = "NJ", x = 3.5, y = 4.5),
+  list(state = "PA", x = 2.5, y = 4.5),
+  list(state = "OH", x = 1.5, y = 4.5),
+  list(state = "IN", x = 0.5, y = 4.5),
+  list(state = "IL", x = -0.5, y = 4.5),
+  list(state = "IA", x = -1.5, y = 4.5),
+  list(state = "SD", x = -2.5, y = 4.5),
+  list(state = "WY", x = -3.5, y = 4.5),
+  list(state = "ID", x = -4.5, y = 4.5),
+  list(state = "WA", x = -5, y = 6),
+  list(state = "MT", x = -4, y = 6),
+  list(state = "ND", x = -3, y = 6),
+  list(state = "MN", x = -2, y = 6),
+  list(state = "WI", x = -1, y = 6),
+  list(state = "MI", x = 1, y = 6),
+  list(state = "NY", x = 3, y = 6),
+  list(state = "MA", x = 4, y = 6),
+  list(state = "RI", x = 5, y = 6),
+  list(state = "NH", x = 4.5, y = 7.5),
+  list(state = "VT", x = 3.5, y = 7.5),
+  list(state = "ME", x = 5, y = 9),
+  list(state = "AK", x = -5, y = 9),
+  list(state = "HI", x = -5, y = -1.5)
+)
+
+st_locations <- st_locations_list %>% 
+  map_dfr(~.x)
+
+us_hex_map <- map_dfr(
+  st_locations_list,
+  ~{
+    tibble(
+      x = sh$x + .x$x,
+      y = sh$y + .x$y,
+      group = .x$state
+    )
+  }
+)
+
+gp <- us_hex_map %>% 
+  ggplot() +
+  geom_polygon_interactive(aes(x, y, group = group, data_id = group), fill = "lightgray", color = "white") +
+  geom_text(aes(x, y, label = state), data = st_locations) +
+  theme_void() +
+  theme(legend.position = "none") 
+
+#girafe(ggobj = gp)
+
+gp
+```
+
+
+```{r}
+plot_usmap(regions = "county", data = us_counties, values = "pred_status") +
+  scale_fill_manual(breaks = c("below", "above", "ok"), values = c("red", "blue", "green")) +
+  theme(legend.position = "bottom")
+```
+

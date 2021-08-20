@@ -1,0 +1,300 @@
+---
+title: "Access to Hospital Care Dashboard"
+runtime: shiny
+output:
+  flexdashboard::flex_dashboard:
+    logo: RStudio1.png
+    navbar:
+    - align: right
+      href: https://solutions.rstudio.com/tour/access_to_care/
+      title: About
+    orientation: rows
+    social:
+    - linkedin
+    - twitter
+    - menu
+    source_code: embed
+    theme: lumen
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(shiny)
+library(dplyr)
+library(purrr)
+library(leaflet)
+library(DT)
+library(metricsgraphics)
+library(pins)
+library(shinymeta)
+library(shinyAce)
+library(clipr)
+
+if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
+  boardname <- "rsconnect"
+  board_register_rsconnect(
+    server = Sys.getenv("CONNECT_SERVER"),
+    key = Sys.getenv("CONNECT_API_KEY")
+    )
+} else {
+  boardname <- "local"
+  board_register(boardname)  
+}
+
+states <- pin_get("atc-states", board = boardname) %>% collect()
+```
+
+```{r, include=FALSE}
+under <- "#CC79A7"
+over <- "#0072B2"  #009E73
+at_level <- "#008b00"
+hospital_color <- "#F0E442"
+```
+
+
+```{r, include=FALSE}
+state_info <- metaReactive({
+  states %>% 
+    filter(full == ..(input$state)) 
+})
+
+curr_state <- metaReactive({
+  ..(state_info()) %>% 
+    pull(state_id)
+})
+
+county_map <-  metaReactive({
+  pin_get("atc-county-map", board = boardname) %>% 
+    filter(state_id == !! ..(curr_state())) %>%
+    collect()
+})
+
+base_map <- metaReactive({
+  pin_get("atc-base-map", boardname) %>%
+    filter(full %in% ..(input$state)) %>%
+    collect()
+})
+```
+
+
+State Info
+======================================================================
+
+
+Row 
+-----------------------------------------------------------------------
+### Options
+
+```{r}
+selectInput(
+  "state","Select a State:", states$full,
+  selected="California", selectize = FALSE
+  )
+```
+
+
+### Population
+
+```{r}
+renderValueBox({
+  state_info() %>%
+    mutate(
+      x = round(sum(population)/1000000, digits=0),
+      x = paste0(x, "M")
+      ) %>%
+    pull() %>%
+    valueBox(icon="fa-user")
+    })
+```
+
+### Hospitals
+
+```{r}
+renderValueBox({
+  state_info() %>%
+    pull(hospitals) %>%
+    valueBox(icon="fa-ambulance",color="#E69F00")
+  })
+```
+
+### Counties
+
+```{r}
+renderValueBox({
+  state_info() %>%
+    pull(counties) %>%
+    valueBox(icon="fa-map-marker",color = over)
+  })
+```
+
+
+### Underserved Counties
+
+```{r}
+renderValueBox({
+  state_info() %>%
+    pull(under) %>%
+    valueBox(icon="fa-h-square", color = under)
+  })
+```
+
+
+Row {.tabset data-height=950}
+-----------------------------------------------------------------------
+
+### County Map
+
+Breakdown of counties and their status based on county population compared to the number of hospitals
+
+```{r}
+output$map <- metaRender(renderLeaflet, {
+  initial_map <- leaflet() %>%
+  addProviderTiles(providers$CartoDB) %>%
+  addLegend(
+    "bottomright", 
+    color  = c(under,over ,at_level, hospital_color), 
+    labels = c(
+      "Less hopitals than expected",
+      "More hospitals than expected", "Within Range", 
+      "Hospital Location"), 
+    title  = "Legend",
+    opacity = 0.5
+    )
+  
+  locations <- pin_get("atc-hospitals", board = boardname) %>%
+    filter(state_id == !! ..(curr_state())) %>%
+    select(longitude, latitude) %>%
+    collect() %>%
+    mutate_all(round, 1) %>%
+    count(longitude, latitude) %>%
+    mutate(popup = paste0("Hospitals: ", n))
+  
+  ..(base_map()) %>%
+    select(popup, color, county_id) %>%
+    inner_join(..(county_map()), by = "county_id") %>%
+    group_by(county_id, shape_id) %>%
+    group_map(~.x) %>%
+    reduce(
+      ~ addPolygons(
+        .x, 
+        lng = .y$long, 
+        lat = .y$lat, 
+        color = .y$color[[1]],
+        popup = .y$popup[[1]],
+        weight = 1, 
+        fillOpacity = 0.3
+        ), 
+      .init = initial_map) %>%
+      addCircleMarkers(
+        lng = locations$longitude, 
+        lat = locations$latitude,
+        radius = 2 * (1 + log(locations$n)),
+        popup = locations$popup,
+        fillColor = hospital_color, color = "gray", 
+        fillOpacity = 0.7,weight = 1)
+})
+
+leafletOutput("map")
+```
+
+### County summary
+
+
+```{r}
+output$table <- metaRender(renderDataTable, {
+  pin_get("atc-county-table", board = boardname)  %>%
+    filter(full == ..(input$state)) %>%
+    select(-full) %>%
+    collect() %>%
+    datatable(class = 'cell-border stripe')
+})
+
+DTOutput("table")
+```
+
+Row {data-height=50}
+-----------------------------------------------------------------------
+```{r}
+actionButton("code", "R code", icon("code"))
+observeEvent(input$code, {
+  code <- expandChain(
+    "# Environment setup ----",
+    quote({
+      library(dplyr)
+      library(purrr)
+      library(leaflet)
+      library(DT)
+      library(pins)
+      
+      boardname <- "rsconnect"
+      board_register_rsconnect(
+        server = Sys.getenv("CONNECT_SERVER"),
+        key = Sys.getenv("CONNECT_API_KEY")
+      )
+      
+      states <- pin_get("atc-states", board = boardname) %>% collect()
+    }),
+    "# Leaflet plot ----",
+    output$map(),
+    "# County details DataTable ----",
+    output$table()
+  )
+  displayCodeModal(
+    code,
+    title = "Access to Care Code",
+    clip = NULL,
+    size = "l",
+    fontSize = 16,
+    
+  )
+})
+```
+
+
+Model {.storyboard}
+======================================================================
+
+### There was a high degree of correlation between the county's population and the number of hospitals
+
+```{r}
+renderMetricsgraphics({
+  base_map() %>%
+    mutate(population = round(population / 1000)) %>%
+    count(population, hospitals) %>%
+    mjs_plot(x=population, y=hospitals, width=600, height=500) %>%
+    mjs_point() %>%
+    mjs_labs(x="Population (Thousands)", y="Hospitals")
+})
+```
+
+### Fitted a model to predict how many hospitals should be in a county
+
+```{r create-plot, eval = FALSE}
+bounds <- county_hospitals %>%
+  summarise(mi = min(population), mx = max(population)) %>%
+  as.numeric()
+
+preds <- predict(
+  model, 
+  data.frame(population = bounds),
+  interval = "prediction")
+
+set.seed(100)
+
+county_hospitals %>% 
+  ggplot() +
+    geom_point(aes(hospitals, population), color = "#E69F00", alpha = 0.5) +
+    scale_y_continuous(breaks = 0:10 * 1000000, labels = paste0(0:10, "M")) +
+    geom_segment(x = preds[1,2], y = bounds[1],
+                 xend = preds[2,2], yend = bounds[2],
+                 color = over) +
+    geom_segment(x = preds[1,3], y = bounds[1],
+                 xend = preds[2,3], yend = bounds[2],
+                 color = under) +
+    theme_minimal()
+```
+
+```{r printplot}
+knitr::include_graphics("model.png")
+
+```

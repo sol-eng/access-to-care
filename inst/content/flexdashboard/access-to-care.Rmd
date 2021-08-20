@@ -191,6 +191,8 @@ output$map <- renderGirafe({
       x_min = mid_long - x_add, x_max = mid_long + x_add,
       y_min = mid_lat - y_add, y_max = mid_lat + y_add
       )
+  
+  print(st_limits)
     
     gp <- ss %>% 
       inner_join(cs, by = c("state_key", "county_key")) %>% 
@@ -209,10 +211,10 @@ output$map <- renderGirafe({
         breaks = c("Above", "Acceptable", "Under"), 
         values = c(over, at_level, under)
         ) +
-      coord_fixed(
-        xlim = c(st_limits$x_min, st_limits$x_max),
-        ylim = c(st_limits$y_min, st_limits$y_max)
-        ) +
+      # coord_fixed(
+      #   xlim = c(st_limits$x_min, st_limits$x_max),
+      #   ylim = c(st_limits$y_min, st_limits$y_max)
+      #   ) +
       theme_void() +
       theme(
         legend.position = "none", 
@@ -237,7 +239,7 @@ girafeOutput("map")
 
 ```{r}
 observeEvent(
-  input$map_selected, 
+  input$map_selected,
   updateSelectInput(inputId = "state", selected = str_to_title(input$map_selected))
 )
 ```
