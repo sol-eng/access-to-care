@@ -152,11 +152,15 @@ output$usmap <- renderGirafe({
   if(input$view == "No. of Hospitals") vr <- "hospitals"
     
   gp <- us_states %>% 
+    mutate(
+      pop = format_number(population),
+      tooltip = paste0(state_name, "\nPopulation: ", pop, "\nHospitals: ", format_number(hospitals))
+      ) %>% 
     mutate(fill = !! sym(vr)) %>% 
-    select(state, fill) %>% 
+    select(state, fill, tooltip) %>% 
     inner_join(us_hex_polygons, by = "state") %>% 
     ggplot() +
-    geom_polygon_interactive(aes(x, y, group = state, fill = fill, data_id = state), color = "#333333") +
+    geom_polygon_interactive(aes(x, y, group = state, fill = fill, data_id = state, tooltip = tooltip), color = "#333333") +
     geom_text_interactive(aes(x, y, label = state, data_id = state), size = 20, data = us_hex_positions) +
     scale_fill_gradient(low = low_color, high = high_color) +
     theme_void() +

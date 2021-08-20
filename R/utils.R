@@ -1,19 +1,11 @@
 #' @export
 format_number <- function(x, round_digits = 0) {
   res <- x
-  if(x >= 1000) {
-    res <- round(x / 1000, digits = round_digits)
-    res <- paste0(res, "K")
-  }
-  if(x >= 1000000) {
-    res <- round(x / 1000000, digits = round_digits)
-    res <- paste0(res, "M")
-  }
-  res
-  if(x >= 1000000000) {
-    res <- round(x / 1000000000, digits = round_digits)
-    res <- paste0(res, "B")
-  }
+  
+  res[x >= 1000] <- paste0(round(x[x >= 1000] / 1000, digits = round_digits), "K")
+  res[x >= 1000000] <- paste0(round(x[x >= 1000000] / 1000000, digits = round_digits), "M")
+  res[x >= 1000000000] <- paste0(round(x[x >= 1000000000] / 1000000000, digits = round_digits), "B")
+  
   res
 }
 
