@@ -2,3 +2,11 @@
 
 export(format_currency)
 export(format_number)
+export(write_manifest)
+import(crayon)
+import(fs)
+importFrom(here,here)
+importFrom(purrr,keep)
+importFrom(purrr,map)
+importFrom(purrr,walk)
+importFrom(rsconnect,writeManifest)
