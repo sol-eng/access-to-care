@@ -29,7 +29,7 @@ library(rlang)
 
 state_list <- c("All US", us_states$state_name)
 
-
+county_map <- usmap::us_map("county")
   
 under <- "#CC79A7"
 over <- "#0072B2"  #009E73
@@ -87,6 +87,11 @@ Row {data-height=1050}
 ###  Map
 
 ```{r}
+actionButton(
+  inputId = "us",
+  label = "All US"
+  )
+
 radioButtons(
   inputId = "view",
   label = "Select a view:",
@@ -95,10 +100,8 @@ radioButtons(
   )
 ```
 
-```{r, fig.width=12, fig.height=5, eval = TRUE}
-
+```{r, fig.width=5, fig.height=5, eval = TRUE}
 girafeOutput("usmap")
-
 ```
 
 ```{r, context = "server"}
@@ -109,6 +112,11 @@ observeEvent(input$usmap_selected, {
     updateSelectInput(session, "state", selected = sel_map)
   }
 })
+
+observeEvent(
+  input$us, 
+  updateSelectInput(session, "state", selected = "All US")
+  )
 
 output$usmap <- renderGirafe({
   
@@ -145,9 +153,24 @@ output$usmap <- renderGirafe({
       theme_void() +
       theme(legend.position = "none")
   } else {
-    gp <- NA
+    
+    state_polygons <- county_map %>% 
+      filter(full == input$state)
+    
+    gp <- us_counties %>% 
+      filter(state_name == input$state) %>% 
+      select(fips, pred_status) %>% 
+      right_join(state_polygons, by = "fips") %>% 
+      ggplot() +
+      geom_polygon_interactive(
+        aes(x, y, group = group, fill = pred_status, data_id = fips), 
+        color = "#333333"
+        ) +
+      scale_fill_manual(values = c(over, under, at_level), breaks = c("above", "below", "ok")) +
+      theme_void() +
+      theme(legend.position = "none")
+      
   }
-  
   
   girafe(
     ggobj = gp,
