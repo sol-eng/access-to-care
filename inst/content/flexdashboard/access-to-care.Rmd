@@ -1,6 +1,6 @@
 ---
 title: "Access to Hospital Care Dashboard"
-runtime: shiny
+runtime: shiny_prerendered
 output:
   flexdashboard::flex_dashboard:
     logo: RStudio1.png
@@ -29,23 +29,7 @@ library(rlang)
 
 state_list <- c("All US", us_states$state_name)
 
-sel_state <- reactive({
-  if(input$state == "All US") {
-    us_states
-  } else {
-    us_states %>% 
-      filter(state_name == input$state) 
-  }
-})
 
-sel_county <- reactive({
-  if(input$state == "All US") {
-    us_counties
-  } else {
-    us_counties %>% 
-      filter(state_name == input$state) 
-  }
-})
   
 under <- "#CC79A7"
 over <- "#0072B2"  #009E73
@@ -76,68 +60,56 @@ selectInput(
 ### Population
 
 ```{r}
-renderValueBox({
-  sel_state() %>% 
-    summarise(sum(population)) %>% 
-    pull() %>%
-    format_number() %>% 
-    valueBox(icon="fa-user")
-    })
+valueBoxOutput("population")
 ```
 
 ### Hospitals
 
 ```{r}
-renderValueBox({
-  sel_state() %>%
-    summarise(sum(hospitals)) %>%
-    pull() %>% 
-    format_number() %>% 
-    valueBox(icon="fa-ambulance",color="#E69F00")
-  })
+valueBoxOutput("hospitals")
 ```
 
 ### Counties
 
 ```{r}
-renderValueBox({
-  sel_county() %>%
-    count() %>% 
-    pull() %>% 
-    format_number() %>% 
-    valueBox(icon="fa-map-marker",color = over)
-  })
+valueBoxOutput("counties")
 ```
 
 ### Underserved Counties
 
 ```{r}
-renderValueBox({
-  sel_county() %>%
-    filter(pred_status == "below") %>% 
-    count() %>% 
-    pull() %>% 
-    valueBox(icon="fa-h-square", color = under)
-  })
+valueBoxOutput("underserved")
 ```
 
 Row {data-height=1050}
 -----------------------------------------------------------------------
 
-### Selection
+###  Map
 
 ```{r}
 radioButtons(
   inputId = "view",
   label = "Select a view:",
-  choices = c("Hospitals per Capita", "No. of Hospitals", "Population")
+  choices = c("Hospitals per Capita", "No. of Hospitals", "Population"), 
+  inline = TRUE
   )
 ```
 
-
-###  Map
-
 ```{r, fig.width=12, fig.height=5, eval = TRUE}
+
+girafeOutput("usmap")
+
+```
+
+```{r, context = "server"}
+
+observeEvent(input$usmap_selected, {
+  sel_map <- input$usmap_selected
+  if(sel_map != "All US") {
+    updateSelectInput(session, "state", selected = sel_map)
+  }
+})
+
 output$usmap <- renderGirafe({
   
   low_color <- "#eeeeee"
@@ -151,20 +123,31 @@ output$usmap <- renderGirafe({
   if(input$view == "Population") vr <- "population"
   if(input$view == "No. of Hospitals") vr <- "hospitals"
     
-  gp <- us_states %>% 
-    mutate(
-      pop = format_number(population),
-      tooltip = paste0(state_name, "\nPopulation: ", pop, "\nHospitals: ", format_number(hospitals))
-      ) %>% 
-    mutate(fill = !! sym(vr)) %>% 
-    select(state, fill, tooltip) %>% 
-    inner_join(us_hex_polygons, by = "state") %>% 
-    ggplot() +
-    geom_polygon_interactive(aes(x, y, group = state, fill = fill, data_id = state, tooltip = tooltip), color = "#333333") +
-    geom_text_interactive(aes(x, y, label = state, data_id = state), size = 20, data = us_hex_positions) +
-    scale_fill_gradient(low = low_color, high = high_color) +
-    theme_void() +
-    theme(legend.position = "none")
+  if(input$state == "All US") {
+    gp <- us_states %>% 
+      mutate(
+        pop = format_number(population),
+        tooltip = paste0(state_name, "\nPopulation: ", pop, "\nHospitals: ", format_number(hospitals))
+        ) %>% 
+      mutate(fill = !! sym(vr)) %>% 
+      select(state, state_name, fill, tooltip) %>% 
+      inner_join(us_hex_polygons, by = "state") %>% 
+      ggplot() +
+      geom_polygon_interactive(
+        aes(x, y, group = state, fill = fill, data_id = state_name, tooltip = tooltip), 
+        color = "#333333"
+        ) +
+      geom_text_interactive(
+        aes(x, y, label = state, data_id = state_name), size = 20, 
+        data = us_hex_positions
+        ) +
+      scale_fill_gradient(low = low_color, high = high_color) +
+      theme_void() +
+      theme(legend.position = "none")
+  } else {
+    gp <- NA
+  }
+  
   
   girafe(
     ggobj = gp,
@@ -176,6 +159,54 @@ output$usmap <- renderGirafe({
     )  
 })
 
-girafeOutput("usmap")
+sel_state <- reactive({
+  if(input$state == "All US") {
+    us_states
+  } else {
+    us_states %>% 
+      filter(state_name == input$state) 
+  }
+})
+
+sel_county <- reactive({
+  if(input$state == "All US") {
+    us_counties
+  } else {
+    us_counties %>% 
+      filter(state_name == input$state) 
+  }
+})
+
+output$population <- renderValueBox({
+  sel_state() %>% 
+    summarise(sum(population)) %>% 
+    pull() %>%
+    format_number() %>% 
+    valueBox(icon="fa-user")
+    })
+
+output$hospitals <- renderValueBox({
+  sel_state() %>%
+    summarise(sum(hospitals)) %>%
+    pull() %>% 
+    format_number() %>% 
+    valueBox(icon="fa-ambulance",color="#E69F00")
+  })
+
+output$counties <- renderValueBox({
+  sel_county() %>%
+    count() %>% 
+    pull() %>% 
+    format_number() %>% 
+    valueBox(icon="fa-map-marker",color = over)
+  })
+
+output$underserved <- renderValueBox({
+  sel_county() %>%
+    filter(pred_status == "below") %>% 
+    count() %>% 
+    pull() %>% 
+    valueBox(icon="fa-h-square", color = under)
+  })
 ```
 
