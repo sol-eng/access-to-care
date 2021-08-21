@@ -7,15 +7,27 @@
 #' @export
 write_manifest <- function(content_folder, 
                            base_folder = here("inst/content/"),
-                           ignore_files = list("config.yml", ".gitignore", "manifest.json")
+                           ignore_files = list("config.yml", ".gitignore", 
+                                               "manifest.json", ".DS_Store",
+                                               ".gitignore"
+                                               )
                            ) {
   
   full_path <- path(base_folder, content_folder)
   
-  app_files <- dir(full_path)
+  app_files <- dir_ls(full_path, all = TRUE)
   
-  for(i in seq_along(ignore_files)) {
-    app_files <- app_files[app_files != ignore_files[i]]
+  app_file_names <- path_file(app_files)
+  
+  git_ignore <- app_files[app_file_names == ".gitignore"]
+  if(length(git_ignore) > 0) {
+    git_files <- readLines(git_ignore)
+  } else {
+    git_files <- ""
+  }
+  ig <- c(ignore_files, git_files)
+  for(i in seq_along(ig)) {
+    app_file_names <- app_file_names[app_file_names != ig[i]]
   }
 
   primary_docs <- map(
@@ -39,14 +51,14 @@ write_manifest <- function(content_folder,
   cat(green("Full path: ", full_path, "\n"))
   cat(red("Application files\n"))
   walk(
-    app_files,
+    app_file_names,
     ~ cat(cyan("--- ", .x, "\n"))
   )
   cat(paste0(red("Primary file: "), cyan(primary_doc, "\n")))
   cat(magenta("Compiling manifest...\n"))
   rsconnect::writeManifest(
     appDir = full_path,
-    appFiles = app_files,
+    appFiles = app_file_names,
     appPrimaryDoc = primary_doc
   )
   cat(magenta("Manifest complete\n\n"))
