@@ -1,11 +1,11 @@
 #' @export
 format_number <- function(x, round_digits = 0) {
   res <- x
-  
-  res[x >= 1000] <- paste0(round(x[x >= 1000] / 1000, digits = round_digits), "K")
-  res[x >= 1000000] <- paste0(round(x[x >= 1000000] / 1000000, digits = round_digits), "M")
-  res[x >= 1000000000] <- paste0(round(x[x >= 1000000000] / 1000000000, digits = round_digits), "B")
-  
+  nf <- c(1000, 1000000, 1000000000)
+  sf <- c("K", "M", "B")
+  for(i in 1:3) {
+    res[x >= nf[i]] <- paste0(round(x[x >= nf[i]] / nf[i], digits = round_digits), sf[i])
+  }
   res
 }
 
