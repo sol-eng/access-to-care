@@ -26,6 +26,7 @@ library(usmap)
 library(dplyr)
 library(shiny)
 library(rlang)
+library(gt)
 
 state_list <- c("All US", us_states$state_name)
 
@@ -116,7 +117,17 @@ observeEvent(input$usmap_selected, {
     
     showModal(modalDialog(
       title = sel_county$county_name[1],
-      paste0(sel_county$facility_name, collapse = "\n\n")
+      sel_county %>% 
+        arrange(facility_name, city) %>%
+        mutate(nbr = row_number()) %>% 
+        select(nbr, facility_name, city) %>% 
+        gt() %>% 
+        cols_label(
+          nbr = "",
+          facility_name = "Hospital Name",
+          city = "City"
+        ),
+      easyClose = TRUE, fade = TRUE
     ))
   }
 })
@@ -182,14 +193,20 @@ output$usmap <- renderGirafe({
     
     gp <- us_counties %>% 
       filter(state_name == input$state) %>% 
-      select(fips, pred_status) %>% 
+      mutate(
+        tooltip = paste0(state_name, "\nPopulation: ", format_number(population), "\nHospitals: ", format_number(hospitals))
+      ) %>% 
+      select(tooltip, fips, pred_status) %>% 
       right_join(state_polygons, by = "fips") %>% 
       ggplot() +
       geom_polygon_interactive(
-        aes(x, y, group = group, fill = pred_status, data_id = fips), 
+        aes(x, y, group = group, fill = pred_status, data_id = fips, tooltip = tooltip),
         color = "#333333"
         ) +
-      scale_fill_manual(values = c(over, under, at_level), breaks = c("above", "below", "ok")) +
+      scale_fill_manual(
+        values = c(over, under, at_level), 
+        breaks = c("above", "below", "ok")
+        ) +
       theme_void() +
       theme(legend.position = "none")
       

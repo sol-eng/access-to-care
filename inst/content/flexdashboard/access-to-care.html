@@ -2755,6 +2755,7 @@ library(usmap)
 library(dplyr)
 library(shiny)
 library(rlang)
+library(gt)
 
 state_list <- c("All US", us_states$state_name)
 
@@ -2777,7 +2778,17 @@ observeEvent(input$usmap_selected, {
     
     showModal(modalDialog(
       title = sel_county$county_name[1],
-      paste0(sel_county$facility_name, collapse = "\n\n")
+      sel_county %>% 
+        arrange(facility_name, city) %>%
+        mutate(nbr = row_number()) %>% 
+        select(nbr, facility_name, city) %>% 
+        gt() %>% 
+        cols_label(
+          nbr = "",
+          facility_name = "Hospital Name",
+          city = "City"
+        ),
+      easyClose = TRUE, fade = TRUE
     ))
   }
 })
@@ -2843,14 +2854,20 @@ output$usmap <- renderGirafe({
     
     gp <- us_counties %>% 
       filter(state_name == input$state) %>% 
-      select(fips, pred_status) %>% 
+      mutate(
+        tooltip = paste0(state_name, "\nPopulation: ", format_number(population), "\nHospitals: ", format_number(hospitals))
+      ) %>% 
+      select(tooltip, fips, pred_status) %>% 
       right_join(state_polygons, by = "fips") %>% 
       ggplot() +
       geom_polygon_interactive(
-        aes(x, y, group = group, fill = pred_status, data_id = fips), 
+        aes(x, y, group = group, fill = pred_status, data_id = fips, tooltip = tooltip),
         color = "#333333"
         ) +
-      scale_fill_manual(values = c(over, under, at_level), breaks = c("above", "below", "ok")) +
+      scale_fill_manual(
+        values = c(over, under, at_level), 
+        breaks = c("above", "below", "ok")
+        ) +
       theme_void() +
       theme(legend.position = "none")
       
@@ -2923,7 +2940,7 @@ output$underserved <- renderValueBox({
 <!--/html_preserve-->
 <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="execution_dependencies">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67]}},"value":[{"type":"character","attributes":{},"value":["accesstocare","assertthat","base","bslib","colorspace","compiler","crayon","datasets","DBI","digest","dplyr","ellipsis","evaluate","fansi","fastmap","flexdashboard","fs","generics","ggiraph","ggplot2","glue","graphics","grDevices","grid","gtable","here","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","later","lifecycle","magrittr","methods","mime","munsell","pillar","pkgconfig","promises","purrr","R6","Rcpp","rlang","rmarkdown","rprojroot","rsconnect","sass","scales","shiny","stats","stringi","stringr","systemfonts","tibble","tidyselect","tools","usmap","utf8","utils","uuid","vctrs","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["0.0.1.9006","0.2.1","4.1.0","0.2.5.1","2.0-1","4.1.0","1.4.1","4.1.0","1.1.1","0.6.27","1.0.6","0.3.2","0.14","0.5.0","1.1.0","0.5.2","1.5.0","0.1.0","0.7.10","3.3.3","1.4.2","4.1.0","4.1.0","4.1.0","0.3.0","1.0.1","0.5.1.1","1.5.3","1.6.1","0.1.4","1.7.2","1.33","1.2.0","1.0.0","2.0.1","4.1.0","0.11","0.5.0","1.6.1","2.0.3","1.2.0.1","0.3.4","2.5.0","1.0.7","0.4.11","2.9.7","2.0.2","0.8.24","0.4.0","1.1.1","1.6.0","4.1.0","1.6.2","1.4.0","1.0.2","3.1.2","1.1.1","4.1.0","0.5.2","1.2.1","4.1.0","0.1-4","0.3.8","2.4.2","0.23","1.8-4","2.2.1"]}]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68]}},"value":[{"type":"character","attributes":{},"value":["accesstocare","assertthat","base","bslib","colorspace","compiler","crayon","datasets","DBI","digest","dplyr","ellipsis","evaluate","fansi","fastmap","flexdashboard","fs","generics","ggiraph","ggplot2","glue","graphics","grDevices","grid","gt","gtable","here","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","later","lifecycle","magrittr","methods","mime","munsell","pillar","pkgconfig","promises","purrr","R6","Rcpp","rlang","rmarkdown","rprojroot","rsconnect","sass","scales","shiny","stats","stringi","stringr","systemfonts","tibble","tidyselect","tools","usmap","utf8","utils","uuid","vctrs","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["0.0.1.9006","0.2.1","4.1.0","0.2.5.1","2.0-1","4.1.0","1.4.1","4.1.0","1.1.1","0.6.27","1.0.6","0.3.2","0.14","0.5.0","1.1.0","0.5.2","1.5.0","0.1.0","0.7.10","3.3.3","1.4.2","4.1.0","4.1.0","4.1.0","0.3.1","0.3.0","1.0.1","0.5.1.1","1.5.3","1.6.1","0.1.4","1.7.2","1.33","1.2.0","1.0.0","2.0.1","4.1.0","0.11","0.5.0","1.6.1","2.0.3","1.2.0.1","0.3.4","2.5.0","1.0.7","0.4.11","2.9.7","2.0.2","0.8.24","0.4.0","1.1.1","1.6.0","4.1.0","1.6.2","1.4.0","1.0.2","3.1.2","1.1.1","4.1.0","0.5.2","1.2.1","4.1.0","0.1-4","0.3.8","2.4.2","0.23","1.8-4","2.2.1"]}]}]}
 </script>
 <!--/html_preserve-->
 </div>
@@ -2977,6 +2994,7 @@ library(usmap)
 library(dplyr)
 library(shiny)
 library(rlang)
+library(gt)
 
 state_list <- c("All US", us_states$state_name)
 
@@ -3067,7 +3085,17 @@ observeEvent(input$usmap_selected, {
     
     showModal(modalDialog(
       title = sel_county$county_name[1],
-      paste0(sel_county$facility_name, collapse = "\n\n")
+      sel_county %>% 
+        arrange(facility_name, city) %>%
+        mutate(nbr = row_number()) %>% 
+        select(nbr, facility_name, city) %>% 
+        gt() %>% 
+        cols_label(
+          nbr = "",
+          facility_name = "Hospital Name",
+          city = "City"
+        ),
+      easyClose = TRUE, fade = TRUE
     ))
   }
 })
@@ -3133,14 +3161,20 @@ output$usmap <- renderGirafe({
     
     gp <- us_counties %>% 
       filter(state_name == input$state) %>% 
-      select(fips, pred_status) %>% 
+      mutate(
+        tooltip = paste0(state_name, "\nPopulation: ", format_number(population), "\nHospitals: ", format_number(hospitals))
+      ) %>% 
+      select(tooltip, fips, pred_status) %>% 
       right_join(state_polygons, by = "fips") %>% 
       ggplot() +
       geom_polygon_interactive(
-        aes(x, y, group = group, fill = pred_status, data_id = fips), 
+        aes(x, y, group = group, fill = pred_status, data_id = fips, tooltip = tooltip),
         color = "#333333"
         ) +
-      scale_fill_manual(values = c(over, under, at_level), breaks = c("above", "below", "ok")) +
+      scale_fill_manual(
+        values = c(over, under, at_level), 
+        breaks = c("above", "below", "ok")
+        ) +
       theme_void() +
       theme(legend.position = "none")
       
