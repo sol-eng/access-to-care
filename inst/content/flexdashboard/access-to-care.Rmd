@@ -108,8 +108,16 @@ girafeOutput("usmap")
 
 observeEvent(input$usmap_selected, {
   sel_map <- input$usmap_selected
-  if(sel_map != "All US") {
+  if(any(sel_map == state_list)) {
     updateSelectInput(session, "state", selected = sel_map)
+  } else {
+    sel_county <- us_hospitals %>% 
+      filter(fips == sel_map) 
+    
+    showModal(modalDialog(
+      title = sel_county$county_name[1],
+      paste0(sel_county$facility_name, collapse = "\n\n")
+    ))
   }
 })
 
@@ -122,6 +130,7 @@ output$usmap <- renderGirafe({
   
   low_color <- "#eeeeee"
   high_color <- over
+  x_width <- 20
   
   if(input$view == "Hospitals per Capita") {
     vr <- "per_person"
@@ -146,7 +155,7 @@ output$usmap <- renderGirafe({
         color = "#333333"
         ) +
       geom_text_interactive(
-        aes(x, y, label = state, data_id = state_name), size = 20, 
+        aes(x, y, label = state, data_id = state_name), size = 10, 
         data = us_hex_positions
         ) +
       scale_fill_gradient(low = low_color, high = high_color) +
@@ -156,6 +165,20 @@ output$usmap <- renderGirafe({
     
     state_polygons <- county_map %>% 
       filter(full == input$state)
+    
+    x_width <- state_polygons %>% 
+      summarise(
+        max_x = max(x),
+        min_x = min(x),
+        max_y = max(y),
+        min_y = min(y)
+      ) %>% 
+      mutate(
+        x_size = max_x - min_x,
+        y_size = max_y - min_y,
+        xy = x_size/y_size * 10
+      ) %>% 
+      pull(xy)
     
     gp <- us_counties %>% 
       filter(state_name == input$state) %>% 
@@ -174,7 +197,7 @@ output$usmap <- renderGirafe({
   
   girafe(
     ggobj = gp,
-    width = 50, height = 25,
+    width = x_width, height = 10,
     options = list(
       opts_selection(type = "single", only_shiny = FALSE),
       opts_tooltip(opacity = 0.7)
