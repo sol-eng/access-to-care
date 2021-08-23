@@ -1,6 +1,6 @@
 Package: accesstocare
 Title: Example content of Access to Care project
-Version: 0.0.1.9007
+Version: 0.0.1.9008
 Authors@R: 
     person(given = "Edgar",
            family = "Ruiz",
