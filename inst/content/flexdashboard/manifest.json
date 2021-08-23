@@ -169,7 +169,7 @@
       "GithubRepo": "access-to-care",
       "GithubUsername": "sol-eng",
       "GithubRef": "updates",
-      "GithubSha1": "f631c381b8a708947391a40940e91df1b4a1339b",
+      "GithubSha1": "bf445a898a9faa318987847add5dcef0ee599355",
       "description": {
         "Package": "accesstocare",
         "Title": "Example content of Access to Care project",
@@ -182,22 +182,22 @@
         "Roxygen": "list(markdown = TRUE)",
         "RoxygenNote": "7.1.1",
         "Depends": "R (>= 2.10)",
-        "Imports": "crayon, fs, here, purrr, rsconnect",
+        "Imports": "crayon, fs, here, purrr, rsconnect, ggplot2, ggiraph, dplyr,\nrlang, magrittr",
         "RemoteType": "github",
         "RemoteHost": "api.github.com",
         "RemoteRepo": "access-to-care",
         "RemoteUsername": "sol-eng",
         "RemoteRef": "updates",
-        "RemoteSha": "f631c381b8a708947391a40940e91df1b4a1339b",
+        "RemoteSha": "bf445a898a9faa318987847add5dcef0ee599355",
         "GithubRepo": "access-to-care",
         "GithubUsername": "sol-eng",
         "GithubRef": "updates",
-        "GithubSHA1": "f631c381b8a708947391a40940e91df1b4a1339b",
+        "GithubSHA1": "bf445a898a9faa318987847add5dcef0ee599355",
         "NeedsCompilation": "no",
-        "Packaged": "2021-08-23 20:09:49 UTC; edgar",
+        "Packaged": "2021-08-23 20:17:54 UTC; edgar",
         "Author": "Edgar Ruiz [aut, cre]",
         "Maintainer": "Edgar Ruiz <edgar@rstudio.com>",
-        "Built": "R 4.1.0; ; 2021-08-23 20:09:50 UTC; unix"
+        "Built": "R 4.1.0; ; 2021-08-23 20:17:55 UTC; unix"
       }
     },
     "askpass": {
