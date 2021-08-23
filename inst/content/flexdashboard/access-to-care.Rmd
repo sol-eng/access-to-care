@@ -3,7 +3,7 @@ title: "Access to Hospital Care Dashboard"
 runtime: shiny_prerendered
 output:
   flexdashboard::flex_dashboard:
-    logo: RStudio1.png
+    logo: images/RStudio1.png
     navbar:
     - align: right
       href: https://solutions.rstudio.com/tour/access_to_care/
