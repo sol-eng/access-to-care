@@ -21,4 +21,10 @@ Imports:
     fs,
     here,
     purrr,
-    rsconnect
+    rsconnect,
+    ggplot2,
+    ggiraph,
+    dplyr,
+    rlang,
+    magrittr
+    
