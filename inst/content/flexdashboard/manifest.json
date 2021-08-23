@@ -164,12 +164,12 @@
       }
     },
     "accesstocare": {
-      "Source": "github",
+      "Source": "CRAN",
       "Repository": null,
-      "GithubRepo": "access-to-care",
-      "GithubUsername": "sol-eng",
-      "GithubRef": "updates",
-      "GithubSha1": "b349204ba91f00c12eaf70a458d4d8349115f2ab",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
       "description": {
         "Package": "accesstocare",
         "Title": "Example content of Access to Care project",
@@ -182,21 +182,39 @@
         "Roxygen": "list(markdown = TRUE)",
         "RoxygenNote": "7.1.1",
         "Depends": "R (>= 2.10)",
-        "RemoteType": "github",
-        "RemoteHost": "api.github.com",
-        "RemoteRepo": "access-to-care",
-        "RemoteUsername": "sol-eng",
-        "RemoteRef": "updates",
-        "RemoteSha": "b349204ba91f00c12eaf70a458d4d8349115f2ab",
-        "GithubRepo": "access-to-care",
-        "GithubUsername": "sol-eng",
-        "GithubRef": "updates",
-        "GithubSHA1": "b349204ba91f00c12eaf70a458d4d8349115f2ab",
-        "NeedsCompilation": "no",
-        "Packaged": "2021-08-20 21:30:28 UTC; edgar",
         "Author": "Edgar Ruiz [aut, cre]",
         "Maintainer": "Edgar Ruiz <edgar@rstudio.com>",
-        "Built": "R 4.1.0; ; 2021-08-20 21:30:29 UTC; unix"
+        "Built": "R 4.1.0; ; 2021-08-22 18:47:46 UTC; unix"
+      }
+    },
+    "backports": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com/",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Package": "backports",
+        "Type": "Package",
+        "Title": "Reimplementations of Functions Introduced Since R-3.0.0",
+        "Version": "1.2.1",
+        "Authors@R": "c(\n    person(\"Michel\", \"Lang\", NULL, \"michellang@gmail.com\",\n      role = c(\"cre\", \"aut\"), comment = c(ORCID = \"0000-0001-9754-0393\")),\n    person(\"R Core Team\", role = \"aut\"))",
+        "Maintainer": "Michel Lang <michellang@gmail.com>",
+        "Description": "\n    Functions introduced or changed since R v3.0.0 are re-implemented in this\n    package. The backports are conditionally exported in order to let R resolve\n    the function name to either the implemented backport, or the respective base\n    version, if available. Package developers can make use of new functions or\n    arguments by selectively importing specific backports to\n    support older installations.",
+        "URL": "https://github.com/r-lib/backports",
+        "BugReports": "https://github.com/r-lib/backports/issues",
+        "License": "GPL-2 | GPL-3",
+        "NeedsCompilation": "yes",
+        "ByteCompile": "yes",
+        "Depends": "R (>= 3.0.0)",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.1.1",
+        "Packaged": "2020-12-09 11:51:23 UTC; lang",
+        "Author": "Michel Lang [cre, aut] (<https://orcid.org/0000-0001-9754-0393>),\n  R Core Team [aut]",
+        "Repository": "CRAN",
+        "Date/Publication": "2020-12-09 14:20:07 UTC",
+        "Built": "R 4.1.0; aarch64-apple-darwin20; 2021-05-20 05:14:15 UTC; unix"
       }
     },
     "base64enc": {
@@ -222,6 +240,31 @@
         "Repository": "CRAN",
         "Date/Publication": "2015-07-28 08:03:37",
         "Built": "R 4.1.0; aarch64-apple-darwin20; 2021-05-20 05:13:20 UTC; unix"
+      }
+    },
+    "bitops": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com/",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Package": "bitops",
+        "Version": "1.0-7",
+        "Date": "2021-04-13",
+        "Author": "S original by Steve Dutky <sdutky@terpalum.umd.edu> initial R\n        port and extensions by Martin Maechler; revised and modified\n        by Steve Dutky",
+        "Maintainer": "Martin Maechler <maechler@stat.math.ethz.ch>",
+        "Title": "Bitwise Operations",
+        "Description": "Functions for bitwise operations on integer vectors.",
+        "License": "GPL (>= 2)",
+        "URL": "https://github.com/mmaechler/R-bitops",
+        "BugReports": "https://github.com/mmaechler/R-bitops/issues",
+        "NeedsCompilation": "yes",
+        "Packaged": "2021-04-13 20:50:22 UTC; maechler",
+        "Repository": "CRAN",
+        "Date/Publication": "2021-04-24 11:40:08 UTC",
+        "Built": "R 4.1.0; aarch64-apple-darwin20; 2021-07-24 10:38:56 UTC; unix"
       }
     },
     "bslib": {
@@ -283,6 +326,41 @@
         "Repository": "CRAN",
         "Date/Publication": "2021-05-15 06:20:37 UTC",
         "Built": "R 4.1.0; aarch64-apple-darwin20; 2021-05-20 06:44:35 UTC; unix"
+      }
+    },
+    "checkmate": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com/",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Package": "checkmate",
+        "Type": "Package",
+        "Title": "Fast and Versatile Argument Checks",
+        "Description": "Tests and assertions to perform frequent argument checks. A\n    substantial part of the package was written in C to minimize any worries\n    about execution time overhead.",
+        "Version": "2.0.0",
+        "Authors@R": "c(\n    person(\"Michel\", \"Lang\", NULL, \"michellang@gmail.com\",\n      role = c(\"cre\", \"aut\"), comment = c(ORCID = \"0000-0001-9754-0393\")),\n    person(\"Bernd\", \"Bischl\", NULL, \"bernd_bischl@gmx.net\", role = \"ctb\")\n    )",
+        "URL": "https://github.com/mllg/checkmate",
+        "URLNote": "https://github.com/mllg/checkmate",
+        "BugReports": "https://github.com/mllg/checkmate/issues",
+        "NeedsCompilation": "yes",
+        "ByteCompile": "yes",
+        "Encoding": "UTF-8",
+        "Depends": "R (>= 3.0.0)",
+        "Imports": "backports (>= 1.1.0), utils",
+        "Suggests": "R6, fastmatch, data.table (>= 1.9.8), devtools, ggplot2,\nknitr, magrittr, microbenchmark, rmarkdown, testthat (>=\n0.11.0), tinytest (>= 1.1.0), tibble",
+        "License": "BSD_3_clause + file LICENSE",
+        "VignetteBuilder": "knitr",
+        "RoxygenNote": "7.0.2",
+        "Collate": "'AssertCollection.R' 'allMissing.R' 'anyInfinite.R'\n'anyMissing.R' 'anyNaN.R' 'asInteger.R' 'assert.R' 'helper.R'\n'makeExpectation.R' 'makeTest.R' 'makeAssertion.R'\n'checkAccess.R' 'checkArray.R' 'checkAtomic.R'\n'checkAtomicVector.R' 'checkCharacter.R' 'checkChoice.R'\n'checkClass.R' 'checkComplex.R' 'checkCount.R'\n'checkDataFrame.R' 'checkDataTable.R' 'checkDate.R'\n'checkDirectoryExists.R' 'checkDisjunct.R' 'checkDouble.R'\n'checkEnvironment.R' 'checkFALSE.R' 'checkFactor.R'\n'checkFileExists.R' 'checkFlag.R' 'checkFormula.R'\n'checkFunction.R' 'checkInt.R' 'checkInteger.R'\n'checkIntegerish.R' 'checkList.R' 'checkLogical.R'\n'checkMatrix.R' 'checkMultiClass.R' 'checkNamed.R'\n'checkNames.R' 'checkNull.R' 'checkNumber.R' 'checkNumeric.R'\n'checkOS.R' 'checkPOSIXct.R' 'checkPathForOutput.R' 'checkR6.R'\n'checkRaw.R' 'checkScalar.R' 'checkScalarNA.R'\n'checkSetEqual.R' 'checkString.R' 'checkSubset.R' 'checkTRUE.R'\n'checkTibble.R' 'checkVector.R' 'coalesce.R' 'isIntegerish.R'\n'matchArg.R' 'qassert.R' 'qassertr.R' 'vname.R' 'wfwl.R'\n'zzz.R'",
+        "Packaged": "2020-02-05 12:51:29 UTC; michel",
+        "Author": "Michel Lang [cre, aut] (<https://orcid.org/0000-0001-9754-0393>),\n  Bernd Bischl [ctb]",
+        "Maintainer": "Michel Lang <michellang@gmail.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2020-02-06 01:00:13 UTC",
+        "Built": "R 4.1.1; aarch64-apple-darwin20; 2021-08-20 02:29:36 UTC; unix"
       }
     },
     "cli": {
@@ -853,6 +931,40 @@
         "Repository": "CRAN",
         "Date/Publication": "2020-08-27 13:50:06 UTC",
         "Built": "R 4.1.0; aarch64-apple-darwin20; 2021-05-20 05:13:30 UTC; unix"
+      }
+    },
+    "gt": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com/",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
+      "description": {
+        "Type": "Package",
+        "Package": "gt",
+        "Version": "0.3.1",
+        "Title": "Easily Create Presentation-Ready Display Tables",
+        "Description": "Build display tables from tabular data with an easy-to-use set of\n    functions. With its progressive approach, we can construct display tables\n    with a cohesive set of table parts. Table values can be formatted using any\n    of the included formatting functions. Footnotes and cell styles can be \n    precisely added through a location targeting system. The way in which 'gt'\n    handles things for you means that you don't often have to worry about the\n    fine details.",
+        "Authors@R": "c(\n    person(\"Richard\", \"Iannone\", , \"rich@rstudio.com\", c(\"aut\", \"cre\"),\n           comment = c(ORCID = \"0000-0003-3925-190X\")),\n    person(\"Joe\", \"Cheng\", , \"joe@rstudio.com\", \"aut\"),\n    person(\"Barret\", \"Schloerke\", , \"barret@rstudio.com\", \"aut\",\n           comment = c(ORCID = \"0000-0001-9986-114X\")),\n    person(\"RStudio\", role = c(\"cph\", \"fnd\"))\n    )",
+        "License": "MIT + file LICENSE",
+        "URL": "https://gt.rstudio.com/, https://github.com/rstudio/gt",
+        "BugReports": "https://github.com/rstudio/gt/issues",
+        "Encoding": "UTF-8",
+        "LazyData": "true",
+        "ByteCompile": "true",
+        "RoxygenNote": "7.1.1",
+        "Depends": "R (>= 3.2.0)",
+        "Imports": "base64enc (>= 0.1-3), bitops (>= 1.0.6), checkmate (>= 2.0.0),\ncommonmark (>= 1.7), dplyr (>= 0.8.5), fs (>= 1.3.2), ggplot2\n(>= 3.3.0), glue (>= 1.3.2), htmltools (>= 0.5.0), magrittr (>=\n1.5), rlang (>= 0.4.5), sass (>= 0.1.1), scales (>= 1.1.0),\nstringr (>= 1.3.1), tibble (>= 3.0.0), tidyselect (>= 1.0.0)",
+        "Suggests": "covr, knitr, paletteer, testthat (>= 2.1.0), RColorBrewer,\nrmarkdown, rvest, shiny, tidyr, webshot, xml2",
+        "Collate": "'as_data_frame.R' 'build_data.R' 'compile_scss.R'\n'data_color.R' 'datasets.R' 'dt__.R' 'dt_body.R' 'dt_boxhead.R'\n'dt_cols_merge.R' 'dt_data.R' 'dt_footnotes.R' 'dt_formats.R'\n'dt_groups_rows.R' 'dt_has_built.R' 'dt_heading.R'\n'dt_options.R' 'dt_row_groups.R' 'dt_source_notes.R'\n'dt_spanners.R' 'dt_stub_df.R' 'dt_stubhead.R' 'dt_styles.R'\n'dt_summary.R' 'dt_transforms.R' 'export.R' 'format_data.R'\n'gt-package.R' 'gt.R' 'gt_preview.R' 'helpers.R' 'image.R'\n'info_tables.R' 'knitr-utils.R' 'location_methods.R'\n'modify_columns.R' 'modify_rows.R' 'tab_create_modify.R'\n'opts.R' 'print.R' 'reexports.R' 'render_as_html.R'\n'resolver.R' 'shiny.R' 'summary_rows.R' 'text_transform.R'\n'utils.R' 'utils_formatters.R' 'utils_general_str_formatting.R'\n'utils_pipe.R' 'utils_render_common.R'\n'utils_render_footnotes.R' 'utils_render_html.R'\n'utils_render_latex.R' 'utils_render_rtf.R' 'zzz.R'",
+        "NeedsCompilation": "no",
+        "Packaged": "2021-08-06 16:37:39 UTC; rich",
+        "Author": "Richard Iannone [aut, cre] (<https://orcid.org/0000-0003-3925-190X>),\n  Joe Cheng [aut],\n  Barret Schloerke [aut] (<https://orcid.org/0000-0001-9986-114X>),\n  RStudio [cph, fnd]",
+        "Maintainer": "Richard Iannone <rich@rstudio.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2021-08-07 04:40:05 UTC",
+        "Built": "R 4.1.1; ; 2021-08-14 20:25:06 UTC; unix"
       }
     },
     "gtable": {
@@ -2272,17 +2384,20 @@
     }
   },
   "files": {
+    "access-to-care.html": {
+      "checksum": "6645c51255c082f78c948f2745e6ec6f"
+    },
     "access-to-care.Rmd": {
-      "checksum": "d8f426f91c5cf7879c82ade89444e41f"
+      "checksum": "87b8511dc8a0b81d73cad4aa1293b9b2"
+    },
+    "images/model.png": {
+      "checksum": "d43a7d18e1310610959315a3023f2020"
+    },
+    "images/RStudio1.png": {
+      "checksum": "288da77036023512c0adbf27de9fe9c2"
     },
     "metadata.yml": {
       "checksum": "6a089bf7d5d485378e5a4f92cad4ad42"
-    },
-    "model.png": {
-      "checksum": "d43a7d18e1310610959315a3023f2020"
-    },
-    "RStudio1.png": {
-      "checksum": "288da77036023512c0adbf27de9fe9c2"
     }
   },
   "users": null
