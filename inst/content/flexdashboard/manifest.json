@@ -169,11 +169,11 @@
       "GithubRepo": "access-to-care",
       "GithubUsername": "sol-eng",
       "GithubRef": "updates",
-      "GithubSha1": "7dc56a3b8b263e5138b37e745c6eaea2095999a0",
+      "GithubSha1": "f631c381b8a708947391a40940e91df1b4a1339b",
       "description": {
         "Package": "accesstocare",
         "Title": "Example content of Access to Care project",
-        "Version": "0.0.1.9007",
+        "Version": "0.0.1.9008",
         "Authors@R": "\n    person(given = \"Edgar\",\n           family = \"Ruiz\",\n           role = c(\"aut\", \"cre\"),\n           email = \"edgar@rstudio.com\"\n           )",
         "Description": "Contains example content, data, and common functions used within the\n    examples",
         "License": "MIT + file LICENSE",
@@ -188,16 +188,16 @@
         "RemoteRepo": "access-to-care",
         "RemoteUsername": "sol-eng",
         "RemoteRef": "updates",
-        "RemoteSha": "7dc56a3b8b263e5138b37e745c6eaea2095999a0",
+        "RemoteSha": "f631c381b8a708947391a40940e91df1b4a1339b",
         "GithubRepo": "access-to-care",
         "GithubUsername": "sol-eng",
         "GithubRef": "updates",
-        "GithubSHA1": "7dc56a3b8b263e5138b37e745c6eaea2095999a0",
+        "GithubSHA1": "f631c381b8a708947391a40940e91df1b4a1339b",
         "NeedsCompilation": "no",
-        "Packaged": "2021-08-23 13:56:28 UTC; edgar",
+        "Packaged": "2021-08-23 20:09:49 UTC; edgar",
         "Author": "Edgar Ruiz [aut, cre]",
         "Maintainer": "Edgar Ruiz <edgar@rstudio.com>",
-        "Built": "R 4.1.0; ; 2021-08-23 13:56:28 UTC; unix"
+        "Built": "R 4.1.0; ; 2021-08-23 20:09:50 UTC; unix"
       }
     },
     "askpass": {
@@ -2690,10 +2690,10 @@
   },
   "files": {
     "access-to-care.html": {
-      "checksum": "d4457b16339f2e010ff182ae3aaecc9c"
+      "checksum": "2173fac5bbd894c0701acd544daa11b8"
     },
     "access-to-care.Rmd": {
-      "checksum": "2a583eaa298600d497e4260717084d7d"
+      "checksum": "5b3648496b9754293444a8ac189bafb6"
     },
     "images/model.png": {
       "checksum": "d43a7d18e1310610959315a3023f2020"
