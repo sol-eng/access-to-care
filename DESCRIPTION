@@ -27,4 +27,3 @@ Imports:
     dplyr,
     rlang,
     magrittr
-    
