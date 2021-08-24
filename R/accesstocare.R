@@ -1,9 +1,7 @@
 #' @importFrom rsconnect writeManifest
 #' @importFrom purrr map keep walk
 #' @importFrom here here
-#' @importFrom dplyr mutate select filter inner_join right_join
 #' @importFrom crayon cyan black blue red green magenta
-#' @importFrom magrittr `%>%`
 #' @import ggplot2
 #' @import ggiraph
 #' @import rlang

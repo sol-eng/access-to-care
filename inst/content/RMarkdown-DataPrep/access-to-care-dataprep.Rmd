@@ -328,6 +328,30 @@ us_states %>%
   theme_void() +
   theme(legend.position = "bottom")
 ```
+```{r}
+pred_count <- us_counties %>% 
+  count(state, pred_status) %>% 
+  pivot_wider(
+    names_from = pred_status, 
+    values_from = n, 
+    values_fill = 0,
+    names_prefix = "pred_"
+    )
+
+us_atc_state_polygons <- us_states %>% 
+  inner_join(us_hex_polygons, by = "state") %>% 
+  inner_join(pred_count, by = "state")
+```
+
+
+```{r}
+county_map <- usmap::us_map("county")
+
+us_atc_county_polygons <- us_counties %>% 
+  left_join(county_map, by = "fips") 
+
+```
+
 
 ```{r, eval = FALSE}
 library(usethis)
@@ -337,6 +361,8 @@ use_data(us_hex_polygons, overwrite = TRUE)
 use_data(us_hospitals, overwrite = TRUE)
 use_data(us_counties, overwrite = TRUE)
 use_data(us_states, overwrite = TRUE)
+use_data(us_atc_county_polygons, overwrite = TRUE)
+use_data(us_atc_state_polygons, overwrite = TRUE)
 ```
 
 

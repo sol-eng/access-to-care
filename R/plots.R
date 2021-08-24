@@ -1,5 +1,5 @@
 #' @export
-atc_plot_us_map <- function(variable = c("population", "hospitals", "per-capita"),
+atc_plot_us_map <- function(variable = c("population", "hospitals", "above", "below"),
                             colors = list(high = palette_atc$high, low = palette_atc$low)
                             ) {
   low_color <- colors$low
@@ -7,12 +7,16 @@ atc_plot_us_map <- function(variable = c("population", "hospitals", "per-capita"
   x_width <- 20
   font <- "Helvetica"
   
-  if(variable[[1]] == "per-capita") {
-    vr <- "per_person"
-    fill_lab <- "1 Hospital per # people"
-    low_color <- colors$high
-    high_color <- colors$low
-  }  
+  if(variable[[1]] == "above") {
+    vr <- "pred_above"
+    fill_lab <- "Counties"
+    high_color <- palette_atc$above
+  } 
+  if(variable[[1]] == "below") {
+    vr <- "pred_below"
+    fill_lab <- "Counties"
+    high_color <- palette_atc$below
+  } 
   if(variable[[1]] == "population") {
     vr <- "population"
     fill_lab <- "Population"
@@ -21,25 +25,20 @@ atc_plot_us_map <- function(variable = c("population", "hospitals", "per-capita"
     vr <- "hospitals"
     fill_lab <- "Hospitals"
   } 
-  prep_us <- us_states %>% 
-    mutate(
-      tooltip = paste0(
-        state_name, 
-        "\nPopulation: ", format_number(population), 
-        "\nHospitals: ", format_number(hospitals)
-        ),
-      fill = !! sym(vr)
-    ) %>% 
-    select(state, state_name, fill, tooltip) 
+  prep_us <- us_atc_state_polygons
+  prep_us$tooltip <- paste0(
+    prep_us$state_name, 
+    "\nPopulation: ", format_number(prep_us$population), 
+    "\nHospitals: ", format_number(prep_us$hospitals)
+    )
+  prep_us$fill <- prep_us[, vr][[1]]
   
   min_fill <- min(prep_us$fill)
   max_fill <- max(prep_us$fill)
   
-  prep_us %>% 
-    inner_join(us_hex_polygons, by = "state") %>% 
-    ggplot() +
+  ggplot(data = prep_us) +
     geom_polygon_interactive(
-      aes(x, y, group = state, fill = fill, data_id = state_name, tooltip = tooltip), 
+      aes(x, y, group = state, data_id = state_name, fill = fill), 
       color = "#cccccc"
     ) +
     geom_text_interactive(
@@ -61,41 +60,69 @@ atc_plot_us_map <- function(variable = c("population", "hospitals", "per-capita"
 
 #' @export
 atc_plot_state_map <- function(state = "Florida", 
-                               variable = c("population", "hospitals", "model"),
-                               colors = list(high = palette_atc$high, low = palette_atc$low),
+                               variable = c("model", "population", "hospitals"),
+                               colors = list(high = palette_atc$high, 
+                                             low = palette_atc$low
+                                             ),
                                model_colors = list(above = palette_atc$above, 
                                                    below = palette_atc$below, 
                                                    ok = palette_atc$ok
                                                    )
                                ) {
   
-  county_map <- usmap::us_map("county")
+  low_color <- colors$low
+  high_color <- colors$high
+  x_width <- 20
+  font <- "Helvetica"
   
-  state_polygons <- county_map %>% 
-    filter(full == !! state)
+  if(variable[[1]] == "model") {
+    vr <- "pred_status"
+    fill_lab <- "Model results"
+  }  
+  if(variable[[1]] == "population") {
+    vr <- "population"
+    fill_lab <- "Population"
+  } 
+  if(variable[[1]] == "hospitals") {
+    vr <- "hospitals"
+    fill_lab <- "Hospitals"
+  } 
+  prep_us <- us_atc_county_polygons[us_atc_county_polygons$state_name == state, ]
   
-  us_counties %>% 
-    filter(state_name == !! state) %>% 
-    mutate(
-      tooltip = paste0(
-        county_name, 
-        "\nPopulation: ", format_number(population), 
-        "\nHospitals: ", format_number(hospitals)
-      )
-    ) %>% 
-    select(tooltip, fips, pred_status) %>% 
-    right_join(state_polygons, by = "fips") %>% 
-    ggplot() +
+  prep_us$tooltip <- paste0(
+    prep_us$county_name, 
+    "\nPopulation: ", format_number(prep_us$population), 
+    "\nHospitals: ", format_number(prep_us$hospitals)
+  )
+  prep_us$fill <- prep_us[, vr][[1]]
+  
+  gp <- ggplot(data = prep_us) +
     geom_polygon_interactive(
-      aes(x, y, group = group, fill = pred_status, data_id = fips, tooltip = tooltip),
+      aes(x, y, group = group, fill = fill, data_id = fips, tooltip = tooltip),
       color = "#cccccc", alpha = 0.7
     ) +
-    scale_fill_manual(
-      labels = c("Above", "Below", "At Level"),
-      values = c(model_colors$above, model_colors$below, model_colors$ok),
-      breaks = c("above", "below", "ok")
-    ) +
-    labs(fill = "Model results") +
+    labs(fill = fill_lab) +
     theme_void() +
     theme(legend.position = "bottom")
+  
+  if(is.numeric(prep_us$fill)) {
+    min_fill <- min(prep_us$fill)
+    max_fill <- max(prep_us$fill)
+    
+    gp +
+      scale_fill_gradient(
+        low = low_color, 
+        high = high_color,
+        breaks = c(min_fill, max_fill),
+        labels = c(format_number(min_fill), format_number(max_fill))
+      ) 
+  } else {
+    gp +
+      scale_fill_manual(
+        labels = c("Above", "Below", "At Level"),
+        values = c(model_colors$above, model_colors$below, model_colors$ok),
+        breaks = c("above", "below", "ok")
+      ) 
+  }
+  
 }
