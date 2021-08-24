@@ -32,6 +32,8 @@ state_list <- c("All US", us_states$state_name)
 
 county_map <- usmap::us_map("county")
 
+us_choices <- c("Above model", "Below model", "No. of Hospitals", "Population")
+state_choices <- c( "Model", "No. of Hospitals", "Population")
 ```
 
 
@@ -93,7 +95,7 @@ actionButton(
 radioButtons(
   inputId = "view",
   label = "Select a view:",
-  choices = c("Hospitals per Capita", "No. of Hospitals", "Population"), 
+  choices = us_choices, 
   inline = TRUE
   )
 ```
@@ -108,6 +110,7 @@ observeEvent(input$usmap_selected, {
   sel_map <- input$usmap_selected
   if(any(sel_map == state_list)) {
     updateSelectInput(session, "state", selected = sel_map)
+    updateRadioButtons(session, "view", choices = state_choices, selected = "Model", inline = TRUE)
   } else {
     sel_county <- us_hospitals %>% 
       filter(fips == sel_map) 
@@ -130,31 +133,32 @@ observeEvent(input$usmap_selected, {
 })
 
 observeEvent(
-  input$us, 
-  updateSelectInput(session, "state", selected = "All US")
+  input$us, {
+    updateSelectInput(session, "state", selected = "All US")  
+    updateRadioButtons(session, "view", choices = us_choices, inline = TRUE)  
+    }
   )
 
 output$usmap <- renderGirafe({
   
   x_width <- 10
   
-  if(input$view == "Hospitals per Capita") vr <- "per-capita"
   if(input$view == "Population") vr <- "population"
   if(input$view == "No. of Hospitals") vr <- "hospitals"
+  if(input$view == "Above model") vr <- "above"
+  if(input$view == "Below model") vr <- "below"
+  if(input$view == "Model") vr <- "model"
     
   if(input$state == "All US") {
     gp <- atc_plot_us_map(vr)
   } else {
     
-    state_polygons <- county_map %>% 
-      filter(full == input$state)
     
-    x_width <- state_polygons %>% 
+    x_width <- usmap::us_map("counties") %>% 
+      filter(full == input$state) %>% 
       summarise(
-        max_x = max(x),
-        min_x = min(x),
-        max_y = max(y),
-        min_y = min(y)
+        max_x = max(x), min_x = min(x),
+        max_y = max(y), min_y = min(y)
       ) %>% 
       mutate(
         x_size = max_x - min_x,
@@ -163,7 +167,7 @@ output$usmap <- renderGirafe({
       ) %>% 
       pull(xy)
     
-    gp <- atc_plot_state_map(input$state)
+    gp <- atc_plot_state_map(input$state, vr)
   }
   
   girafe(

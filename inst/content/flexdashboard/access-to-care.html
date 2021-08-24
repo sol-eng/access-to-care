@@ -2725,8 +2725,12 @@ window.FlexDashboardComponents.push({
 <label class="control-label" id="view-label" for="view">Select a view:</label>
 <div class="shiny-options-group">
 <label class="radio-inline">
-<input type="radio" name="view" value="Hospitals per Capita" checked="checked"/>
-<span>Hospitals per Capita</span>
+<input type="radio" name="view" value="Above model" checked="checked"/>
+<span>Above model</span>
+</label>
+<label class="radio-inline">
+<input type="radio" name="view" value="Below model"/>
+<span>Below model</span>
 </label>
 <label class="radio-inline">
 <input type="radio" name="view" value="No. of Hospitals"/>
@@ -2761,6 +2765,8 @@ state_list <- c("All US", us_states$state_name)
 
 county_map <- usmap::us_map("county")
 
+us_choices <- c("Above model", "Below model", "No. of Hospitals", "Population")
+state_choices <- c( "Model", "No. of Hospitals", "Population")
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
@@ -2769,6 +2775,7 @@ observeEvent(input$usmap_selected, {
   sel_map <- input$usmap_selected
   if(any(sel_map == state_list)) {
     updateSelectInput(session, "state", selected = sel_map)
+    updateRadioButtons(session, "view", choices = state_choices, selected = "Model", inline = TRUE)
   } else {
     sel_county <- us_hospitals %>% 
       filter(fips == sel_map) 
@@ -2791,31 +2798,32 @@ observeEvent(input$usmap_selected, {
 })
 
 observeEvent(
-  input$us, 
-  updateSelectInput(session, "state", selected = "All US")
+  input$us, {
+    updateSelectInput(session, "state", selected = "All US")  
+    updateRadioButtons(session, "view", choices = us_choices, inline = TRUE)  
+    }
   )
 
 output$usmap <- renderGirafe({
   
   x_width <- 10
   
-  if(input$view == "Hospitals per Capita") vr <- "per-capita"
   if(input$view == "Population") vr <- "population"
   if(input$view == "No. of Hospitals") vr <- "hospitals"
+  if(input$view == "Above model") vr <- "above"
+  if(input$view == "Below model") vr <- "below"
+  if(input$view == "Model") vr <- "model"
     
   if(input$state == "All US") {
     gp <- atc_plot_us_map(vr)
   } else {
     
-    state_polygons <- county_map %>% 
-      filter(full == input$state)
     
-    x_width <- state_polygons %>% 
+    x_width <- usmap::us_map("counties") %>% 
+      filter(full == input$state) %>% 
       summarise(
-        max_x = max(x),
-        min_x = min(x),
-        max_y = max(y),
-        min_y = min(y)
+        max_x = max(x), min_x = min(x),
+        max_y = max(y), min_y = min(y)
       ) %>% 
       mutate(
         x_size = max_x - min_x,
@@ -2824,7 +2832,7 @@ output$usmap <- renderGirafe({
       ) %>% 
       pull(xy)
     
-    gp <- atc_plot_state_map(input$state)
+    gp <- atc_plot_state_map(input$state, vr)
   }
   
   girafe(
@@ -2895,7 +2903,7 @@ output$underserved <- renderValueBox({
 <!--/html_preserve-->
 <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="execution_dependencies">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68]}},"value":[{"type":"character","attributes":{},"value":["accesstocare","assertthat","base","bslib","colorspace","compiler","crayon","datasets","DBI","digest","dplyr","ellipsis","evaluate","fansi","fastmap","flexdashboard","fs","generics","ggiraph","ggplot2","glue","graphics","grDevices","grid","gt","gtable","here","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","later","lifecycle","magrittr","methods","mime","munsell","pillar","pkgconfig","promises","purrr","R6","Rcpp","rlang","rmarkdown","rprojroot","rsconnect","sass","scales","shiny","stats","stringi","stringr","systemfonts","tibble","tidyselect","tools","usmap","utf8","utils","uuid","vctrs","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["0.0.1.9007","0.2.1","4.1.0","0.2.5.1","2.0-1","4.1.0","1.4.1","4.1.0","1.1.1","0.6.27","1.0.6","0.3.2","0.14","0.5.0","1.1.0","0.5.2","1.5.0","0.1.0","0.7.10","3.3.3","1.4.2","4.1.0","4.1.0","4.1.0","0.3.1","0.3.0","1.0.1","0.5.1.1","1.5.3","1.6.1","0.1.4","1.7.2","1.33","1.2.0","1.0.0","2.0.1","4.1.0","0.11","0.5.0","1.6.1","2.0.3","1.2.0.1","0.3.4","2.5.0","1.0.7","0.4.11","2.9.7","2.0.2","0.8.24","0.4.0","1.1.1","1.6.0","4.1.0","1.6.2","1.4.0","1.0.2","3.1.2","1.1.1","4.1.0","0.5.2","1.2.1","4.1.0","0.1-4","0.3.8","2.4.2","0.23","1.8-4","2.2.1"]}]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68]}},"value":[{"type":"character","attributes":{},"value":["accesstocare","assertthat","base","bslib","colorspace","compiler","crayon","datasets","DBI","digest","dplyr","ellipsis","evaluate","fansi","fastmap","flexdashboard","fs","generics","ggiraph","ggplot2","glue","graphics","grDevices","grid","gt","gtable","here","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","later","lifecycle","magrittr","methods","mime","munsell","pillar","pkgconfig","promises","purrr","R6","Rcpp","rlang","rmarkdown","rprojroot","rsconnect","sass","scales","shiny","stats","stringi","stringr","systemfonts","tibble","tidyselect","tools","usmap","utf8","utils","uuid","vctrs","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["0.0.1.9008","0.2.1","4.1.0","0.2.5.1","2.0-1","4.1.0","1.4.1","4.1.0","1.1.1","0.6.27","1.0.6","0.3.2","0.14","0.5.0","1.1.0","0.5.2","1.5.0","0.1.0","0.7.10","3.3.3","1.4.2","4.1.0","4.1.0","4.1.0","0.3.1","0.3.0","1.0.1","0.5.1.1","1.5.3","1.6.1","0.1.4","1.7.2","1.33","1.2.0","1.0.0","2.0.1","4.1.0","0.11","0.5.0","1.6.1","2.0.3","1.2.0.1","0.3.4","2.5.0","1.0.7","0.4.11","2.9.7","2.0.2","0.8.24","0.4.0","1.1.1","1.6.0","4.1.0","1.6.2","1.4.0","1.0.2","3.1.2","1.1.1","4.1.0","0.5.2","1.2.1","4.1.0","0.1-4","0.3.8","2.4.2","0.23","1.8-4","2.2.1"]}]}]}
 </script>
 <!--/html_preserve-->
 </div>
@@ -2955,6 +2963,8 @@ state_list <- c("All US", us_states$state_name)
 
 county_map <- usmap::us_map("county")
 
+us_choices <- c("Above model", "Below model", "No. of Hospitals", "Population")
+state_choices <- c( "Model", "No. of Hospitals", "Population")
 ```
 
 
@@ -3016,7 +3026,7 @@ actionButton(
 radioButtons(
   inputId = "view",
   label = "Select a view:",
-  choices = c("Hospitals per Capita", "No. of Hospitals", "Population"), 
+  choices = us_choices, 
   inline = TRUE
   )
 ```
@@ -3031,6 +3041,7 @@ observeEvent(input$usmap_selected, {
   sel_map <- input$usmap_selected
   if(any(sel_map == state_list)) {
     updateSelectInput(session, "state", selected = sel_map)
+    updateRadioButtons(session, "view", choices = state_choices, selected = "Model", inline = TRUE)
   } else {
     sel_county <- us_hospitals %>% 
       filter(fips == sel_map) 
@@ -3053,31 +3064,32 @@ observeEvent(input$usmap_selected, {
 })
 
 observeEvent(
-  input$us, 
-  updateSelectInput(session, "state", selected = "All US")
+  input$us, {
+    updateSelectInput(session, "state", selected = "All US")  
+    updateRadioButtons(session, "view", choices = us_choices, inline = TRUE)  
+    }
   )
 
 output$usmap <- renderGirafe({
   
   x_width <- 10
   
-  if(input$view == "Hospitals per Capita") vr <- "per-capita"
   if(input$view == "Population") vr <- "population"
   if(input$view == "No. of Hospitals") vr <- "hospitals"
+  if(input$view == "Above model") vr <- "above"
+  if(input$view == "Below model") vr <- "below"
+  if(input$view == "Model") vr <- "model"
     
   if(input$state == "All US") {
     gp <- atc_plot_us_map(vr)
   } else {
     
-    state_polygons <- county_map %>% 
-      filter(full == input$state)
     
-    x_width <- state_polygons %>% 
+    x_width <- usmap::us_map("counties") %>% 
+      filter(full == input$state) %>% 
       summarise(
-        max_x = max(x),
-        min_x = min(x),
-        max_y = max(y),
-        min_y = min(y)
+        max_x = max(x), min_x = min(x),
+        max_y = max(y), min_y = min(y)
       ) %>% 
       mutate(
         x_size = max_x - min_x,
@@ -3086,7 +3098,7 @@ output$usmap <- renderGirafe({
       ) %>% 
       pull(xy)
     
-    gp <- atc_plot_state_map(input$state)
+    gp <- atc_plot_state_map(input$state, vr)
   }
   
   girafe(
