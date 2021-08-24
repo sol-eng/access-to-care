@@ -54,8 +54,11 @@ atc_plot_us_map <- function(variable = c("population", "hospitals", "above", "be
     labs(fill = fill_lab) +
     theme_void() +
     theme(
-      legend.position = "bottom"
-      )
+      legend.position = "bottom", 
+      legend.text = element_text(family = font),
+      legend.title = element_text(family = font)
+    )
+  
 }
 
 #' @export
@@ -67,7 +70,8 @@ atc_plot_state_map <- function(state = "Florida",
                                model_colors = list(above = palette_atc$above, 
                                                    below = palette_atc$below, 
                                                    ok = palette_atc$ok
-                                                   )
+                                                   ),
+                               top_cities = 3
                                ) {
   
   low_color <- colors$low
@@ -87,10 +91,15 @@ atc_plot_state_map <- function(state = "Florida",
     vr <- "hospitals"
     fill_lab <- "Hospitals"
   } 
-  prep_us <- us_atc_county_polygons[us_atc_county_polygons$state_name == state, ]
+  if(state == "All US") {
+    prep_us <- us_atc_county_polygons
+    prep_cities <- us_large_cities
+  } else {
+    prep_us <- us_atc_county_polygons[us_atc_county_polygons$state_name == state, ]  
+    prep_cities <- us_large_cities[us_large_cities$state == prep_us$state[[1]], ]
+  }
   
-  prep_cities <- us_large_cities[us_large_cities$state == prep_us$state[[1]], ]
-  prep_cities <- prep_cities[prep_cities$position <= 3, ]
+  prep_cities <- prep_cities[prep_cities$position <= top_cities, ]
   
   prep_us$tooltip <- paste0(
     prep_us$county_name, 
@@ -102,7 +111,8 @@ atc_plot_state_map <- function(state = "Florida",
   gp <- ggplot(data = prep_us) +
     geom_text(aes(x, y, label = city_name), 
               data = prep_cities, 
-              hjust = 1.1
+              hjust = 1.1,
+              family = font
               ) +
     geom_point(aes(x, y), data = prep_cities) +
     geom_polygon_interactive(
@@ -113,7 +123,11 @@ atc_plot_state_map <- function(state = "Florida",
     ) +
     labs(fill = fill_lab) +
     theme_void() +
-    theme(legend.position = "bottom")
+    theme(
+      legend.position = "bottom", 
+      legend.text = element_text(family = font),
+      legend.title = element_text(family = font)
+      )
   
   if(is.numeric(prep_us$fill)) {
     min_fill <- min(prep_us$fill)

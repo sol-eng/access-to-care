@@ -25,12 +25,9 @@ library(ggiraph)
 library(usmap)
 library(dplyr)
 library(shiny)
-library(rlang)
 library(gt)
 
 state_list <- c("All US", us_states$state_name)
-
-county_map <- usmap::us_map("county")
 
 us_choices <- c("Above model", "Below model", "No. of Hospitals", "Population")
 state_choices <- c( "Model", "No. of Hospitals", "Population")
@@ -100,7 +97,7 @@ radioButtons(
   )
 ```
 
-```{r, fig.width=5, fig.height=5, eval = TRUE}
+```{r}
 girafeOutput("usmap")
 ```
 
@@ -216,7 +213,7 @@ output$hospitals <- renderValueBox({
     summarise(sum(hospitals)) %>%
     pull() %>% 
     format_number() %>% 
-    valueBox(icon="fa-ambulance",color="#E69F00")
+    valueBox(icon="fa-ambulance",color = palette_atc$ambulance)
   })
 
 output$counties <- renderValueBox({

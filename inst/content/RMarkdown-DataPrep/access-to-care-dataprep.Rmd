@@ -370,6 +370,17 @@ us_large_cities <- maps::us.cities %>%
   ungroup()
 ```
 
+```{r}
+palette_atc <- list(
+    above = "#0072B2",
+    below =  "#CC79A7",
+    ok = "#009E73",
+    low = "#ffffff",
+    high = "#0072B2",
+    ambulance = "#E69F00"
+  )
+
+```
 
 
 ```{r, eval = FALSE}
@@ -384,6 +395,8 @@ use_data(us_atc_county_polygons, overwrite = TRUE)
 use_data(us_atc_state_polygons, overwrite = TRUE)
 use_data(us_large_cities, overwrite = TRUE)
 
+
+use_data(palette_atc, overwrite = TRUE)
 ```
 
 
