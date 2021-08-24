@@ -352,6 +352,25 @@ us_atc_county_polygons <- us_counties %>%
 
 ```
 
+```{r}
+us_large_cities <- maps::us.cities %>% 
+  select(long, lat, everything()) %>% 
+  usmap::usmap_transform() %>% 
+  select(-lat, -long) %>% 
+  rename(x = long.1, 
+         y = lat.1, 
+         city_name = name, 
+         state = country.etc,
+         population = pop
+         ) %>% 
+  mutate(city_name = str_sub(city_name, 1, nchar(city_name) - 3)) %>% 
+  arrange(state, -population) %>% 
+  group_by(state) %>% 
+  mutate(position = row_number()) %>% 
+  ungroup()
+```
+
+
 
 ```{r, eval = FALSE}
 library(usethis)
@@ -363,6 +382,8 @@ use_data(us_counties, overwrite = TRUE)
 use_data(us_states, overwrite = TRUE)
 use_data(us_atc_county_polygons, overwrite = TRUE)
 use_data(us_atc_state_polygons, overwrite = TRUE)
+use_data(us_large_cities, overwrite = TRUE)
+
 ```
 
 

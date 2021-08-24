@@ -89,6 +89,9 @@ atc_plot_state_map <- function(state = "Florida",
   } 
   prep_us <- us_atc_county_polygons[us_atc_county_polygons$state_name == state, ]
   
+  prep_cities <- us_large_cities[us_large_cities$state == prep_us$state[[1]], ]
+  prep_cities <- prep_cities[prep_cities$position <= 3, ]
+  
   prep_us$tooltip <- paste0(
     prep_us$county_name, 
     "\nPopulation: ", format_number(prep_us$population), 
@@ -97,9 +100,16 @@ atc_plot_state_map <- function(state = "Florida",
   prep_us$fill <- prep_us[, vr][[1]]
   
   gp <- ggplot(data = prep_us) +
+    geom_text(aes(x, y, label = city_name), 
+              data = prep_cities, 
+              hjust = 1.1
+              ) +
+    geom_point(aes(x, y), data = prep_cities) +
     geom_polygon_interactive(
       aes(x, y, group = group, fill = fill, data_id = fips, tooltip = tooltip),
-      color = "#cccccc", alpha = 0.7
+      color = "#cccccc", 
+      size = 0.3,
+      alpha = 0.6
     ) +
     labs(fill = fill_lab) +
     theme_void() +
@@ -108,7 +118,6 @@ atc_plot_state_map <- function(state = "Florida",
   if(is.numeric(prep_us$fill)) {
     min_fill <- min(prep_us$fill)
     max_fill <- max(prep_us$fill)
-    
     gp +
       scale_fill_gradient(
         low = low_color, 
@@ -124,5 +133,4 @@ atc_plot_state_map <- function(state = "Florida",
         breaks = c("above", "below", "ok")
       ) 
   }
-  
 }
