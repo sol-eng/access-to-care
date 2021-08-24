@@ -169,7 +169,7 @@
       "GithubRepo": "access-to-care",
       "GithubUsername": "sol-eng",
       "GithubRef": "updates",
-      "GithubSha1": "d40f5671e6532374acb9b2be505ec13e448b56d9",
+      "GithubSha1": "62eb7734620f360a7736dbe9b75a04b2e201df1c",
       "description": {
         "Package": "accesstocare",
         "Title": "Example content of Access to Care project",
@@ -188,16 +188,16 @@
         "RemoteRepo": "access-to-care",
         "RemoteUsername": "sol-eng",
         "RemoteRef": "updates",
-        "RemoteSha": "d40f5671e6532374acb9b2be505ec13e448b56d9",
+        "RemoteSha": "62eb7734620f360a7736dbe9b75a04b2e201df1c",
         "GithubRepo": "access-to-care",
         "GithubUsername": "sol-eng",
         "GithubRef": "updates",
-        "GithubSHA1": "d40f5671e6532374acb9b2be505ec13e448b56d9",
+        "GithubSHA1": "62eb7734620f360a7736dbe9b75a04b2e201df1c",
         "NeedsCompilation": "no",
-        "Packaged": "2021-08-24 15:51:21 UTC; edgar",
+        "Packaged": "2021-08-24 17:22:09 UTC; edgar",
         "Author": "Edgar Ruiz [aut, cre]",
         "Maintainer": "Edgar Ruiz <edgar@rstudio.com>",
-        "Built": "R 4.1.0; ; 2021-08-24 15:51:22 UTC; unix"
+        "Built": "R 4.1.0; ; 2021-08-24 17:22:10 UTC; unix"
       }
     },
     "askpass": {
@@ -2690,10 +2690,10 @@
   },
   "files": {
     "access-to-care.html": {
-      "checksum": "ae91a1485f7612f5f9470deb7c200fd0"
+      "checksum": "2e23e45aa0020e0e6ce92c12dfd975c4"
     },
     "access-to-care.Rmd": {
-      "checksum": "87c7dc292521a05188785b2e526a1aec"
+      "checksum": "414592eb8ff0040e59cd4057327a2acb"
     },
     "images/model.png": {
       "checksum": "d43a7d18e1310610959315a3023f2020"

@@ -110,7 +110,11 @@ observeEvent(input$usmap_selected, {
   sel_map <- input$usmap_selected
   if(any(sel_map == state_list)) {
     updateSelectInput(session, "state", selected = sel_map)
-    updateRadioButtons(session, "view", choices = state_choices, selected = "Model", inline = TRUE)
+    updateRadioButtons(session, "view", 
+                       choices = state_choices, 
+                       selected = "Model", 
+                       inline = TRUE
+                       )
   } else {
     sel_county <- us_hospitals %>% 
       filter(fips == sel_map) 
@@ -118,7 +122,7 @@ observeEvent(input$usmap_selected, {
     showModal(modalDialog(
       title = sel_county$county_name[1],
       sel_county %>% 
-        arrange(facility_name, city) %>%
+        arrange(city, facility_name) %>%
         mutate(nbr = row_number()) %>% 
         select(nbr, facility_name, city) %>% 
         gt() %>% 
