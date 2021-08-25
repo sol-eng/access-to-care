@@ -1,24 +1,27 @@
 {
   "version": 1,
   "locale": "en_US",
-  "platform": "3.6.1",
+  "platform": "4.1.0",
   "metadata": {
     "appmode": "static",
     "primary_rmd": null,
     "primary_html": "map.html",
-    "content_category": "plot",
+    "content_category": null,
     "has_parameters": false
   },
   "packages": null,
   "files": {
     "access-to-care-ggplot.R": {
-      "checksum": "53fcbe6d8e9c738f73dbfd07d9fb7e72"
+      "checksum": "b0f748955b1f456234f04eab1c5872ce"
     },
     "map.html": {
       "checksum": "0af1e82f555c9268c93461c9d039bccb"
     },
     "map.png": {
-      "checksum": "6a27283d1a53fbcdabbddd870d618483"
+      "checksum": "770ab42bccd620564d2adf99394559a6"
+    },
+    "metadata.yml": {
+      "checksum": "b7d509bd465db966f80e4729d61ae492"
     }
   },
   "users": null
