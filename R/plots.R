@@ -1,4 +1,70 @@
 #' @export
+atc_plot_hospitals <- function(population_max = 11000000,
+                               model_colors = list(above = palette_atc$above, 
+                                                   below = palette_atc$below, 
+                                                   ok = palette_atc$ok
+                                                   ),
+                               show_model_results = FALSE
+                               ) {
+  
+  font <- "Helvetica"
+  
+  prep_counties <- us_counties[us_counties$population <= population_max, ]
+  
+  prep_counties$tooltip <- paste0(
+    prep_counties$county_name, ", ", prep_counties$state,
+    "\nPopulation: ", format_number(prep_counties$population), 
+    "\nHospitals: ", format_number(prep_counties$hospitals)
+  )
+  
+  p_seg <- (max(prep_counties$population) - min(prep_counties$population)) / 4
+  
+  p_breaks <- c(0, p_seg * 1:4)
+  p_labels <- format_number(p_breaks)
+  
+  gp <- ggplot(data = prep_counties) +
+    geom_point_interactive(
+      aes(hospitals, population, data_id = fips, tooltip = tooltip), color = "#cc9900"
+    ) +
+    scale_y_continuous(breaks = p_breaks, labels = p_labels) +
+    labs(x = "Hospitals", y = "Population") +
+    theme_minimal() +
+    theme(
+      axis.text = element_text(font), 
+      text = element_text(font)
+      )
+  
+  if(show_model_results) {
+    
+    h_count <- c(100000, population_max)
+    
+    h_pred <- predict(
+      us_atc_model, 
+      newdata = data.frame(population = h_count),
+      interval = "prediction"
+    )
+    
+    h_pred <- as.data.frame(h_pred)
+    h_pred$population <- h_count  
+    
+    lwr_tbl <- data.frame(
+      x = c(h_pred$lwr, h_pred$lwr[1]),
+      y = c(h_pred$population, h_pred$population[2])
+    ) 
+    
+    upr_tbl <- data.frame(
+      x = c(h_pred$upr, h_pred$upr[2]),
+      y = c(h_pred$population, h_pred$population[1])
+    ) 
+    
+    gp <- gp +
+      geom_polygon(aes(x, y), data = lwr_tbl, alpha = 0.4, fill = model_colors$below) +
+      geom_polygon(aes(x, y), data = upr_tbl, alpha = 0.4, fill = model_colors$above) 
+  }
+  gp
+}
+
+#' @export
 atc_plot_us_map <- function(variable = c("population", "hospitals", "above", "below"),
                             colors = list(high = palette_atc$high, low = palette_atc$low)
                             ) {
