@@ -318,16 +318,7 @@ us_hex_polygons %>%
   theme(legend.position = "none") 
 ```
 
-```{r}
-us_states %>% 
-  select(state, `Hospitals per capita` = per_person) %>% 
-  inner_join(us_hex_polygons, by = "state") %>% 
-  ggplot() +
-  geom_polygon(aes(x, y, group = state, fill = `Hospitals per capita`), color = "white") +
-  geom_text(aes(x, y, label = state), data = us_hex_positions) +
-  theme_void() +
-  theme(legend.position = "bottom")
-```
+
 ```{r}
 pred_count <- us_counties %>% 
   count(state, pred_status) %>% 

@@ -8,37 +8,13 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, fig.width = 9, fig.height = 7, fig.align = "center")
-
-library(dplyr)
-library(ggplot2)
-library(pins)
-library(broom)
-library(tidypredict)
-
-if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
-  boardname <- "rsconnect"
-  board_register_rsconnect(
-    server = Sys.getenv("CONNECT_SERVER"),
-    key = Sys.getenv("CONNECT_API_KEY")
-    )
-} else {
-  boardname <- "local"
-  board_register(boardname)  
-}
-
-model <- pin_get("atc-parsed-model", board = boardname)
-states <- pin_get("atc-states", board = boardname) %>% collect()
-county_hospitals <- pin_get("atc-base-map", boardname)
+library(accesstocare)
 ```
 
 ## County population vs hospitals
 
 ```{r}
-county_hospitals %>%
-  ggplot() +
-  geom_point(aes(hospitals, population), color = "#E69F00", alpha = 0.5) +
-  scale_y_continuous(breaks = 0:10 * 1000000, labels = paste0(0:10, "M")) +
-  theme_minimal() 
+atc_plot_hospitals()
 ```
 
 ---
@@ -46,7 +22,7 @@ county_hospitals %>%
 ## Model
 
 ```{r}
-tidy(model)
+summary(us_atc_model)
 ```
 
 ---
@@ -55,29 +31,7 @@ tidy(model)
 
 
 ```{r}
-bounds <- county_hospitals %>%
-  summarise(
-    mi = min(population, na.rm = TRUE), 
-    mx = max(population, na.rm = TRUE)
-    ) %>% 
-  collect() %>%
-  as.numeric()
-
-preds <- data.frame(population = bounds) %>%
-  tidypredict_to_column(model, add_interval = TRUE)
-
-county_hospitals %>% 
-  group_by(population, hospitals) %>%
-  summarise() %>%
-  ggplot() +
-    geom_point(aes(hospitals, population), color = "#E69F00", alpha = 0.5) +
-    scale_y_continuous(breaks = 0:10 * 1000000, labels = paste0(0:10, "M")) +
-    geom_segment(x = preds[1,2], y = bounds[1], 
-                 xend = preds[2,2], yend = bounds[2], 
-                 color = "#009E73") +
-    geom_segment(x = preds[1,3], y = bounds[1], 
-                 xend = preds[2,3], yend = bounds[2], 
-                 color = "#CC79A7") +
-    theme_minimal()
+atc_plot_hospitals(show_model_results = TRUE)
 ```
+
 
