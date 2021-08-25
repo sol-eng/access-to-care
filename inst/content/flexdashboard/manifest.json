@@ -164,12 +164,12 @@
       }
     },
     "accesstocare": {
-      "Source": "github",
+      "Source": "CRAN",
       "Repository": null,
-      "GithubRepo": "access-to-care",
-      "GithubUsername": "sol-eng",
-      "GithubRef": "updates",
-      "GithubSha1": "62eb7734620f360a7736dbe9b75a04b2e201df1c",
+      "GithubRepo": null,
+      "GithubUsername": null,
+      "GithubRef": null,
+      "GithubSha1": null,
       "description": {
         "Package": "accesstocare",
         "Title": "Example content of Access to Care project",
@@ -182,22 +182,10 @@
         "Roxygen": "list(markdown = TRUE)",
         "RoxygenNote": "7.1.1",
         "Depends": "R (>= 2.10)",
-        "Imports": "crayon, fs, here, purrr, rsconnect, ggplot2, ggiraph, dplyr,\nrlang, magrittr",
-        "RemoteType": "github",
-        "RemoteHost": "api.github.com",
-        "RemoteRepo": "access-to-care",
-        "RemoteUsername": "sol-eng",
-        "RemoteRef": "updates",
-        "RemoteSha": "62eb7734620f360a7736dbe9b75a04b2e201df1c",
-        "GithubRepo": "access-to-care",
-        "GithubUsername": "sol-eng",
-        "GithubRef": "updates",
-        "GithubSHA1": "62eb7734620f360a7736dbe9b75a04b2e201df1c",
-        "NeedsCompilation": "no",
-        "Packaged": "2021-08-24 17:22:09 UTC; edgar",
+        "Imports": "crayon,\nfs,\nhere,\npurrr,\nrsconnect,\nggplot2,\nggiraph,\ndplyr,\nrlang,\nmagrittr",
         "Author": "Edgar Ruiz [aut, cre]",
         "Maintainer": "Edgar Ruiz <edgar@rstudio.com>",
-        "Built": "R 4.1.0; ; 2021-08-24 17:22:10 UTC; unix"
+        "Built": "R 4.1.0; ; 2021-08-25 18:14:33 UTC; unix"
       }
     },
     "askpass": {
@@ -2400,7 +2388,7 @@
         "Package": "tinytex",
         "Type": "Package",
         "Title": "Helper Functions to Install and Maintain TeX Live, and Compile\nLaTeX Documents",
-        "Version": "0.32",
+        "Version": "0.33",
         "Authors@R": "c(\n  person(\"Yihui\", \"Xie\", role = c(\"aut\", \"cre\", \"cph\"), email = \"xie@yihui.name\", comment = c(ORCID = \"0000-0003-0645-5666\")),\n  person(family = \"RStudio, PBC\", role = \"cph\"),\n  person(\"Christophe\", \"Dervieux\", role = \"ctb\", comment = c(ORCID = \"0000-0003-4474-2498\")),\n  person(\"Devon\", \"Ryan\", role = \"ctb\", email = \"dpryan79@gmail.com\", comment = c(ORCID = \"0000-0002-8549-0971\")),\n  person(\"Ethan\", \"Heinzen\", role = \"ctb\"),\n  person(\"Fernando\", \"Cagua\", role = \"ctb\"),\n  person()\n  )",
         "Description": "Helper functions to install and maintain the 'LaTeX' distribution\n  named 'TinyTeX' (<https://yihui.org/tinytex/>), a lightweight, cross-platform,\n  portable, and easy-to-maintain version of 'TeX Live'. This package also\n  contains helper functions to compile 'LaTeX' documents, and install missing\n  'LaTeX' packages automatically.",
         "Imports": "xfun (>= 0.23)",
@@ -2411,12 +2399,12 @@
         "Encoding": "UTF-8",
         "RoxygenNote": "7.1.1",
         "NeedsCompilation": "no",
-        "Packaged": "2021-05-29 05:43:54 UTC; yihui",
+        "Packaged": "2021-08-05 19:49:44 UTC; yihui",
         "Author": "Yihui Xie [aut, cre, cph] (<https://orcid.org/0000-0003-0645-5666>),\n  RStudio, PBC [cph],\n  Christophe Dervieux [ctb] (<https://orcid.org/0000-0003-4474-2498>),\n  Devon Ryan [ctb] (<https://orcid.org/0000-0002-8549-0971>),\n  Ethan Heinzen [ctb],\n  Fernando Cagua [ctb]",
         "Maintainer": "Yihui Xie <xie@yihui.name>",
         "Repository": "CRAN",
-        "Date/Publication": "2021-05-29 17:20:02 UTC",
-        "Built": "R 4.1.0; ; 2021-05-31 22:41:59 UTC; unix"
+        "Date/Publication": "2021-08-05 20:10:02 UTC",
+        "Built": "R 4.1.1; ; 2021-08-14 20:02:32 UTC; unix"
       }
     },
     "usmap": {
@@ -2690,13 +2678,10 @@
   },
   "files": {
     "access-to-care.html": {
-      "checksum": "2e23e45aa0020e0e6ce92c12dfd975c4"
+      "checksum": "403cc3760577ec078cfc94f29a8bd3df"
     },
     "access-to-care.Rmd": {
-      "checksum": "414592eb8ff0040e59cd4057327a2acb"
-    },
-    "images/model.png": {
-      "checksum": "d43a7d18e1310610959315a3023f2020"
+      "checksum": "49302e6371a675e9ed2b7893d735469e"
     },
     "images/RStudio1.png": {
       "checksum": "288da77036023512c0adbf27de9fe9c2"
