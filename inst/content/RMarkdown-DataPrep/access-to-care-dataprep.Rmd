@@ -381,7 +381,11 @@ palette_atc <- list(
   )
 
 ```
-
+ 
+```{r}
+us_atc_model <- us_model 
+```
+ 
 
 ```{r, eval = FALSE}
 library(usethis)
@@ -391,10 +395,13 @@ use_data(us_hex_polygons, overwrite = TRUE)
 use_data(us_hospitals, overwrite = TRUE)
 use_data(us_counties, overwrite = TRUE)
 use_data(us_states, overwrite = TRUE)
+
 use_data(us_atc_county_polygons, overwrite = TRUE)
 use_data(us_atc_state_polygons, overwrite = TRUE)
+
 use_data(us_large_cities, overwrite = TRUE)
 
+use_data(us_atc_model, overwrite = TRUE)
 
 use_data(palette_atc, overwrite = TRUE)
 ```

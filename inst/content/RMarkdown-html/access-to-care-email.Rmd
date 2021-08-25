@@ -13,30 +13,21 @@ output: blastula::blastula_email
 Breakdown of counties and their status based on county population compared to the number of hospitals
 
 ```{r}
-full_map %>%
-  mutate(group = paste(county_id, shape_id)) %>%
-  ggplot() +
-  geom_polygon(
-    aes(long, lat, group = group), 
-    fill = full_map$color,
-    alpha = 0.5,
-    color = "#666666",
-    size = 0.1
-    ) +
-  theme_minimal() +
-  theme(
-    axis.title = element_blank(), 
-    axis.text = element_blank(), 
-    panel.grid = element_blank(),
-    panel.grid.major = element_blank()) 
+atc_plot_state_map(state = params$state)
 ```
 
 ### Counties Under or Over the exepected number of hospitals
 
 ```{r}
-display_table %>%
-  filter(`Model Result` != "Acceptable") %>%
-  formattable::format_table()
+us_counties %>% 
+  filter(state_name == params$state) %>% 
+  select(county_name, hospitals, population) %>% 
+  gt() %>% 
+  fmt_number(
+    columns = population,
+    suffixing = TRUE
+  ) %>% 
+  cols_label("county_name" = "County", "hospitals" = "Hospitals", "population" = "Population")
 ```
 
 ### Background

@@ -1,31 +1,12 @@
 library(plumber)
-library(pins)
-library(usmap)
-library(dplyr)
-library(tidypredict)
-
-if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
-  boardname <- "rsconnect"
-  board_register_rsconnect(
-    server = Sys.getenv("CONNECT_SERVER"),
-    key = Sys.getenv("CONNECT_API_KEY")
-  )
-} else {
-  boardname <- "local"
-  board_register(boardname)  
-}
-
-states <-pin_get("atc-states", board = boardname)  
-counties <- pin_get("atc-base-map", boardname)
-model <- pin_get("atc-parsed-model", board = boardname) %>%
-  as_parsed_model()
+library(accesstocare)
 
 #* Get the state's summarized information
 #* @get /summary
 #* @param state Two letter abbreviation of the state
 function(state = "MS") {
   st_name <- toupper(state)
-  state_data <- states[states$state == st_name, ]
+  state_data <- us_states[us_states$state == st_name, ]
   state_data
 }
 
@@ -33,9 +14,9 @@ function(state = "MS") {
 #* @get /model
 #* @param population:numeric Number of people living in a given county
 function(population = 70000) {
-  pop <- as.numeric(population)
-  data.frame(population = pop) %>%
-    tidypredict_to_column(model, add_interval = TRUE)
+  pop <- data.frame(population = as.numeric(population))
+  pred <- predict(us_atc_model, newdata = pop, interval = "prediction")
+  as.data.frame(pred)
 }
 
 #* Prediction of number of hospitals based on population
@@ -43,5 +24,6 @@ function(population = 70000) {
 #* @param state Two letter abbreviation of the state
 function(state = "MS") {
   st_name <- toupper(state)
-  counties[counties$state == st_name, ]
+  st_cols <- c("county_name", "state", "hospitals", "population", "pred_status")
+  us_counties[us_counties$state == st_name, st_cols]
 }
