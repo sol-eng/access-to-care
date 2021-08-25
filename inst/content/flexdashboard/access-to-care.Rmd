@@ -101,6 +101,26 @@ radioButtons(
 girafeOutput("usmap")
 ```
 
+
+Model {.storyboard}
+======================================================================
+
+### There was a high degree of correlation between the county's population and the number of hospitals
+
+```{r}
+sliderInput("pop", "Population", 0, 11000000, value = 11000000, step = 1000000, width = "700px")
+```
+
+```{r, fig.width = 10}
+girafeOutput("pop_plot")
+```
+
+### Fitted a model to predict how many hospitals should be in a county
+
+```{r, fig.width = 10}
+girafeOutput("pop_plot_model")
+```
+
 ```{r, context = "server"}
 
 observeEvent(input$usmap_selected, {
@@ -231,5 +251,30 @@ output$underserved <- renderValueBox({
     pull() %>% 
     valueBox(icon="fa-h-square", color = palette_atc$below)
   })
-```
 
+output$pop_plot <- renderGirafe({
+  gp <- atc_plot_hospitals(input$pop)
+  girafe(
+    ggobj = gp,
+    options = list(
+      width = 10,
+      height = 5,
+      opts_selection(type = "single", only_shiny = FALSE),
+      opts_tooltip(opacity = 0.7)
+      )
+    )  
+})
+
+output$pop_plot_model <- renderGirafe({
+  gp <- atc_plot_hospitals(show_model_results = TRUE)
+  girafe(
+    ggobj = gp,
+    options = list(
+      width = 10,
+      height = 5,
+      opts_selection(type = "single", only_shiny = FALSE),
+      opts_tooltip(opacity = 0.7)
+      )
+    )  
+})
+```

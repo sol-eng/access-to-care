@@ -164,12 +164,12 @@
       }
     },
     "accesstocare": {
-      "Source": "CRAN",
+      "Source": "github",
       "Repository": null,
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
+      "GithubRepo": "access-to-care",
+      "GithubUsername": "sol-eng",
+      "GithubRef": "updates",
+      "GithubSha1": "442fd22c85adfbfc2c4d553fcdd4e185acac1003",
       "description": {
         "Package": "accesstocare",
         "Title": "Example content of Access to Care project",
@@ -182,10 +182,22 @@
         "Roxygen": "list(markdown = TRUE)",
         "RoxygenNote": "7.1.1",
         "Depends": "R (>= 2.10)",
-        "Imports": "crayon,\nfs,\nhere,\npurrr,\nrsconnect,\nggplot2,\nggiraph,\ndplyr,\nrlang,\nmagrittr",
+        "Imports": "crayon, fs, here, purrr, rsconnect, ggplot2, ggiraph, dplyr,\nrlang, magrittr",
+        "RemoteType": "github",
+        "RemoteHost": "api.github.com",
+        "RemoteRepo": "access-to-care",
+        "RemoteUsername": "sol-eng",
+        "RemoteRef": "updates",
+        "RemoteSha": "442fd22c85adfbfc2c4d553fcdd4e185acac1003",
+        "GithubRepo": "access-to-care",
+        "GithubUsername": "sol-eng",
+        "GithubRef": "updates",
+        "GithubSHA1": "442fd22c85adfbfc2c4d553fcdd4e185acac1003",
+        "NeedsCompilation": "no",
+        "Packaged": "2021-08-25 18:22:31 UTC; edgar",
         "Author": "Edgar Ruiz [aut, cre]",
         "Maintainer": "Edgar Ruiz <edgar@rstudio.com>",
-        "Built": "R 4.1.0; ; 2021-08-25 18:14:33 UTC; unix"
+        "Built": "R 4.1.0; ; 2021-08-25 18:22:32 UTC; unix"
       }
     },
     "askpass": {
