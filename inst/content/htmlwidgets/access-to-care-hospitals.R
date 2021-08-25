@@ -1,25 +1,19 @@
-library(pins)
-library(dplyr)
+library(accesstocare)
 library(htmlwidgets)
-library(leaflet)
+library(ggiraph)
+library(fs)
 
-hospitals <- pin_get("atc-hospital-list", "local")
+p <- atc_plot_state_map("All US", top_cities = 0)
 
-hospital_maps <- hospitals %>%
-  leaflet() %>%
-  addProviderTiles(providers$CartoDB) %>%
-  addMarkers(
-    ~longitude, 
-    ~latitude, 
-    popup = ~ paste(paste0("<b>", hospital_name, "</b>"), address, sep = "<br/>"), 
-    clusterOptions = markerClusterOptions()
-    )
+gp <- girafe(ggobj = p)
 
-saveWidget(hospital_maps, here::here("htmlwidgets/map.html"))
+content_folder <- here::here("inst/content/htmlwidgets/")
 
-full_path <- here::here("htmlwidgets")
-rsconnect::writeManifest(
-  appDir = full_path,
-  appPrimaryDoc = "map.html",
-  contentCategory = "plot"
+# Save the map as an HTMLWidget
+saveWidget(gp, path(content_folder, "map.html"))
+
+# Write the manifest
+write_manifest(
+  content_folder = "htmlwidgets",
+  primary_document = "map.html"
 )
