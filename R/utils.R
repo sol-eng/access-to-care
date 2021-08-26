@@ -34,24 +34,17 @@ write_manifest <- function(content_folder,
         path_file(dl)
       }
     )
-    
     primary_match <- keep(
       primary_docs, 
       ~ length(.x) > 0
     )
-    
     primary_doc <-  ifelse(length(primary_match) > 0, primary_match[[1]], NA) 
-    
     if(is.na(primary_doc)) stop("No identifies primary doc")
     if(length(primary_match) > 1) stop("There are more then one primary doc")
     
   } else {
     primary_doc <- primary_document
   }
-  
-  
-  
-  
   
   cat(green("Full path: ", full_path, "\n"))
   cat(red("Application files\n"))

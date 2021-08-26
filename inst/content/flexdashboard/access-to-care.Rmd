@@ -147,7 +147,8 @@ observeEvent(input$usmap_selected, {
           nbr = "",
           facility_name = "Hospital Name",
           city = "City"
-        ),
+        ) %>% 
+        tab_options(table.font.size = 8),
       easyClose = TRUE, fade = TRUE
     ))
   }
