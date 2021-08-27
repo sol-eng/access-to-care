@@ -1,34 +1,61 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Access to Care
+# accesstocare
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-<img src="readme-files/access-to-care-diagram.png" width = "1000px">
+The goal of accesstocare is to …
 
-**Background:** This project combines US CENSUS population data with
-hospital data provided by Medicare. A linear model is used to determine
-if a county is over, or under served based on the size of the
-population.
+## Installation
 
-## Individual content
+You can install the released version of accesstocare from
+[CRAN](https://CRAN.R-project.org) with:
 
-|  No | Type               | Content                                                                                          | Code                                                                               | Refresh     | Description                                                                |
-|----:|:-------------------|:-------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------|:------------|:---------------------------------------------------------------------------|
-|   1 | Dashboard          | [Dashboard built in Dash](https://colorado.rstudio.com/rsc/access-to-care/dash/)                 | [Code](https://github.com/sol-eng/access-to-care/tree/master/dash)                 |             | Dashboard by state                                                         |
-|   2 | Dashboard          | [flexdashboard](https://colorado.rstudio.com/rsc/access-to-care/dashboard/)                      | [Code](https://github.com/sol-eng/access-to-care/tree/master/flexdashboard)        |             | Dashboard by state                                                         |
-|   3 | Jupyter            | [Jupyter notebook](https://colorado.rstudio.com/rsc/access-to-care/jupyter/)                     | [Code](https://github.com/sol-eng/access-to-care/tree/master/jupyter)              |             | Published version of the Jupyter Notebook                                  |
-|   4 | Launcher           | Multiple report creation                                                                         | [Code](https://github.com/sol-eng/access-to-care/tree/master/launcher-programatic) |             | Programatic use of the Launcher to create several reports at the same time |
-|   5 | Notebook           | [R Notebook](https://colorado.rstudio.com/rsc/access-to-care/notebook/)                          | [Code](https://github.com/sol-eng/access-to-care/tree/master/RNotebook)            |             | Notebook with some analysis, and creation of the Tensorflow model          |
-|   6 | Plot               | [Leaflet plot](https://colorado.rstudio.com/rsc/access-to-care/leaflet/)                         | [Code](https://github.com/sol-eng/access-to-care/tree/master/htmlwidgets)          |             | Stand alone leaflet plot                                                   |
-|   7 | Plot               | [Full country plot](https://colorado.rstudio.com/rsc/access-to-care/plot/)                       | [Code](https://github.com/sol-eng/access-to-care/tree/master/plot)                 |             | ggplot2 plot of the entire country                                         |
-|   8 | PowerPoint         | [PowerPoint Presentation](https://colorado.rstudio.com/rsc/access-to-care/powerpoint/)           | [Code](https://github.com/sol-eng/access-to-care/tree/master/powerpoint)           |             | Presentation of the data and model                                         |
-|   9 | PowerPoint         | [PowerPoint Presentation by State](https://colorado.rstudio.com/rsc/access-to-care/ppt-state/)   | [Code](https://github.com/sol-eng/access-to-care/tree/master/powerpoint-state)     |             | Parameterized RMarkdown presentation per state                             |
-|  10 | Presentation       | [RMarkdown Xaringan presentation](https://colorado.rstudio.com/rsc/access-to-care/presentation/) | [Code](https://github.com/sol-eng/access-to-care/tree/master/presentation)         |             | Presentation of the data and model                                         |
-|  11 | Report             | [RMarkdown with Email](https://colorado.rstudio.com/rsc/access-to-care/report/)                  | [Code](https://github.com/sol-eng/access-to-care/tree/master/RMarkdown-html)       |             | Single state report with customized blastula email                         |
-|  12 | Report             | [PDF by State](https://colorado.rstudio.com/rsc/access-to-care/pdf/)                             | [Code](https://github.com/sol-eng/access-to-care/tree/master/RMarkdown-pdf)        |             | Single state report with a PDF output                                      |
-|  13 | Report             | [Summary page](https://colorado.rstudio.com/rsc/access-to-care/overview/)                        | [Code](https://github.com/sol-eng/access-to-care/tree/master/connectwidgets)       |             | Summary page of all related content                                        |
-|  14 | REST API           | [REST API](https://colorado.rstudio.com/rsc/access-to-care/api/)                                 | [Code](https://github.com/sol-eng/access-to-care/tree/master/plumber-api)          |             | Multiple endpoints to access the model and data                            |
-|  15 | Scheduled R Script | [Data preparation](https://colorado.rstudio.com/rsc/access-to-care/data-preparation/)            | [Code](https://github.com/sol-eng/access-to-care/tree/master/RMarkdown-DataPrep)   | Once a week | Scheduled data preparation script dropped inside an RMarkdown              |
+``` r
+install.packages("accesstocare")
+```
+
+And the development version from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("sol-eng/access-to-care")
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+``` r
+library(accesstocare)
+## basic example code
+```
+
+What is special about using `README.Rmd` instead of just `README.md`?
+You can include R chunks like so:
+
+``` r
+summary(cars)
+#>      speed           dist       
+#>  Min.   : 4.0   Min.   :  2.00  
+#>  1st Qu.:12.0   1st Qu.: 26.00  
+#>  Median :15.0   Median : 36.00  
+#>  Mean   :15.4   Mean   : 42.98  
+#>  3rd Qu.:19.0   3rd Qu.: 56.00  
+#>  Max.   :25.0   Max.   :120.00
+```
+
+You’ll still need to render `README.Rmd` regularly, to keep `README.md`
+up-to-date. `devtools::build_readme()` is handy for this. You could also
+use GitHub Actions to re-render `README.Rmd` every time you push. An
+example workflow can be found here:
+<https://github.com/r-lib/actions/tree/master/examples>.
+
+You can also embed plots, for example:
+
+<img src="man/figures/README-pressure-1.png" width="100%" />
+
+In that case, don’t forget to commit and push the resulting figure
+files, so they display on GitHub and CRAN.

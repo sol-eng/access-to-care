@@ -1,93 +1,45 @@
 {
   "version": 1,
   "locale": "en_US",
-  "platform": "3.6.1",
+  "platform": "4.1.0",
   "metadata": {
     "appmode": "static",
     "primary_rmd": null,
     "primary_html": "map.html",
-    "content_category": "plot",
+    "content_category": null,
     "has_parameters": false
   },
   "packages": null,
   "files": {
     "access-to-care-hospitals.R": {
-      "checksum": "a94ba0d8baede13ef8bda562313d66fb"
+      "checksum": "5cbe84916bad13617182852f4ead03a8"
     },
-    "map_files/htmlwidgets-1.5.1/htmlwidgets.js": {
-      "checksum": "4ea5c55cd0143175643435a640086c16"
+    "map_files/d3-bundle-5.16.0/d3-bundle.min.js": {
+      "checksum": "e6fbd264f058915c3f3b92ef64bb5964"
     },
-    "map_files/jquery-1.12.4/jquery.min.js": {
-      "checksum": "4f252523d4af0b478c810c2547a63e19"
+    "map_files/d3-lasso-0.0.5/d3-lasso.min.js": {
+      "checksum": "898c17890edabad2ad91c9fd0a744452"
     },
-    "map_files/leaflet-1.3.1/images/layers-2x.png": {
-      "checksum": "4f0283c6ce28e888000e978e537a6a56"
+    "map_files/ggiraphjs-0.4.1/ggiraphjs.min.css": {
+      "checksum": "b6dbb48fbedc299e236995d501b9044b"
     },
-    "map_files/leaflet-1.3.1/images/layers.png": {
-      "checksum": "a6137456ed160d7606981aa57c559898"
+    "map_files/ggiraphjs-0.4.1/ggiraphjs.min.js": {
+      "checksum": "acaed8bc4308b939e1b9f9b32d7048e8"
     },
-    "map_files/leaflet-1.3.1/images/marker-icon-2x.png": {
-      "checksum": "401d815dc206b8dc1b17cd0e37695975"
+    "map_files/girafe-binding-0.7.10/girafe.js": {
+      "checksum": "316b014884a7f81d13e0f04052884aef"
     },
-    "map_files/leaflet-1.3.1/images/marker-icon.png": {
-      "checksum": "2273e3d8ad9264b7daa5bdbf8e6b47f8"
+    "map_files/htmlwidgets-1.5.3/htmlwidgets.js": {
+      "checksum": "ae5c4ea4df7a9e3398313f74a6b8edf2"
     },
-    "map_files/leaflet-1.3.1/images/marker-shadow.png": {
-      "checksum": "44a526eed258222515aa21eaffd14a96"
-    },
-    "map_files/leaflet-1.3.1/leaflet.css": {
-      "checksum": "58da535d4980b4c71b74a41bbee8a510"
-    },
-    "map_files/leaflet-1.3.1/leaflet.js": {
-      "checksum": "244e15299eb3715351e6cc53bf49aaba"
-    },
-    "map_files/leaflet-binding-2.0.3/leaflet.js": {
-      "checksum": "d5a930aadd6bb2911a067aa5e295612e"
-    },
-    "map_files/leaflet-markercluster-1.0.5/leaflet.markercluster.freezable.js": {
-      "checksum": "51116a1dd35da2f756743ca3e7aa3288"
-    },
-    "map_files/leaflet-markercluster-1.0.5/leaflet.markercluster.js": {
-      "checksum": "b28919e69b47689dd6e60185b74e53af"
-    },
-    "map_files/leaflet-markercluster-1.0.5/leaflet.markercluster.layersupport.js": {
-      "checksum": "ec78b520f1573bb9bff475fc24a797f3"
-    },
-    "map_files/leaflet-markercluster-1.0.5/MarkerCluster.css": {
-      "checksum": "7bc4f5bc3ef97f61a122253681687894"
-    },
-    "map_files/leaflet-markercluster-1.0.5/MarkerCluster.Default.css": {
-      "checksum": "0ba3d71ad0980967a4d3c7dc2ad819ef"
-    },
-    "map_files/leaflet-markercluster-1.0.5/MIT-LICENCE.txt": {
-      "checksum": "f4f84157ded9988586b6d1effec4684c"
-    },
-    "map_files/leaflet-markercluster-1.0.5/package.json": {
-      "checksum": "d27c0ae37857ddb98cbcb2f285304a12"
-    },
-    "map_files/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js": {
-      "checksum": "df38a3cf54f5b2c79edd680a15deae82"
-    },
-    "map_files/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js": {
-      "checksum": "8fb426b3cfaa7d730f3b56a104012882"
-    },
-    "map_files/leafletfix-1.0.0/leafletfix.css": {
-      "checksum": "f4b863df17301af3515da5260a02d2d2"
-    },
-    "map_files/Proj4Leaflet-1.0.1/proj4-compressed.js": {
-      "checksum": "38aad9a670e708ad10feeccc71d5fc12"
-    },
-    "map_files/Proj4Leaflet-1.0.1/proj4leaflet.js": {
-      "checksum": "4c72a5a790e066510f9eb68541280646"
-    },
-    "map_files/rstudio_leaflet-1.3.1/images/1px.png": {
-      "checksum": "978c1bee49d7ad5fc1a4d81099b13e18"
-    },
-    "map_files/rstudio_leaflet-1.3.1/rstudio_leaflet.css": {
-      "checksum": "71ac350889ff148fab73f0a9450addda"
+    "map_files/save-svg-as-png-1.4.17/save-svg-as-png.min.js": {
+      "checksum": "402e24e7ac6d5d48eb2610b22af959b8"
     },
     "map.html": {
-      "checksum": "164155ffdaaec24c261d097edb03e249"
+      "checksum": "c05e56045ff09a864cd07ebdf96c4b94"
+    },
+    "metadata.yml": {
+      "checksum": "272b17fb2bcf0c1d9dc04e205c57b020"
     }
   },
   "users": null

@@ -1,36 +1,34 @@
 {
   "version": 1,
+  "locale": "en_US",
+  "platform": "4.1.0",
   "metadata": {
-    "appmode": "python-dash",
-    "entrypoint": "app"
+    "appmode": "static",
+    "primary_rmd": null,
+    "primary_html": "app.py",
+    "content_category": null,
+    "has_parameters": false
   },
-  "locale": "en_US.UTF-8",
-  "python": {
-    "version": "3.7.3",
-    "package_manager": {
-      "name": "pip",
-      "version": "21.0.1",
-      "package_file": "requirements.txt"
-    }
-  },
+  "packages": null,
   "files": {
-    "requirements.txt": {
-      "checksum": "88c031dd3672a24acab9807bdd685798"
-    },
     "app.py": {
       "checksum": "651728958a0cdcbf6c7e12b584a323c7"
-    },
-    "assets/.DS_Store": {
-      "checksum": "d9945160348087eeb253f13e0af86b06"
-    },
-    "assets/RStudio1.png": {
-      "checksum": "288da77036023512c0adbf27de9fe9c2"
     },
     "assets/dash.css": {
       "checksum": "bef4f3a493c57c8cc7ffa20de40ccf1a"
     },
     "assets/dashboard.css": {
       "checksum": "f46c3368cbb1507d3ad67a3e2158172d"
+    },
+    "assets/RStudio1.png": {
+      "checksum": "288da77036023512c0adbf27de9fe9c2"
+    },
+    "metadata.yml": {
+      "checksum": "24d925a2f8246ace3f152cf30d60d1b6"
+    },
+    "requirements.txt": {
+      "checksum": "a02851e79878a64e209d4e1abfcee31e"
     }
-  }
+  },
+  "users": null
 }

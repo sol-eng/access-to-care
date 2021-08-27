@@ -1,9 +1,6 @@
 ---
 title: "Access to Care"
 params:
-  printcode:
-    label: 'Display Code:'
-    value: no
   state:
     choices: [Alabama, Arizona, Arkansas, California, Colorado, Connecticut, Delaware, District of Columbia, Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana, Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana, Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina, North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina, South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia, Wisconsin, Wyoming]
     input: select
@@ -16,54 +13,10 @@ output:
     reference_doc: template.potx
 ---
 
-<img src="RStudio1.png" style="position:absolute;top:10px;right:200px;" />
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = params$printcode)
-
-library(dplyr)
-library(ggplot2)
-library(pins)
-library(connections)
-
-under <- "#CC79A7"
-over <- "#0072B2"
-at_level <- "#008b00"
-hospital_color <- "#F0E442"
-
-if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
-  boardname <- "rsconnect"
-  board_register_rsconnect(
-    server = Sys.getenv("CONNECT_SERVER"),
-    key = Sys.getenv("CONNECT_API_KEY")
-    )
-} else {
-  boardname <- "local"
-  board_register(boardname)  
-}
-
-states <- pin_get("atc-states", board = boardname) %>% 
-  filter(full == !! params$state) %>%
-  collect()
-
-curr_state <- pull(states, state_id)
-
-counties <- pin_get("atc-county-map", boardname) %>%
-  filter(state_id == !! curr_state) %>%
-  collect()
-
-state <- counties$state_id[1]
-
-counties_table <- pin_get("atc-county-table", boardname) %>%
-  filter(full %in% !! params$state) %>%
-  collect()
-
-full_map <- pin_get("atc-base-map", boardname) %>%
-  filter(full %in% !! params$state) %>%
-  collect() %>%
-  select(popup, color, county_id) %>%
-  inner_join(counties, by = "county_id")
-
+knitr::opts_chunk$set(echo = FALSE)
+library(accesstocare)
 ```
 
 # `r params$state`
@@ -77,30 +30,8 @@ A **statistical model using data from across the country** is used to identify t
 ## County Map
 
 ```{r, fig.width = 10, fig.height = 6}
-
-full_map %>%
-  mutate(group = paste(county_id, shape_id)) %>%
-  ggplot() +
-  geom_polygon(
-    aes(long, lat, group = group), 
-    fill = full_map$color,
-    alpha = 0.5,
-    color = "#666666",
-    size = 0.1
-    ) +
-  theme_minimal() +
-  theme(
-    axis.title = element_blank(), 
-    axis.text = element_blank(), 
-    panel.grid = element_blank(),
-    panel.grid.major = element_blank()) 
+atc_plot_state_map(state = params$state)
 ```
 
 
-## County Data
-Counties with above or below the number of hostpitals expected.
-```{r}
-counties_table %>%
-  select(-full) 
-```
 

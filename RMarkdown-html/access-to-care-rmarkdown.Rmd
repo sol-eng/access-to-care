@@ -9,8 +9,6 @@ params:
     input: select
     label: 'State:'
     value: California
-resource_files:
-- config.yml
 output: html_document
 ---
 
@@ -19,57 +17,11 @@ output: html_document
 ```{r, include=FALSE}
 knitr::opts_chunk$set(echo = params$printcode)
 
-library(dplyr)
-library(readr)
-library(purrr)
-library(ggplot2)
-library(leaflet)
-library(DT)
-library(usmap)
-library(pins)
+library(accesstocare)
 library(blastula)
-library(connections)
-
-under <- "#CC79A7"
-over <- "#0072B2"
-at_level <- "#008b00"
-hospital_color <- "#F0E442"
-
-if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
-  boardname <- "rsconnect"
-  board_register_rsconnect(
-    server = Sys.getenv("CONNECT_SERVER"),
-    key = Sys.getenv("CONNECT_API_KEY")
-    )
-} else {
-  boardname <- "local"
-  board_register(boardname)  
-}
-
-states <- pin_get("atc-states", board = boardname) %>% 
-  filter(full == !! params$state) %>%
-  collect()
-
-curr_state <- pull(states, state_id)
-
-counties <- pin_get("atc-county-map", boardname) %>%
-  filter(state_id == !! curr_state) %>%
-  collect()
-
-state <- counties$state_id[1]
-
-counties_table <- pin_get("atc-county-table", boardname) %>%
-  filter(full %in% !! params$state) %>%
-  collect()
-
-base_map <- pin_get("atc-base-map", boardname) %>%
-  filter(full %in% !! params$state) %>%
-  collect()
-
-hospital_locations <- pin_get("atc-hospitals", boardname) %>%
-  filter(state_id == !! state) %>%
-  select(-state_id) %>%
-  collect()
+library(dplyr)
+library(DT)
+library(gt)
 ```
 
 ## `r params$state`
@@ -85,54 +37,7 @@ A **statistical model using data from across the country** is used to identify t
 Breakdown of counties and their status based on county population compared to the number of hospitals
 
 ```{r, fig.height = 7, fig.width = 9}
-locations <- pin_get("atc-hospitals", board = boardname) %>%
-  filter(state_id == !! curr_state) %>%
-  select(longitude, latitude) %>%
-  collect() %>%
-  mutate_all(round, 1) %>%
-  count(longitude, latitude) %>%
-  mutate(popup = paste0("Hospitals: ", n))
-
-initial_map <- leaflet() %>%
-  addProviderTiles(providers$CartoDB) %>%
-  addLegend(
-    "bottomright", 
-    color  = c(under,over ,at_level, hospital_color), 
-    labels = c(
-      "Less hopitals than expected",
-      "More hospitals than expected", "Within Range", 
-      "Hospital Location"), 
-    title  = "Legend",
-    opacity = 0.5
-    )
-
-full_map <- base_map %>%
-  select(popup, color, county_id) %>%
-  inner_join(counties, by = "county_id")
-
-full_map %>%
-  group_by(county_id, shape_id) %>%
-  group_map(~ .x) %>%
-  reduce(
-    ~ addPolygons(
-      .x, 
-      lng = .y$long, 
-      lat = .y$lat, 
-      color = .y$color[[1]], 
-      popup = .y$popup[[1]],
-      weight = 1, 
-      fillOpacity = 0.3
-      ), 
-    .init = initial_map
-    ) %>%
-  addCircleMarkers(
-    lng = locations$longitude, 
-    lat = locations$latitude,
-    radius = 2 * (1 + log(locations$n)),
-    popup = locations$popup,
-    fillColor = hospital_color, color = "gray", 
-    fillOpacity = 0.7,weight = 1
-    )
+atc_plot_state_map(state = params$state)
 ```
 
 ### County Data
@@ -140,12 +45,13 @@ full_map %>%
 Here is the county level data used in this report
 
 ```{r}
-display_table <- counties_table %>%
-  select(-full)
-datatable(display_table, class = "cell-border stripe")
+us_counties %>% 
+  filter(state_name == params$state) %>% 
+  select(county_name, hospitals, population) %>% 
+  datatable(colnames = c("County" = "county_name", "Hospitals" = "hospitals", "Population" = "population"))
 ```
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, eval = TRUE}
 attach_connect_email(
   render_connect_email("access-to-care-email.Rmd"),
   subject = paste0("Access to Care - ", params$state)

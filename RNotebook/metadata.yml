@@ -1,4 +1,3 @@
 title: "R Notebook"
-description: "Notebook with some analysis, and creation of the Tensorflow model"
-published: https://colorado.rstudio.com/rsc/access-to-care/notebook/
+description: "Notebook with some analysis of the Hospital and County data"
 type: Notebook

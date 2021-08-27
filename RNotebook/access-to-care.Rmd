@@ -3,129 +3,42 @@ title: "Access to Care Analysis"
 output: html_notebook
 ---
 
-```{r setup, include=FALSE}
-library(dplyr)
-library(ggplot2)
-library(pins)
-library(connections)
+```{r setup, include = FALSE}
+library(tidyverse)
+library(accesstocare)
+```
 
-if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
-  boardname <- "rsconnect"
-  board_register_rsconnect(
-    server = Sys.getenv("CONNECT_SERVER"),
-    key = Sys.getenv("CONNECT_API_KEY")
-    )
-} else {
-  boardname <- "local"
-  board_register(boardname)  
-}
-
-model <- pin_get("atc-model", board = boardname)
-states <- pin_get("atc-states", board = boardname) %>% collect()
-county_hospitals <- pin_get("atc-base-map", boardname)
+```{r}
+library(tidyverse)
+library(accesstocare)
 ```
 
 ## County population vs hospitals
 
 ```{r}
-county_hospitals %>%
+us_counties %>% 
   ggplot() +
-  geom_point(aes(hospitals, population), color = "#E69F00", alpha = 0.5) +
-  scale_y_continuous(breaks = 0:10 * 1000000, labels = paste0(0:10, "M")) +
-  theme_minimal() 
+  geom_point(aes(population, hospitals)) +
+  theme_minimal() +
+  labs(x = "Counties", y = "Hospitals")
 ```
 
-## Model
-
 ```{r}
-summary(model)
-```
-
-## Overlay the model
-
-
-```{r}
-bounds <- county_hospitals %>%
-  summarise(
-    mi = min(population, na.rm = TRUE), 
-    mx = max(population, na.rm = TRUE)
-    ) %>% 
-  collect() %>%
-  as.numeric()
-
-preds <- predict(
-  model, 
-  data.frame(population = bounds),
-  interval = "prediction"
-  )
-
-county_hospitals %>% 
-  group_by(population, hospitals) %>%
-  summarise() %>%
-  ggplot() +
-    geom_point(aes(hospitals, population), color = "#E69F00", alpha = 0.5) +
-    scale_y_continuous(breaks = 0:10 * 1000000, labels = paste0(0:10, "M")) +
-    geom_segment(x = preds[1,2], y = bounds[1], 
-                 xend = preds[2,2], yend = bounds[2], 
-                 color = "#009E73") +
-    geom_segment(x = preds[1,3], y = bounds[1], 
-                 xend = preds[2,3], yend = bounds[2], 
-                 color = "#CC79A7") +
-    theme_minimal()
-```
-
-## Tensorflow / Keras model
-
-```{r}
-library(keras)
-library(dplyr)
-library(rsample)
-library(pins)
-library(ggplot2)
-
-counties <- pin_get("atc-base-map", "local") %>%
-  select(population, hospitals)
-
-set.seed(100)
-train_test_split <- initial_split(
-  counties, 
-  prop = 0.8)
-train_tbl <- training(train_test_split)
-test_tbl  <- testing(train_test_split)
-
-model_keras <- keras_model_sequential() %>%
-  layer_dense(
-    units = 16,
-    kernel_initializer = "uniform",
-    activation = "relu",
-    input_shape = 1) %>%
-  layer_dense(units = 16, activation = "relu") %>%
-  layer_dense(units = 16, activation = "relu") %>%
-  layer_dense(units = 1) %>%
-  compile(
-    loss = "mse",
-    optimizer = optimizer_rmsprop(),
-    metrics = list("mean_absolute_error")
-  )
-
-history <-  model_keras %>%
-  fit(
-    x = train_tbl$population,
-    y = train_tbl$hospitals,
-    epochs = 50,
-    validation_split = 0.3,
-    verbose = 0
-)
-plot(history)
+summary(us_atc_model)
 ```
 
 
 ```{r}
-export_savedmodel(model_keras, here::here("tensorflow"))
-
-full_path <- here::here("tensorflow")
-rsconnect::writeManifest(
-  appDir = full_path
-)
+us_counties %>% 
+  count(pred_status) %>% 
+  ggplot(aes(pred_status, n)) +
+  geom_col() +
+  geom_text(aes(label = n, y = n + 100)) +
+  coord_flip() +
+  theme_minimal() +
+  labs(x = "Counties", y = "Prediction Result")
 ```
+
+
+
 

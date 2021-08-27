@@ -3,368 +3,399 @@ title: "Access to Care Data Preparation"
 output: html_document
 ---
 
-```{r, include = FALSE}
+
+```{r setup, include = FALSE}
 library(dplyr)
-library(readr)
-library(haven)
-library(rlang)
-library(tidyr)
-library(stringr)
-library(purrr)
-library(tigris)
-library(fs)
 library(haven)
 library(usmap)
-library(pins)
-```
-
-
-```{r}
-library(dplyr)
-library(readr)
-library(haven)
-library(rlang)
-library(tidyr)
+library(janitor)
 library(stringr)
+library(readr)
+library(httr)
+library(maps)
+library(ggplot2)
 library(purrr)
-library(tigris)
-library(fs)
-library(haven)
-library(usmap)
-library(pins)
-
-## Read SAS dataset
-hospitals_raw <- haven::read_sas("data/Structural_Measures_-_Hospital.sas7bdat") 
-
-## Prepare hospital data
-hospitals <- hospitals_raw %>%
-  rename_all(str_to_lower) %>%
-  rename_all(str_replace_all, " ", "_") %>%
-  select(provider_id, hospital_name, state, county_name, location) %>%
-  group_by_all() %>%
-  summarise() %>%
-  ungroup() %>%
-  separate(location, into = c("address", "location"), sep = "\\(") %>%
-  mutate(location = str_remove(location, "\\)")) %>%
-  separate(location, into = c("latitude", "longitude"), sep = ",") %>%
-  mutate(
-    longitude = as.numeric(longitude), latitude = as.numeric(latitude),
-    county_key = str_remove_all(county_name, " County"),
-    county_key = str_remove_all(county_key, " Parish"),
-    county_key = str_remove_all(county_key, " city"),
-    county_key = str_to_lower(county_key),
-    county_key = str_remove_all(county_key, " "),
-    county_key = str_replace_all(county_key, "st. ", "saint")
-    )
-
-## Prepare state data
-states <- usmap::statepop %>%
-  select(-fips) %>%
-  select(state = abbr, full) %>%
-  mutate(state_id = row_number()) %>%
-  select(state_id, everything())
-
-## Prepare location data
-hospital_locations <- hospitals  %>%
-  filter(!is.na(longitude)) %>%
-  select(state, longitude, latitude) %>%
-  mutate(state = as.factor(state)) %>%
-  inner_join(states, by = "state")  %>%
-  select(state_id,longitude, latitude)
-
-population <- usmap::countypop %>%
-  mutate(
-    county_key = str_remove_all(county, " County"),
-    county_key = str_remove_all(county_key, " Parish"),
-    county_key = str_remove_all(county_key, " city"),
-    county_key = str_to_lower(county_key),
-    county_key = str_remove_all(county_key, " "),
-    county_key = str_replace_all(county_key, "st. ", "saint")) %>%
-  rename(
-    population = pop_2015,
-    state = abbr
-  )
-
-hospital_count <- hospitals %>%
-  count(state, county_name) %>%
-  filter(!is.na(county_name)) %>%
-  mutate(
-    county_key = str_remove_all(county_name, " County"),
-    county_key = str_remove_all(county_key, " Parish"),
-    county_key = str_remove_all(county_key, " city"),
-    county_key = str_to_lower(county_key),
-    county_key = str_remove_all(county_key, " "),
-    county_key = str_replace_all(county_key, "st.", "saint")) %>%
-  rename(hospitals = n)
-
-state_hospitals <- population %>%
-  left_join(hospital_count, by = c("state", "county_key")) %>%
-  replace_na(list(hospitals = 0))
+library(tidyr)
+library(accesstocare)
+library(usethis)
 ```
 
-
 ```{r}
-## Fit model
 set.seed(100)
+options(scipen=999)
 
-hospital_sample <- state_hospitals %>%
-  sample_frac(0.3)
+library(dplyr)
+library(haven)
+library(usmap)
+library(janitor)
+library(stringr)
+library(readr)
+library(httr)
+library(maps)
+library(ggplot2)
+library(purrr)
+library(tidyr)
+library(accesstocare)
+library(usethis)
 
-model <- lm(hospitals ~ population, data = hospital_sample)
+```
 
-predictions <- predict(
-  model, 
-  newdata = state_hospitals, 
-  interval = "prediction"
-  ) %>%
-  as_tibble() %>%
-  mutate_all(round)
+Data provider: CMS
+Data website: https://data.cms.gov/
+Data URL: https://data.cms.gov/provider-data/dataset/xubh-q36u
 
-hospital_results <- state_hospitals %>%
-  inner_join(states, by = "state") %>%
-  bind_cols(predictions) %>%
+It pulls the data from the package instead of the site.  By default, the following code chunk does not run, unless an update is needed.
+
+```{r, eval = FALSE}
+data_url <- "https://data.cms.gov/provider-data/sites/default/files/resources/092256becd267d9eeccf73bf7d16c46b_1623902717/Hospital_General_Information.csv"
+
+cms_data <- read_csv(data_url)
+
+cms_raw_data <- clean_names(cms_data[, 1:9])
+
+use_data(cms_raw_data)
+```
+
+Prepares the CMS data by removing Psychiatric hospitals, and thos from states not included in the FIPS files.
+
+```{r}
+hospital_tbl <- cms_raw_data %>% 
+  filter(
+    hospital_type != "Psychiatric", 
+    state != "PR", state != "VI", 
+    state != "AS", state != "GU",  
+    state != "MP"
+    ) %>% 
+  select(
+    facility_id, 
+    facility_name, 
+    address, 
+    city, 
+    state, 
+    zip_code,
+    county_name
+    ) %>% 
+  mutate(county_name = str_to_upper(county_name)) %>% 
+  group_by(address, city, state, zip_code, county_name) %>% 
+  summarise(
+    facility_id = first(facility_id),
+    facility_name = first(facility_name)
+    ) %>% 
+  select(contains("facility"), everything()) %>% 
+  arrange(state, city, address, facility_name) %>% 
+  ungroup() %>% 
   mutate(
-    result = case_when(
-      hospitals < lwr ~ -1,
-      hospitals > upr ~ 1,
-      TRUE ~ 0
-      )
-    ) %>%
-  select(-county_name, -fips, -full, -state) 
+    county_name = str_to_upper(county_name),
+    county_name = str_remove(
+      county_name, 
+      " MUNICIPALITY| CENSUS AREA| COUNTY| PARISH| CITY AND| BOROUGH"
+      ),
+    county_name = str_remove(county_name, "BOROUGH"),
+    county_name = str_replace(county_name, "ST. ", "SAINT "),
+    county_name = str_replace(county_name, "STE. ", "SAINTE "),
+    county_name = str_replace(county_name, "-", " "),
+    county_name = case_when(
+      state == "AL" & county_name == "NEW YORK" ~ "CHAMBERS",
+      state == "AZ" & county_name == "DUPAGE" ~ "MARICOPA",
+      state == "IN" & county_name == "ST JOSEPH" ~ "SAINT JOSEPH",
+      state == "VA" & county_name == "SALEM" ~ "SALEM CITY",
+      TRUE ~ county_name
+    ),
+    county_name = str_trim(county_name),
+    county_name = str_replace_all(county_name, " ", ""),
+    county_name = str_replace_all(county_name, "'", "")
+  )
+```
 
-## Build state shapes
-get_state_shapes <- function(path = "data/shapes.rds", rebuild = FALSE) {
-  ## Should only rebuild if running on a local computer
-  if(rebuild)  {
-    dir_create("shapes")
-    all_paths <- path("shapes", state.abb, ext = "rds") %>%
-      set_names(state.abb)
-    exist <- file_exists(all_paths)
-    county_paths <- all_paths[!exist]
-    imap(
-      county_paths,
-      ~ counties(.y) %>%
-        write_rds(.x)
+Uses the `usmap` data to retrieve the FIPS code for each county.  Performs close to the same transformations to the county names to produce the matches
+
+```{r}
+states <- usmap::statepop %>% 
+  select(state = abbr, state_name = full)
+
+county_list <- countypop %>% 
+  select(
+    fips,
+    state = abbr,
+    county_name = county
+  ) %>% 
+  mutate(
+    county_name = str_to_upper(county_name),
+    county_name = str_remove(
+      county_name, 
+      " MUNICIPALITY| CENSUS AREA| COUNTY| PARISH| CITY AND| BOROUGH"
+      ),
+    county_name = str_remove(county_name, "BOROUGH"),
+    county_name = str_replace(county_name, "ST. ", "SAINT "),
+    county_name = str_replace(county_name, "STE. ", "SAINTE "),
+    county_name = str_replace(county_name, "-", " "),
+    county_name = str_trim(county_name),
+    county_name = str_replace_all(county_name, " ", ""),
+    county_name = str_replace_all(county_name, "'", ""),
+    county_name = str_replace_all(county_name, "Ð", "N")
+  )
+```
+
+Confirms that there are no unmtached counties
+
+```{r}
+hospital_counties <- hospital_tbl %>% 
+  group_by(state, county_name) %>% 
+  summarise() %>% 
+  ungroup() 
+
+hospital_counties %>% 
+  left_join(county_list, by = c("state", "county_name")) %>% 
+  filter(is.na(fips))
+```
+
+Prepares the `us_hospitals` data set.
+
+```{r}
+county_tbl <- countypop %>% 
+  select(
+    fips, 
+    state = abbr, 
+    county_name = county, 
+    population = pop_2015
     )
-    select_row <- function(x, y) x %% y == 0
-    extract_coordinates <- function(path, decimals = 2) {
-      state_rds <- readRDS(path)
-      state_rds@polygons %>%
-        map(~ {
-          map(
-            .x@Polygons,
-            ~ tibble(
-              long = .x@coords[, 1],
-              lat = .x@coords[, 2],
-              rn = 1:length(.x@coords[, 1]),
-              sel = select_row(rn, 20)
-            )) %>% 
-            set_names(paste0("s", seq_along(.x@Polygons))) %>%
-            map_df(~.x, .id = "shape_id")}) %>%
-        set_names(state_rds$NAME) %>%
-        map_df(~.x, .id = "county") %>%
-        filter(sel) %>%
-        select(-rn, -sel) %>%
-        mutate(step = row_number())
-    }
-    county_states <- map_dfr(
-      all_paths,
-      extract_coordinates,
-      .id = "state"
-    ) 
-    shapes <- county_states %>%
-      mutate(
-        county_key = str_to_lower(county),
-        county_key = str_remove_all(county_key, " "),
-        county_key = str_replace_all(county_key, "st. ", "saint")
-      ) %>%
-      select(-county)
-    readr::write_rds(shapes, path, compress = "gz")
-    shapes
-  } else {
-    readr::read_rds(path)
-  }
-}
 
-## Data Optimizations
-state_shapes <- get_state_shapes()
-
-county_hospitals_full <- state_shapes %>%
-  count(state, county_key) %>%
-  inner_join(states, by = "state") %>%
-  inner_join(hospital_results, by = c("state_id", "county_key")) %>%
-  mutate(county_id = row_number())
-
-county_shapes <- county_hospitals_full %>%
-  select(state, state_id, county_key, county_id) %>%
-  inner_join(state_shapes, by = c("state", "county_key")) %>%
-  ungroup() %>%
-  mutate(shape_id = as.integer(str_remove(shape_id, "s"))) %>%
-  select(-state, -county_key)  %>%
-  select(state_id, county_id, shape_id, step, everything()) %>%
-  arrange(county_id, shape_id, step)
-
-county_hospitals <- county_hospitals_full %>%
+us_hospitals <- hospital_tbl %>% 
+  left_join(county_list, by = c("state", "county_name")) %>% 
+  select(-county_name, -state) %>% 
+  left_join(county_tbl, by = c("fips")) %>% 
   mutate(
-    county = str_remove(county, "County"), 
-    county = str_squish(county)
-    ) %>%
-  select(-county_key, -n, -full, -state) %>%
-  select(county_id, everything()) 
+    county_name = str_to_upper(county_name),
+    city = str_to_upper(city)
+    ) %>% 
+  select(-population) %>% 
+  left_join(states, by = "state")
+```
 
-state_full <- county_hospitals_full %>%
-  group_by(state) %>%
+Prepares data for the model, and produces the `us_model` variable.
+
+```{r}
+cnt_hosp <- us_hospitals %>% 
+  count(fips, name = "hospitals") %>% 
+  right_join(county_tbl, by = "fips")
+
+cnt_hosp2 <- cnt_hosp %>% 
+  replace_na(list(hospitals = 0)) %>% 
+  select(fips, state, county_name, hospitals, population) %>% 
+  arrange(state, county_name)
+
+us_model <- cnt_hosp2 %>% 
+  sample_frac(0.3) %>% 
+  lm(hospitals ~ population, data = .) 
+
+preds <- predict(
+  us_model, 
+  newdata = cnt_hosp2, 
+  interval = "prediction",
+  level = 0.99
+  ) %>% 
+  as_tibble() %>% 
+  rename_all(function(x) paste0("pred_", x))
+```
+
+Matches the county data with the predictions to create the `us_counties` data set
+
+```{r}
+us_counties <- cnt_hosp2 %>% 
+  bind_cols(preds) %>% 
+  mutate(
+    pred_lwr = round(pred_lwr),
+    pred_fit = round(pred_fit),
+    pred_upr = round(pred_upr),
+    pred_lwr = ifelse(pred_lwr < 0, 0, pred_lwr),
+    pred_fit = ifelse(pred_fit < 0, 0, pred_fit),
+    pred_upr = ifelse(pred_upr < 0, 0, pred_upr),
+    pred_status = case_when(
+      hospitals < pred_lwr ~ "below",
+      hospitals > pred_upr ~ "above",
+      TRUE ~ "ok"
+    )
+  ) %>% 
+  left_join(states, by = "state")
+
+```
+
+```{r}
+us_states <- us_counties %>% 
+  group_by(state) %>% 
   summarise(
     hospitals = sum(hospitals),
-    population = sum(population),
-    under = sum(ifelse(result == -1, 1, 0)),
-    counties = n()
-  ) %>%
-  ungroup() %>%
-  inner_join(states, by = "state")
-  
-```
-
-```{r}
-under <- "#CC79A7"
-over <- "#0072B2"  #009E73
-at_level <- "#008b00"
-hospital_color <- "#F0E442"
-```
-
-```{r} 
-base_map <-  state_full %>%
-  select(state_id, full, state) %>%
-  inner_join(county_hospitals, by = "state_id") %>%
+    population = sum(population)
+  ) %>% 
+  ungroup() %>% 
   mutate(
-    population_label = ifelse(
-      population > 1000000, 
-      paste0(as.integer(round(population / 1000000)), "M"),
-      paste0(as.integer(round(population / 1000)), "K")
-      ),
-    popup = paste0(
-      "<b>", county, "</b>", 
-      "<br/>Population: ", population_label, 
-      "<br/>Hospitals: ", as.integer(hospitals),
-      "<br/>Expected: ", as.integer(fit)
-      ), 
-    color = case_when(
-      result ==  0  ~ at_level,
-      result ==  1  ~ over,
-      result == -1  ~ under
-    ),
-    result = case_when(
-      result ==  0  ~ "Acceptable",
-      result ==  1  ~ "Above",
-      result == -1  ~ "Under"
-    )
-    )
+    per_person = round(population / hospitals),
+    per_person_quartile = ntile(per_person, 4)
+  ) %>% 
+  left_join(states, by = "state")
 ```
 
-```{r}
-county_table <- base_map %>%
-  select(
-    full,
-    County = county,
-    Population = population_label,
-    Hospitals = hospitals,
-    Expected = fit,
-    `Model Result` = result
-    ) 
-```
 
 ```{r}
-## Output - Register PINs inside RStudio Connect
-if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
-  boardname <- "rsconnect"
-  board_register_rsconnect(
-    server = Sys.getenv("CONNECT_SERVER"),
-    key = Sys.getenv("CONNECT_API_KEY")
-    )
-} else {
-  boardname <- "local"
-  board_register(boardname)  
-}
-```
+library(hexbin)
 
-```{r}
-pin(
-  state_full,
-  "atc-states",
-  board = boardname
+sh <- hexcoords(0.5, 0.5)
+
+st_locations_list <- list(
+  list(state = "MS", x = 0, y = 0),
+  list(state = "AL", x = 1, y = 0),
+  list(state = "GA", x = 2, y = 0),
+  list(state = "FL", x = 1.5, y = -1.5),
+  list(state = "LA", x = -1, y = 0),
+  list(state = "OK", x = -2, y = 0),
+  list(state = "TX", x = -1.5, y = -1.5),
+  list(state = "AZ", x = -3, y = 0),
+  list(state = "TN", x = 0.5, y = 1.5),
+  list(state = "AR", x = -0.5, y = 1.5),
+  list(state = "KS", x = -1.5, y = 1.5),
+  list(state = "NM", x = -2.5, y = 1.5),
+  list(state = "UT", x = -3.5, y = 1.5),
+  list(state = "CA", x = -4.5, y = 1.5),
+  list(state = "NC", x = 1.5, y = 1.5),
+  list(state = "SC", x = 2.5, y = 1.5),
+  list(state = "DC", x = 3.5, y = 1.5),
+  list(state = "OR", x = -5, y = 3),
+  list(state = "NV", x = -4, y = 3),
+  list(state = "CO", x = -3, y = 3),
+  list(state = "NE", x = -2, y = 3),
+  list(state = "MO", x = -1, y = 3),
+  list(state = "KY", x = 0, y = 3),
+  list(state = "WV", x = 1, y = 3),
+  list(state = "VA", x = 2, y = 3),
+  list(state = "MD", x = 3, y = 3),
+  list(state = "DE", x = 4, y = 3),
+  list(state = "CT", x = 4.5, y = 4.5),
+  list(state = "NJ", x = 3.5, y = 4.5),
+  list(state = "PA", x = 2.5, y = 4.5),
+  list(state = "OH", x = 1.5, y = 4.5),
+  list(state = "IN", x = 0.5, y = 4.5),
+  list(state = "IL", x = -0.5, y = 4.5),
+  list(state = "IA", x = -1.5, y = 4.5),
+  list(state = "SD", x = -2.5, y = 4.5),
+  list(state = "WY", x = -3.5, y = 4.5),
+  list(state = "ID", x = -4.5, y = 4.5),
+  list(state = "WA", x = -5, y = 6),
+  list(state = "MT", x = -4, y = 6),
+  list(state = "ND", x = -3, y = 6),
+  list(state = "MN", x = -2, y = 6),
+  list(state = "WI", x = -1, y = 6),
+  list(state = "MI", x = 1, y = 6),
+  list(state = "NY", x = 3, y = 6),
+  list(state = "MA", x = 4, y = 6),
+  list(state = "RI", x = 5, y = 6),
+  list(state = "NH", x = 4.5, y = 7.5),
+  list(state = "VT", x = 3.5, y = 7.5),
+  list(state = "ME", x = 5, y = 9),
+  list(state = "AK", x = -5, y = 9),
+  list(state = "HI", x = -5, y = -1.5)
 )
-```
 
-```{r}
-pin(
-  hospital_locations,
-  "atc-hospitals",
-  board = boardname
+us_hex_positions <- st_locations_list %>% 
+  map_dfr(~.x) %>% 
+  left_join(states, by = "state")
+
+us_hex_polygons <- map_dfr(
+  st_locations_list,
+  ~{
+    tibble(
+      x = sh$x + .x$x,
+      y = sh$y + .x$y,
+      state = .x$state
+    )
+  }
 )
+
+us_hex_polygons %>% 
+  ggplot() +
+  geom_polygon(aes(x, y, group = state), fill = "lightgray", color = "white") +
+  geom_text(aes(x, y, label = state), data = us_hex_positions) +
+  theme_void() +
+  theme(legend.position = "none") 
 ```
-
-```{r}
-pin(
-  county_shapes,
-  name = "atc-county-map",
-  board = boardname
-  )
-```
-
-```{r}
-pin(
-  base_map,
-  name = "atc-base-map",
-  board = boardname
-  )
-```
-
-```{r}
-pin(
-  county_table,
-  name = "atc-county-table",
-  board = boardname
-  )
-```
-
-```{r}
-hospital_list <- hospitals %>%
-  mutate_if(is.character, str_to_title) %>%
-  filter(!is.na(longitude))
-
-if(boardname == "local") {
-  pin(
-    hospital_list,
-    name = "atc-hospital-list",
-    board = boardname
-  )
-}
-```
-
 
 
 ```{r}
-pin.parsed_model <- function(x, name = NULL, description = NULL, board = NULL, ...) {
-  path <- tempfile()
-  dir.create(path)
-  on.exit(unlink(path))
+pred_count <- us_counties %>% 
+  count(state, pred_status) %>% 
+  pivot_wider(
+    names_from = pred_status, 
+    values_from = n, 
+    values_fill = 0,
+    names_prefix = "pred_"
+    )
 
-  saveRDS(x, file.path(path, "data.rds"), version = 2)
-  
-  metadata <- list(
-    columns = pm$general
-  )
+us_atc_state_polygons <- us_states %>% 
+  inner_join(us_hex_polygons, by = "state") %>% 
+  inner_join(pred_count, by = "state")
+```
 
-  board_pin_store(board, path, name, description, "pm_model", metadata, ...)
-}
+
+```{r}
+county_map <- usmap::us_map("county")
+
+us_atc_county_polygons <- us_counties %>% 
+  left_join(county_map, by = "fips") 
+
 ```
 
 ```{r}
-library(tidypredict)
-pm <- parse_model(model)
-pin(
-  pm,
-  name = "atc-parsed-model",
-  board = boardname
-  )
+us_large_cities <- maps::us.cities %>% 
+  select(long, lat, everything()) %>% 
+  usmap::usmap_transform() %>% 
+  select(-lat, -long) %>% 
+  rename(x = long.1, 
+         y = lat.1, 
+         city_name = name, 
+         state = country.etc,
+         population = pop
+         ) %>% 
+  mutate(city_name = str_sub(city_name, 1, nchar(city_name) - 3)) %>% 
+  arrange(state, -population) %>% 
+  group_by(state) %>% 
+  mutate(position = row_number()) %>% 
+  ungroup()
 ```
+
+```{r}
+palette_atc <- list(
+    above = "#0072B2",
+    below =  "#CC79A7",
+    ok = "#009E73",
+    low = "#ffffff",
+    high = "#0072B2",
+    ambulance = "#E69F00"
+  )
+
+```
+ 
+```{r}
+us_atc_model <- us_model 
+```
+ 
+
+```{r, eval = FALSE}
+library(usethis)
+
+use_data(us_hex_positions, overwrite = TRUE)
+use_data(us_hex_polygons, overwrite = TRUE)
+use_data(us_hospitals, overwrite = TRUE)
+use_data(us_counties, overwrite = TRUE)
+use_data(us_states, overwrite = TRUE)
+
+use_data(us_atc_county_polygons, overwrite = TRUE)
+use_data(us_atc_state_polygons, overwrite = TRUE)
+
+use_data(us_large_cities, overwrite = TRUE)
+
+use_data(us_atc_model, overwrite = TRUE)
+
+use_data(palette_atc, overwrite = TRUE)
+```
+
+
+
