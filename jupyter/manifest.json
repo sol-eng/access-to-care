@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "locale": "en_US",
+  "platform": "4.1.0",
+  "metadata": {
+    "appmode": "static",
+    "primary_rmd": null,
+    "primary_html": "access-to-care.ipynb",
+    "content_category": null,
+    "has_parameters": false
+  },
+  "packages": null,
+  "files": {
+    ".ipynb_checkpoints/access-to-care-checkpoint.ipynb": {
+      "checksum": "c5318789a12c2d6fafc2e2f1daf64c15"
+    },
+    "access-to-care.ipynb": {
+      "checksum": "c5318789a12c2d6fafc2e2f1daf64c15"
+    },
+    "metadata.yml": {
+      "checksum": "f913b9de08f65890e0500ab8353ed09b"
+    }
+  },
+  "users": null
+}

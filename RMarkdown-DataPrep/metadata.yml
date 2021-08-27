@@ -1,0 +1,3 @@
+title: "Data preparation"
+description: "Scheduled data preparation script dropped inside an RMarkdown"
+type: Scheduled R Script
