@@ -376,9 +376,44 @@ palette_atc <- list(
 ```{r}
 us_atc_model <- us_model 
 ```
- 
 
-```{r, eval = FALSE}
+```{r}
+if(Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
+  boardname <- "rsconnect"
+  board_register_rsconnect(
+    server = Sys.getenv("CONNECT_SERVER"),
+    key = Sys.getenv("CONNECT_API_KEY")
+    )
+  
+  pin(
+    us_counties,
+    name = "atc-counties",
+    board = boardname
+  )
+  
+  pin(
+    us_states,
+    name = "atc-states",
+    board = boardname
+  )
+  
+  pin(
+    us_hospitals,
+    name = "atc-hospitals",
+    board = boardname
+  )
+  
+  pin(
+    us_atc_model,
+    name = "atc-model",
+    board = boardname
+  )
+}
+```
+
+
+```{r, echo = FALSE, eval = FALSE}
+
 library(usethis)
 
 use_data(us_hex_positions, overwrite = TRUE)
