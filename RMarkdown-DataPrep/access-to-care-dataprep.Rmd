@@ -18,6 +18,7 @@ library(purrr)
 library(tidyr)
 library(accesstocare)
 library(usethis)
+library(maptools)
 ```
 
 ```{r}
