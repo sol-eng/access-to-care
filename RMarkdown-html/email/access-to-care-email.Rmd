@@ -3,8 +3,6 @@ title: "Access to Care by State"
 output: blastula::blastula_email
 ---
 
-<img src="RStudio1.png"/>
-
 #  Access to Care 
 ## `r params$state`
 

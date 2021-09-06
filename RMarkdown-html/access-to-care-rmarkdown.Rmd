@@ -12,8 +12,6 @@ params:
 output: html_document
 ---
 
-<img src="RStudio1.png" style="position:absolute;top:10px;right:200px;" />
-
 ```{r, include=FALSE}
 knitr::opts_chunk$set(echo = params$printcode)
 
@@ -53,9 +51,7 @@ us_counties %>%
 
 ```{r, echo = FALSE, eval = TRUE}
 attach_connect_email(
-  render_connect_email("access-to-care-email.Rmd", 
-                       envir = globalenv()
-                       ),
+  render_connect_email("email/access-to-care-email.Rmd"),
   subject = paste0("Access to Care - ", params$state)
 )
 ```

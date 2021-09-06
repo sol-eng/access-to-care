@@ -4,10 +4,10 @@
   "platform": "4.1.0",
   "metadata": {
     "appmode": "rmd-static",
-    "primary_rmd": "access-to-care-email.Rmd",
+    "primary_rmd": "access-to-care-rmarkdown.Rmd",
     "primary_html": null,
     "content_category": null,
-    "has_parameters": false
+    "has_parameters": true
   },
   "packages": {
     "DT": {
@@ -199,35 +199,39 @@
       "GithubRepo": "accesstocare",
       "GithubUsername": "sol-eng",
       "GithubRef": "HEAD",
-      "GithubSha1": "c315b4343c120f804d5b5e9c8e3643826d99539a",
+      "GithubSha1": "b3ddaa9b8aa5d3a36f7bffa2d48dfd239f81bc13",
       "description": {
         "Package": "accesstocare",
         "Title": "Example content of Access to Care project",
-        "Version": "0.0.1.9008",
+        "Version": "0.0.1.9009",
         "Authors@R": "\n    person(given = \"Edgar\",\n           family = \"Ruiz\",\n           role = c(\"aut\", \"cre\"),\n           email = \"edgar@rstudio.com\"\n           )",
-        "Description": "Contains example content, data, and common functions used within the\n    examples",
+        "Description": "Contains the example documents, applications and 'API's that are\n    part of the Access To Care analysis.  The package also contains the data and\n    helper functions to make it easy to run the example code.",
         "License": "MIT + file LICENSE",
         "Encoding": "UTF-8",
         "LazyData": "true",
         "Roxygen": "list(markdown = TRUE)",
         "RoxygenNote": "7.1.1",
         "Depends": "R (>= 2.10)",
-        "Imports": "crayon, fs, here, purrr, rsconnect, ggplot2, ggiraph, dplyr,\nrlang, magrittr, tibble, yaml",
+        "Imports": "crayon, fs, here, purrr, rsconnect, ggplot2, ggiraph, rlang,\ntibble, yaml, rstudioapi",
+        "Suggests": "knitr, covr, testthat (>= 3.0.0), rmarkdown",
+        "Config/testthat/edition": "3",
+        "URL": "https://sol-eng.github.io/accesstocare",
+        "VignetteBuilder": "knitr",
         "RemoteType": "github",
         "RemoteHost": "api.github.com",
         "RemoteRepo": "accesstocare",
         "RemoteUsername": "sol-eng",
         "RemoteRef": "HEAD",
-        "RemoteSha": "c315b4343c120f804d5b5e9c8e3643826d99539a",
+        "RemoteSha": "b3ddaa9b8aa5d3a36f7bffa2d48dfd239f81bc13",
         "GithubRepo": "accesstocare",
         "GithubUsername": "sol-eng",
         "GithubRef": "HEAD",
-        "GithubSHA1": "c315b4343c120f804d5b5e9c8e3643826d99539a",
+        "GithubSHA1": "b3ddaa9b8aa5d3a36f7bffa2d48dfd239f81bc13",
         "NeedsCompilation": "no",
-        "Packaged": "2021-08-27 20:29:31 UTC; edgar",
+        "Packaged": "2021-09-05 16:32:40 UTC; edgar",
         "Author": "Edgar Ruiz [aut, cre]",
         "Maintainer": "Edgar Ruiz <edgar@rstudio.com>",
-        "Built": "R 4.1.0; ; 2021-08-27 20:29:32 UTC; unix"
+        "Built": "R 4.1.0; ; 2021-09-05 16:32:40 UTC; unix"
       }
     },
     "askpass": {
@@ -2802,17 +2806,20 @@
     }
   },
   "files": {
-    "access-to-care-email.Rmd": {
-      "checksum": "2928d2f6bbcdf6f0a7932f8b7ae57de5"
+    "access-to-care-rmarkdown_email.html": {
+      "checksum": "034bfb40e5210a8731f8fbd807a0fea4"
+    },
+    "access-to-care-rmarkdown.html": {
+      "checksum": "d2bd79f457de1c8eb0ee7147a0b29270"
     },
     "access-to-care-rmarkdown.Rmd": {
-      "checksum": "661564449ab3885726ca6b63b15c35b6"
+      "checksum": "25ab9f6a04d44885d73794e197ca1267"
+    },
+    "email/access-to-care-email.Rmd": {
+      "checksum": "24c07597e16dbd4fa37adb5d08a22ffa"
     },
     "metadata.yml": {
       "checksum": "a64d36a7228fefd2abebbf6c3527769a"
-    },
-    "RStudio1.png": {
-      "checksum": "288da77036023512c0adbf27de9fe9c2"
     }
   },
   "users": null
