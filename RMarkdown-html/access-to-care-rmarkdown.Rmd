@@ -53,7 +53,9 @@ us_counties %>%
 
 ```{r, echo = FALSE, eval = TRUE}
 attach_connect_email(
-  render_connect_email("access-to-care-email.Rmd"),
+  render_connect_email("access-to-care-email.Rmd", 
+                       envir = globalenv()
+                       ),
   subject = paste0("Access to Care - ", params$state)
 )
 ```
