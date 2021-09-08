@@ -1159,7 +1159,7 @@
         "Package": "htmlwidgets",
         "Type": "Package",
         "Title": "HTML Widgets for R",
-        "Version": "1.5.4",
+        "Version": "1.5.3",
         "Authors@R": "c(\n    person(\"Ramnath\", \"Vaidyanathan\", role = c(\"aut\", \"cph\")),\n    person(\"Yihui\", \"Xie\", role = c(\"aut\")),\n    person(\"JJ\", \"Allaire\", role = c(\"aut\")),\n    person(\"Joe\", \"Cheng\", role = c(\"aut\"), email = \"joe@rstudio.com\"),\n    person(\"Carson\", \"Sievert\", role = c(\"aut\", \"cre\"), email = \"carson@rstudio.com\", comment = c(ORCID = \"0000-0002-4958-2844\")),\n    person(\"Kenton\", \"Russell\", role = c(\"aut\", \"cph\")),\n    person(\"Ellis\", \"Hughes\", role = c(\"ctb\")),\n    person(family = \"RStudio\", role = \"cph\")\n    )",
         "Description": "A framework for creating HTML widgets that render in various\n    contexts including the R console, 'R Markdown' documents, and 'Shiny'\n    web applications.",
         "License": "MIT + file LICENSE",
@@ -1171,12 +1171,13 @@
         "BugReports": "https://github.com/ramnathv/htmlwidgets/issues",
         "RoxygenNote": "7.1.1",
         "NeedsCompilation": "no",
-        "Packaged": "2021-09-08 13:21:35 UTC; cpsievert",
+        "Packaged": "2020-12-10 16:43:45 UTC; cpsievert",
         "Author": "Ramnath Vaidyanathan [aut, cph],\n  Yihui Xie [aut],\n  JJ Allaire [aut],\n  Joe Cheng [aut],\n  Carson Sievert [aut, cre] (<https://orcid.org/0000-0002-4958-2844>),\n  Kenton Russell [aut, cph],\n  Ellis Hughes [ctb],\n  RStudio [cph]",
         "Maintainer": "Carson Sievert <carson@rstudio.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2021-09-08 14:00:02 UTC",
-        "Built": "R 4.1.0; ; 2021-09-08 17:36:21 UTC; unix"
+        "Repository": "RSPM",
+        "Date/Publication": "2020-12-10 17:30:02 UTC",
+        "Encoding": "UTF-8",
+        "Built": "R 4.1.0; ; 2021-09-08 21:35:48 UTC; unix"
       }
     },
     "httpuv": {
