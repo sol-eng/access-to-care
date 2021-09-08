@@ -534,9 +534,9 @@
         "Packaged": "2021-07-22 18:53:47 UTC; bsmith",
         "Author": "Brian Smith [aut, cre],\n  Marcos Navarro [aut],\n  David Aja [ctb],\n  Kelly O'Briant [ctb],\n  RStudio [cph]",
         "Maintainer": "Brian Smith <brian@rstudio.com>",
-        "Repository": "CRAN",
+        "Repository": "RSPM",
         "Date/Publication": "2021-07-23 09:40:02 UTC",
-        "Built": "R 4.1.0; ; 2021-07-25 05:28:42 UTC; unix"
+        "Built": "R 4.1.0; ; 2021-09-08 21:38:22 UTC; unix"
       }
     },
     "cpp11": {
@@ -2247,9 +2247,9 @@
         "Packaged": "2021-01-25 16:18:51 UTC; winston",
         "Author": "Winston Chang [aut, cre],\n  Joe Cheng [aut],\n  JJ Allaire [aut],\n  Carson Sievert [aut],\n  Barret Schloerke [aut],\n  Yihui Xie [aut],\n  Jeff Allen [aut],\n  Jonathan McPherson [aut],\n  Alan Dipert [aut],\n  Barbara Borges [aut],\n  RStudio [cph],\n  jQuery Foundation [cph] (jQuery library and jQuery UI library),\n  jQuery contributors [ctb, cph] (jQuery library; authors listed in\n    inst/www/shared/jquery-AUTHORS.txt),\n  jQuery UI contributors [ctb, cph] (jQuery UI library; authors listed in\n    inst/www/shared/jqueryui/AUTHORS.txt),\n  Mark Otto [ctb] (Bootstrap library),\n  Jacob Thornton [ctb] (Bootstrap library),\n  Bootstrap contributors [ctb] (Bootstrap library),\n  Twitter, Inc [cph] (Bootstrap library),\n  Prem Nawaz Khan [ctb] (Bootstrap accessibility plugin),\n  Victor Tsaran [ctb] (Bootstrap accessibility plugin),\n  Dennis Lembree [ctb] (Bootstrap accessibility plugin),\n  Srinivasu Chakravarthula [ctb] (Bootstrap accessibility plugin),\n  Cathy O'Connor [ctb] (Bootstrap accessibility plugin),\n  PayPal, Inc [cph] (Bootstrap accessibility plugin),\n  Stefan Petre [ctb, cph] (Bootstrap-datepicker library),\n  Andrew Rowls [ctb, cph] (Bootstrap-datepicker library),\n  Dave Gandy [ctb, cph] (Font-Awesome font),\n  Brian Reavis [ctb, cph] (selectize.js library),\n  Salmen Bejaoui [ctb, cph] (selectize-plugin-a11y library),\n  Denis Ineshin [ctb, cph] (ion.rangeSlider library),\n  Sami Samhuri [ctb, cph] (Javascript strftime library),\n  SpryMedia Limited [ctb, cph] (DataTables library),\n  John Fraser [ctb, cph] (showdown.js library),\n  John Gruber [ctb, cph] (showdown.js library),\n  Ivan Sagalaev [ctb, cph] (highlight.js library),\n  R Core Team [ctb, cph] (tar implementation from R)",
         "Maintainer": "Winston Chang <winston@rstudio.com>",
-        "Repository": "CRAN",
+        "Repository": "RSPM",
         "Date/Publication": "2021-01-25 21:50:02 UTC",
-        "Built": "R 4.1.0; ; 2021-05-20 09:15:44 UTC; unix"
+        "Built": "R 4.1.0; ; 2021-09-08 21:38:06 UTC; unix"
       }
     },
     "shinymaterial": {
@@ -2276,9 +2276,9 @@
         "NeedsCompilation": "no",
         "Packaged": "2020-08-31 15:42:59 UTC; ericrayanderson",
         "Author": "Eric Anderson [aut, cre],\n  Alvin Wang [ctb, cph] (Materialize CSS library),\n  Alan Chang [ctb, cph] (Materialize CSS library),\n  Alex Mark [ctb, cph] (Materialize CSS library),\n  Kevin Louie [ctb, cph] (Materialize CSS library)",
-        "Repository": "CRAN",
+        "Repository": "RSPM",
         "Date/Publication": "2020-08-31 20:50:02 UTC",
-        "Built": "R 4.1.0; ; 2021-07-25 11:06:58 UTC; unix"
+        "Built": "R 4.1.0; ; 2021-09-08 21:39:03 UTC; unix"
       }
     },
     "sourcetools": {
@@ -2784,6 +2784,9 @@
   "files": {
     "app.R": {
       "checksum": "23b82c321ba92ce6157b2f810f2d3aa8"
+    },
+    "content.rds": {
+      "checksum": "88bca333cab5eb7a657316b82b95b2e4"
     },
     "metadata.yml": {
       "checksum": "11e494d39a845035d2cc9837ae0721f7"
