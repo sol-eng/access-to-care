@@ -1,24 +1,24 @@
-library(shiny)
 library(connectwidgets)
 library(shinymaterial)
-library(dplyr)
-library(stringr)
-library(fs)
-library(readr)
 library(accesstocare)
+library(stringr)
+library(readr)
+library(shiny)
+library(dplyr)
+library(fs)
 
-
-if (Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
+rsc_content <- function() {
   connect_server <- Sys.getenv("CONNECT_SERVER")
   connect_key <- Sys.getenv("CONNECT_API_KEY")
   client <- connect(server = connect_server, api_key = connect_key)
-  all_content <- content(client)
+  content(client)
+}
+
+if (Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
+  rsc_content()
 } else {
   if (!file_exists("content.rds")) {
-    connect_server <- Sys.getenv("CONNECT_SERVER")
-    connect_key <- Sys.getenv("CONNECT_API_KEY")
-    client <- connect(server = connect_server, api_key = connect_key)
-    all_content <- content(client)
+    all_content <- rsc_content()
     write_rds(all_content, "content.rds")
   } else {
     all_content <- read_rds("content.rds")
@@ -27,7 +27,7 @@ if (Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
 
 choice_types <- c(
   "All", "Script", "Report", "Dashboard", "Data", "Model",
-  "Notebook", "Plot", "Presentation"
+  "Notebook", "Plot", "Presentation", "Application", "API"
 )
 
 atc_content <- all_content %>%
@@ -40,9 +40,11 @@ atc_content <- all_content %>%
       content_category == "pin" ~ "Data",
       str_detect(title, " Prep") ~ "Script",
       str_detect(title, "Presentation|PowerPoint") ~ "Presentation",
-      app_mode == "rmd-static" ~ "Report", 
+      app_mode == "rmd-static" ~ "Report",
       app_mode %in% c("rmd-shiny", "python-dash") ~ "Dashboard",
-      app_mode == "static" ~ "Plot", 
+      app_mode == "static" ~ "Plot",
+      app_mode == "shiny" ~ "Application",
+      app_mode == "api" ~ "API",
       TRUE ~ "Other"
     ),
     language = case_when(
@@ -51,7 +53,6 @@ atc_content <- all_content %>%
       TRUE ~ "R"
     )
   )
-
 
 ui <- material_page(
   title = "Access to Care",
@@ -97,4 +98,5 @@ server <- function(input, output, session) {
     }
   })
 }
+
 shinyApp(ui = ui, server = server)

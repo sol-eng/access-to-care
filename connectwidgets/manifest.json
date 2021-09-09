@@ -168,7 +168,7 @@
       "GithubRepo": "accesstocare",
       "GithubUsername": "sol-eng",
       "GithubRef": "HEAD",
-      "GithubSha1": "2cb7fbc015d265e3c955e81cd26cdd14c0bfed20",
+      "GithubSha1": "efe19103265dc0e1ad67114fa9e7ca37bd24cce9",
       "description": {
         "Package": "accesstocare",
         "Title": "Example content of Access to Care project",
@@ -191,16 +191,16 @@
         "RemoteRepo": "accesstocare",
         "RemoteUsername": "sol-eng",
         "RemoteRef": "HEAD",
-        "RemoteSha": "2cb7fbc015d265e3c955e81cd26cdd14c0bfed20",
+        "RemoteSha": "efe19103265dc0e1ad67114fa9e7ca37bd24cce9",
         "GithubRepo": "accesstocare",
         "GithubUsername": "sol-eng",
         "GithubRef": "HEAD",
-        "GithubSHA1": "2cb7fbc015d265e3c955e81cd26cdd14c0bfed20",
+        "GithubSHA1": "efe19103265dc0e1ad67114fa9e7ca37bd24cce9",
         "NeedsCompilation": "no",
-        "Packaged": "2021-09-08 21:26:33 UTC; edgar",
+        "Packaged": "2021-09-09 13:20:15 UTC; edgar",
         "Author": "Edgar Ruiz [aut, cre]",
         "Maintainer": "Edgar Ruiz <edgar@rstudio.com>",
-        "Built": "R 4.1.0; ; 2021-09-08 21:26:33 UTC; unix"
+        "Built": "R 4.1.0; ; 2021-09-09 13:20:15 UTC; unix"
       }
     },
     "askpass": {
@@ -2783,19 +2783,13 @@
   },
   "files": {
     "app.R": {
-      "checksum": "23b82c321ba92ce6157b2f810f2d3aa8"
-    },
-    "content.rds": {
-      "checksum": "88bca333cab5eb7a657316b82b95b2e4"
+      "checksum": "2913bd4ff4f79cb6713789cd11fad27a"
     },
     "metadata.yml": {
       "checksum": "11e494d39a845035d2cc9837ae0721f7"
     },
     "www/hospital.jpeg": {
       "checksum": "a47524aa366f53e417163f89b2fb4540"
-    },
-    "www/hospital1.png": {
-      "checksum": "202d2e40df416a5450ba6326f6b6b4af"
     }
   },
   "users": null
