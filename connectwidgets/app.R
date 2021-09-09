@@ -15,7 +15,7 @@ rsc_content <- function() {
 }
 
 if (Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
-  rsc_content()
+  all_content <- rsc_content()
 } else {
   if (!file_exists("content.rds")) {
     all_content <- rsc_content()
