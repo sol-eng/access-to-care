@@ -31,7 +31,14 @@ choice_types <- c(
 )
 
 atc_content <- all_content %>%
-  by_tags("Access to Care") %>%
+  by_tags("Access to Care")
+
+if (nrow(atc_content) == 0) {
+  atc_content <- all_content |>
+    filter(grepl("access to care", tolower(title)))
+}
+
+atc_content <- atc_content %>%
   mutate(
     title = str_remove(title, "Access to Care - "),
     type = case_when(
@@ -41,7 +48,7 @@ atc_content <- all_content %>%
       str_detect(title, " Prep") ~ "Script",
       str_detect(title, "Presentation|PowerPoint") ~ "Presentation",
       app_mode == "rmd-static" ~ "Report",
-      app_mode %in% c("rmd-shiny", "python-dash") ~ "Dashboard",
+      app_mode %in% c("rmd-shiny", "python-dash", "quarto-shiny") ~ "Dashboard",
       app_mode == "static" ~ "Plot",
       app_mode == "shiny" ~ "Application",
       app_mode == "api" ~ "API",
@@ -80,19 +87,52 @@ ui <- material_page(
       left = 200,
       width = "80%"
     )
+  ),
+  fluidRow(
+    absolutePanel(
+      rscgridOutput("grid", width = "90%"),
+      left = 20,
+      width = "80%"
+    )
+  ),
+  fluidRow(
+    absolutePanel(
+      material_radio_button("view", "View:", c("Cards", "Grid")),
+      right = 300,
+      top = 420
+    )
   )
 )
 
 server <- function(input, output, session) {
+  filter_content <- reactive({
+    f_content <- atc_content
+    if (input$type != "All") {
+      f_content <- filter(f_content, type == input$type)
+    }
+    if (input$language != "All") {
+      f_content <- filter(f_content, language == input$language)
+    }
+    f_content
+  })
   output$cards <- renderRsccard({
-    fa <- atc_content
-
-    if (input$type != "All") fa <- filter(fa, type == input$type)
-
-    if (input$language != "All") fa <- filter(fa, language == input$language)
-
-    if (nrow(fa) > 0) {
-      rsc_card(fa)
+    if (input$view == "Grid") {
+      return(NULL)
+    }
+    f_content <- filter_content()
+    if (nrow(f_content) > 0) {
+      rsc_card(f_content)
+    } else {
+      NULL
+    }
+  })
+  output$grid <- renderRscgrid({
+    if (input$view == "Cards") {
+      return(NULL)
+    }
+    f_content <- filter_content()
+    if (nrow(f_content) > 0) {
+      rsc_grid(f_content)
     } else {
       NULL
     }

@@ -1,3 +1,4 @@
-title: "Summary page"
-description: "Summary page of all related content"
-type: Report
+title: "Overview"
+description: "Application that lists of all related content"
+type: Application
+url: "overview"
