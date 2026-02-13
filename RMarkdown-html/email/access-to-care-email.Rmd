@@ -8,7 +8,8 @@ output: blastula::blastula_email
 
 ### County Map - Hospital Coverage
 
-Breakdown of counties and their status based on county population compared to the number of hospitals
+Breakdown of counties and their status based on county population compared to 
+the number of hospitals
 
 ```{r}
 atc_plot_state_map(state = params$state)
@@ -17,18 +18,27 @@ atc_plot_state_map(state = params$state)
 ### Counties Under or Over the exepected number of hospitals
 
 ```{r}
-us_counties %>% 
-  filter(state_name == params$state) %>% 
-  select(county_name, hospitals, population) %>% 
-  gt() %>% 
+us_counties |> 
+  filter(state_name == params$state, pred_status == "below") |> 
+  select(county_name, hospitals, population, pred_lwr, pred_fit) |> 
+  gt() |> 
   fmt_number(
     columns = population,
     suffixing = TRUE
-  ) %>% 
-  cols_label("county_name" = "County", "hospitals" = "Hospitals", "population" = "Population")
+  ) |> 
+  cols_label(
+    "county_name" = "County", 
+    "hospitals" = "Hospitals", 
+    "population" = "Population",
+    "pred_lwr" = "Least Expected",
+    "pred_fit" = "Ideally Expected"
+    )
 ```
 
 ### Background
 
-We are trying to determine which counties in **`r params$state`** have comparatively more access or less access to hospital care. A **statistical model using data from across the country** is used to identify those counties that have more or less than the model expects the specific county to have.
+We are trying to determine which counties in **`r params$state`** have 
+comparatively more access or less access to hospital care. A **statistical
+model using data from across the country** is used to identify those counties 
+that have more or less than the model expects the specific county to have.
 
