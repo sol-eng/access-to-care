@@ -3,7 +3,7 @@
   "locale": "en_US",
   "platform": "4.5.2",
   "metadata": {
-    "appmode": "shiny",
+    "appmode": "api",
     "primary_rmd": null,
     "primary_html": null,
     "content_category": null,
@@ -267,16 +267,16 @@
         "RemoteUsername": "sol-eng",
         "RemotePkgRef": "sol-eng/accesstocare@updates",
         "RemoteRef": "updates",
-        "RemoteSha": "d66c1e2466c7e770b3381454acbd383b6956db6b",
+        "RemoteSha": "3ee1d0aa86a5bc916cce0b208982939f7e728a2c",
         "GithubRepo": "accesstocare",
         "GithubUsername": "sol-eng",
         "GithubRef": "updates",
-        "GithubSHA1": "d66c1e2466c7e770b3381454acbd383b6956db6b",
+        "GithubSHA1": "3ee1d0aa86a5bc916cce0b208982939f7e728a2c",
         "NeedsCompilation": "no",
-        "Packaged": "2026-02-13 02:31:05 UTC; edgar",
+        "Packaged": "2026-02-13 02:50:34 UTC; edgar",
         "Author": "Edgar Ruiz [aut, cre]",
         "Maintainer": "Edgar Ruiz <edgar@posit.com>",
-        "Built": "R 4.5.2; ; 2026-02-13 02:31:06 UTC; unix"
+        "Built": "R 4.5.2; ; 2026-02-13 02:50:35 UTC; unix"
       }
     },
     "askpass": {
@@ -2452,6 +2452,38 @@
         "RemoteSha": "1.5.0"
       }
     },
+    "plumber": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Type": "Package",
+        "Package": "plumber",
+        "Title": "An API Generator for R",
+        "Version": "1.3.2",
+        "Authors@R": "c(\n    person(\"Barret\", \"Schloerke\", , \"barret@posit.co\", role = c(\"cre\", \"aut\"),\n           comment = c(ORCID = \"0000-0001-9986-114X\")),\n    person(\"Jeff\", \"Allen\", , \"cran@trestletech.com\", role = c(\"aut\", \"ccp\")),\n    person(\"Bruno\", \"Tremblay\", , \"cran@neoxone.com\", role = \"ctb\"),\n    person(\"Frans\", \"van Dunné\", , \"frans@ixpantia.com\", role = \"ctb\"),\n    person(\"Sebastiaan\", \"Vandewoude\", , \"sebastiaanvandewoude@gmail.com\", role = \"ctb\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"),\n           comment = c(ROR = \"03wc8by49\"))\n  )",
+        "Description": "Gives the ability to automatically generate and serve an HTTP\n    API from R functions using the annotations in the R documentation\n    around your functions.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://www.rplumber.io, https://github.com/rstudio/plumber",
+        "BugReports": "https://github.com/rstudio/plumber/issues",
+        "Depends": "R (>= 3.0.0)",
+        "Imports": "crayon, httpuv (>= 1.5.5), jsonlite (>= 0.9.16), lifecycle (>=\n1.0.0), magrittr, mime, promises (>= 1.1.0), R6 (>= 2.0.0),\nrlang (>= 1.0.0), sodium, stringi (>= 0.3.0), swagger (>=\n3.33.0), webutils (>= 1.1)",
+        "Suggests": "arrow, base64enc, coro, future, geojsonsf, htmlwidgets,\nlater, ragg, rapidoc, readr, readxl, redoc, rmarkdown,\nrstudioapi, sf, spelling, svglite, testthat (>= 0.11.0), utils,\nvisNetwork, withr, writexl, yaml",
+        "ByteCompile": "TRUE",
+        "Config/Needs/check": "Cairo, r-quantities/units",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "Encoding": "UTF-8",
+        "Language": "en-US",
+        "RoxygenNote": "7.3.3",
+        "Collate": "'async.R' 'content-types.R' 'default-handlers.R' 'hookable.R'\n'shared-secret-filter.R' 'parser-cookie.R' 'parse-body.R'\n'parse-query.R' 'plumber.R' 'deprecated-R6.R' 'deprecated.R'\n'digital-ocean.R' 'find-port.R' 'globals.R' 'includes.R'\n'json.R' 'new-rstudio-project.R' 'openapi-spec.R'\n'openapi-types.R' 'options_plumber.R' 'paths.R' 'plumb-block.R'\n'plumb-globals.R' 'plumb.R' 'plumber-response.R'\n'plumber-static.R' 'plumber-step.R' 'pr.R' 'pr_set.R'\n'serializer.R' 'session-cookie.R' 'ui.R' 'utf8.R'\n'utils-pipe.R' 'utils.R' 'validate_api_spec.R' 'zzz.R'",
+        "NeedsCompilation": "no",
+        "Packaged": "2025-12-22 16:32:01 UTC; barret",
+        "Author": "Barret Schloerke [cre, aut] (ORCID:\n    <https://orcid.org/0000-0001-9986-114X>),\n  Jeff Allen [aut, ccp],\n  Bruno Tremblay [ctb],\n  Frans van Dunné [ctb],\n  Sebastiaan Vandewoude [ctb],\n  Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
+        "Maintainer": "Barret Schloerke <barret@posit.co>",
+        "Repository": "CRAN",
+        "Date/Publication": "2025-12-23 06:10:19 UTC",
+        "Built": "R 4.5.2; ; 2025-12-23 09:51:30 UTC; unix"
+      }
+    },
     "plumber2": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -3246,36 +3278,6 @@
         "RemoteSha": "1.4.0"
       }
     },
-    "shiny": {
-      "Source": "CRAN",
-      "Repository": "https://cran.rstudio.com",
-      "description": {
-        "Type": "Package",
-        "Package": "shiny",
-        "Title": "Web Application Framework for R",
-        "Version": "1.12.1",
-        "Authors@R": "c(\n    person(\"Winston\", \"Chang\", , \"winston@posit.co\", role = \"aut\",\n           comment = c(ORCID = \"0000-0002-1576-2126\")),\n    person(\"Joe\", \"Cheng\", , \"joe@posit.co\", role = \"aut\"),\n    person(\"JJ\", \"Allaire\", , \"jj@posit.co\", role = \"aut\"),\n    person(\"Carson\", \"Sievert\", , \"carson@posit.co\", role = c(\"aut\", \"cre\"),\n           comment = c(ORCID = \"0000-0002-4958-2844\")),\n    person(\"Barret\", \"Schloerke\", , \"barret@posit.co\", role = \"aut\",\n           comment = c(ORCID = \"0000-0001-9986-114X\")),\n    person(\"Garrick\", \"Aden-Buie\", , \"garrick@adenbuie.com\", role = \"aut\",\n           comment = c(ORCID = \"0000-0002-7111-0077\")),\n    person(\"Yihui\", \"Xie\", , \"yihui@posit.co\", role = \"aut\"),\n    person(\"Jeff\", \"Allen\", role = \"aut\"),\n    person(\"Jonathan\", \"McPherson\", , \"jonathan@posit.co\", role = \"aut\"),\n    person(\"Alan\", \"Dipert\", role = \"aut\"),\n    person(\"Barbara\", \"Borges\", role = \"aut\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"),\n           comment = c(ROR = \"03wc8by49\")),\n    person(, \"jQuery Foundation\", role = \"cph\",\n           comment = \"jQuery library and jQuery UI library\"),\n    person(, \"jQuery contributors\", role = c(\"ctb\", \"cph\"),\n           comment = \"jQuery library; authors listed in inst/www/shared/jquery-AUTHORS.txt\"),\n    person(, \"jQuery UI contributors\", role = c(\"ctb\", \"cph\"),\n           comment = \"jQuery UI library; authors listed in inst/www/shared/jqueryui/AUTHORS.txt\"),\n    person(\"Mark\", \"Otto\", role = \"ctb\",\n           comment = \"Bootstrap library\"),\n    person(\"Jacob\", \"Thornton\", role = \"ctb\",\n           comment = \"Bootstrap library\"),\n    person(, \"Bootstrap contributors\", role = \"ctb\",\n           comment = \"Bootstrap library\"),\n    person(, \"Twitter, Inc\", role = \"cph\",\n           comment = \"Bootstrap library\"),\n    person(\"Prem Nawaz\", \"Khan\", role = \"ctb\",\n           comment = \"Bootstrap accessibility plugin\"),\n    person(\"Victor\", \"Tsaran\", role = \"ctb\",\n           comment = \"Bootstrap accessibility plugin\"),\n    person(\"Dennis\", \"Lembree\", role = \"ctb\",\n           comment = \"Bootstrap accessibility plugin\"),\n    person(\"Srinivasu\", \"Chakravarthula\", role = \"ctb\",\n           comment = \"Bootstrap accessibility plugin\"),\n    person(\"Cathy\", \"O'Connor\", role = \"ctb\",\n           comment = \"Bootstrap accessibility plugin\"),\n    person(, \"PayPal, Inc\", role = \"cph\",\n           comment = \"Bootstrap accessibility plugin\"),\n    person(\"Stefan\", \"Petre\", role = c(\"ctb\", \"cph\"),\n           comment = \"Bootstrap-datepicker library\"),\n    person(\"Andrew\", \"Rowls\", role = c(\"ctb\", \"cph\"),\n           comment = \"Bootstrap-datepicker library\"),\n    person(\"Brian\", \"Reavis\", role = c(\"ctb\", \"cph\"),\n           comment = \"selectize.js library\"),\n    person(\"Salmen\", \"Bejaoui\", role = c(\"ctb\", \"cph\"),\n           comment = \"selectize-plugin-a11y library\"),\n    person(\"Denis\", \"Ineshin\", role = c(\"ctb\", \"cph\"),\n           comment = \"ion.rangeSlider library\"),\n    person(\"Sami\", \"Samhuri\", role = c(\"ctb\", \"cph\"),\n           comment = \"Javascript strftime library\"),\n    person(, \"SpryMedia Limited\", role = c(\"ctb\", \"cph\"),\n           comment = \"DataTables library\"),\n    person(\"Ivan\", \"Sagalaev\", role = c(\"ctb\", \"cph\"),\n           comment = \"highlight.js library\"),\n    person(\"R Core Team\", role = c(\"ctb\", \"cph\"),\n           comment = \"tar implementation from R\")\n  )",
-        "Description": "Makes it incredibly easy to build interactive web\n    applications with R. Automatic \"reactive\" binding between inputs and\n    outputs and extensive prebuilt widgets make it possible to build\n    beautiful, responsive, and powerful applications with minimal effort.",
-        "License": "GPL-3 | file LICENSE",
-        "URL": "https://shiny.posit.co/, https://github.com/rstudio/shiny",
-        "BugReports": "https://github.com/rstudio/shiny/issues",
-        "Depends": "methods, R (>= 3.0.2)",
-        "Imports": "bslib (>= 0.6.0), cachem (>= 1.1.0), cli, commonmark (>=\n2.0.0), fastmap (>= 1.1.1), fontawesome (>= 0.4.0), glue (>=\n1.3.2), grDevices, htmltools (>= 0.5.4), httpuv (>= 1.5.2),\njsonlite (>= 0.9.16), later (>= 1.0.0), lifecycle (>= 0.2.0),\nmime (>= 0.3), otel, promises (>= 1.5.0), R6 (>= 2.0), rlang\n(>= 0.4.10), sourcetools, tools, utils, withr, xtable",
-        "Suggests": "Cairo (>= 1.5-5), coro (>= 1.1.0), datasets, DT, dygraphs,\nfuture, ggplot2, knitr (>= 1.6), magrittr, markdown, mirai,\notelsdk (>= 0.2.0), ragg, reactlog (>= 1.0.0), rmarkdown, sass,\nshowtext, testthat (>= 3.2.1), watcher, yaml",
-        "Config/Needs/check": "shinytest2",
-        "Config/testthat/edition": "3",
-        "Encoding": "UTF-8",
-        "RoxygenNote": "7.3.3",
-        "Collate": "'globals.R' 'app-state.R' 'app_template.R' 'bind-cache.R'\n'bind-event.R' 'bookmark-state-local.R' 'bookmark-state.R'\n'bootstrap-deprecated.R' 'bootstrap-layout.R' 'conditions.R'\n'map.R' 'utils.R' 'bootstrap.R' 'busy-indicators-spinners.R'\n'busy-indicators.R' 'cache-utils.R' 'deprecated.R' 'devmode.R'\n'diagnose.R' 'extended-task.R' 'fileupload.R' 'graph.R'\n'reactives.R' 'reactive-domains.R' 'history.R' 'hooks.R'\n'html-deps.R' 'image-interact-opts.R' 'image-interact.R'\n'imageutils.R' 'input-action.R' 'input-checkbox.R'\n'input-checkboxgroup.R' 'input-date.R' 'input-daterange.R'\n'input-file.R' 'input-numeric.R' 'input-password.R'\n'input-radiobuttons.R' 'input-select.R' 'input-slider.R'\n'input-submit.R' 'input-text.R' 'input-textarea.R'\n'input-utils.R' 'insert-tab.R' 'insert-ui.R' 'jqueryui.R'\n'knitr.R' 'middleware-shiny.R' 'middleware.R' 'timer.R'\n'shiny.R' 'mock-session.R' 'modal.R' 'modules.R'\n'notifications.R' 'otel-attr-srcref.R' 'otel-collect.R'\n'otel-enable.R' 'otel-error.R' 'otel-label.R'\n'otel-reactive-update.R' 'otel-session.R' 'otel-shiny.R'\n'otel-with.R' 'priorityqueue.R' 'progress.R' 'react.R'\n'reexports.R' 'render-cached-plot.R' 'render-plot.R'\n'render-table.R' 'run-url.R' 'runapp.R' 'serializers.R'\n'server-input-handlers.R' 'server-resource-paths.R' 'server.R'\n'shiny-options.R' 'shiny-package.R' 'shinyapp.R' 'shinyui.R'\n'shinywrappers.R' 'showcase.R' 'snapshot.R' 'staticimports.R'\n'tar.R' 'test-export.R' 'test-server.R' 'test.R'\n'update-input.R' 'utils-lang.R' 'utils-tags.R'\n'version_bs_date_picker.R' 'version_ion_range_slider.R'\n'version_jquery.R' 'version_jqueryui.R' 'version_selectize.R'\n'version_strftime.R' 'viewer.R'",
-        "NeedsCompilation": "no",
-        "Packaged": "2025-12-08 21:22:26 UTC; barret",
-        "Author": "Winston Chang [aut] (ORCID: <https://orcid.org/0000-0002-1576-2126>),\n  Joe Cheng [aut],\n  JJ Allaire [aut],\n  Carson Sievert [aut, cre] (ORCID:\n    <https://orcid.org/0000-0002-4958-2844>),\n  Barret Schloerke [aut] (ORCID: <https://orcid.org/0000-0001-9986-114X>),\n  Garrick Aden-Buie [aut] (ORCID:\n    <https://orcid.org/0000-0002-7111-0077>),\n  Yihui Xie [aut],\n  Jeff Allen [aut],\n  Jonathan McPherson [aut],\n  Alan Dipert [aut],\n  Barbara Borges [aut],\n  Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>),\n  jQuery Foundation [cph] (jQuery library and jQuery UI library),\n  jQuery contributors [ctb, cph] (jQuery library; authors listed in\n    inst/www/shared/jquery-AUTHORS.txt),\n  jQuery UI contributors [ctb, cph] (jQuery UI library; authors listed in\n    inst/www/shared/jqueryui/AUTHORS.txt),\n  Mark Otto [ctb] (Bootstrap library),\n  Jacob Thornton [ctb] (Bootstrap library),\n  Bootstrap contributors [ctb] (Bootstrap library),\n  Twitter, Inc [cph] (Bootstrap library),\n  Prem Nawaz Khan [ctb] (Bootstrap accessibility plugin),\n  Victor Tsaran [ctb] (Bootstrap accessibility plugin),\n  Dennis Lembree [ctb] (Bootstrap accessibility plugin),\n  Srinivasu Chakravarthula [ctb] (Bootstrap accessibility plugin),\n  Cathy O'Connor [ctb] (Bootstrap accessibility plugin),\n  PayPal, Inc [cph] (Bootstrap accessibility plugin),\n  Stefan Petre [ctb, cph] (Bootstrap-datepicker library),\n  Andrew Rowls [ctb, cph] (Bootstrap-datepicker library),\n  Brian Reavis [ctb, cph] (selectize.js library),\n  Salmen Bejaoui [ctb, cph] (selectize-plugin-a11y library),\n  Denis Ineshin [ctb, cph] (ion.rangeSlider library),\n  Sami Samhuri [ctb, cph] (Javascript strftime library),\n  SpryMedia Limited [ctb, cph] (DataTables library),\n  Ivan Sagalaev [ctb, cph] (highlight.js library),\n  R Core Team [ctb, cph] (tar implementation from R)",
-        "Maintainer": "Carson Sievert <carson@posit.co>",
-        "Repository": "CRAN",
-        "Date/Publication": "2025-12-09 09:30:02 UTC",
-        "Built": "R 4.5.2; ; 2025-12-09 10:52:28 UTC; unix"
-      }
-    },
     "snowflakeauth": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -3339,37 +3341,6 @@
         "RemoteRepos": "https://cran.rstudio.com/",
         "RemotePkgPlatform": "aarch64-apple-darwin20",
         "RemoteSha": "1.4.0"
-      }
-    },
-    "sourcetools": {
-      "Source": "CRAN",
-      "Repository": "https://cran.rstudio.com",
-      "description": {
-        "Package": "sourcetools",
-        "Type": "Package",
-        "Title": "Tools for Reading, Tokenizing and Parsing R Code",
-        "Version": "0.1.7-1",
-        "Author": "Kevin Ushey",
-        "Maintainer": "Kevin Ushey <kevinushey@gmail.com>",
-        "Description": "Tools for the reading and tokenization of R code. The\n    'sourcetools' package provides both an R and C++ interface for the tokenization\n    of R code, and helpers for interacting with the tokenized representation of R\n    code.",
-        "License": "MIT + file LICENSE",
-        "Depends": "R (>= 3.0.2)",
-        "Suggests": "testthat",
-        "RoxygenNote": "5.0.1",
-        "BugReports": "https://github.com/kevinushey/sourcetools/issues",
-        "Encoding": "UTF-8",
-        "NeedsCompilation": "yes",
-        "Packaged": "2023-01-31 18:03:04 UTC; kevin",
-        "Repository": "CRAN",
-        "Date/Publication": "2023-02-01 10:10:02 UTC",
-        "Built": "R 4.5.0; aarch64-apple-darwin20; 2025-03-31 21:43:26 UTC; unix",
-        "Archs": "sourcetools.so.dSYM",
-        "RemoteType": "standard",
-        "RemotePkgRef": "sourcetools",
-        "RemoteRef": "sourcetools",
-        "RemoteRepos": "https://cran.rstudio.com/",
-        "RemotePkgPlatform": "aarch64-apple-darwin20",
-        "RemoteSha": "0.1.7-1"
       }
     },
     "storr": {
@@ -3518,6 +3489,31 @@
         "RemoteRepos": "https://cran.rstudio.com/",
         "RemotePkgPlatform": "aarch64-apple-darwin20",
         "RemoteSha": "2.2.2"
+      }
+    },
+    "swagger": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "swagger",
+        "Type": "Package",
+        "Title": "Dynamically Generates Documentation from a 'Swagger' Compliant\nAPI",
+        "Version": "5.17.14.1",
+        "Authors@R": "c(\n    person(\"Barret\", \"Schloerke\", role = \"aut\", email = \"barret@rstudio.com\", comment = c(ORCID = \"0000-0001-9986-114X\")),\n    person(\"Javier\", \"Luraschi\", role = \"aut\", email = \"javier@rstudio.com\"),\n    person(\"Bruno\", \"Tremblay\", role = c(\"cre\", \"ctb\"), email = \"cran@neoxone.com\"),\n    person(family = \"RStudio\", role = \"cph\"),\n    person(family = \"SmartBear Software\", role = c(\"aut\", \"cph\"))\n    )",
+        "Suggests": "jsonlite, plumber, testthat",
+        "Description": "A collection of 'HTML', 'JavaScript', and 'CSS' assets that\n  dynamically generate beautiful documentation from a 'Swagger' compliant API:\n  <https://swagger.io/specification/>.",
+        "License": "Apache License 2.0 | file LICENSE",
+        "Encoding": "UTF-8",
+        "URL": "https://rstudio.github.io/swagger/,\nhttps://github.com/rstudio/swagger",
+        "BugReports": "https://github.com/rstudio/swagger/issues",
+        "RoxygenNote": "7.3.1",
+        "NeedsCompilation": "no",
+        "Packaged": "2024-06-28 16:48:07 UTC; tremb",
+        "Author": "Barret Schloerke [aut] (<https://orcid.org/0000-0001-9986-114X>),\n  Javier Luraschi [aut],\n  Bruno Tremblay [cre, ctb],\n  RStudio [cph],\n  SmartBear Software [aut, cph]",
+        "Maintainer": "Bruno Tremblay <cran@neoxone.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2024-06-28 17:10:02 UTC",
+        "Built": "R 4.5.0; ; 2025-03-31 22:46:59 UTC; unix"
       }
     },
     "sys": {
@@ -4213,37 +4209,6 @@
         "RemoteSha": "1.5.2"
       }
     },
-    "xtable": {
-      "Source": "CRAN",
-      "Repository": "https://cran.rstudio.com",
-      "description": {
-        "Package": "xtable",
-        "Version": "1.8-4",
-        "Date": "2019-04-08",
-        "Title": "Export Tables to LaTeX or HTML",
-        "Authors@R": "c(person(\"David B.\", \"Dahl\", role=\"aut\"),\n             person(\"David\", \"Scott\", role=c(\"aut\",\"cre\"),\n               email=\"d.scott@auckland.ac.nz\"),\n             person(\"Charles\", \"Roosen\", role=\"aut\"),\n             person(\"Arni\", \"Magnusson\", role=\"aut\"),\n             person(\"Jonathan\", \"Swinton\", role=\"aut\"),\n             person(\"Ajay\", \"Shah\", role=\"ctb\"),\n             person(\"Arne\", \"Henningsen\", role=\"ctb\"),\n             person(\"Benno\", \"Puetz\", role=\"ctb\"),\n             person(\"Bernhard\", \"Pfaff\", role=\"ctb\"),\n             person(\"Claudio\", \"Agostinelli\", role=\"ctb\"),\n             person(\"Claudius\", \"Loehnert\", role=\"ctb\"),\n             person(\"David\", \"Mitchell\", role=\"ctb\"),\n             person(\"David\", \"Whiting\", role=\"ctb\"),\n             person(\"Fernando da\", \"Rosa\", role=\"ctb\"),\n             person(\"Guido\", \"Gay\", role=\"ctb\"),\n             person(\"Guido\", \"Schulz\", role=\"ctb\"),\n             person(\"Ian\", \"Fellows\", role=\"ctb\"),\n             person(\"Jeff\", \"Laake\", role=\"ctb\"),\n             person(\"John\", \"Walker\", role=\"ctb\"),\n             person(\"Jun\", \"Yan\", role=\"ctb\"),\n             person(\"Liviu\", \"Andronic\", role=\"ctb\"),\n             person(\"Markus\", \"Loecher\", role=\"ctb\"),\n             person(\"Martin\", \"Gubri\", role=\"ctb\"),\n             person(\"Matthieu\", \"Stigler\", role=\"ctb\"),\n             person(\"Robert\", \"Castelo\", role=\"ctb\"),\n             person(\"Seth\", \"Falcon\", role=\"ctb\"),\n             person(\"Stefan\", \"Edwards\", role=\"ctb\"),\n             person(\"Sven\", \"Garbade\", role=\"ctb\"),\n             person(\"Uwe\", \"Ligges\", role=\"ctb\"))",
-        "Maintainer": "David Scott <d.scott@auckland.ac.nz>",
-        "Imports": "stats, utils",
-        "Suggests": "knitr, plm, zoo, survival",
-        "VignetteBuilder": "knitr",
-        "Description": "Coerce data to LaTeX and HTML tables.",
-        "URL": "http://xtable.r-forge.r-project.org/",
-        "Depends": "R (>= 2.10.0)",
-        "License": "GPL (>= 2)",
-        "Repository": "CRAN",
-        "NeedsCompilation": "no",
-        "Packaged": "2019-04-21 10:56:51 UTC; dsco036",
-        "Author": "David B. Dahl [aut],\n  David Scott [aut, cre],\n  Charles Roosen [aut],\n  Arni Magnusson [aut],\n  Jonathan Swinton [aut],\n  Ajay Shah [ctb],\n  Arne Henningsen [ctb],\n  Benno Puetz [ctb],\n  Bernhard Pfaff [ctb],\n  Claudio Agostinelli [ctb],\n  Claudius Loehnert [ctb],\n  David Mitchell [ctb],\n  David Whiting [ctb],\n  Fernando da Rosa [ctb],\n  Guido Gay [ctb],\n  Guido Schulz [ctb],\n  Ian Fellows [ctb],\n  Jeff Laake [ctb],\n  John Walker [ctb],\n  Jun Yan [ctb],\n  Liviu Andronic [ctb],\n  Markus Loecher [ctb],\n  Martin Gubri [ctb],\n  Matthieu Stigler [ctb],\n  Robert Castelo [ctb],\n  Seth Falcon [ctb],\n  Stefan Edwards [ctb],\n  Sven Garbade [ctb],\n  Uwe Ligges [ctb]",
-        "Date/Publication": "2019-04-21 12:20:03 UTC",
-        "Built": "R 4.5.0; ; 2025-03-31 21:41:48 UTC; unix",
-        "RemoteType": "standard",
-        "RemotePkgRef": "xtable",
-        "RemoteRef": "xtable",
-        "RemoteRepos": "https://cran.rstudio.com/",
-        "RemotePkgPlatform": "aarch64-apple-darwin20",
-        "RemoteSha": "1.8-4"
-      }
-    },
     "yaml": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -4281,11 +4246,11 @@
     }
   },
   "files": {
-    "app.R": {
-      "checksum": "e0351b7e1d641f0629bff1f5bc9eacbe"
-    },
     "metadata.yml": {
       "checksum": "07b174daeb3d3f7f94f7f7395aeccd1b"
+    },
+    "plumber.R": {
+      "checksum": "e0351b7e1d641f0629bff1f5bc9eacbe"
     }
   },
   "users": null
