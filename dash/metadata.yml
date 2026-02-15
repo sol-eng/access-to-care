@@ -1,3 +1,4 @@
-title: "Dashboard built in Dash"
-description: "Dashboard by state"
+title: "Dash"
+description: "Dashboard by state using Dash"
 type: Dashboard
+url: "dash"

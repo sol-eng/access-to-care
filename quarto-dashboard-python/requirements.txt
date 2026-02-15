@@ -1,0 +1,5 @@
+polars
+plotly
+shiny
+shinywidgets
+numpy

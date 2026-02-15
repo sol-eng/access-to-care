@@ -1,18 +1,21 @@
 ---
 title: "Access to Care by State"
+params:
+  printcode:
+    label: 'Display Code:'
+    value: no
+  state:
+    choices: [Alabama, Arizona, Arkansas, California, Colorado, Connecticut, Delaware, District of Columbia, Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana, Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana, Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina, North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Puerto Rico, Rhode Island, South Carolina, South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia, Wisconsin, Wyoming]
+    input: select
+    label: 'State:'
+    value: California
 output:
   pdf_document:
+    latex_engine: xelatex
     df_print: kable
-params:
-  state:
-    label: "State:"
-    value: California
-    input: select
-    choices: [Alabama, Arizona, Arkansas, California, Colorado, Connecticut, Delaware, District of Columbia, Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana, Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana, Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina, North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina, South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia, Wisconsin, Wyoming]
-  printcode:
-    label: "Display Code:"
-    value: FALSE
-always_allow_html: yes    
+    includes:
+      in_header: preamble.tex
+always_allow_html: yes
 ---
 
 ```{r, include=FALSE}
@@ -20,20 +23,26 @@ knitr::opts_chunk$set(echo = params$printcode)
 
 library(accesstocare)
 library(dplyr)
-library(gt)
+library(kableExtra)
 ```
 
 ## `r params$state`
 
 ### Background
 
-We are trying to determine which counties in **`r params$state`** have comparatively more access or less access to hospital care.
+This report analyzes hospital access across counties in **`r params$state`**. The goal is to identify which counties may be underserved or overserved relative to their population size.
 
-A **statistical model using data from across the country** is used to identify those counties that have more or less than the model expects the specific county to have.
+Our analysis uses a **statistical model built on nationwide data** that predicts the expected number of hospitals for a county based on its population. By comparing actual hospital counts to model predictions, we can identify counties that fall outside expected ranges. Counties with fewer hospitals than the model's minimum prediction are flagged as potentially underserved.
+
+The data sources for this analysis include hospital locations from the Centers for Medicare & Medicaid Services (2025) and population estimates from the U.S. Census Bureau (2024).
 
 ### County Map
 
-Breakdown of counties and their status based on county population compared to the number of hospitals
+The map below shows each county in **`r params$state`** color-coded by its model status. Counties are classified as:
+
+- **Below**: Fewer hospitals than expected (potentially underserved)
+- **At Level**: Hospital counts within expected range
+- **Above**: More hospitals than expected
 
 ```{r, fig.height = 7, fig.width = 9}
 atc_plot_state_map(state = params$state)
@@ -41,16 +50,36 @@ atc_plot_state_map(state = params$state)
 
 ### County Data
 
-Here is the county level data used in this report
+The table below provides detailed data for each county in **`r params$state`**. This includes population estimates, actual hospital counts, model predictions, and whether a county is identified as underserved.
 
 ```{r}
-us_counties %>% 
-  filter(state_name == params$state) %>% 
-  select(county_name, hospitals, population) %>% 
-  gt() %>% 
-  fmt_number(
-    columns = population,
-    suffixing = TRUE
-  ) %>% 
-  cols_label("county_name" = "County", "hospitals" = "Hospitals", "population" = "Population")
+state_info <- us_counties |>
+  filter(state_name == params$state)
+
+state_info |>
+  mutate(underserved = ifelse(pred_status == "below", "Yes", "")) |>
+  select(county_name, population, hospitals, pred_fit, pred_lwr, underserved) |>
+  kable(
+    col.names = c("County", "Population", "Hospitals", "Expected", "Minimum", "Underserved"),
+    format.args = list(big.mark = ","),
+    booktabs = TRUE,
+    longtable = TRUE
+  ) |>
+  kable_styling(
+    latex_options = c("striped", "repeat_header"),
+    font_size = 9
+  ) |>
+  column_spec(1, width = "5cm") |>
+  column_spec(2, width = "2.5cm") |>
+  column_spec(3:5, width = "2cm") |>
+  column_spec(6, width = "2.5cm")
 ```
+
+**Column Definitions:**
+
+- **County**: The name of the county
+- **Population**: Estimated population for the county (U.S. Census Bureau, 2024)
+- **Hospitals**: The actual number of hospitals currently operating in the county
+- **Expected**: The expected number of hospitals predicted by the statistical model based on population
+- **Minimum**: The lower bound of the model's prediction interval. Counties below this threshold are considered underserved
+- **Underserved**: Marked as "Yes" if the county has fewer hospitals than the minimum expected threshold, indicating potential gaps in healthcare access

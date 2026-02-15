@@ -1,19 +1,17 @@
-import dash
-import dash_core_components as dcc
-import dash_html_components as html
-import plotly.express as px
-import pandas as pd
-import requests 
+from dash import Dash, dcc, html, Input, Output
+import polars as pl
 import plotly.graph_objects as go
 
-from dash.dependencies import Input, Output
+app = Dash(__name__, external_stylesheets=["dashboard"])
 
-app = dash.Dash(__name__, external_stylesheets=["dashboard"])
+# Read the parquet file
+us_counties = pl.read_parquet("data/us_counties.parquet")
 
-all_states = ["AL", "MS", "CA", "NY", "SC", "CO", "VA"]
+# Get unique states for dropdown
+all_states = us_counties.select("state").unique().sort("state").to_series().to_list()
 
 app.layout = html.Div(children=[
-    html.H1(children= ["Access to Hospital Care", html.Img(src="assets/RStudio1.png")]),
+    html.H1(children= ["Access to Hospital Care"]),
 
     dcc.Dropdown(
         id="state",
@@ -24,36 +22,42 @@ app.layout = html.Div(children=[
 ])
 
 @app.callback(
-    Output("counties","children"),
-    [Input("state","value")]
+    Output("counties", "children"),
+    Input("state", "value")
 )
 def update_counties(value):
-    st_counties = requests.get("https://colorado.rstudio.com/rsc/access-to-care/api/state?state=" + value)
-    counties =  pd.DataFrame.from_dict(st_counties.json())
-    #fig2 = px.scatter(counties, x="population", y="hospitals", color = "result")
+    # Filter counties by selected state
+    st_counties = us_counties.filter(pl.col("state") == value)
+
+    # Map pred_status to colors
+    color_map = {"below": "#d62728", "ok": "#2ca02c", "above": "#1f77b4"}
+    counties_df = st_counties.with_columns(
+        pl.col("pred_status").map_dict(color_map).alias("color")
+    )
+
     fig_layout = go.Layout(
         height = 2000
     )
     fig2 = go.Figure(layout = fig_layout)
     fig2.add_trace(go.Scatter(
-                    x = counties["hospitals"], 
-                    y = counties["county"],
+                    x = counties_df["hospitals"].to_list(),
+                    y = counties_df["county_name"].to_list(),
                     mode = "markers",
                     name = "Hospitals",
-                    marker_color = counties["color"],
+                    marker_color = counties_df["color"].to_list(),
                     marker = dict(size = 20)
                     ))
     fig2.add_trace(go.Scatter(
-                    x = counties["fit"], 
-                    y = counties["county"],
+                    x = counties_df["pred_fit"].to_list(),
+                    y = counties_df["county_name"].to_list(),
                     mode = "markers",
                     name = "Predicted",
                     marker_color = "#333333",
                     marker = dict(size = 10)
                     ))
     fig2.add_trace(go.Scatter(
-                    x = counties["lwr"], 
-                    y = counties["county"],
+                    x = counties_df["pred_lwr"].to_list(),
+                    y = counties_df["county_name"].to_list(),
                     mode = "markers",
                     name = "Minimum",
                     marker_color = "#dddddd",
@@ -62,4 +66,4 @@ def update_counties(value):
     return dcc.Graph(id="counties_plot", figure=fig2)
 
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    app.run(debug=True)

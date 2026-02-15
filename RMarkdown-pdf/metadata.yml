@@ -1,3 +1,4 @@
-title: "PDF by State"
+title: "PDF"
 description: "Single state report with a PDF output"
 type: Report
+url: "pdf"

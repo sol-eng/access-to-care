@@ -1,0 +1,40 @@
+% Use a clean sans-serif font
+\renewcommand{\familydefault}{\sfdefault}
+
+% Colors
+\usepackage{xcolor}
+\definecolor{primaryblue}{HTML}{0357b8}
+\definecolor{secondaryblue}{HTML}{5b9bd5}
+\definecolor{lightblue}{HTML}{e8f4fd}
+\definecolor{textdark}{HTML}{2c3e50}
+
+% Section formatting with colors
+\usepackage{titlesec}
+\titleformat{\section}
+  {\Large\bfseries\color{primaryblue}}
+  {\thesection}{1em}{}
+\titleformat{\subsection}
+  {\large\bfseries\color{secondaryblue}}
+  {\thesubsection}{1em}{}
+
+% Table styling
+\usepackage{colortbl}
+\usepackage{booktabs}
+
+% Header/footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{2pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primaryblue}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\color{primaryblue}\textbf{Access to Care}}
+\fancyfoot[C]{\thepage}
+
+% Links
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=primaryblue,
+  urlcolor=primaryblue,
+  citecolor=primaryblue
+}

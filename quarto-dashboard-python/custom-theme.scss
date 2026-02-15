@@ -1,0 +1,211 @@
+/*-- scss:defaults --*/
+
+// Import Google Font - Open Sans (similar to Source Sans Pro)
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
+
+// Color palette - white and light blues
+$primary: #0357b8;
+$secondary: #5b9bd5;
+$light-blue: #e8f4fd;
+$white: #ffffff;
+$text-dark: #2c3e50;
+$border-color: #d4e6f1;
+
+// Typography
+$font-family-sans-serif: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$headings-font-weight: 600;
+
+// Dashboard specific
+$dashboard-bg: $white;
+$dashboard-sidebar-bg: $light-blue;
+$card-bg: $white;
+$card-border-color: $border-color;
+
+/*-- scss:rules --*/
+
+// Overall dashboard styling
+.dashboard {
+  background-color: $white;
+  font-family: $font-family-sans-serif;
+}
+
+// Ensure text outputs are visible
+.shiny-text-output {
+  color: inherit !important;
+}
+
+#population, #hospitals, #counties, #underserved {
+  color: inherit !important;
+}
+
+// Navbar/header styling
+.navbar {
+  background: linear-gradient(135deg, $primary 0%, $secondary 100%) !important;
+  border-bottom: 3px solid $primary;
+  padding: 0.75rem 1.5rem;
+
+  .navbar-title {
+    color: $white !important;
+    font-weight: 600;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    img.logo {
+      height: 50px;
+      width: auto;
+    }
+  }
+}
+
+// Sidebar styling
+.sidebar {
+  background-color: $light-blue !important;
+  border-right: 2px solid $border-color;
+  padding: 1.5rem;
+
+  label {
+    color: $text-dark;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-control, .form-select {
+    border: 1px solid $border-color;
+    border-radius: 6px;
+
+    &:focus {
+      border-color: $primary;
+      box-shadow: 0 0 0 0.2rem rgba(3, 87, 184, 0.15);
+    }
+  }
+
+  .btn {
+    background-color: $primary;
+    border-color: $primary;
+    color: $white;
+    font-weight: 600;
+    border-radius: 6px;
+
+    &:hover {
+      background-color: darken($primary, 10%);
+      border-color: darken($primary, 10%);
+    }
+  }
+}
+
+// Value boxes - minimal styling for Python Shiny
+.bslib-value-box {
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  overflow: visible !important;
+  height: auto !important;
+  min-height: 120px !important;
+
+  .value-box-grid {
+    overflow: visible !important;
+    height: 100% !important;
+  }
+
+  .value-box-area {
+    overflow: visible !important;
+    height: 100% !important;
+    padding: 1.5rem 1rem !important;
+    border: none !important;
+    background: none !important;
+    box-shadow: none !important;
+  }
+
+  .value-box-showcase {
+    overflow: visible !important;
+    height: auto !important;
+
+    i, svg {
+      font-size: 2rem !important;
+    }
+  }
+}
+
+// Cards
+.card {
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  background-color: $white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  margin-bottom: 1rem;
+
+  .card-header {
+    background: linear-gradient(135deg, $light-blue 0%, $white 100%);
+    border-bottom: 2px solid $primary;
+    color: $text-dark;
+    font-weight: 600;
+    padding: 1rem 1.5rem;
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
+}
+
+// Radio buttons
+.form-check-input {
+  &:checked {
+    background-color: $primary;
+    border-color: $primary;
+  }
+}
+
+// Tables (for gt tables in modals)
+table {
+  font-family: $font-family-sans-serif;
+
+  thead {
+    background-color: $light-blue;
+    color: $text-dark;
+    font-weight: 600;
+  }
+
+  tbody tr {
+    &:hover {
+      background-color: rgba(232, 244, 253, 0.5);
+    }
+  }
+}
+
+// Modals
+.modal-content {
+  border-radius: 8px;
+  border: 2px solid $border-color;
+
+  .modal-header {
+    background: linear-gradient(135deg, $primary 0%, $secondary 100%);
+    color: $white;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+
+    .modal-title {
+      font-weight: 600;
+    }
+
+    .btn-close {
+      filter: brightness(0) invert(1);
+    }
+  }
+}
+
+// General improvements
+hr {
+  border-color: $border-color;
+  opacity: 0.5;
+}
+
+p {
+  color: $text-dark;
+  line-height: 1.6;
+}
+
+strong {
+  font-weight: 600;
+  color: $primary;
+}

@@ -1,3 +1,4 @@
-title: "Shiny APP"
+title: "Shiny App"
 description: "County-level data for all of the US"
-type: Dashboard
+type: Application
+url: "shiny"

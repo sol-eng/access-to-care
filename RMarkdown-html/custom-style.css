@@ -1,0 +1,182 @@
+/* Import Google Font - Open Sans */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
+
+/* Color palette - white and light blues */
+:root {
+  --primary-blue: #0357b8;
+  --secondary-blue: #5b9bd5;
+  --light-blue: #e8f4fd;
+  --white: #ffffff;
+  --text-dark: #2c3e50;
+  --border-color: #d4e6f1;
+}
+
+/* Overall styling */
+body {
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text-dark);
+  background-color: var(--white);
+  line-height: 1.6;
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  color: var(--primary-blue);
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+  color: var(--white);
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+h2 {
+  border-bottom: 2px solid var(--primary-blue);
+  padding-bottom: 0.5rem;
+}
+
+h3 {
+  color: var(--secondary-blue);
+}
+
+/* Links */
+a {
+  color: var(--primary-blue);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--secondary-blue);
+  text-decoration: underline;
+}
+
+/* Tables */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5rem 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+thead {
+  background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
+  border-bottom: 2px solid var(--primary-blue);
+}
+
+thead th {
+  color: var(--text-dark);
+  font-weight: 600;
+  padding: 1rem;
+  text-align: left;
+}
+
+tbody td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+tbody tr:hover {
+  background-color: rgba(232, 244, 253, 0.5);
+}
+
+/* Code blocks */
+pre {
+  background-color: var(--light-blue);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+code {
+  font-family: 'Courier New', Courier, monospace;
+  background-color: var(--light-blue);
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+/* Plots and figures */
+img, .plot {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  margin: 1rem 0;
+}
+
+/* Strong/bold text */
+strong {
+  font-weight: 600;
+  color: var(--primary-blue);
+}
+
+/* HR */
+hr {
+  border: none;
+  border-top: 2px solid var(--border-color);
+  margin: 2rem 0;
+}
+
+/* Container */
+.container-fluid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* DT tables styling */
+.dataTables_wrapper {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_paginate {
+  color: var(--text-dark);
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  background: var(--primary-blue) !important;
+  border-color: var(--primary-blue) !important;
+  color: white !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  background: var(--secondary-blue) !important;
+  border-color: var(--secondary-blue) !important;
+  color: white !important;
+}
+
+/* GT tables */
+.gt_table {
+  border-top: 2px solid var(--primary-blue);
+  border-bottom: 2px solid var(--primary-blue);
+}
+
+.gt_col_heading {
+  background-color: var(--light-blue);
+  color: var(--text-dark);
+  font-weight: 600;
+}
+
+.gt_row {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.gt_row:hover {
+  background-color: rgba(232, 244, 253, 0.5);
+}
