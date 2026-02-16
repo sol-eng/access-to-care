@@ -15,10 +15,10 @@
   },
   "files": {
     "requirements.txt": {
-      "checksum": "a03a5fa6ae92531b77628f9b5d0206b2"
+      "checksum": "6cab67fde0a149f1ff1484bebc20ad5e"
     },
     "app.py": {
-      "checksum": "138f128287eb718e1647405b703d1988"
+      "checksum": "ff4a803f85c4557f10fdd51ef2b4613a"
     },
     "assets/dash.css": {
       "checksum": "bef4f3a493c57c8cc7ffa20de40ccf1a"

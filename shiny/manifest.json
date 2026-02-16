@@ -386,18 +386,18 @@
         "RemoteHost": "api.github.com",
         "RemoteRepo": "accesstocare",
         "RemoteUsername": "sol-eng",
-        "RemotePkgRef": "sol-eng/accesstocare",
-        "RemoteRef": "HEAD",
-        "RemoteSha": "70836b3960204615f29fc1d6a1cbd12b0d1ec3f8",
+        "RemotePkgRef": "sol-eng/accesstocare@updates",
+        "RemoteRef": "updates",
+        "RemoteSha": "5290b86d42bb3ed2d08f4fb9c7b48c8801afe407",
         "GithubRepo": "accesstocare",
         "GithubUsername": "sol-eng",
-        "GithubRef": "HEAD",
-        "GithubSHA1": "70836b3960204615f29fc1d6a1cbd12b0d1ec3f8",
+        "GithubRef": "updates",
+        "GithubSHA1": "5290b86d42bb3ed2d08f4fb9c7b48c8801afe407",
         "NeedsCompilation": "no",
-        "Packaged": "2026-02-15 23:33:50 UTC; edgar",
+        "Packaged": "2026-02-16 17:07:29 UTC; edgar",
         "Author": "Edgar Ruiz [aut, cre]",
         "Maintainer": "Edgar Ruiz <edgar@posit.com>",
-        "Built": "R 4.5.2; ; 2026-02-15 23:33:51 UTC; unix"
+        "Built": "R 4.5.2; ; 2026-02-16 17:07:30 UTC; unix"
       }
     },
     "arrow": {
@@ -3836,7 +3836,7 @@
   },
   "files": {
     "app.R": {
-      "checksum": "3f29a69543c27b8b864327fc9153b75c"
+      "checksum": "69631fef9ecf75f7fa8001bb5e371363"
     },
     "metadata.yml": {
       "checksum": "cd2b2209d9b91020f76884ec311f5a40"

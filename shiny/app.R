@@ -1,25 +1,162 @@
+library(shiny)
 library(accesstocare)
 library(leaflet)
 library(dplyr)
 library(gt)
+library(bslib)
 
 state_choices <- c("Model", "No. of Hospitals", "Population")
 
-ui <- fillPage(
+# Define custom theme matching Quarto dashboard
+custom_theme <- bs_theme(
+  version = 5,
+  bg = "#ffffff",
+  fg = "#2c3e50",
+  primary = "#0357b8",
+  secondary = "#5b9bd5",
+  success = "#009E73",
+  info = "#0072B2",
+  warning = "#FFA500",
+  danger = "#CC79A7",
+  base_font = font_google("Open Sans"),
+  heading_font = font_google("Open Sans", wght = "600")
+)
+
+# Custom CSS to match Quarto dashboard styling
+custom_css <- tags$style(HTML("
+  @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
+
+  .control-panel {
+    background: #ffffff;
+    border: 1px solid #d4e6f1;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .control-panel-header {
+    background: linear-gradient(135deg, #0357b8 0%, #5b9bd5 100%);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-bottom: 2px solid #0357b8;
+  }
+
+  .control-panel-header h3 {
+    font-weight: 600;
+    margin: 0;
+    font-size: 1.25rem;
+  }
+
+  .control-panel-body {
+    background: #e8f4fd;
+    padding: 1.5rem;
+  }
+
+  .control-panel-body label {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .radio-group .form-check {
+    margin-bottom: 0.5rem;
+  }
+
+  .form-check-input:checked {
+    background-color: #0357b8;
+    border-color: #0357b8;
+  }
+
+  .form-check-input:focus {
+    border-color: #0357b8;
+    box-shadow: 0 0 0 0.2rem rgba(3, 87, 184, 0.15);
+  }
+
+  .source-panel {
+    background: white;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: 1px solid #d4e6f1;
+  }
+
+  .source-panel p {
+    margin: 0;
+    font-size: 0.85em;
+    color: #2c3e50;
+  }
+
+  .modal-content {
+    border-radius: 8px;
+    border: 2px solid #d4e6f1;
+  }
+
+  .modal-header {
+    background: linear-gradient(135deg, #0357b8 0%, #5b9bd5 100%);
+    color: white;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    padding: 1rem 1.5rem;
+  }
+
+  .modal-title {
+    font-weight: 600;
+    color: white;
+  }
+
+  .modal-header .btn-close {
+    filter: brightness(0) invert(1);
+  }
+
+  .modal-body {
+    padding: 1.5rem;
+  }
+
+  /* GT table styling */
+  .gt_table {
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  .gt_col_heading {
+    background-color: #e8f4fd;
+    color: #2c3e50;
+    font-weight: 600;
+  }
+
+  .gt_row {
+    border-bottom: 1px solid #d4e6f1;
+  }
+
+  .leaflet-control {
+    border-radius: 6px;
+    border: 1px solid #d4e6f1;
+  }
+"))
+
+ui <- page_fillable(
+  theme = custom_theme,
+  custom_css,
   leafletOutput("map", width = "100%", height = "100%"),
   absolutePanel(
     top = 10,
     right = 10,
-    width = 250,
+    width = 300,
     height = "auto",
     div(
-      style = "background: white; padding: 15px; border-radius: 5px; box-shadow: 0 0 15px rgba(0,0,0,0.2);",
-      h3("Access to Care", style = "margin-top: 0; margin-bottom: 15px;"),
-      hr(),
-      radioButtons(
-        inputId = "view",
-        label = "Select a view:",
-        choices = state_choices
+      class = "control-panel",
+      div(
+        class = "control-panel-header",
+        h3("Access to Hospital Care")
+      ),
+      div(
+        class = "control-panel-body",
+        radioButtons(
+          inputId = "view",
+          label = "Select a view:",
+          choices = state_choices,
+          selected = state_choices[1]
+        )
       )
     ),
     draggable = TRUE
@@ -30,12 +167,9 @@ ui <- fillPage(
     width = "auto",
     height = "auto",
     div(
-      style = "background: white; padding: 10px; border-radius: 5px; box-shadow: 0 0 15px rgba(0,0,0,0.2);",
+      class = "source-panel",
       p(
-        em(
-          "Sources: Centers of Medicine & Medicaid services (2025), and US Census Bureau (2024)."
-        ),
-        style = "margin: 0; font-size: 0.85em;"
+        em("Sources: Centers of Medicine & Medicaid services (2025), and US Census Bureau (2024).")
       )
     )
   )
