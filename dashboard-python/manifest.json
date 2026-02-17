@@ -2,7 +2,8 @@
   "version": 1,
   "locale": "en_US.UTF-8",
   "metadata": {
-    "appmode": "quarto-shiny"
+    "appmode": "quarto-shiny",
+    "primary_rmd": "access-to-care.qmd",
   },
   "quarto": {
     "version": "1.8.27",
