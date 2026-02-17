@@ -29,8 +29,6 @@ choice_types <- c(
   "All",
   "Report",
   "Dashboard",
-  "Data",
-  "Model",
   "Plot",
   "Presentation",
   "Application",
@@ -49,18 +47,16 @@ atc_content <- atc_content |>
   mutate(
     title = str_remove(title, "Access to Care - "),
     type = case_when(
-      content_category == "pin" & str_detect(title, "Model") ~ "Model",
-      content_category == "pin" ~ "Data",
-      str_detect(title, " Prep") ~ "Script",
-      app_mode == "rmd-static" ~ "Report",
-      app_mode %in% c("rmd-shiny", "python-dash", "quarto-shiny") ~ "Dashboard",
-      app_mode == "static" ~ "Plot",
-      app_mode == "shiny" ~ "Application",
-      app_mode == "api" ~ "API",
+      str_detect(title, "Report") ~ "Report",
+      str_detect(title, "Presentation") ~ "Presentation",
+      str_detect(title, "Dashboard") ~ "Dashboard",
+      str_detect(title, "App ") ~ "Application",
+      str_detect(title, "REST API") ~ "API",
+      str_detect(title, "Plot") ~ "Plot",
       TRUE ~ "Other"
     ),
     language = case_when(
-      str_detect(app_mode, "python") ~ "python",
+      str_detect(title, "Python") ~ "Python",
       TRUE ~ "R"
     )
   )
@@ -76,14 +72,24 @@ ui <- material_page(
   material_parallax("hospital.jpg"),
   fluidRow(
     absolutePanel(
-      material_radio_button("type", "Content Type", choice_types),
+      material_radio_button(
+        "type",
+        "Content Type",
+        choice_types,
+        selected = "All"
+      ),
       right = 80,
       top = 70
     )
   ),
   fluidRow(
     absolutePanel(
-      material_radio_button("language", "Language", c("All", "R", "python")),
+      material_radio_button(
+        "language",
+        "Language",
+        c("All", "R", "Python"),
+        selected = "All"
+      ),
       right = 300,
       top = 70
     )
