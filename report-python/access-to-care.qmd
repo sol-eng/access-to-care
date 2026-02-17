@@ -1,0 +1,505 @@
+---
+title: "Access to Care Analysis"
+subtitle: "Understanding Hospital Distribution Across the United States"
+author: "Posit PBC"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    code-fold: true
+    theme: cosmo
+---
+
+```{python}
+#| echo: false
+import polars as pl
+import plotnine as p9
+from plotnine import *
+from great_tables import GT, loc, style
+import warnings
+warnings.filterwarnings('ignore')
+
+# Read data
+us_counties = pl.read_parquet("data/us_counties.parquet")
+us_states = pl.read_parquet("data/us_states.parquet")
+us_atc_county_polygons = pl.read_parquet("data/us_atc_county_polygons.parquet")
+us_large_cities = pl.read_parquet("data/us_large_cities.parquet")
+
+# Helper function to format large numbers
+def format_number(x):
+    if x >= 1_000_000:
+        return f"{x/1_000_000:.1f}M"
+    elif x >= 1_000:
+        return f"{x/1_000:.1f}K"
+    else:
+        return str(int(x))
+```
+
+## Data Sources
+
+This analysis combines data from two authoritative sources to provide a comprehensive view of healthcare access across the United States:
+
+- **Centers for Medicare & Medicaid Services (2025)**: Hospital location and facility information from the Medicare Provider Data. This dataset includes detailed information about hospitals participating in Medicare programs, including their geographic locations and operational status.
+
+- **U.S. Census Bureau (2024)**: Population estimates at the county level. These estimates provide the most recent demographic data necessary for understanding population distribution and healthcare needs across different regions.
+
+Together, these datasets allow us to examine the relationship between population distribution and hospital access across the United States. By combining these authoritative sources, we can identify potential gaps in healthcare infrastructure and highlight areas that may require additional attention from policymakers and healthcare administrators.
+
+## County Population vs Hospitals
+
+Understanding the relationship between population size and hospital availability is fundamental to assessing healthcare access. Each point in the visualization below represents a single county in the United States, showing its total population and the number of hospitals serving that community.
+
+The scatter plot reveals several important patterns. Larger population centers tend to have more hospitals, which is expected. However, the relationship is not strictly linear, and there is considerable variation. Some counties have more hospitals than others with similar populations, while some densely populated areas appear to have relatively fewer healthcare facilities than might be expected.
+
+This initial exploration sets the stage for our statistical modeling approach, which aims to quantify what constitutes "expected" hospital coverage based on population and identify counties that deviate significantly from these expectations.
+
+```{python}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 5
+#| fig-align: center
+
+(
+    ggplot(us_counties.to_pandas(), aes(x='population', y='hospitals')) +
+    geom_point(alpha=0.5, size=2, color='#0072B2') +
+    scale_x_log10(labels=lambda x: [format_number(v) for v in x]) +
+    scale_y_continuous() +
+    labs(
+        x='Population (log scale)',
+        y='Number of Hospitals',
+        title='County Population vs Hospital Count'
+    ) +
+    theme_minimal() +
+    theme(
+        figure_size=(8, 5),
+        text=element_text(family='Helvetica'),
+        plot_title=element_text(size=14, weight='bold')
+    )
+)
+```
+
+## Model Predictions
+
+To systematically identify underserved and overserved counties, we developed a statistical model that predicts the expected number of hospitals based on population size. The model uses nationwide data to establish baseline expectations and calculates prediction intervals that account for natural variation in hospital distribution.
+
+The visualization below shows our model predictions overlaid on the actual county data. The dark line represents the expected number of hospitals for any given population size, while the shaded blue region represents the prediction interval. Counties are color-coded based on their relationship to these predictions:
+
+- **Pink points** represent counties with fewer hospitals than expected (below the prediction interval). These counties may be underserved and could benefit from additional healthcare infrastructure investment.
+
+- **Blue points** represent counties with more hospitals than expected (above the prediction interval). These areas have relatively strong hospital coverage compared to their population size.
+
+- **Green points** represent counties within the expected range, indicating that their hospital count aligns with what the model predicts based on population alone.
+
+This approach provides an objective, data-driven method for identifying potential healthcare access gaps across the country.
+
+```{python}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 5
+#| fig-align: center
+
+# Prepare data with colors based on status
+plot_data = us_counties.with_columns([
+    pl.when(pl.col("pred_status") == "below")
+      .then(pl.lit("#CC79A7"))
+      .when(pl.col("pred_status") == "above")
+      .then(pl.lit("#0072B2"))
+      .otherwise(pl.lit("#009E73"))
+      .alias("color")
+]).to_pandas()
+
+(
+    ggplot(plot_data, aes(x='population', y='hospitals', color='pred_status')) +
+    geom_point(alpha=0.6, size=2) +
+    geom_smooth(
+        aes(x='population', y='pred_fit'),
+        method='lm',
+        color='#333333',
+        se=False
+    ) +
+    geom_ribbon(
+        aes(x='population', ymin='pred_lwr', ymax='pred_upr'),
+        alpha=0.2,
+        fill='#0072B2'
+    ) +
+    scale_x_log10(labels=lambda x: [format_number(v) for v in x]) +
+    scale_color_manual(
+        values={'below': '#CC79A7', 'above': '#0072B2', 'ok': '#009E73'},
+        labels={'below': 'Below', 'above': 'Above', 'ok': 'At Level'}
+    ) +
+    labs(
+        x='Population (log scale)',
+        y='Number of Hospitals',
+        color='Status',
+        title='Hospital Count vs Population with Model Predictions'
+    ) +
+    theme_minimal() +
+    theme(
+        figure_size=(8, 5),
+        text=element_text(family='Helvetica'),
+        plot_title=element_text(size=14, weight='bold'),
+        legend_position='bottom'
+    )
+)
+```
+
+## Most Underserved Counties
+
+The table below highlights the 15 counties with the largest gaps between their actual hospital counts and the minimum expected threshold from our model. These counties represent the most significant potential deficits in healthcare infrastructure relative to population size.
+
+Counties appearing in this list warrant closer examination by healthcare planners and policymakers. The "gap" between actual and expected hospital counts indicates the magnitude of potential underservice. For instance, a county with 2 actual hospitals but a minimum expectation of 5 hospitals shows a gap of 3 facilities.
+
+It's important to note that this analysis is based purely on population and hospital counts. Other factors such as proximity to neighboring counties with hospitals, the size and capacity of existing facilities, and specialized healthcare services may also influence healthcare access. Nevertheless, this quantitative approach provides a starting point for identifying areas that may benefit from targeted healthcare infrastructure investments.
+
+```{python}
+#| echo: false
+
+top_underserved = (
+    us_counties
+    .filter(pl.col("pred_status") == "below")
+    .with_columns((pl.col("pred_lwr") - pl.col("hospitals")).alias("gap"))
+    .sort("gap", descending=True)
+    .head(15)
+    .select(["county_name", "state", "population", "hospitals", "pred_lwr", "pred_fit"])
+)
+
+# Display using great_tables
+(
+    GT(top_underserved.to_pandas())
+    .cols_label(
+        county_name="County",
+        state="State",
+        population="Population",
+        hospitals="Actual Hospitals",
+        pred_lwr="Minimum Expected",
+        pred_fit="Expected Hospitals"
+    )
+    .fmt_number(
+        columns="population",
+        decimals=0
+    )
+    .fmt_number(
+        columns=["pred_lwr", "pred_fit"],
+        decimals=1
+    )
+    .tab_style(
+        style=style.text(weight="bold"),
+        locations=loc.column_labels()
+    )
+    .tab_options(
+        table_font_size="16px"
+    )
+)
+```
+
+## Regional Analysis
+
+The following sections provide detailed geographic breakdowns for selected states, visualizing hospital access patterns at the county level. These maps allow us to identify regional patterns and clusters of underserved areas within each state.
+
+### California
+
+California, the most populous state in the nation, presents a complex picture of healthcare access. The state's diverse geography includes major metropolitan areas like Los Angeles, San Francisco, and San Diego, alongside vast rural regions in the Central Valley and northern counties.
+
+The map below shows significant variation in hospital access across California counties. Urban coastal counties generally show adequate or above-expected hospital coverage, reflecting the concentration of population and healthcare infrastructure in these areas. However, several inland and rural counties fall below expected thresholds, particularly in the Central Valley and northeastern regions.
+
+These patterns reflect the challenges of providing healthcare infrastructure in areas with lower population density, geographic barriers, and economic constraints. The Inland Empire and parts of the Central Valley, despite having substantial populations, show evidence of potential underservice that may warrant further investigation and resource allocation.
+
+```{python}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 6
+#| fig-align: center
+
+state_name = "California"
+state_polygons = us_atc_county_polygons.filter(pl.col("state_name") == state_name)
+state_code = state_polygons.select("state").unique().item()
+state_cities = us_large_cities.filter(pl.col("state") == state_code).filter(pl.col("position") <= 3).to_pandas()
+
+# Convert to pandas and ensure columns are preserved
+state_polygons_pd = state_polygons.to_pandas()
+
+# Define colors
+color_map = {"below": "#CC79A7", "above": "#0072B2", "ok": "#009E73"}
+
+# Create plot
+p = (
+    ggplot(state_polygons_pd) +
+    geom_polygon(aes(x='x', y='y', group='group', fill='pred_status'),
+                 color='#cccccc', size=0.3) +
+    geom_text(aes(x='x', y='y', label='city_name'),
+              data=state_cities,
+              size=8,
+              ha='left',
+              color='black') +
+    scale_fill_manual(
+        values=color_map,
+        labels={'below': 'Below', 'above': 'Above', 'ok': 'At Level'}
+    ) +
+    labs(
+        fill='Status'
+    ) +
+    theme_void() +
+    theme(
+        figure_size=(8, 6),
+        text=element_text(family='Helvetica'),
+        legend_position='bottom',
+        axis_title=element_blank(),
+        axis_text=element_blank(),
+        axis_ticks=element_blank()
+    ) +
+    coord_equal()
+)
+p
+```
+
+### Florida
+
+Florida's healthcare landscape is shaped by its role as a retirement destination and tourist hub, creating unique healthcare demands. The state's population is concentrated along the coasts, particularly in the Miami-Fort Lauderdale corridor, Tampa Bay area, and Orlando region.
+
+The county-level analysis reveals interesting patterns. Many coastal counties, especially in South Florida and around major metropolitan areas, show adequate or above-expected hospital coverage. This likely reflects both the high population density and the healthcare infrastructure developed to serve both residents and seasonal visitors.
+
+However, several counties in the Panhandle, North Florida, and parts of the interior show potential underservice relative to their populations. Rural counties in particular may face challenges in hospital access, despite Florida's overall wealth and development. The geographic distribution of hospitals appears to track closely with population centers, leaving some less dense areas potentially underserved.
+
+```{python}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 6
+#| fig-align: center
+
+state_name = "Florida"
+state_polygons = us_atc_county_polygons.filter(pl.col("state_name") == state_name)
+state_code = state_polygons.select("state").unique().item()
+state_cities = us_large_cities.filter(pl.col("state") == state_code).filter(pl.col("position") <= 3).to_pandas()
+state_polygons_pd = state_polygons.to_pandas()
+
+p = (
+    ggplot(state_polygons_pd) +
+    geom_polygon(aes(x='x', y='y', group='group', fill='pred_status'),
+                 color='#cccccc', size=0.3) +
+    geom_text(aes(x='x', y='y', label='city_name'),
+              data=state_cities,
+              size=8,
+              ha='left',
+              color='black') +
+    scale_fill_manual(
+        values=color_map,
+        labels={'below': 'Below', 'above': 'Above', 'ok': 'At Level'}
+    ) +
+    labs(
+        fill='Status'
+    ) +
+    theme_void() +
+    theme(
+        figure_size=(8, 6),
+        text=element_text(family='Helvetica'),
+        legend_position='bottom',
+        axis_title=element_blank(),
+        axis_text=element_blank(),
+        axis_ticks=element_blank()
+    ) +
+    coord_equal()
+)
+p
+```
+
+### Georgia
+
+Georgia presents a healthcare access profile typical of Southeastern states, with strong concentration of resources in the Atlanta metropolitan area and potential gaps in rural counties. Atlanta and its surrounding counties show robust hospital coverage, reflecting the concentration of major healthcare systems in the state's economic and population center.
+
+The map reveals significant disparities between urban and rural areas. Counties in the southern and southwestern parts of the state, as well as some northern rural counties, show evidence of potential underservice. These areas face challenges common to rural America, including lower population density, economic constraints, and difficulties in attracting and retaining healthcare professionals.
+
+The contrast between Atlanta's healthcare infrastructure and that of rural Georgia highlights the ongoing challenge of equitable healthcare distribution. Counties along the coast, including the Savannah area, generally show better coverage than interior rural counties, suggesting that access to hospitals may correlate with both population size and proximity to larger urban centers.
+
+```{python}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 6
+#| fig-align: center
+
+state_name = "Georgia"
+state_polygons = us_atc_county_polygons.filter(pl.col("state_name") == state_name)
+state_code = state_polygons.select("state").unique().item()
+state_cities = us_large_cities.filter(pl.col("state") == state_code).filter(pl.col("position") <= 3).to_pandas()
+state_polygons_pd = state_polygons.to_pandas()
+
+p = (
+    ggplot(state_polygons_pd) +
+    geom_polygon(aes(x='x', y='y', group='group', fill='pred_status'),
+                 color='#cccccc', size=0.3) +
+    geom_text(aes(x='x', y='y', label='city_name'),
+              data=state_cities,
+              size=8,
+              ha='left',
+              color='black') +
+    scale_fill_manual(
+        values=color_map,
+        labels={'below': 'Below', 'above': 'Above', 'ok': 'At Level'}
+    ) +
+    labs(
+        fill='Status'
+    ) +
+    theme_void() +
+    theme(
+        figure_size=(8, 6),
+        text=element_text(family='Helvetica'),
+        legend_position='bottom',
+        axis_title=element_blank(),
+        axis_text=element_blank(),
+        axis_ticks=element_blank()
+    ) +
+    coord_equal()
+)
+p
+```
+
+### New York
+
+New York State exhibits one of the most dramatic urban-rural divides in healthcare access. New York City and its immediate suburbs show exceptional hospital coverage, far exceeding what would be expected based on population alone. This reflects the city's role as a major healthcare hub with numerous specialized facilities, teaching hospitals, and healthcare systems.
+
+The map illustrates stark contrasts between downstate and upstate regions. While the metropolitan New York City area shows abundant hospital resources, many upstate counties, particularly in the North Country, Southern Tier, and western regions, show signs of potential underservice. The Albany, Syracuse, Rochester, and Buffalo areas show moderate coverage as regional healthcare centers, but surrounding rural counties often fall below expected thresholds.
+
+This geographic disparity presents challenges for state health policy. Rural residents may face significant travel times to reach hospital facilities, while urban residents have multiple nearby options. The concentration of specialized and tertiary care facilities in New York City also means that patients from across the state often travel to the city for complex medical procedures, adding to the burden on rural residents seeking advanced care.
+
+```{python}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 6
+#| fig-align: center
+
+state_name = "New York"
+state_polygons = us_atc_county_polygons.filter(pl.col("state_name") == state_name)
+state_code = state_polygons.select("state").unique().item()
+state_cities = us_large_cities.filter(pl.col("state") == state_code).filter(pl.col("position") <= 3).to_pandas()
+state_polygons_pd = state_polygons.to_pandas()
+
+p = (
+    ggplot(state_polygons_pd) +
+    geom_polygon(aes(x='x', y='y', group='group', fill='pred_status'),
+                 color='#cccccc', size=0.3) +
+    geom_text(aes(x='x', y='y', label='city_name'),
+              data=state_cities,
+              size=8,
+              ha='left',
+              color='black') +
+    scale_fill_manual(
+        values=color_map,
+        labels={'below': 'Below', 'above': 'Above', 'ok': 'At Level'}
+    ) +
+    labs(
+        fill='Status'
+    ) +
+    theme_void() +
+    theme(
+        figure_size=(8, 6),
+        text=element_text(family='Helvetica'),
+        legend_position='bottom',
+        axis_title=element_blank(),
+        axis_text=element_blank(),
+        axis_ticks=element_blank()
+    ) +
+    coord_equal()
+)
+p
+```
+
+### North Carolina
+
+North Carolina's healthcare infrastructure reflects its mix of growing urban centers and traditional rural communities. The Research Triangle area (Raleigh-Durham-Chapel Hill) and Charlotte show strong hospital coverage, benefiting from economic growth and the presence of major healthcare systems and academic medical centers.
+
+The map shows a relatively balanced distribution across the state compared to some other regions, though rural counties in the eastern and western parts of the state show signs of potential underservice. Eastern North Carolina, despite having a substantial population, shows several counties below expected hospital coverage levels. The mountainous western counties also face challenges, likely exacerbated by difficult terrain and lower population density.
+
+The coastal counties show mixed results, with some areas having adequate coverage and others falling short. This may reflect the seasonal nature of coastal populations and the challenges of providing year-round healthcare infrastructure in areas with significant seasonal variation. The corridor along Interstate 85 and Interstate 40 generally shows better hospital access than more remote areas, suggesting that transportation infrastructure may play a role in healthcare facility location decisions.
+
+```{python}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 6
+#| fig-align: center
+
+state_name = "North Carolina"
+state_polygons = us_atc_county_polygons.filter(pl.col("state_name") == state_name)
+state_code = state_polygons.select("state").unique().item()
+state_cities = us_large_cities.filter(pl.col("state") == state_code).filter(pl.col("position") <= 3).to_pandas()
+state_polygons_pd = state_polygons.to_pandas()
+
+p = (
+    ggplot(state_polygons_pd) +
+    geom_polygon(aes(x='x', y='y', group='group', fill='pred_status'),
+                 color='#cccccc', size=0.3) +
+    geom_text(aes(x='x', y='y', label='city_name'),
+              data=state_cities,
+              size=8,
+              ha='left',
+              color='black') +
+    scale_fill_manual(
+        values=color_map,
+        labels={'below': 'Below', 'above': 'Above', 'ok': 'At Level'}
+    ) +
+    labs(
+        fill='Status'
+    ) +
+    theme_void() +
+    theme(
+        figure_size=(8, 6),
+        text=element_text(family='Helvetica'),
+        legend_position='bottom',
+        axis_title=element_blank(),
+        axis_text=element_blank(),
+        axis_ticks=element_blank()
+    ) +
+    coord_equal()
+)
+p
+```
+
+### Virginia
+
+Virginia's healthcare access patterns reflect its diverse geography and economic development. Northern Virginia, part of the Washington D.C. metropolitan area, shows strong hospital coverage. Richmond and Virginia Beach also demonstrate adequate healthcare infrastructure as major population centers.
+
+The map reveals potential challenges in parts of Southside Virginia and the Shenandoah Valley. Rural counties in these regions show signs of underservice relative to their populations. The southwestern corner of the state, including parts of Appalachia, also shows counties below expected hospital coverage levels, reflecting the broader challenges facing Appalachian healthcare.
+
+Central Virginia, around Richmond and Charlottesville, benefits from the presence of major healthcare systems and academic medical centers. The I-95 and I-64 corridors show generally better hospital access than more remote areas. Coastal Virginia, including the Hampton Roads region, shows adequate coverage, though some surrounding counties may face access challenges.
+
+The state's geography, from Tidewater to the mountains, creates different challenges for healthcare delivery. While urban and suburban areas have developed robust healthcare infrastructure, maintaining adequate hospital access in rural and mountain communities remains an ongoing challenge for state health planners.
+
+```{python}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 6
+#| fig-align: center
+
+state_name = "Virginia"
+state_polygons = us_atc_county_polygons.filter(pl.col("state_name") == state_name)
+state_code = state_polygons.select("state").unique().item()
+state_cities = us_large_cities.filter(pl.col("state") == state_code).filter(pl.col("position") <= 3).to_pandas()
+state_polygons_pd = state_polygons.to_pandas()
+
+p = (
+    ggplot(state_polygons_pd) +
+    geom_polygon(aes(x='x', y='y', group='group', fill='pred_status'),
+                 color='#cccccc', size=0.3) +
+    geom_text(aes(x='x', y='y', label='city_name'),
+              data=state_cities,
+              size=8,
+              ha='left',
+              color='black') +
+    scale_fill_manual(
+        values=color_map,
+        labels={'below': 'Below', 'above': 'Above', 'ok': 'At Level'}
+    ) +
+    labs(
+        fill='Status'
+    ) +
+    theme_void() +
+    theme(
+        figure_size=(8, 6),
+        text=element_text(family='Helvetica'),
+        legend_position='bottom',
+        axis_title=element_blank(),
+        axis_text=element_blank(),
+        axis_ticks=element_blank()
+    ) +
+    coord_equal()
+)
+p
+```

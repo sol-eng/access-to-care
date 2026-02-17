@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "locale": "en_US",
+  "platform": "4.5.2",
+  "metadata": {
+    "appmode": "static",
+    "primary_rmd": null,
+    "primary_html": "map.html",
+    "content_category": null,
+    "has_parameters": false
+  },
+  "packages": null,
+  "files": {
+    "map_files/ggiraphjs-0.9.4/girafe.css": {
+      "checksum": "14a61df5d45d828c7246260a3f2812e9"
+    },
+    "map_files/ggiraphjs-0.9.4/girafe.js": {
+      "checksum": "a53815bdd327b02a31bdeef102b1d17c"
+    },
+    "map_files/ggiraphjs-0.9.4/girafe.yaml": {
+      "checksum": "7e5c6820e740f08b8f9f450cbd193989"
+    },
+    "map_files/girafe-binding-0.9.4/girafe.js": {
+      "checksum": "a53815bdd327b02a31bdeef102b1d17c"
+    },
+    "map_files/htmltools-fill-0.5.9/fill.css": {
+      "checksum": "0c307b2ce7a3fa7f260a0451457c809f"
+    },
+    "map_files/htmlwidgets-1.6.4/htmlwidgets.js": {
+      "checksum": "237f59bc086ccf24f39be55311023b91"
+    },
+    "map.html": {
+      "checksum": "60b670958ee0e44e63aaa199644c91bc"
+    },
+    "metadata.yml": {
+      "checksum": "e1c8134055c477a554f81089d05567b0"
+    },
+    "thumbnail.png": {
+      "checksum": "15e3aef99a243749ce4562a2245b8758"
+    }
+  },
+  "users": null
+}

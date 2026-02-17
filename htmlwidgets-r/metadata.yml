@@ -1,0 +1,4 @@
+title: "Interactive Plot - R"
+description: "Interactive US Map showing the model results, created using htmlwidget"
+type: Plot
+url: "htmlwidgets-r"

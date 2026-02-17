@@ -1,0 +1,4 @@
+title: "REST API - R"
+description: "Multiple endpoints to access the model and data, using plumber2"
+type: REST API
+url: "api-r"

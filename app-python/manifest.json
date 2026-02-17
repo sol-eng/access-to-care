@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "locale": "en_US.UTF-8",
+  "metadata": {
+    "appmode": "python-dash",
+    "entrypoint": "app"
+  },
+  "python": {
+    "version": "3.11.12",
+    "package_manager": {
+      "name": "pip",
+      "version": "26.0.1",
+      "package_file": "requirements.txt"
+    }
+  },
+  "files": {
+    "requirements.txt": {
+      "checksum": "6cab67fde0a149f1ff1484bebc20ad5e"
+    },
+    "app.py": {
+      "checksum": "0aafc0b30cccee4bdd57bf32151f431c"
+    },
+    "assets/dash.css": {
+      "checksum": "bef4f3a493c57c8cc7ffa20de40ccf1a"
+    },
+    "assets/dashboard.css": {
+      "checksum": "f46c3368cbb1507d3ad67a3e2158172d"
+    },
+    "data/us_counties.parquet": {
+      "checksum": "ed66df1dcb936eb8285f35d3ac311920"
+    },
+    "metadata.yml": {
+      "checksum": "a48ce05cb7241bc627d4b793cb830f8a"
+    },
+    "thumbnail.png": {
+      "checksum": "0112282ab7b187b6a3a1c12921f39cf2"
+    }
+  }
+}

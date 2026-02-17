@@ -26,8 +26,15 @@ if (Sys.getenv("R_CONFIG_ACTIVE") == "rsconnect") {
 }
 
 choice_types <- c(
-  "All", "Script", "Report", "Dashboard", "Data", "Model",
-  "Notebook", "Plot", "Presentation", "Application", "API"
+  "All",
+  "Report",
+  "Dashboard",
+  "Data",
+  "Model",
+  "Plot",
+  "Presentation",
+  "Application",
+  "API"
 )
 
 atc_content <- all_content |>
@@ -42,11 +49,9 @@ atc_content <- atc_content |>
   mutate(
     title = str_remove(title, "Access to Care - "),
     type = case_when(
-      str_detect(title, "RNotebook") ~ "Notebook",
       content_category == "pin" & str_detect(title, "Model") ~ "Model",
       content_category == "pin" ~ "Data",
       str_detect(title, " Prep") ~ "Script",
-      str_detect(title, "Presentation|PowerPoint") ~ "Presentation",
       app_mode == "rmd-static" ~ "Report",
       app_mode %in% c("rmd-shiny", "python-dash", "quarto-shiny") ~ "Dashboard",
       app_mode == "static" ~ "Plot",
@@ -62,10 +67,13 @@ atc_content <- atc_content |>
 
 ui <- material_page(
   title = "Access to Care",
-  primary_theme_color = palette_atc$ok,
-  secondary_theme_color = palette_atc$above,
+  primary_theme_color = "#0357b8",
+  secondary_theme_color = "#5b9bd5",
   background_color = "white",
-  material_parallax("hospital.jpeg"),
+  tags$head(
+    tags$link(rel = "stylesheet", type = "text/css", href = "custom-theme.css")
+  ),
+  material_parallax("hospital.jpg"),
   fluidRow(
     absolutePanel(
       material_radio_button("type", "Content Type", choice_types),
@@ -93,13 +101,6 @@ ui <- material_page(
       left = 20,
       width = "80%"
     )
-  ),
-  fluidRow(
-    absolutePanel(
-      material_radio_button("view", "View:", c("Cards", "Grid")),
-      right = 300,
-      top = 420
-    )
   )
 )
 
@@ -114,21 +115,7 @@ server <- function(input, output, session) {
     }
     f_content
   })
-  output$cards <- renderRsccard({
-    if (input$view == "Grid") {
-      return(NULL)
-    }
-    f_content <- filter_content()
-    if (nrow(f_content) > 0) {
-      rsc_card(f_content)
-    } else {
-      NULL
-    }
-  })
   output$grid <- renderRscgrid({
-    if (input$view == "Cards") {
-      return(NULL)
-    }
     f_content <- filter_content()
     if (nrow(f_content) > 0) {
       rsc_grid(f_content)

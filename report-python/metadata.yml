@@ -1,0 +1,8 @@
+title: "Report - Python"
+description: "HTML document showing Access to Care analysis using Python, Polars, Plotnine, and Great Tables"
+type: "Quarto HTML"
+url: "report-python"
+tags:
+  - "Access to Care"
+  - "HTML Report"
+  - "Python"

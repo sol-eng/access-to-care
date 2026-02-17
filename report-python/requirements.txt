@@ -1,0 +1,4 @@
+polars
+plotnine
+pyarrow
+great-tables

@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "locale": "en_US",
+  "platform": "4.5.2",
+  "metadata": {
+    "appmode": "static",
+    "primary_rmd": null,
+    "primary_html": "map.html",
+    "content_category": null,
+    "has_parameters": false
+  },
+  "packages": null,
+  "files": {
+    "map.html": {
+      "checksum": "0af1e82f555c9268c93461c9d039bccb"
+    },
+    "map.png": {
+      "checksum": "fd5e270ff21fcff891306cae3d289b48"
+    },
+    "metadata.yml": {
+      "checksum": "a99e2913860ef3ce7095fba7856bc96c"
+    },
+    "thumbnail.png": {
+      "checksum": "2569f5f9c2bcede2c052d51596da30c8"
+    }
+  },
+  "users": null
+}

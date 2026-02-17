@@ -1,0 +1,8 @@
+title: "Presentation - Python"
+description: "Published version of the presentation created using Python, Polars, and Plotnine"
+type: Quarto presentation
+url: "presentation-python"
+tags:
+  - "Access to Care"
+  - "Presentation"
+  - "Python"

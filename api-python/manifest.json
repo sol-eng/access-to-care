@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "locale": "en_US.UTF-8",
+  "metadata": {
+    "appmode": "python-fastapi",
+    "entrypoint": "main"
+  },
+  "python": {
+    "version": "3.11.12",
+    "package_manager": {
+      "name": "pip",
+      "version": "26.0.1",
+      "package_file": "requirements.txt"
+    }
+  },
+  "files": {
+    "requirements.txt": {
+      "checksum": "2481991d89ec0187d1c34ad64a3b18d6"
+    },
+    "data/us_counties.parquet": {
+      "checksum": "ed66df1dcb936eb8285f35d3ac311920"
+    },
+    "data/us_states.parquet": {
+      "checksum": "07cc1cec2b1875633b8fa809f48499f4"
+    },
+    "main.py": {
+      "checksum": "ea83c45c595a7afcf079215d0440e6d2"
+    },
+    "metadata.yml": {
+      "checksum": "36164ab65909ff97c34dbe329d67c226"
+    }
+  }
+}

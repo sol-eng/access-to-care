@@ -1,0 +1,444 @@
+---
+title: "Access to Care"
+subtitle: "Quarto presentation"
+author: "Posit PBC"
+format:
+  revealjs:
+    theme: [simple, theme.scss]
+    slide-number: true
+    transition: fade
+    background-transition: fade
+---
+
+```{python}
+#| echo: false
+import polars as pl
+import plotnine as p9
+from plotnine import *
+from great_tables import GT, loc, style
+import warnings
+warnings.filterwarnings('ignore')
+
+# Read data
+us_counties = pl.read_parquet("data/us_counties.parquet")
+us_states = pl.read_parquet("data/us_states.parquet")
+us_atc_county_polygons = pl.read_parquet("data/us_atc_county_polygons.parquet")
+us_large_cities = pl.read_parquet("data/us_large_cities.parquet")
+
+# Helper function to format large numbers
+def format_number(x):
+    if x >= 1_000_000:
+        return f"{x/1_000_000:.1f}M"
+    elif x >= 1_000:
+        return f"{x/1_000:.1f}K"
+    else:
+        return str(int(x))
+```
+
+## Data Sources
+
+This analysis combines data from two authoritative sources:
+
+- **Centers for Medicare & Medicaid Services (2025)**: Hospital location and facility information from the Medicare Provider Data
+- **U.S. Census Bureau (2024)**: Population estimates at the county level
+
+Together, these datasets allow us to examine the relationship between population distribution and hospital access across the United States.
+
+## County Population vs Hospitals
+
+Each point represents a county, showing population size and number of hospitals.
+
+```{python}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 5
+#| fig-align: center
+
+(
+    ggplot(us_counties.to_pandas(), aes(x='population', y='hospitals')) +
+    geom_point(alpha=0.5, size=2, color='#0072B2') +
+    scale_x_log10(labels=lambda x: [format_number(v) for v in x]) +
+    scale_y_continuous() +
+    labs(
+        x='Population (log scale)',
+        y='Number of Hospitals',
+        title='County Population vs Hospital Count'
+    ) +
+    theme_minimal() +
+    theme(
+        figure_size=(8, 5),
+        text=element_text(family='Helvetica'),
+        plot_title=element_text(size=14, weight='bold')
+    )
+)
+```
+
+## Model Predictions
+
+Pink region: fewer hospitals than expected. Blue region: more hospitals than expected.
+
+```{python}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 5
+#| fig-align: center
+
+# Prepare data with colors based on status
+plot_data = us_counties.with_columns([
+    pl.when(pl.col("pred_status") == "below")
+      .then(pl.lit("#CC79A7"))
+      .when(pl.col("pred_status") == "above")
+      .then(pl.lit("#0072B2"))
+      .otherwise(pl.lit("#009E73"))
+      .alias("color")
+]).to_pandas()
+
+(
+    ggplot(plot_data, aes(x='population', y='hospitals', color='pred_status')) +
+    geom_point(alpha=0.6, size=2) +
+    geom_smooth(
+        aes(x='population', y='pred_fit'),
+        method='lm',
+        color='#333333',
+        se=False
+    ) +
+    geom_ribbon(
+        aes(x='population', ymin='pred_lwr', ymax='pred_upr'),
+        alpha=0.2,
+        fill='#0072B2'
+    ) +
+    scale_x_log10(labels=lambda x: [format_number(v) for v in x]) +
+    scale_color_manual(
+        values={'below': '#CC79A7', 'above': '#0072B2', 'ok': '#009E73'},
+        labels={'below': 'Below', 'above': 'Above', 'ok': 'At Level'}
+    ) +
+    labs(
+        x='Population (log scale)',
+        y='Number of Hospitals',
+        color='Status',
+        title='Hospital Count vs Population with Model Predictions'
+    ) +
+    theme_minimal() +
+    theme(
+        figure_size=(8, 5),
+        text=element_text(family='Helvetica'),
+        plot_title=element_text(size=14, weight='bold'),
+        legend_position='bottom'
+    )
+)
+```
+
+## Most Underserved Counties
+
+Counties with the largest gap between actual and expected hospital counts, based on population.
+
+```{python}
+#| echo: false
+
+top_underserved = (
+    us_counties
+    .filter(pl.col("pred_status") == "below")
+    .with_columns((pl.col("pred_lwr") - pl.col("hospitals")).alias("gap"))
+    .sort("gap", descending=True)
+    .head(15)
+    .select(["county_name", "state", "population", "hospitals", "pred_lwr", "pred_fit"])
+)
+
+# Display using great_tables
+(
+    GT(top_underserved.to_pandas())
+    .cols_label(
+        county_name="County",
+        state="State",
+        population="Population",
+        hospitals="Actual Hospitals",
+        pred_lwr="Minimum Expected",
+        pred_fit="Expected Hospitals"
+    )
+    .fmt_number(
+        columns="population",
+        decimals=0
+    )
+    .fmt_number(
+        columns=["pred_lwr", "pred_fit"],
+        decimals=1
+    )
+    .tab_style(
+        style=style.text(weight="bold"),
+        locations=loc.column_labels()
+    )
+    .tab_options(
+        table_font_size="16px"
+    )
+)
+```
+
+## California - Underserved Counties
+
+```{python}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 6
+#| fig-align: center
+
+state_name = "California"
+state_polygons = us_atc_county_polygons.filter(pl.col("state_name") == state_name)
+state_code = state_polygons.select("state").unique().item()
+state_cities = us_large_cities.filter(pl.col("state") == state_code).filter(pl.col("position") <= 3).to_pandas()
+
+# Convert to pandas and ensure columns are preserved
+state_polygons_pd = state_polygons.to_pandas()
+
+# Define colors
+color_map = {"below": "#CC79A7", "above": "#0072B2", "ok": "#009E73"}
+
+# Create plot
+p = (
+    ggplot(state_polygons_pd) +
+    geom_polygon(aes(x='x', y='y', group='group', fill='pred_status'),
+                 color='#cccccc', size=0.3) +
+    geom_text(aes(x='x', y='y', label='city_name'),
+              data=state_cities,
+              size=8,
+              ha='left',
+              color='black') +
+    scale_fill_manual(
+        values=color_map,
+        labels={'below': 'Below', 'above': 'Above', 'ok': 'At Level'}
+    ) +
+    labs(
+        fill='Status'
+    ) +
+    theme_void() +
+    theme(
+        figure_size=(8, 6),
+        text=element_text(family='Helvetica'),
+        legend_position='bottom',
+        axis_title=element_blank(),
+        axis_text=element_blank(),
+        axis_ticks=element_blank()
+    ) +
+    coord_equal()
+)
+p
+```
+
+## Florida - Underserved Counties
+
+```{python}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 6
+#| fig-align: center
+
+state_name = "Florida"
+state_polygons = us_atc_county_polygons.filter(pl.col("state_name") == state_name)
+state_code = state_polygons.select("state").unique().item()
+state_cities = us_large_cities.filter(pl.col("state") == state_code).filter(pl.col("position") <= 3).to_pandas()
+state_polygons_pd = state_polygons.to_pandas()
+
+p = (
+    ggplot(state_polygons_pd) +
+    geom_polygon(aes(x='x', y='y', group='group', fill='pred_status'),
+                 color='#cccccc', size=0.3) +
+    geom_text(aes(x='x', y='y', label='city_name'),
+              data=state_cities,
+              size=8,
+              ha='left',
+              color='black') +
+    scale_fill_manual(
+        values=color_map,
+        labels={'below': 'Below', 'above': 'Above', 'ok': 'At Level'}
+    ) +
+    labs(
+        fill='Status'
+    ) +
+    theme_void() +
+    theme(
+        figure_size=(8, 6),
+        text=element_text(family='Helvetica'),
+        legend_position='bottom',
+        axis_title=element_blank(),
+        axis_text=element_blank(),
+        axis_ticks=element_blank()
+    ) +
+    coord_equal()
+)
+p
+```
+
+## Georgia - Underserved Counties
+
+```{python}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 6
+#| fig-align: center
+
+state_name = "Georgia"
+state_polygons = us_atc_county_polygons.filter(pl.col("state_name") == state_name)
+state_code = state_polygons.select("state").unique().item()
+state_cities = us_large_cities.filter(pl.col("state") == state_code).filter(pl.col("position") <= 3).to_pandas()
+state_polygons_pd = state_polygons.to_pandas()
+
+p = (
+    ggplot(state_polygons_pd) +
+    geom_polygon(aes(x='x', y='y', group='group', fill='pred_status'),
+                 color='#cccccc', size=0.3) +
+    geom_text(aes(x='x', y='y', label='city_name'),
+              data=state_cities,
+              size=8,
+              ha='left',
+              color='black') +
+    scale_fill_manual(
+        values=color_map,
+        labels={'below': 'Below', 'above': 'Above', 'ok': 'At Level'}
+    ) +
+    labs(
+        fill='Status'
+    ) +
+    theme_void() +
+    theme(
+        figure_size=(8, 6),
+        text=element_text(family='Helvetica'),
+        legend_position='bottom',
+        axis_title=element_blank(),
+        axis_text=element_blank(),
+        axis_ticks=element_blank()
+    ) +
+    coord_equal()
+)
+p
+```
+
+## New York - Underserved Counties
+
+```{python}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 6
+#| fig-align: center
+
+state_name = "New York"
+state_polygons = us_atc_county_polygons.filter(pl.col("state_name") == state_name)
+state_code = state_polygons.select("state").unique().item()
+state_cities = us_large_cities.filter(pl.col("state") == state_code).filter(pl.col("position") <= 3).to_pandas()
+state_polygons_pd = state_polygons.to_pandas()
+
+p = (
+    ggplot(state_polygons_pd) +
+    geom_polygon(aes(x='x', y='y', group='group', fill='pred_status'),
+                 color='#cccccc', size=0.3) +
+    geom_text(aes(x='x', y='y', label='city_name'),
+              data=state_cities,
+              size=8,
+              ha='left',
+              color='black') +
+    scale_fill_manual(
+        values=color_map,
+        labels={'below': 'Below', 'above': 'Above', 'ok': 'At Level'}
+    ) +
+    labs(
+        fill='Status'
+    ) +
+    theme_void() +
+    theme(
+        figure_size=(8, 6),
+        text=element_text(family='Helvetica'),
+        legend_position='bottom',
+        axis_title=element_blank(),
+        axis_text=element_blank(),
+        axis_ticks=element_blank()
+    ) +
+    coord_equal()
+)
+p
+```
+
+## North Carolina - Underserved Counties
+
+```{python}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 6
+#| fig-align: center
+
+state_name = "North Carolina"
+state_polygons = us_atc_county_polygons.filter(pl.col("state_name") == state_name)
+state_code = state_polygons.select("state").unique().item()
+state_cities = us_large_cities.filter(pl.col("state") == state_code).filter(pl.col("position") <= 3).to_pandas()
+state_polygons_pd = state_polygons.to_pandas()
+
+p = (
+    ggplot(state_polygons_pd) +
+    geom_polygon(aes(x='x', y='y', group='group', fill='pred_status'),
+                 color='#cccccc', size=0.3) +
+    geom_text(aes(x='x', y='y', label='city_name'),
+              data=state_cities,
+              size=8,
+              ha='left',
+              color='black') +
+    scale_fill_manual(
+        values=color_map,
+        labels={'below': 'Below', 'above': 'Above', 'ok': 'At Level'}
+    ) +
+    labs(
+        fill='Status'
+    ) +
+    theme_void() +
+    theme(
+        figure_size=(8, 6),
+        text=element_text(family='Helvetica'),
+        legend_position='bottom',
+        axis_title=element_blank(),
+        axis_text=element_blank(),
+        axis_ticks=element_blank()
+    ) +
+    coord_equal()
+)
+p
+```
+
+## Virginia - Underserved Counties
+
+```{python}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 6
+#| fig-align: center
+
+state_name = "Virginia"
+state_polygons = us_atc_county_polygons.filter(pl.col("state_name") == state_name)
+state_code = state_polygons.select("state").unique().item()
+state_cities = us_large_cities.filter(pl.col("state") == state_code).filter(pl.col("position") <= 3).to_pandas()
+state_polygons_pd = state_polygons.to_pandas()
+
+p = (
+    ggplot(state_polygons_pd) +
+    geom_polygon(aes(x='x', y='y', group='group', fill='pred_status'),
+                 color='#cccccc', size=0.3) +
+    geom_text(aes(x='x', y='y', label='city_name'),
+              data=state_cities,
+              size=8,
+              ha='left',
+              color='black') +
+    scale_fill_manual(
+        values=color_map,
+        labels={'below': 'Below', 'above': 'Above', 'ok': 'At Level'}
+    ) +
+    labs(
+        fill='Status'
+    ) +
+    theme_void() +
+    theme(
+        figure_size=(8, 6),
+        text=element_text(family='Helvetica'),
+        legend_position='bottom',
+        axis_title=element_blank(),
+        axis_text=element_blank(),
+        axis_ticks=element_blank()
+    ) +
+    coord_equal()
+)
+p
+```

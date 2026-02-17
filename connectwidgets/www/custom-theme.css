@@ -1,0 +1,114 @@
+/* Custom Theme for Access to Care ConnectWidgets App */
+
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
+
+/* Base Typography */
+body,
+.material-radio-group label,
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Open Sans', sans-serif !important;
+}
+
+/* Material Design Color Overrides - Primary Blue */
+.mdl-radio__outer-circle {
+  border-color: #0357b8 !important;
+}
+
+.mdl-radio__inner-circle {
+  background-color: #0357b8 !important;
+}
+
+.mdl-radio.is-checked .mdl-radio__outer-circle {
+  border-color: #0357b8 !important;
+}
+
+.mdl-radio.is-checked .mdl-radio__inner-circle {
+  background-color: #0357b8 !important;
+}
+
+.mdl-button--primary {
+  background-color: #0357b8 !important;
+}
+
+.mdl-button--accent {
+  background-color: #5b9bd5 !important;
+}
+
+/* ConnectWidgets Card Styling */
+.rsc-card,
+.rsc-grid-item {
+  border: 1px solid #d4e6f1 !important;
+  border-radius: 6px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+  transition: all 0.2s ease !important;
+}
+
+.rsc-card:hover,
+.rsc-grid-item:hover {
+  box-shadow: 0 4px 12px rgba(3, 87, 184, 0.15) !important;
+  transform: translateY(-2px);
+  border-color: #0357b8 !important;
+}
+
+/* Card titles */
+.rsc-card-title,
+.rsc-grid-item-title {
+  color: #0357b8 !important;
+  font-weight: 600 !important;
+}
+
+/* Card metadata */
+.rsc-card-meta,
+.rsc-grid-item-meta {
+  color: #5b9bd5 !important;
+}
+
+/* Z-index Layering to Prevent Overlaps */
+.parallax-container {
+  z-index: 0;
+}
+
+div[id*="grid"],
+div[id*="cards"] {
+  z-index: 1 !important;
+  position: relative;
+}
+
+.shiny-bound-output {
+  z-index: 1;
+}
+
+/* Material Parallax Adjustments */
+.parallax-container .parallax img {
+  opacity: 0.3;
+}
+
+/* Content Grid Background */
+.rsc-grid,
+.rsc-card-container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Smooth Transitions */
+* {
+  transition-timing-function: ease-in-out;
+}
+
+/* Focus States */
+.mdl-radio:focus:not(:active) .mdl-radio__outer-circle {
+  box-shadow: 0 0 0 0.2rem rgba(3, 87, 184, 0.15);
+}
+
+/* Loading/Error States */
+.shiny-output-error {
+  color: #CC79A7;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.shiny-output-error:before {
+  content: "⚠️ ";
+}
