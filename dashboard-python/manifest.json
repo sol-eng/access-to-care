@@ -2,8 +2,14 @@
   "version": 1,
   "locale": "en_US.UTF-8",
   "metadata": {
-    "appmode": "python-shiny",
+    "appmode": "quarto-shiny",
     "entrypoint": "app"
+  },
+  "quarto": {
+    "version": "1.8.27",
+    "engines": [
+      "jupyter"
+    ]
   },
   "python": {
     "version": "3.11.12",
