@@ -2,8 +2,7 @@
   "version": 1,
   "locale": "en_US.UTF-8",
   "metadata": {
-    "appmode": "quarto-shiny",
-    "entrypoint": "app"
+    "appmode": "quarto-static"
   },
   "quarto": {
     "version": "1.8.27",
@@ -12,7 +11,7 @@
     ]
   },
   "python": {
-    "version": "3.11.12",
+    "version": "3.13.1",
     "package_manager": {
       "name": "pip",
       "version": "26.0.1",
@@ -23,110 +22,8 @@
     "requirements.txt": {
       "checksum": "fc50bc89d08ed30364c97bf8c72db6ef"
     },
-    ".connect": {
-      "checksum": "c56e4a8b8a75d5bed6f5f7164fdca6cc"
-    },
-    "access-to-care.html": {
-      "checksum": "6c0b28b71736641386bb0263dbf08f92"
-    },
     "access-to-care.qmd": {
       "checksum": "0c836b85f40dcdb2f38a15d945ad5155"
-    },
-    "access-to-care_files/libs/bootstrap/bootstrap-089692a5cd3f3e75a5b541f1e3436db7.min.css": {
-      "checksum": "089692a5cd3f3e75a5b541f1e3436db7"
-    },
-    "access-to-care_files/libs/bootstrap/bootstrap-dark-089692a5cd3f3e75a5b541f1e3436db7.min.css": {
-      "checksum": "089692a5cd3f3e75a5b541f1e3436db7"
-    },
-    "access-to-care_files/libs/bootstrap/bootstrap-icons.css": {
-      "checksum": "886da841d7421705f715f600c5ff11bb"
-    },
-    "access-to-care_files/libs/bootstrap/bootstrap-icons.woff": {
-      "checksum": "efe54401ef52214fd3b701e23ff88c5f"
-    },
-    "access-to-care_files/libs/bootstrap/bootstrap.min.js": {
-      "checksum": "e2b09c06f0e714b6144a6788a28e3950"
-    },
-    "access-to-care_files/libs/clipboard/clipboard.min.js": {
-      "checksum": "15f52a1ee547f2bdd46e56747332ca2d"
-    },
-    "access-to-care_files/libs/quarto-dashboard/components.js": {
-      "checksum": "ac49ebff39666f27f4631a3914841683"
-    },
-    "access-to-care_files/libs/quarto-dashboard/datatables.min.css": {
-      "checksum": "7b2279175549cd49b758a7d5b4da6cd6"
-    },
-    "access-to-care_files/libs/quarto-dashboard/datatables.min.js": {
-      "checksum": "c06be800b0cfc85e5d5b522e200c5f51"
-    },
-    "access-to-care_files/libs/quarto-dashboard/pdfmake.min.js": {
-      "checksum": "95caca411bcbd3095c0f8db152de05dd"
-    },
-    "access-to-care_files/libs/quarto-dashboard/quarto-dashboard.js": {
-      "checksum": "73bfea128e6f7c27f0bab4cc0777aff9"
-    },
-    "access-to-care_files/libs/quarto-dashboard/stickythead.js": {
-      "checksum": "5b27aeec9a60192899f23015fd741564"
-    },
-    "access-to-care_files/libs/quarto-dashboard/vfs_fonts.js": {
-      "checksum": "8a026906153f3e29bc684f6b392e8654"
-    },
-    "access-to-care_files/libs/quarto-dashboard/web-components.js": {
-      "checksum": "c91de9b5866fb45c694bbeafa119d6b9"
-    },
-    "access-to-care_files/libs/quarto-html/anchor.min.js": {
-      "checksum": "91bcf6cd1fd88fec3f109811e5fc3546"
-    },
-    "access-to-care_files/libs/quarto-html/axe/axe-check.js": {
-      "checksum": "b4f6a44157bfe20b68b69aabf2f8125d"
-    },
-    "access-to-care_files/libs/quarto-html/popper.min.js": {
-      "checksum": "3a4a291ccf3f1ea0f82b641542fd3827"
-    },
-    "access-to-care_files/libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css": {
-      "checksum": "4d9afe2b8d18ee9fa5d0d57b5ed4214d"
-    },
-    "access-to-care_files/libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css": {
-      "checksum": "ed96de9b727972fe78a7b5d16c58bf87"
-    },
-    "access-to-care_files/libs/quarto-html/quarto.js": {
-      "checksum": "a65a7780c10232b6515cdfb8beaaa221"
-    },
-    "access-to-care_files/libs/quarto-html/tabsets/tabsets.js": {
-      "checksum": "e8d6a8862b33ccc461f8fd532e05b365"
-    },
-    "access-to-care_files/libs/quarto-html/tippy.css": {
-      "checksum": "ebd6f8ce46a677e1a4f5f8a8317109a9"
-    },
-    "access-to-care_files/libs/quarto-html/tippy.umd.min.js": {
-      "checksum": "d828775275749701b48bd9d958814111"
-    },
-    "app.py": {
-      "checksum": "fe831f3226cd0b1c630dadeab03b4b35"
-    },
-    "custom-theme.scss": {
-      "checksum": "af18c4f909340769134b055c787a2087"
-    },
-    "data/us_atc_county_polygons.parquet": {
-      "checksum": "116a7a1e20900bd6618900a3b22b147a"
-    },
-    "data/us_counties.parquet": {
-      "checksum": "ed66df1dcb936eb8285f35d3ac311920"
-    },
-    "data/us_hex_positions.parquet": {
-      "checksum": "8249269e835f56aeb1a75bf8585b60ea"
-    },
-    "data/us_large_cities.parquet": {
-      "checksum": "8c208804ccff5fb770162cc214b1f4a0"
-    },
-    "data/us_states.parquet": {
-      "checksum": "07cc1cec2b1875633b8fa809f48499f4"
-    },
-    "metadata.yml": {
-      "checksum": "50c6dde613f83eb8375759416565f436"
-    },
-    "thumbnail.png": {
-      "checksum": "63028e3dc3a841182204b8bf543f1a62"
     }
   }
 }
