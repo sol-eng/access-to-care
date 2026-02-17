@@ -2,12 +2,8 @@
   "version": 1,
   "locale": "en_US.UTF-8",
   "metadata": {
-    "appmode": "quarto-shiny",
-    "primary_rmd": "access-to-care.qmd"
-  },
-  "quarto": {
-    "version": "1.8.27",
-    "engines": ["jupyter"]
+    "appmode": "python-shiny",
+    "entrypoint": "access-to-care.qmd"
   },
   "python": {
     "version": "3.11.12",
@@ -21,8 +17,35 @@
     "requirements.txt": {
       "checksum": "fc50bc89d08ed30364c97bf8c72db6ef"
     },
+    ".connect": {
+      "checksum": "c56e4a8b8a75d5bed6f5f7164fdca6cc"
+    },
     "access-to-care.qmd": {
       "checksum": "0c836b85f40dcdb2f38a15d945ad5155"
+    },
+    "custom-theme.scss": {
+      "checksum": "af18c4f909340769134b055c787a2087"
+    },
+    "data/us_atc_county_polygons.parquet": {
+      "checksum": "116a7a1e20900bd6618900a3b22b147a"
+    },
+    "data/us_counties.parquet": {
+      "checksum": "ed66df1dcb936eb8285f35d3ac311920"
+    },
+    "data/us_hex_positions.parquet": {
+      "checksum": "8249269e835f56aeb1a75bf8585b60ea"
+    },
+    "data/us_large_cities.parquet": {
+      "checksum": "8c208804ccff5fb770162cc214b1f4a0"
+    },
+    "data/us_states.parquet": {
+      "checksum": "07cc1cec2b1875633b8fa809f48499f4"
+    },
+    "metadata.yml": {
+      "checksum": "50c6dde613f83eb8375759416565f436"
+    },
+    "thumbnail.png": {
+      "checksum": "63028e3dc3a841182204b8bf543f1a62"
     }
   }
 }
