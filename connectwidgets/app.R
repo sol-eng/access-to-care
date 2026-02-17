@@ -100,13 +100,6 @@ ui <- material_page(
       left = 200,
       width = "80%"
     )
-  ),
-  fluidRow(
-    absolutePanel(
-      rscgridOutput("grid", width = "90%"),
-      left = 20,
-      width = "80%"
-    )
   )
 )
 
@@ -121,10 +114,10 @@ server <- function(input, output, session) {
     }
     f_content
   })
-  output$grid <- renderRscgrid({
+  output$cards <- renderRsccard({
     f_content <- filter_content()
     if (nrow(f_content) > 0) {
-      rsc_grid(f_content)
+      rsc_card(f_content)
     } else {
       NULL
     }
