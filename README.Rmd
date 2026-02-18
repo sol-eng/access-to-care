@@ -13,9 +13,153 @@ knitr::opts_chunk$set(
 )
 ```
 
+<img src="dashboard-r/thumbnail.png" width = "200px" align="right">
+
 # Access to Care
 
+This project combines US CENSUS population data with hospital data provided by Medicare to analyze healthcare accessibility across the United States. The analysis aims to identify counties that are underserved or overserved in terms of hospital resources relative to their population size. The main goal of these assets is to showcase [Posit Connect's](https://posit.co/products/enterprise/connect) capabilities, such as its ability to host presentations, REST APIs, applications, reports, and interactive content in both R and Python.
 
-<img src="man/figures/access-to-care-diagram.png" width = "1000px">
+### Data Sources
 
-**Background:** This project combines US CENSUS population data with hospital data provided by Medicare. A linear model is used to determine if a county is over, or under served based on the size of the population.
+- **Population Data**: 2024 US CENSUS data providing county-level population estimates
+- **Hospital Data**: 2025 Medicare hospital facility data, including location and operational information
+
+### Analysis Methodology
+
+A linear regression model is used to establish a baseline relationship between population size and the expected number of hospitals in a county. This model helps identify:
+
+- **Underserved counties**: Areas with fewer hospitals than predicted by the model based on their population
+- **Overserved counties**: Areas with more hospitals than predicted by the model
+- **Adequately served counties**: Areas where hospital availability aligns with population expectations
+
+The model and processed data are made available through the pins package, enabling reproducible analysis and easy integration with other analytical workflows.
+
+## Project Contents
+
+This repository contains multiple implementations of the Access to Care analysis across different formats and programming languages. All content is deployed to [Posit Connect](https://connect.posit.com) for easy access and interactivity.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(knitr)
+library(yaml)
+
+# Function to read metadata
+read_metadata <- function(folder) {
+  metadata_file <- file.path(folder, "metadata.yml")
+  if (file.exists(metadata_file)) {
+    metadata <- yaml::read_yaml(metadata_file)
+    return(metadata)
+  }
+  return(NULL)
+}
+
+# Define all assets
+assets <- c(
+  "pins-data",
+  "pins-model",
+  "api-r",
+  "api-python",
+  "app-r",
+  "app-python",
+  "dashboard-r",
+  "dashboard-python",
+  "report-r",
+  "report-python",
+  "presentation-r",
+  "presentation-python",
+  "plot-r",
+  "htmlwidgets-r",
+  "pdf-r",
+  "connectwidgets"
+)
+
+# Create table data
+table_data <- lapply(assets, function(asset) {
+  meta <- read_metadata(asset)
+  if (!is.null(meta)) {
+    thumbnail_path <- file.path(asset, "thumbnail.png")
+    if (!file.exists(thumbnail_path)) {
+      thumbnail_path <- file.path(asset, "thumbnail-1.png")
+    }
+
+    github_link <- sprintf("[%s](https://github.com/sol-eng/access-to-care/tree/main/%s)", asset, asset)
+
+    connect_url <- sprintf("https://connect.posit.it/access-to-care/%s", meta$url)
+    connect_link <- sprintf("[View on Connect](%s)", connect_url)
+
+    thumbnail <- if (file.exists(thumbnail_path)) {
+      sprintf("![%s](%s)", meta$title, thumbnail_path)
+    } else {
+      ""
+    }
+
+    data.frame(
+      Thumbnail = thumbnail,
+      Title = meta$title,
+      Type = meta$type,
+      Description = meta$description,
+      GitHub = github_link,
+      Connect = connect_link,
+      stringsAsFactors = FALSE
+    )
+  }
+})
+
+# Combine and display
+table_df <- do.call(rbind, table_data)
+kable(table_df, format = "markdown", row.names = FALSE)
+```
+
+## Repository Structure
+
+Each folder in this repository contains a complete, deployable implementation:
+
+- **pins-data** and **pins-model**: Shared data and model artifacts accessible via the pins package
+- **api-r** and **api-python**: REST API implementations for programmatic access to data and predictions
+- **app-r** and **app-python**: Interactive applications for exploring county-level data
+- **dashboard-r** and **dashboard-python**: State-level dashboards with visualizations
+- **report-r** and **report-python**: Comprehensive HTML reports with analysis
+- **presentation-r** and **presentation-python**: Presentation-format outputs for sharing findings
+- **plot-r** and **htmlwidgets-r**: Static and interactive visualization outputs
+- **pdf-r**: PDF report generation for single-state analysis
+- **connectwidgets**: Landing page application listing all related content
+
+
+This project was created using the [accesstocare](https://github.com/sol-eng/accesstocare) R package, which provides tools for generating Access to Care analyses.
+
+## Deploy to Your Posit Connect Instance
+
+If you want to deploy all of these assets to your own Posit Connect instance, you can use the programmatic deployment capabilities built into the `accesstocare` package. This approach will replicate the entire project structure, including all content types, custom thumbnails, and vanity URLs, to your Connect server.
+
+The deployment process uses Git-backed deployment, which means your Posit Connect instance will maintain a direct connection to the repository for ongoing synchronization and updates.
+
+### Deployment Steps
+
+**Step 1: Clone the repository**
+
+```bash
+git clone https://github.com/sol-eng/access-to-care.git
+cd access-to-care
+```
+
+**Step 2: Install the accesstocare package**
+
+```r
+pak::pak("sol-eng/accesstocare")
+```
+
+**Step 3: Deploy everything to your Connect instance**
+
+```r
+library(accesstocare)
+deploy_git_backed(".")
+```
+
+The `deploy_git_backed()` function will automatically:
+
+- Deploy all example data products to your Posit Connect instance
+- Set custom thumbnails for each content item
+- Establish vanity URLs for convenient access to each asset
+- Configure Git-backed deployment for all compatible content types
+
+Make sure you have your Posit Connect credentials configured (via environment variables or RStudio Connect pane) before running the deployment.
+
