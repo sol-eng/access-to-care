@@ -9,6 +9,15 @@
     "content_category": null,
     "has_parameters": false
   },
+  "python": {
+    "version": "3.13.1",
+    "requires": null,
+    "package_manager": {
+      "name": "pip",
+      "version": "26.0.1",
+      "package_file": "requirements.txt"
+    }
+  },
   "packages": {
     "Matrix": {
       "Source": "CRAN",
@@ -97,7 +106,13 @@
         "Maintainer": "Winston Chang <winston@posit.co>",
         "Repository": "CRAN",
         "Date/Publication": "2025-02-15 00:50:02 UTC",
-        "Built": "R 4.5.0; ; 2025-02-15 01:07:20 UTC; unix"
+        "Built": "R 4.5.0; ; 2025-02-15 01:07:20 UTC; unix",
+        "RemoteType": "standard",
+        "RemotePkgRef": "R6",
+        "RemoteRef": "R6",
+        "RemoteRepos": "https://cran.rstudio.com/",
+        "RemotePkgPlatform": "aarch64-apple-darwin20",
+        "RemoteSha": "2.6.1"
       }
     },
     "RColorBrewer": {
@@ -243,7 +258,7 @@
       "description": {
         "Package": "accesstocare",
         "Title": "Example content of Access to Care project",
-        "Version": "0.0.1.9013",
+        "Version": "0.0.1.9015",
         "Authors@R": "\n    person(given = \"Edgar\",\n           family = \"Ruiz\",\n           role = c(\"aut\", \"cre\"),\n           email = \"edgar@posit.com\"\n           )",
         "Description": "Contains the example documents, applications and 'API's that are\n    part of the Access To Care analysis.  The package also contains the data and\n    helper functions to make it easy to run the example code.",
         "License": "MIT + file LICENSE",
@@ -252,7 +267,7 @@
         "Roxygen": "list(markdown = TRUE)",
         "RoxygenNote": "7.3.3",
         "Depends": "R (>= 3.5)",
-        "Imports": "fs, cli, here, purrr, rsconnect, ggplot2, ggiraph, rlang,\ntibble, yaml, rstudioapi, htmlwidgets, arrow, reticulate, gert,\nconnectapi",
+        "Imports": "fs, cli, here, purrr, rsconnect, ggplot2, ggiraph, rlang,\ntibble, yaml, rstudioapi, htmlwidgets, arrow, reticulate, gert,\nconnectapi, pins, vetiver",
         "Suggests": "knitr, covr, testthat (>= 3.0.0), rmarkdown",
         "Config/testthat/edition": "3",
         "URL": "https://sol-eng.github.io/accesstocare,\nhttps://github.com/sol-eng/accesstocare/",
@@ -264,16 +279,16 @@
         "RemoteUsername": "sol-eng",
         "RemotePkgRef": "sol-eng/accesstocare@updates",
         "RemoteRef": "updates",
-        "RemoteSha": "dbc23cb7741d323c6be87b30ccbdb0070b46c666",
+        "RemoteSha": "4c75bea2d6613fb1d2420d5a22248db9a7f8a10e",
         "GithubRepo": "accesstocare",
         "GithubUsername": "sol-eng",
         "GithubRef": "updates",
-        "GithubSHA1": "dbc23cb7741d323c6be87b30ccbdb0070b46c666",
+        "GithubSHA1": "4c75bea2d6613fb1d2420d5a22248db9a7f8a10e",
         "NeedsCompilation": "no",
-        "Packaged": "2026-02-17 17:28:45 UTC; edgar",
+        "Packaged": "2026-02-18 21:32:44 UTC; edgar",
         "Author": "Edgar Ruiz [aut, cre]",
         "Maintainer": "Edgar Ruiz <edgar@posit.com>",
-        "Built": "R 4.5.2; ; 2026-02-17 17:28:46 UTC; unix"
+        "Built": "R 4.5.2; ; 2026-02-18 21:32:46 UTC; unix"
       }
     },
     "arrow": {
@@ -517,6 +532,78 @@
         "RemoteSha": "0.10.0"
       }
     },
+    "bundle": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "bundle",
+        "Title": "Serialize Model Objects with a Consistent Interface",
+        "Version": "0.1.3",
+        "Authors@R": "c(\n    person(\"Julia\", \"Silge\", , \"julia.silge@posit.co\", role = c(\"aut\", \"cre\"),\n           comment = c(ORCID = \"0000-0002-3671-836X\")),\n    person(\"Simon\", \"Couch\", , \"simonpatrickcouch@gmail.com\", role = \"aut\"),\n    person(\"Qiushi\", \"Yan\", , \"qiushi.yann@gmail.com\", role = \"aut\"),\n    person(\"Max\", \"Kuhn\", , \"max@posit.co\", role = \"aut\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"),\n           comment = c(ROR = \"03wc8by49\"))\n  )",
+        "Description": "Typically, models in 'R' exist in memory and can be saved via\n    regular 'R' serialization. However, some models store information in\n    locations that cannot be saved using 'R' serialization alone. The goal\n    of 'bundle' is to provide a common interface to capture this\n    information, situate it within a portable object, and restore it for\n    use in new settings.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://github.com/rstudio/bundle,\nhttps://rstudio.github.io/bundle/",
+        "BugReports": "https://github.com/rstudio/bundle/issues",
+        "Depends": "R (>= 4.1)",
+        "Imports": "glue, lifecycle, purrr, rlang, utils, withr",
+        "Suggests": "bonsai, butcher (>= 0.4.0), callr, caret, covr, dbarts,\nembed, h2o, keras, kernlab, knitr, luz, MASS, modeldata,\nparsnip, recipes, renv, rmarkdown, stacks, tensorflow, testthat\n(>= 3.0.0), torch, torchvision, uwot, vetiver, workflows,\nxgboost (>= 1.6.0.1)",
+        "VignetteBuilder": "knitr",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Config/usethis/last-upkeep": "2025-12-08",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.3.3",
+        "NeedsCompilation": "no",
+        "Packaged": "2025-12-09 23:43:45 UTC; juliasilge",
+        "Author": "Julia Silge [aut, cre] (ORCID: <https://orcid.org/0000-0002-3671-836X>),\n  Simon Couch [aut],\n  Qiushi Yan [aut],\n  Max Kuhn [aut],\n  Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
+        "Maintainer": "Julia Silge <julia.silge@posit.co>",
+        "Repository": "CRAN",
+        "Date/Publication": "2025-12-10 10:50:08 UTC",
+        "Built": "R 4.5.2; ; 2025-12-10 13:53:21 UTC; unix",
+        "RemoteType": "standard",
+        "RemotePkgRef": "bundle",
+        "RemoteRef": "bundle",
+        "RemoteRepos": "https://cran.rstudio.com/",
+        "RemotePkgPlatform": "aarch64-apple-darwin20",
+        "RemoteSha": "0.1.3"
+      }
+    },
+    "butcher": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "butcher",
+        "Title": "Model Butcher",
+        "Version": "0.4.0",
+        "Authors@R": "c(\n    person(\"Joyce\", \"Cahoon\", , \"joyceyu48@gmail.com\", role = \"aut\",\n           comment = c(ORCID = \"0000-0001-7217-4702\")),\n    person(\"Davis\", \"Vaughan\", , \"davis@posit.co\", role = \"aut\"),\n    person(\"Max\", \"Kuhn\", , \"max@posit.co\", role = c(\"cre\", \"aut\"),\n           comment = c(ORCID = \"0000-0003-2402-136X\")),\n    person(\"Alex\", \"Hayes\", , \"alexpghayes@gmail.com\", role = \"aut\"),\n    person(\"Julia\", \"Silge\", , \"julia.silge@posit.co\", role = \"aut\",\n           comment = c(ORCID = \"0000-0002-3671-836X\")),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"),\n           comment = c(ROR = \"03wc8by49\"))\n  )",
+        "Description": "Provides a set of S3 generics to axe components of fitted\n    model objects and help reduce the size of model objects saved to disk.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://butcher.tidymodels.org/,\nhttps://github.com/tidymodels/butcher",
+        "BugReports": "https://github.com/tidymodels/butcher/issues",
+        "Depends": "R (>= 4.1.0)",
+        "Imports": "cli (>= 3.3.0), lobstr (>= 1.1.2), methods, purrr (>= 0.3.4),\nrlang (>= 1.0.2), tibble (>= 3.1.7), utils, vctrs (>= 0.4.1)",
+        "Suggests": "C50, caret, censored, ClusterR, clustMixType, covr, dbarts,\nddalpha, dplyr, e1071, earth, flexsurv, fs, ipred, kernlab,\nkknn, klaR, knitr, MASS, mda, mgcv, modeldata, nnet, parsnip\n(>= 1.3.3), pkgload, pls, QSARdata, randomForest, ranger, RANN,\nrecipes (>= 0.2.0), rmarkdown, rpart, rsample, RSpectra,\nsparklyr, survival (>= 3.2-10), tabnet, testthat (>= 3.0.0),\ntorch, TH.data, tune, usethis (>= 1.5.0), workflowsets, xgboost\n(>= 1.3.2.1), xrf",
+        "VignetteBuilder": "knitr",
+        "Config/Needs/check": "bioc::mixOmics",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.3.3",
+        "NeedsCompilation": "no",
+        "Packaged": "2025-12-08 20:03:22 UTC; max",
+        "Author": "Joyce Cahoon [aut] (ORCID: <https://orcid.org/0000-0001-7217-4702>),\n  Davis Vaughan [aut],\n  Max Kuhn [cre, aut] (ORCID: <https://orcid.org/0000-0003-2402-136X>),\n  Alex Hayes [aut],\n  Julia Silge [aut] (ORCID: <https://orcid.org/0000-0002-3671-836X>),\n  Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
+        "Maintainer": "Max Kuhn <max@posit.co>",
+        "Repository": "CRAN",
+        "Date/Publication": "2025-12-09 06:10:57 UTC",
+        "Built": "R 4.5.2; ; 2025-12-09 06:29:14 UTC; unix",
+        "RemoteType": "standard",
+        "RemotePkgRef": "butcher",
+        "RemoteRef": "butcher",
+        "RemoteRepos": "https://cran.rstudio.com/",
+        "RemotePkgPlatform": "aarch64-apple-darwin20",
+        "RemoteSha": "0.4.0"
+      }
+    },
     "cachem": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -549,6 +636,41 @@
         "RemoteRepos": "https://cran.rstudio.com/",
         "RemotePkgPlatform": "aarch64-apple-darwin20",
         "RemoteSha": "1.1.0"
+      }
+    },
+    "cereal": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "cereal",
+        "Title": "Serialize 'vctrs' Objects to 'JSON'",
+        "Version": "0.1.0",
+        "Authors@R": "c(\n    person(\"Julia\", \"Silge\", , \"julia.silge@posit.co\", role = c(\"cre\", \"aut\"),\n           comment = c(ORCID = \"0000-0002-3671-836X\")),\n    person(\"Davis\", \"Vaughan\", , \"davis@posit.co\", role = \"aut\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n  )",
+        "Description": "The 'vctrs' package provides a concept of vector prototype\n    that can be especially useful when deploying models and code.  Serialize \n    these object prototypes to 'JSON' so they can be used to check and coerce \n    data in production systems, and deserialize 'JSON' back to the correct \n    object prototypes.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://r-lib.github.io/cereal/, https://github.com/r-lib/cereal/",
+        "BugReports": "https://github.com/r-lib/cereal/issues",
+        "Depends": "R (>= 3.6)",
+        "Imports": "jsonlite, rlang, tibble, vctrs",
+        "Suggests": "covr, testthat (>= 3.0.0), withr",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.2.3",
+        "Language": "en-US",
+        "NeedsCompilation": "no",
+        "Packaged": "2023-06-08 19:18:13 UTC; juliasilge",
+        "Author": "Julia Silge [cre, aut] (<https://orcid.org/0000-0002-3671-836X>),\n  Davis Vaughan [aut],\n  Posit Software, PBC [cph, fnd]",
+        "Maintainer": "Julia Silge <julia.silge@posit.co>",
+        "Repository": "CRAN",
+        "Date/Publication": "2023-06-09 14:00:26 UTC",
+        "Built": "R 4.5.0; ; 2025-04-01 21:08:04 UTC; unix",
+        "RemoteType": "standard",
+        "RemotePkgRef": "cereal",
+        "RemoteRef": "cereal",
+        "RemoteRepos": "https://cran.rstudio.com/",
+        "RemotePkgPlatform": "aarch64-apple-darwin20",
+        "RemoteSha": "0.1.0"
       }
     },
     "cli": {
@@ -1439,6 +1561,43 @@
         "RemoteSha": "0.3.6"
       }
     },
+    "hardhat": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "hardhat",
+        "Title": "Construct Modeling Packages",
+        "Version": "1.4.2",
+        "Authors@R": "c(\n    person(\"Hannah\", \"Frick\", , \"hannah@posit.co\", role = c(\"aut\", \"cre\"),\n           comment = c(ORCID = \"0000-0002-6049-5258\")),\n    person(\"Davis\", \"Vaughan\", , \"davis@posit.co\", role = \"aut\"),\n    person(\"Max\", \"Kuhn\", , \"max@posit.co\", role = \"aut\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"),\n           comment = c(ROR = \"03wc8by49\"))\n  )",
+        "Description": "Building modeling packages is hard. A large amount of effort\n    generally goes into providing an implementation for a new method that\n    is efficient, fast, and correct, but often less emphasis is put on the\n    user interface. A good interface requires specialized knowledge about\n    S3 methods and formulas, which the average package developer might not\n    have. The goal of 'hardhat' is to reduce the burden around building\n    new modeling packages by providing functionality for preprocessing,\n    predicting, and validating input.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://github.com/tidymodels/hardhat,\nhttps://hardhat.tidymodels.org",
+        "BugReports": "https://github.com/tidymodels/hardhat/issues",
+        "Depends": "R (>= 4.1)",
+        "Imports": "cli (>= 3.6.0), glue (>= 1.6.2), rlang (>= 1.1.0), sparsevctrs\n(>= 0.2.0), tibble (>= 3.2.1), vctrs (>= 0.6.0)",
+        "Suggests": "covr, crayon, devtools, knitr, Matrix, modeldata (>= 0.0.2),\nrecipes (>= 1.0.5), rmarkdown (>= 2.3), roxygen2, testthat (>=\n3.0.0), usethis (>= 2.1.5), withr (>= 3.0.0)",
+        "VignetteBuilder": "knitr",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Config/usethis/last-upkeep": "2025-04-23",
+        "Encoding": "UTF-8",
+        "LazyData": "true",
+        "RoxygenNote": "7.3.2",
+        "NeedsCompilation": "no",
+        "Packaged": "2025-08-19 17:29:25 UTC; hannah",
+        "Author": "Hannah Frick [aut, cre] (ORCID:\n    <https://orcid.org/0000-0002-6049-5258>),\n  Davis Vaughan [aut],\n  Max Kuhn [aut],\n  Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
+        "Maintainer": "Hannah Frick <hannah@posit.co>",
+        "Repository": "CRAN",
+        "Date/Publication": "2025-08-20 05:00:57 UTC",
+        "Built": "R 4.5.0; ; 2025-08-21 03:11:06 UTC; unix",
+        "RemoteType": "standard",
+        "RemotePkgRef": "hardhat",
+        "RemoteRef": "hardhat",
+        "RemoteRepos": "https://cran.rstudio.com/",
+        "RemotePkgPlatform": "aarch64-apple-darwin20",
+        "RemoteSha": "1.4.2"
+      }
+    },
     "here": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -2020,6 +2179,42 @@
         "RemoteSha": "1.0.5"
       }
     },
+    "lobstr": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "lobstr",
+        "Title": "Visualize R Data Structures with Trees",
+        "Version": "1.2.0",
+        "Authors@R": "c(\n    person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = c(\"aut\", \"cre\")),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n  )",
+        "Description": "A set of tools for inspecting and understanding R data\n    structures inspired by str(). Includes ast() for visualizing abstract\n    syntax trees, ref() for showing shared references, cst() for showing\n    call stack trees, and obj_size() for computing object sizes.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://lobstr.r-lib.org/, https://github.com/r-lib/lobstr",
+        "BugReports": "https://github.com/r-lib/lobstr/issues",
+        "Depends": "R (>= 3.6.0)",
+        "Imports": "crayon, methods, prettyunits, rlang (>= 1.0.0)",
+        "Suggests": "covr, pillar, pkgdown, testthat (>= 3.0.0)",
+        "LinkingTo": "cpp11 (>= 0.4.2)",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.3.3",
+        "Config/build/compilation-database": "true",
+        "NeedsCompilation": "yes",
+        "Packaged": "2026-02-18 10:54:56 UTC; lionel",
+        "Author": "Hadley Wickham [aut, cre],\n  Posit Software, PBC [cph, fnd]",
+        "Maintainer": "Hadley Wickham <hadley@posit.co>",
+        "Repository": "CRAN",
+        "Date/Publication": "2026-02-18 14:40:09 UTC",
+        "Built": "R 4.5.2; aarch64-apple-darwin20; 2026-02-18 15:19:10 UTC; unix",
+        "Archs": "lobstr.so.dSYM",
+        "RemoteType": "standard",
+        "RemotePkgRef": "lobstr",
+        "RemoteRef": "lobstr",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemoteSha": "1.2.0"
+      }
+    },
     "magrittr": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -2261,6 +2456,42 @@
         "RemoteSha": "1.11.1"
       }
     },
+    "pins": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Type": "Package",
+        "Package": "pins",
+        "Title": "Pin, Discover, and Share Resources",
+        "Version": "1.4.1",
+        "Authors@R": "c(\n    person(\"Julia\", \"Silge\", , \"julia.silge@posit.co\", role = c(\"cre\", \"aut\"),\n           comment = c(ORCID = \"0000-0002-3671-836X\")),\n    person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = \"aut\",\n           comment = c(ORCID = \"0000-0003-4757-117X\")),\n    person(\"Javier\", \"Luraschi\", , \"jluraschi@gmail.com\", role = \"aut\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n  )",
+        "Description": "Publish data sets, models, and other R objects, making it\n    easy to share them across projects and with your colleagues. You can\n    pin objects to a variety of \"boards\", including local folders (to\n    share on a networked drive or with 'DropBox'), 'Posit Connect',\n    'AWS S3', and more.",
+        "License": "Apache License (>= 2)",
+        "URL": "https://pins.rstudio.com/, https://github.com/rstudio/pins-r",
+        "BugReports": "https://github.com/rstudio/pins-r/issues",
+        "Depends": "R (>= 3.6)",
+        "Imports": "cli, digest, fs, generics, glue, httr, jsonlite, lifecycle,\nmagrittr, purrr (>= 1.0.0), rappdirs, rlang (>= 1.1.0), tibble,\nwhisker, withr (>= 2.4.3), yaml",
+        "Suggests": "archive, arrow, AzureStor, covr, data.table, datasets,\nfilelock, gitcreds, googleCloudStorageR, googledrive, httr2,\nids, knitr, Microsoft365R, mime, mockery, nanoparquet, openssl,\npaws.storage, qs, R.utils, rmarkdown, rsconnect, shiny, sodium,\ntestthat (>= 3.1.7), webfakes (>= 1.2.0), xml2, zip",
+        "VignetteBuilder": "knitr",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.3.2",
+        "NeedsCompilation": "no",
+        "Packaged": "2025-04-30 01:40:13 UTC; juliasilge",
+        "Author": "Julia Silge [cre, aut] (<https://orcid.org/0000-0002-3671-836X>),\n  Hadley Wickham [aut] (<https://orcid.org/0000-0003-4757-117X>),\n  Javier Luraschi [aut],\n  Posit Software, PBC [cph, fnd]",
+        "Maintainer": "Julia Silge <julia.silge@posit.co>",
+        "Repository": "CRAN",
+        "Date/Publication": "2025-04-30 02:30:06 UTC",
+        "Built": "R 4.5.0; ; 2025-04-30 03:40:30 UTC; unix",
+        "RemoteType": "standard",
+        "RemotePkgRef": "pins",
+        "RemoteRef": "pins",
+        "RemoteRepos": "https://cran.rstudio.com/",
+        "RemotePkgPlatform": "aarch64-apple-darwin20",
+        "RemoteSha": "1.4.1"
+      }
+    },
     "pkgconfig": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -2460,6 +2691,38 @@
         "RemoteRepos": "https://cran.rstudio.com/",
         "RemotePkgPlatform": "aarch64-apple-darwin20",
         "RemoteSha": "1.2.1"
+      }
+    },
+    "rapidoc": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "rapidoc",
+        "Type": "Package",
+        "Title": "Generates 'RapiDoc' Documentation from an 'OpenAPI'\nSpecification",
+        "Version": "9.3.4",
+        "Authors@R": "c(\n    person(\"Bruno\", \"Tremblay\", email = \"openr@neoxone.com\", role = c(\"aut\", \"cre\")),\n    person(\"Barret\", \"Schloerke\", email = \"barret@rstudio.com\", role = \"ctb\",\n           comment = c(ORCID = \"0000-0001-9986-114X\")),\n    person(\"Mrinmoy\", \"Majumdar\", email = \"mrin9@yahoo.com\", role = \"cph\"))",
+        "Maintainer": "Bruno Tremblay <openr@neoxone.com>",
+        "Description": "A collection of 'HTML', 'JavaScript', 'CSS' and fonts\n  assets that generate 'RapiDoc' documentation from an 'OpenAPI' Specification:\n   <https://mrin9.github.io/RapiDoc/>.",
+        "License": "MIT + file LICENSE",
+        "Suggests": "plumber (>= 1.0), testthat (>= 3.0.0)",
+        "Encoding": "UTF-8",
+        "URL": "https://github.com/meztez/rapidoc",
+        "BugReports": "https://github.com/meztez/rapidoc/issues",
+        "RoxygenNote": "7.2.3",
+        "Config/testthat/edition": "3",
+        "NeedsCompilation": "no",
+        "Packaged": "2023-11-17 18:55:49 UTC; bruno",
+        "Author": "Bruno Tremblay [aut, cre],\n  Barret Schloerke [ctb] (<https://orcid.org/0000-0001-9986-114X>),\n  Mrinmoy Majumdar [cph]",
+        "Repository": "CRAN",
+        "Date/Publication": "2023-11-17 20:20:02 UTC",
+        "Built": "R 4.5.0; ; 2025-04-01 04:40:44 UTC; unix",
+        "RemoteType": "standard",
+        "RemotePkgRef": "rapidoc",
+        "RemoteRef": "rapidoc",
+        "RemoteRepos": "https://cran.rstudio.com/",
+        "RemotePkgPlatform": "aarch64-apple-darwin20",
+        "RemoteSha": "9.3.4"
       }
     },
     "rappdirs": {
@@ -3040,6 +3303,43 @@
         "RemoteSha": "0.1.7-1"
       }
     },
+    "sparsevctrs": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "sparsevctrs",
+        "Title": "Sparse Vectors for Use in Data Frames",
+        "Version": "0.3.6",
+        "Authors@R": "c(\n    person(\"Emil\", \"Hvitfeldt\", , \"emil.hvitfeldt@posit.co\", role = c(\"aut\", \"cre\"),\n           comment = c(ORCID = \"0000-0002-0679-1945\")),\n    person(\"Davis\", \"Vaughan\", , \"davis@posit.co\", role = \"ctb\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"), comment = c(ROR = \"03wc8by49\"))\n  )",
+        "Description": "Provides sparse vectors powered by ALTREP (Alternative\n    Representations for R Objects) that behave like regular vectors, and\n    can thus be used in data frames. Also provides tools to convert\n    between sparse matrices and data frames with sparse columns and\n    functions to interact with sparse vectors.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://github.com/r-lib/sparsevctrs,\nhttps://r-lib.github.io/sparsevctrs/",
+        "BugReports": "https://github.com/r-lib/sparsevctrs/issues",
+        "Depends": "R (>= 4.1)",
+        "Imports": "cli (>= 3.4.0), rlang (>= 1.1.0), vctrs",
+        "Suggests": "knitr, Matrix, methods, rmarkdown, testthat (>= 3.0.0),\ntibble, withr",
+        "VignetteBuilder": "knitr",
+        "Config/Needs/website": "tidyverse/tidytemplate, rmarkdown, lobstr,\nggplot2, bench, tidyr, ggbeeswarm",
+        "Config/testthat/edition": "3",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.3.3",
+        "Config/usethis/last-upkeep": "2025-05-25",
+        "NeedsCompilation": "yes",
+        "Packaged": "2026-01-27 00:07:42 UTC; emilhvitfeldt",
+        "Author": "Emil Hvitfeldt [aut, cre] (ORCID:\n    <https://orcid.org/0000-0002-0679-1945>),\n  Davis Vaughan [ctb],\n  Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
+        "Maintainer": "Emil Hvitfeldt <emil.hvitfeldt@posit.co>",
+        "Repository": "CRAN",
+        "Date/Publication": "2026-01-27 06:10:17 UTC",
+        "Built": "R 4.5.2; aarch64-apple-darwin20; 2026-01-27 07:01:43 UTC; unix",
+        "Archs": "sparsevctrs.so.dSYM",
+        "RemoteType": "standard",
+        "RemotePkgRef": "sparsevctrs",
+        "RemoteRef": "sparsevctrs",
+        "RemoteRepos": "https://cran.rstudio.com/",
+        "RemotePkgPlatform": "aarch64-apple-darwin20",
+        "RemoteSha": "0.3.6"
+      }
+    },
     "stringi": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -3434,6 +3734,42 @@
         "RemoteSha": "0.7.0"
       }
     },
+    "vetiver": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "vetiver",
+        "Title": "Version, Share, Deploy, and Monitor Models",
+        "Version": "0.2.7",
+        "Authors@R": "c(\n    person(\"Julia\", \"Silge\", , \"julia.silge@posit.co\", role = c(\"cre\", \"aut\"),\n           comment = c(ORCID = \"0000-0002-3671-836X\")),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"),\n           comment = c(ROR = \"03wc8by49\"))\n  )",
+        "Description": "The goal of 'vetiver' is to provide fluent tooling to\n    version, share, deploy, and monitor a trained model. Functions handle\n    both recording and checking the model's input data prototype, and\n    predicting from a remote API endpoint. The 'vetiver' package is\n    extensible, with generics that can support many kinds of models.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://vetiver.posit.co, https://rstudio.github.io/vetiver-r/,\nhttps://github.com/rstudio/vetiver-r/",
+        "BugReports": "https://github.com/rstudio/vetiver-r/issues",
+        "Depends": "R (>= 4.1)",
+        "Imports": "bundle (>= 0.1.3), butcher (>= 0.4.0), cereal, cli, fs,\ngenerics, glue, hardhat, lifecycle, pins (>= 1.3.0), purrr,\nrapidoc, readr (>= 1.4.0), rlang (>= 1.1.0), tibble, vctrs,\nwithr",
+        "Suggests": "arrow, callr, caret, clustMixType, covr, curl, dplyr,\nflexdashboard, ggplot2, httpuv, httr, jsonlite, keras, knitr,\nLiblineaR, luz, mgcv, mlr3 (>= 0.17.0), mlr3data, mlr3learners,\nmockery, modeldata, parsnip, paws.machine.learning (>= 0.2.0),\npingr, plotly, plumber (>= 1.0.0), probably (>= 1.2.0),\nquantregForest, ranger, recipes (>= 1.1.0), reticulate,\nrmarkdown, rpart, rsample, rsconnect, slider (>= 0.2.2),\nsmdocker (>= 0.1.2), stacks, tensorflow, testthat (>= 3.1.8),\ntidyselect, torch, tune, vdiffr, workflows, xgboost, yardstick",
+        "VignetteBuilder": "knitr",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Config/usethis/last-upkeep": "2025-12-11",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.3.3",
+        "NeedsCompilation": "no",
+        "Packaged": "2025-12-12 20:39:29 UTC; juliasilge",
+        "Author": "Julia Silge [cre, aut] (ORCID: <https://orcid.org/0000-0002-3671-836X>),\n  Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
+        "Maintainer": "Julia Silge <julia.silge@posit.co>",
+        "Repository": "CRAN",
+        "Date/Publication": "2025-12-13 06:10:02 UTC",
+        "Built": "R 4.5.2; ; 2025-12-13 08:58:15 UTC; unix",
+        "RemoteType": "standard",
+        "RemotePkgRef": "vetiver",
+        "RemoteRef": "vetiver",
+        "RemoteRepos": "https://cran.rstudio.com/",
+        "RemotePkgPlatform": "aarch64-apple-darwin20",
+        "RemoteSha": "0.2.7"
+      }
+    },
     "viridisLite": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -3507,6 +3843,35 @@
         "RemoteRepos": "https://cran.rstudio.com/",
         "RemotePkgPlatform": "aarch64-apple-darwin20",
         "RemoteSha": "1.7.0"
+      }
+    },
+    "whisker": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "whisker",
+        "Maintainer": "Edwin de Jonge <edwindjonge@gmail.com>",
+        "License": "GPL-3",
+        "Title": "{{mustache}} for R, Logicless Templating",
+        "Type": "Package",
+        "LazyLoad": "yes",
+        "Author": "Edwin de Jonge",
+        "Description": "Implements 'Mustache' logicless templating.",
+        "Version": "0.4.1",
+        "URL": "https://github.com/edwindj/whisker",
+        "Suggests": "markdown",
+        "RoxygenNote": "6.1.1",
+        "NeedsCompilation": "no",
+        "Packaged": "2022-12-05 15:15:55 UTC; hornik",
+        "Repository": "CRAN",
+        "Date/Publication": "2022-12-05 15:33:50 UTC",
+        "Built": "R 4.5.0; ; 2025-03-31 21:55:43 UTC; unix",
+        "RemoteType": "standard",
+        "RemotePkgRef": "whisker",
+        "RemoteRef": "whisker",
+        "RemoteRepos": "https://cran.rstudio.com/",
+        "RemotePkgPlatform": "aarch64-apple-darwin20",
+        "RemoteSha": "0.4.1"
       }
     },
     "withr": {
@@ -3685,10 +4050,13 @@
       "checksum": "aaee5feafdc17735d4b4109c890a4613"
     },
     "app.R": {
-      "checksum": "e7d7e61f80a6f1cdb4f95d3ab938cc40"
+      "checksum": "88c6c25b085d3795bb056f2ebe9ad529"
     },
     "metadata.yml": {
       "checksum": "cd30c5e1f09721fd46f83458d893bcb6"
+    },
+    "requirements.txt": {
+      "checksum": "3225869c561e98b312d80776090b4480"
     },
     "thumbnail.png": {
       "checksum": "b5128851e1d58076abfaeeb8209da324"
@@ -3697,7 +4065,7 @@
       "checksum": "075ba5f8fdab2d3812289fd14058f274"
     },
     "www/hospital.jpg": {
-      "checksum": "fe9a79892d247415e693ff2b1bc0df44"
+      "checksum": "799a3277539952c8574133eadc2df1bf"
     }
   },
   "users": null

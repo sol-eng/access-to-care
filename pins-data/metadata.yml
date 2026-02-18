@@ -1,0 +1,5 @@
+title: "Pins - Data"
+description: "County level data with the population and hospital count"
+type: Data
+primary: us_counties.csv
+url: "pins-data"

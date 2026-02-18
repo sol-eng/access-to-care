@@ -1,0 +1,4 @@
+title: "Vetiver - Model"
+description: "Linear regression model to determine appropiate levels of hospitals based on population of a given county"
+type: Model
+url: "vetiver-model"

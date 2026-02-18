@@ -32,7 +32,9 @@ choice_types <- c(
   "Plot",
   "Presentation",
   "Application",
-  "API"
+  "API",
+  "Data",
+  "Model"
 )
 
 atc_content <- all_content |>
@@ -53,6 +55,8 @@ atc_content <- atc_content |>
       str_detect(title, "App ") ~ "Application",
       str_detect(title, "REST API") ~ "API",
       str_detect(title, "Plot") ~ "Plot",
+      str_detect(title, "Data") ~ "Data",
+      str_detect(title, "Model") ~ "Model",
       TRUE ~ "Other"
     ),
     language = case_when(

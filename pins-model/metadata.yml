@@ -1,0 +1,5 @@
+title: "Pins - Model"
+description: "Linear regression model to determine appropiate levels of hospitals based on population of a given county"
+type: Model
+url: "pins-model"
+primary: us_atc_model.rds
